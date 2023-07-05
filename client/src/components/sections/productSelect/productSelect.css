@@ -1,0 +1,16 @@
+.views {
+  display: flex;
+  border: 1px solid gray;
+  border-radius: 15px;
+  max-width: 1180px;
+  margin: auto;
+  padding: 30px;
+  flex-direction: column;
+  box-shadow: 0 4px 8px #b6cdd6;
+  background-color: #F5F5F5;
+  transition: 0.3s;
+}
+h4 {
+    max-width: 300px;
+    font-weight: 448;
+}

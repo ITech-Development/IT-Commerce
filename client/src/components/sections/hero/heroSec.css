@@ -1,0 +1,19 @@
+.container {
+    background-color: #DEEEF7;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    padding: 20px 40px 10px 40px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    max-width: 1320px;
+    margin: auto;
+}
+
+.title {
+    font-size: 55px;
+    color: #010F52;
+}
