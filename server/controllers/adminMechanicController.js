@@ -1,4 +1,4 @@
-const { compare } = require('bcryptjs')
+const { compare } = require('../helpers/bcryptjs');
 const { AdminMechanic } = require('../models')
 const { createToken } = require('../helpers/jwt')
 const bcryptjs = require('bcryptjs')

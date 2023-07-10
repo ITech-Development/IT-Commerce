@@ -1,8 +1,8 @@
 'use strict';
-const { hash } = require('../helpers/bcryptjs')
 const {
   Model
 } = require('sequelize');
+const { hash } = require('../helpers/bcryptjs')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -12,7 +12,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-
+      User.belongsTo(models.AdminSeller, {
+        foreignKey: 'adminSellerId',
+        as: 'adminSeller'
+      })
     }
   }
   User.init({
@@ -37,12 +40,18 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      
+      validate: {
+        len: {
+          args: [6, 100],
+          msg: 'Password must be between 6 and 100 characters long',
+        },
+      },
     },
     phoneNumber: DataTypes.STRING,
     address: DataTypes.TEXT,
     imageProfile: DataTypes.STRING,
-    role: DataTypes.STRING
+    role: DataTypes.STRING,
+    adminSellerId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'User',

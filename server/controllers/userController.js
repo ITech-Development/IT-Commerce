@@ -1,4 +1,4 @@
-const { compare } = require('bcryptjs');
+const { compare } = require('../helpers/bcryptjs');
 const { createToken } = require('../helpers/jwt');
 const { User } = require('../models/index');
 const { OAuth2Client } = require('google-auth-library');
@@ -45,13 +45,13 @@ class UserController {
     static async loginUser(req, res, next) {
         try {
             const { email, password } = req.body
-            const user = await User.findOne({
+            let user = await User.findOne({
                 where: { email }
             })
             if (!user) {
                 throw { name: 'InvalidCredentials' }
             } else {
-                const compareResult = compare(password, user.password)
+                let compareResult = compare(password, user.password)
                 if (!compareResult) {
                     throw { name: 'InvalidCredentials' }
                 } else {

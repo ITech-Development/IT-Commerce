@@ -1,4 +1,4 @@
-const { compare } = require('bcryptjs')
+const { compare } = require('../helpers/bcryptjs');
 const { Driver } = require('../models')
 const { createToken } = require('../helpers/jwt')
 

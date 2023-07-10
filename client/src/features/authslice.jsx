@@ -15,22 +15,16 @@ const initialState = {
   userLoaded: false,
 };
 
+// Fungsi Async Thunk untuk registrasi
 export const registerUser = createAsyncThunk(
-  "auth/registerUser",
-  async (values, { rejectWithValue }) => {
+  'auth/register',
+  async (userData, thunkAPI) => {
     try {
-      const token = await axios.post(`${url}/register`, {
-        name: values.name,
-        email: values.email,
-        password: values.password,
-      });
-
-      localStorage.setItem("token", token.data);
-
-      return token.data;
+      const response = await axios.post('/api/register', userData);
+      return response.data; // Mengembalikan data dari respons API jika berhasil
     } catch (error) {
-      console.log(error.response.data);
-      return rejectWithValue(error.response.data);
+      // Mengembalikan pesan error jika terjadi kesalahan
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -89,8 +83,7 @@ const authSlice = createSlice({
       } else return { ...state, userLoaded: true };
     },
     logoutUser(state, action) {
-      localStorage.removeItem("token");
-
+      localStorage.getItem("access_token")
       return {
         ...state,
         token: "",

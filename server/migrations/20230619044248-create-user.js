@@ -40,6 +40,15 @@ module.exports = {
       imageProfile: {
         type: Sequelize.STRING
       },
+      adminSellerId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'AdminSellers',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onUpdate: 'CASCADE'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -1,41 +1,48 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
+
 import Logo from "../../assets/Logo.png";
 import ShopIcon from "../../assets/shopIcon.png";
-import { useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
-import { logoutUser } from "../../features/authslice";
-import { toast } from "react-toastify";
+import PhotoProfileIcon from "../../assets/user.png";
+
+import { useSelector } from "react-redux";
+import { UserContext } from "../../App.jsx";
 
 export default function Navigation() {
-  const dispatch = useDispatch();
   const { cartTotalQuantity } = useSelector((state) => state.cart);
-  const auth = useSelector((state) => state.auth);
 
-  return (
-    <>
-      <nav className="navigation">
-        <Link to="/">
-          <img style={{ height: "50px" }} src={Logo} alt="" />
-        </Link>
-        <div className="navigation-menu">
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About us</Link>
-            </li>
-            <li>
-              <Link to="/productlist">Products</Link>
-            </li>
-            <li>
-              <Link to="/service">Services</Link>
-            </li>
-          </ul>
-        </div>
-        <div>
+  const { state, dispatch } = useContext(UserContext);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    setDropdownOpen(false);
+    // Tambahkan tindakan lain yang ingin Anda lakukan saat logout
+  };
+
+  const RenderMenu = () => {
+    const token = localStorage.getItem("access_token");
+
+    return (
+      <>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/about">About us</Link>
+        </li>
+        <li>
+          <Link to="/productlist">Products</Link>
+        </li>
+        <li>
+          <Link to="/service">Services</Link>
+        </li>
+        <li>
           <Link to="/cart">
             <img
               style={{ height: "50px", color: "blue", cursor: "pointer" }}
@@ -57,64 +64,53 @@ export default function Navigation() {
               {cartTotalQuantity}
             </span>
           </Link>
-        </div>
-        {auth && auth._id ? (
-          <Logout
-            onClick={() => {
-              dispatch(logoutUser(null));
-              toast.warning("Logged out!", { position: "bottom-left" });
-            }}
-          >
-            Logout
-          </Logout>
+        </li>
+        {token ? (
+          <li>
+            <div className="dropdown">
+              <img
+                onClick={toggleDropdown}
+                style={{ height: "50px", color: "blue", cursor: "pointer" }}
+                src={PhotoProfileIcon}
+                alt=""
+              />
+              {dropdownOpen && (
+                <ul className="dropdown-menu">
+                  <li>
+                    <Link to="/photo-profile">Profile</Link>
+                  </li>
+                  <li>
+                    <Link onClick={handleLogout}>
+                      Logout
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </div>
+          </li>
         ) : (
-          <AuthLinks>
-            <button
-              className="btn"
-              style={{
-                padding: "10px 20px",
-                cursor: "pointer",
-                backgroundColor: "#243A73",
-                color: "white",
-                border: "1px solid #243A73",
-                borderRadius: "10px",
-              }}
-            >
-              <Link to="/login">
-              Masuk
-              </Link>
-            </button>
-            <button
-              className="btn"
-              style={{
-                padding: "10px 20px",
-                cursor: "pointer",
-                backgroundColor: "#243A73",
-                color: "white",
-                border: "1px solid #243A73",
-                borderRadius: "10px",
-              }}
-            >
-              <Link to="/register">
-              Daftar
-              </Link>
-            </button>
-          </AuthLinks>
+          <li>
+            <Link to="/login">
+              <button className="login-button">Login</button>
+            </Link>
+          </li>
         )}
+      </>
+    );
+  };
+
+  return (
+    <>
+      <nav className="navigation">
+        <Link to="/">
+          <img style={{ height: "50px" }} src={Logo} alt="" />
+        </Link>
+        <div className="navigation-menu">
+          <ul>
+            <RenderMenu />
+          </ul>
+        </div>
       </nav>
     </>
   );
 }
-
-const AuthLinks = styled.div`
-  a {
-    &:last-child {
-      margin-left: 2rem;
-    }
-  }
-`;
-
-const Logout = styled.div`
-  color: white;
-  cursor: pointer;
-`;
