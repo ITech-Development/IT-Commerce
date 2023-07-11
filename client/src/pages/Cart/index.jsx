@@ -62,7 +62,7 @@ const Cart = () => {
                     </button>
                   </div>
                 </div>
-                <div className="cart-product-price">Rp.{cartItem.price}</div>
+                <div className="cart-product-price">Rp.{cartItem.unitPrice}</div>
                 <div className="cart-product-quantity">
                   <button onClick={() => handleDecreaseCart(cartItem)}>
                     -
@@ -73,7 +73,7 @@ const Cart = () => {
                   </button>
                 </div>
                 <div className="cart-product-total-price">
-                  Rp.{cartItem.price * cartItem.cartQuantity}
+                  Rp.{cartItem.unitPrice * cartItem.cartQuantity}
                 </div>
               </div>
             ))}
@@ -86,7 +86,7 @@ const Cart = () => {
             <div className="cart-checkout">
               <div className="subtotal">
                 <span>Subtotal</span>
-                <span className="amount">${cart.cartTotalAmount}</span>
+                <span className="amount">Rp.{cart.cartTotalAmount}</span>
               </div>
               <p>Taxes and shipping calculated at checkout</p>
               <button>Check Out</button>

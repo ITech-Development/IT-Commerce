@@ -40,7 +40,8 @@ class ProductController {
                 stock: req.body.stock,
                 shippingInsurance: req.body.shippingInsurance,
                 deliveryService: req.body.deliveryService,
-                authorId: req.superAdmin.id
+                authorId: req.superAdmin.id,
+                brand: req.body.brand
             })
             res.status(201).json(newProduct)
         } catch (error) {

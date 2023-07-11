@@ -43,7 +43,8 @@ module.exports = (sequelize, DataTypes) => {
     size: DataTypes.INTEGER,
     shippingInsurance: DataTypes.STRING,
     deliveryService: DataTypes.STRING,
-    authorId: DataTypes.INTEGER
+    authorId: DataTypes.INTEGER,
+    brand: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Product',
