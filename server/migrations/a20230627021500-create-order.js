@@ -15,8 +15,7 @@ module.exports = {
           model: 'Users',
           key: 'id'
         },
-        onUpdate: 'CASCADE',
-        onUpdate: 'CASCADE'
+        
       },
       transactionId: {
         type: Sequelize.INTEGER,
@@ -24,8 +23,7 @@ module.exports = {
           model: 'Transactions',
           key: 'id'
         },
-        onUpdate: 'CASCADE',
-        onUpdate: 'CASCADE'
+        
       },
       productId: {
         type: Sequelize.INTEGER,
@@ -33,8 +31,6 @@ module.exports = {
           model: 'Products',
           key: 'id'
         },
-        onUpdate: 'CASCADE',
-        onUpdate: 'CASCADE'
       },
       qty: {
         type: Sequelize.INTEGER

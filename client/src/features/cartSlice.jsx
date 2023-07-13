@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import axios from "axios";
+// import addToCartPost from '../features/productSlice'
 
 const initialState = {
   cartItems: localStorage.getItem("cartItems")
@@ -9,16 +11,36 @@ const initialState = {
   cartTotalAmount: 0,
 };
 
+const addToCartPost = async (data) => {
+  console.log(data, 'dataaaaaaaaaaa');
+  try {
+    const response = await axios.post(
+      `http://localhost:3100/orders/${data.id}`,
+      data,
+      {
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
     addToCart(state, action) {
+      console.log('testttttttttttttttttttttttttttt');
       const existingIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
 
       if (existingIndex >= 0) {
+        console.log('ifffffffffffffffffff');
         state.cartItems[existingIndex] = {
           ...state.cartItems[existingIndex],
           cartQuantity: state.cartItems[existingIndex].cartQuantity + 1,
@@ -27,7 +49,10 @@ const cartSlice = createSlice({
           position: "bottom-left",
         });
       } else {
+        console.log('elseeeeeeeeeeeeeeeeeeeeeeeee');
         let tempProductItem = { ...action.payload, cartQuantity: 1 };
+        console.log(tempProductItem, 'temp product itemmmmmm');
+        addToCartPost(tempProductItem)
         state.cartItems.push(tempProductItem);
         toast.success("Product added to cart", {
           position: "bottom-left",

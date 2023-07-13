@@ -13,6 +13,7 @@ const ProductList = () => {
   const navigate = useNavigate();
 
   const handleAddToCart = (product) => {
+    console.log(product, 'ini product......');
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       dispatch(addToCart(product));

@@ -17,11 +17,15 @@ const Cart = () => {
   };
 
   const handleDecreaseCart = (cartItem) => {
-    dispatch(decreaseCart(cartItem));
+    if (cartItem.cartQuantity > 1) {
+      dispatch(decreaseCart(cartItem));
+    }
   };
 
   const handleIncreaseCart = (cartItem) => {
-    dispatch(addToCart(cartItem));
+    if (cartItem.cartQuantity < cartItem.stock) {
+      dispatch(addToCart(cartItem));
+    }
   };
 
   const handleClearCart = () => {
@@ -64,13 +68,9 @@ const Cart = () => {
                 </div>
                 <div className="cart-product-price">Rp.{cartItem.unitPrice}</div>
                 <div className="cart-product-quantity">
-                  <button onClick={() => handleDecreaseCart(cartItem)}>
-                    -
-                  </button>
+                  <button onClick={() => handleDecreaseCart(cartItem)}>-</button>
                   <div className="count">{cartItem.cartQuantity}</div>
-                  <button onClick={() => handleIncreaseCart(cartItem)}>
-                    +
-                  </button>
+                  <button onClick={() => handleIncreaseCart(cartItem)} disabled={cartItem.cartQuantity >= cartItem.stock}>+</button>
                 </div>
                 <div className="cart-product-total-price">
                   Rp.{cartItem.unitPrice * cartItem.cartQuantity}

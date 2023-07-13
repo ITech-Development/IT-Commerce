@@ -27,6 +27,7 @@ export default function Navigation() {
 
   const RenderMenu = () => {
     const token = localStorage.getItem("access_token");
+    const showCart = token ? true : false; // Menentukan apakah keranjang harus ditampilkan
 
     return (
       <>
@@ -42,29 +43,31 @@ export default function Navigation() {
         <li>
           <Link to="/service">Services</Link>
         </li>
-        <li>
-          <Link to="/cart">
-            <img
-              style={{ height: "50px", color: "blue", cursor: "pointer" }}
-              src={ShopIcon}
-              alt=""
-            />
-            <span
-              style={{
-                position: "relative",
-                backgroundColor: "yellow",
-                border: "1px solid yellow",
-                borderRadius: "50px",
-                padding: "3px 10px",
-                textDecoration: "none",
-                top: "-30px",
-                right: "26px",
-              }}
-            >
-              {cartTotalQuantity}
-            </span>
-          </Link>
-        </li>
+        {showCart && ( // Menampilkan keranjang jika showCart adalah true
+          <li>
+            <Link to="/cart">
+              <img
+                style={{ height: "50px", color: "blue", cursor: "pointer" }}
+                src={ShopIcon}
+                alt=""
+              />
+              <span
+                style={{
+                  position: "relative",
+                  backgroundColor: "yellow",
+                  border: "1px solid yellow",
+                  borderRadius: "50px",
+                  padding: "3px 10px",
+                  textDecoration: "none",
+                  top: "-30px",
+                  right: "26px",
+                }}
+              >
+                {cartTotalQuantity}
+              </span>
+            </Link>
+          </li>
+        )}
         {token ? (
           <li>
             <div className="dropdown">
@@ -80,9 +83,7 @@ export default function Navigation() {
                     <Link to="/photo-profile">Profile</Link>
                   </li>
                   <li>
-                    <Link onClick={handleLogout}>
-                      Logout
-                    </Link>
+                    <Link onClick={handleLogout}>Logout</Link>
                   </li>
                 </ul>
               )}
