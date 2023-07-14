@@ -7,28 +7,11 @@ class OrderController {
             const orders = await Order.findAll()
             res.status(200).json(orders)
         } catch (error) {
-            console.log(error, 'order error.....');
             next(error)
         }
     }
 
     static async addOrder(req, res, next) {
-        // try {
-        console.log(req.params, 'params eiiii');
-        // console.log(req.body, 'orderrrrrrrrrrrrrrrrrrrrrrrr');
-        //     const newOrder = await Order.create({
-        //         userId: req.body.userId,
-        //         transactionId: req.body.transactionId,
-        //         productId: req.body.productId,
-        //         qty: req.body.qty,
-        //         totalPrice: req.body.totalPrice
-        //     })
-        //     res.status(201).json(newOrder)
-        // } catch (error) {
-        //     console.log(error, 'errorrr....');
-        //     next(error)
-        // }
-
         try {
             let { id } = req.params
             let findData = await Product.findByPk(id)
@@ -38,16 +21,12 @@ class OrderController {
                 }
             }
             let user_id = req.user.id
-            let createCart = await Order.create({
+            let createOrder = await Order.create({
                 userId: user_id,
-                // transactionId: req.body.transactionId,
-                productId: id,
-                qty: req.body.qty,
-                totalPrice: req.body.qty
             })
-            res.status(201).json(createCart)
+            res.status(201).json(createOrder)
         } catch (error) {
-            console.log(error);
+            next(error)
         }
     }
 

@@ -1,0 +1,20 @@
+[
+    {
+        "cartId": 1,
+        "productId": 1,
+        "createdAt": "2023-07-14T00:00:00Z",
+        "updatedAt": "2023-07-14T00:00:00Z"
+    },
+    {
+        "cartId": 1,
+        "productId": 2,
+        "createdAt": "2023-07-14T00:00:00Z",
+        "updatedAt": "2023-07-14T00:00:00Z"
+    },
+    {
+        "cartId": 2,
+        "productId": 3,
+        "createdAt": "2023-07-14T00:00:00Z",
+        "updatedAt": "2023-07-14T00:00:00Z"
+    }
+]

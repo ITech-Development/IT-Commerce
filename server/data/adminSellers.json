@@ -1,0 +1,36 @@
+[
+    {
+      "fullName": "Seller 1",
+      "email": "seller1@example.com",
+      "password": "password123",
+      "phoneNumber": "1234567890",
+      "address": "123 Main Street, City, Country",
+      "imageProfile": "image_url_1",
+      "role": "adminSeller",
+      "createdAt": "2023-07-14T00:00:00Z",
+      "updatedAt": "2023-07-14T00:00:00Z"
+    },
+    {
+      "fullName": "Seller 2",
+      "email": "seller2@example.com",
+      "password": "password456",
+      "phoneNumber": "0987654321",
+      "address": "456 Park Avenue, City, Country",
+      "imageProfile": "image_url_2",
+      "role": "adminSeller",
+      "createdAt": "2023-07-14T00:00:00Z",
+      "updatedAt": "2023-07-14T00:00:00Z"
+    },
+    {
+      "fullName": "Seller 3",
+      "email": "seller3@example.com",
+      "password": "password789",
+      "phoneNumber": "5555555555",
+      "address": "789 Elm Street, City, Country",
+      "imageProfile": "image_url_3",
+      "role": "adminSeller",
+      "createdAt": "2023-07-14T00:00:00Z",
+      "updatedAt": "2023-07-14T00:00:00Z"
+    }
+  ]
+  

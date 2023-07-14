@@ -12,10 +12,9 @@ const initialState = {
 };
 
 const addToCartPost = async (data) => {
-  console.log(data, 'dataaaaaaaaaaa');
   try {
     const response = await axios.post(
-      `http://localhost:3100/orders/${data.id}`,
+      `http://localhost:3100/product-carts/${data.id}`,
       data,
       {
         headers: {
