@@ -14,6 +14,8 @@ module.exports = {
     */
     let data = JSON.parse(fs.readFileSync('./data/productTypes.json', 'utf-8'))
     .map(el => {
+      el.createdAt = new Date();
+      el.updatedAt = new Date();
       return el
     })
   await queryInterface.bulkInsert('ProductTypes', data, {})

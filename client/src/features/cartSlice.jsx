@@ -33,13 +33,11 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action) {
-      console.log('testttttttttttttttttttttttttttt');
       const existingIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
 
       if (existingIndex >= 0) {
-        console.log('ifffffffffffffffffff');
         state.cartItems[existingIndex] = {
           ...state.cartItems[existingIndex],
           cartQuantity: state.cartItems[existingIndex].cartQuantity + 1,
@@ -48,7 +46,6 @@ const cartSlice = createSlice({
           position: "bottom-left",
         });
       } else {
-        console.log('elseeeeeeeeeeeeeeeeeeeeeeeee');
         let tempProductItem = { ...action.payload, cartQuantity: 1 };
         console.log(tempProductItem, 'temp product itemmmmmm');
         addToCartPost(tempProductItem)

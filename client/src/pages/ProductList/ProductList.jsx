@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios'
 import "../../App.css";
 import { useGetAllProductsQuery } from "../../features/productsApi";
 import Hero from "../../components/sections/heroProductList";
@@ -13,11 +14,16 @@ const ProductList = () => {
   const navigate = useNavigate();
 
   const handleAddToCart = (product) => {
-    console.log(product, 'ini product......');
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      dispatch(addToCart(product));
-      navigate("/cart");
+      let url = 'http://localhost:3100/product-carts'
+      axios({ url, method: 'post', data: product, headers: { access_token: accessToken } })
+        .then(({ data }) => {
+          console.log(data, ' ???Asdas');
+        })
+        .catch((err) => { console.log('asdsad') })
+      // dispatch(addToCart(product));
+      // navigate("/cart");
     } else {
       navigate("/login");
     }
