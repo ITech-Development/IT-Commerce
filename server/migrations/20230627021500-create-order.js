@@ -15,32 +15,6 @@ module.exports = {
           model: 'Users',
           key: 'id'
         },
-        onUpdate: 'CASCADE',
-        onUpdate: 'CASCADE'
-      },
-      transactionId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Transactions',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onUpdate: 'CASCADE'
-      },
-      productId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Products',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onUpdate: 'CASCADE'
-      },
-      qty: {
-        type: Sequelize.INTEGER
-      },
-      totalPrice: {
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

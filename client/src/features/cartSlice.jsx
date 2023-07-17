@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import axios from "axios";
+// import addToCartPost from '../features/productSlice'
 
 const initialState = {
   cartItems: localStorage.getItem("cartItems")
@@ -8,6 +10,23 @@ const initialState = {
   cartTotalQuantity: 0,
   cartTotalAmount: 0,
 };
+
+const addToCartPost = async (data) => {
+  try {
+    const response = await axios.post(
+      `http://localhost:3100/product-carts/${data.id}`,
+      data,
+      {
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 const cartSlice = createSlice({
   name: "cart",
@@ -28,6 +47,8 @@ const cartSlice = createSlice({
         });
       } else {
         let tempProductItem = { ...action.payload, cartQuantity: 1 };
+        console.log(tempProductItem, 'temp product itemmmmmm');
+        addToCartPost(tempProductItem)
         state.cartItems.push(tempProductItem);
         toast.success("Product added to cart", {
           position: "bottom-left",

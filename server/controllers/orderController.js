@@ -1,7 +1,7 @@
-const { Order } = require('../models')
+const { Order, Product } = require('../models')
 
 class OrderController {
-    
+
     static async getAllOrders(req, res, next) {
         try {
             const orders = await Order.findAll()
@@ -13,15 +13,18 @@ class OrderController {
 
     static async addOrder(req, res, next) {
         try {
-            console.log(req.body);
-            const newOrder = await Order.create({
-                userId: req.body.userId,
-                transactionId: req.body.transactionId,
-                productId: req.body.productId,
-                qty: req.body.qty,
-                totalPrice: req.body.totalPrice
+            let { id } = req.params
+            let findData = await Product.findByPk(id)
+            if (!findData) {
+                throw {
+                    message: 'Not Found Product'
+                }
+            }
+            let user_id = req.user.id
+            let createOrder = await Order.create({
+                userId: user_id,
             })
-            res.status(201).json(newOrder)
+            res.status(201).json(createOrder)
         } catch (error) {
             next(error)
         }

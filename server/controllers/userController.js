@@ -31,7 +31,7 @@ class UserController {
                 email,
                 password,
                 fullName,
-                role: 'User',
+                role: 'user',
                 phoneNumber,
                 address,
                 imageProfile

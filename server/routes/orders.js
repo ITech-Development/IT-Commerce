@@ -1,6 +1,9 @@
 const express = require('express')
 const OrderController = require('../controllers/orderController')
+const { authenticationUser } = require('../middlewares/auth')
 const router = express.Router()
+
+router.use(authenticationUser)
 
 /**
  * @swagger
@@ -79,7 +82,7 @@ router.get('/', OrderController.getAllOrders)
  *       500:
  *         description: Error on the internal server
  */
-router.post('/', OrderController.addOrder)
-router.get('/:id', OrderController.addOrder)
+router.post('/:id', OrderController.addOrder)
+// router.get('/:id', OrderController.addOrder)
 
 module.exports = router
