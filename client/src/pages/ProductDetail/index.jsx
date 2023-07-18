@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { useGetAllProductsQuery } from "../../features/productsApi";
+// import { useDispatch } from "react-redux";
+// import { useGetAllProductsQuery } from "../../features/productsApi";[]
 
 import { useNavigate } from "react-router-dom";
 
 
 function ProductDetailPage() {
   const [product, setProduct] = useState(null);
-  const { data, error, isLoading } = useGetAllProductsQuery();
+  // const { data, error, isLoading } = useGetAllProductsQuery();
 
   const { id } = useParams();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
