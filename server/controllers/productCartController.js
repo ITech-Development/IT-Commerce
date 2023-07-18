@@ -87,9 +87,6 @@ class ProductCartController {
       await t.rollback();
       next(error);
     }
-
-
-
   }
 
   static async removeProductCart(req, res, next) {
@@ -120,12 +117,24 @@ class ProductCartController {
 
   static async clearProductCart(req, res, next) {
     try {
-      await ProductCart.destroy({ where: {} })
-      return res.status(200).json({ message: 'All products removed from cart' })
+      const deletedProductCarts = await ProductCart.findAll(); // Mengambil semua produk dalam keranjang
+      await ProductCart.destroy({ where: {} }); // Menghapus semua produk dari keranjang
+
+      // Mengembalikan stok produk yang dihapus
+      for (const productCart of deletedProductCarts) {
+        const product = await Product.findOne({ where: { id: productCart.productId } });
+        if (product) {
+          await product.increment("stock", { by: productCart.quantity });
+        }
+      }
+
+      return res.status(200).json({ message: 'All products removed from cart' });
     } catch (error) {
       console.log(error, 'removed all');
-      next(error)
+      next(error);
     }
+
+
   }
 
   static async addProductCart(req, res, next) {

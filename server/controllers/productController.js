@@ -54,7 +54,17 @@ class ProductController {
             const product = await Product.findOne({
                 where: {
                     id: req.params.id
-                }
+                },
+                include: [
+                    {
+                        model: ProductCategory,
+                        as: 'categories'
+                    },
+                    {
+                        model: ProductType,
+                        as: 'types'
+                    }
+                ]
             })
             if (product) {
                 res.status(200).json(product)
