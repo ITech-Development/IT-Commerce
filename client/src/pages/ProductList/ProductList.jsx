@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../features/cartSlice";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from 'react-router-dom'
 
 const ProductList = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
@@ -68,6 +69,24 @@ const ProductList = () => {
                       disabled={product.stock === 0}
                     >
                       {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
+                    </button>
+                    <button
+                      style={{
+                        marginTop: "10px",
+                        padding: "8px 16px",
+                        backgroundColor: "white",
+                        border: "none",
+                        outline: "none",
+                        cursor: "pointer",
+                        color: "blue",
+                        letterSpacing: "1.1",
+                        borderRadius: "6px",
+                        width: "100%",
+                      }}
+                    >
+                      <Link to={`/products/${product.id}`} className="view-product-button">
+                        {"View Product"}
+                      </Link>
                     </button>
                   </div>
                 ))}
