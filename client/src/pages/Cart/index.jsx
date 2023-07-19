@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import { decreaseCart, removeFromCart, addToCart, clearCart, getTotals } from "../../features/cartSlice";
+// import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import { getTotals } from "../../features/cartSlice";
 import { useEffect, useState } from "react";
 import axios from 'axios'
 
@@ -102,7 +102,7 @@ const Cart = () => {
         })
     }
     console.log(carts);
-  }, [])
+  },)
 
 
   return (
@@ -163,7 +163,9 @@ const Cart = () => {
                   <span>Total</span>
                   <span class="amount">{calculateTotal()}</span>
                 </div>
-                <button>Check Out</button>
+                <button><Link to='/shipping'>Check Out
+                </Link>
+                </button>
                 <div class="start-shopping">
                   <a href="/productlist">
                     <span>&lt;</span>

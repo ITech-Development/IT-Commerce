@@ -14,6 +14,9 @@ import Login from "./components/auth/Login";
 import Logout from "./components/auth/Logout";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./features/authslice";
+import ProductShipping from './pages/productShipping'
+import FirstStep from './pages/productShipping/firstStep'
+import SecondStep from './pages/productShipping/secondStep'
 
 import { initialState, reducer } from "./reducer/UseReducer";
 
@@ -30,6 +33,10 @@ const Routing = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/logout" element={<Logout />} />
+      <Route path="/shipping" element={<ProductShipping />} />
+      <Route path="/shipping" element={<FirstStep />} />
+      <Route path="/shippingSecond" element={<SecondStep />} />
+
     </Routes>
   );
 };

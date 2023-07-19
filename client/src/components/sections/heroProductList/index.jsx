@@ -18,20 +18,6 @@ export default function index() {
         <h1 style={{ color: "#010F52", maxWidth: "450px" }}>
           Dapatkan hingga 10% dari produk yang dipilih
         </h1>
-        <button
-          style={{
-            padding: "20px 25px",
-            backgroundColor: "#243A73",
-            border: "1px solid #243A73",
-            borderRadius: "15px",
-            color: "white",
-            cursor: "pointer",
-            maxWidth: "200px",
-            fontWeight: "700",
-          }}
-        >
-          Belanja Sekarang
-        </button>
       </div>
       <div>
         <img

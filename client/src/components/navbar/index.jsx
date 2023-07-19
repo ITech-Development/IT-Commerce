@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
 
@@ -7,43 +7,43 @@ import ShopIcon from "../../assets/shopIcon.png";
 import PhotoProfileIcon from "../../assets/user.png";
 
 import { useSelector } from "react-redux";
-import { UserContext } from "../../App.jsx";
 
 export default function Navigation() {
   const { cartTotalQuantity } = useSelector((state) => state.cart);
 
-  const { state, dispatch } = useContext(UserContext);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleLogout = () => {
     localStorage.removeItem("access_token");
-    setDropdownOpen(false);
-    // Tambahkan tindakan lain yang ingin Anda lakukan saat logout
+    setIsDropdownOpen(false);
+    // Add any other actions you want to perform on logout
   };
 
   const RenderMenu = () => {
     const token = localStorage.getItem("access_token");
-    const showCart = token ? true : false; // Menentukan apakah keranjang harus ditampilkan
+    const showCart = token ? true : false;
 
     return (
       <>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/about">About us</Link>
-        </li>
-        <li>
-          <Link to="/productlist">Products</Link>
-        </li>
-        <li>
-          <Link to="/service">Services</Link>
-        </li>
-        {showCart && ( // Menampilkan keranjang jika showCart adalah true
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About us</Link>
+          </li>
+          <li>
+            <Link to="/productlist">Products</Link>
+          </li>
+          <li>
+            <Link to="/service">Services</Link>
+          </li>
+        </div>
+        {showCart && (
           <li>
             <Link to="/cart">
               <img
@@ -77,7 +77,7 @@ export default function Navigation() {
                 src={PhotoProfileIcon}
                 alt=""
               />
-              {dropdownOpen && (
+              {isDropdownOpen && (
                 <ul className="dropdown-menu">
                   <li>
                     <Link to="/photo-profile">Profile</Link>

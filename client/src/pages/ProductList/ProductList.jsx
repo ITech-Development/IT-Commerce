@@ -3,15 +3,15 @@ import axios from 'axios'
 import "../../App.css";
 import { useGetAllProductsQuery } from "../../features/productsApi";
 import Hero from "../../components/sections/heroProductList";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../features/cartSlice";
+// import { useDispatch } from "react-redux";
+// import { addToCart } from "../../features/cartSlice";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from 'react-router-dom'
 
 const ProductList = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleAddToCart = (product) => {
