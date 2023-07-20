@@ -14,6 +14,7 @@ import {
 } from "@material-ui/core";
 import { Field, Form, Formik, useFormikContext } from "formik";
 import { CheckboxWithLabel, TextField } from "formik-material-ui";
+import { Link } from "react-router-dom";
 
 const sleep = (time) => new Promise((acc) => setTimeout(acc, time));
 
@@ -188,6 +189,7 @@ export function FormikStepper({ children, ...props }) {
               </Grid>
             ) : null}
             <Grid item>
+              
               <Button
                 startIcon={
                   isSubmitting ? <CircularProgress size="1rem" /> : null
@@ -197,7 +199,9 @@ export function FormikStepper({ children, ...props }) {
                 color="primary"
                 type="submit"
               >
+                <Link to='/check-trans'>
                 {isSubmitting ? "Submitting" : isLastStep() ? "Submit" : "Next"}
+                </Link>
               </Button>
             </Grid>
           </Grid>

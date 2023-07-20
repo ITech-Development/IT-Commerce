@@ -14,9 +14,10 @@ import Login from "./components/auth/Login";
 import Logout from "./components/auth/Logout";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./features/authslice";
-import ProductShipping from './pages/productShipping'
-import FirstStep from './pages/productShipping/firstStep'
-import SecondStep from './pages/productShipping/secondStep'
+import ProductShipping from "./pages/productShipping";
+import FirstStep from "./pages/productShipping/firstStep";
+import SecondStep from "./pages/productShipping/secondStep";
+import CheckTrans from "./pages/CheckTrans";
 
 import { initialState, reducer } from "./reducer/UseReducer";
 
@@ -36,20 +37,17 @@ const Routing = () => {
       <Route path="/shipping" element={<ProductShipping />} />
       <Route path="/shipping" element={<FirstStep />} />
       <Route path="/shippingSecond" element={<SecondStep />} />
-
+      <Route path="/check-trans" element={<CheckTrans />} />
     </Routes>
   );
 };
 
 function App() {
-
-
   const dispatchRedux = useDispatch();
 
   useEffect(() => {
     dispatchRedux(loadUser(null));
   }, [dispatchRedux]);
-
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
