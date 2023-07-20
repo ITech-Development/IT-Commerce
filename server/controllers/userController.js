@@ -173,9 +173,11 @@ class UserController {
             });
             // console.log(cost.data.rajaongkir.results[0].costs[0].cost[0].value,'<<<<');
             const result = cost.data;
-            totalOngkir += cost.data.rajaongkir.results[0].costs[0].cost[0].value
+            console.log(result, 'TEST');
+            // totalOngkir += cost.data.rajaongkir.results[0].costs[0].cost[0].value
             res.status(200).json(result);
         } catch (error) {
+            console.log(error, 'getcost.');
             next(error)
         }
     }
