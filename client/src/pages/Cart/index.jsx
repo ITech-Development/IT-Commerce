@@ -13,6 +13,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(getTotals());
+    console.log('test----------');
   }, [cart, dispatch]);
 
   const handlerInc = (id) => {
@@ -101,8 +102,8 @@ const Cart = () => {
           console.log(error);
         })
     }
-    // console.log(carts);
-  },)
+    console.log(carts);
+  }, [])
 
 
   return (

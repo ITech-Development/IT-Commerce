@@ -157,6 +157,7 @@ class UserController {
 
     static async getCost(req, res, next) {
         try {
+            console.log('test,,,,,,,,,,');
             let courier = "jne"
             const { destination } = req.query;
             const data = {
