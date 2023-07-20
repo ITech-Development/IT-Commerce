@@ -14,84 +14,86 @@ import {
 } from "@material-ui/core";
 import { Field, Form, Formik, useFormikContext } from "formik";
 import { CheckboxWithLabel, TextField } from "formik-material-ui";
+import { Link } from "react-router-dom";
 
 const sleep = (time) => new Promise((acc) => setTimeout(acc, time));
 
 export default function Home() {
   return (
-    <Card>
-      <CardContent style={{ maxWidth: "1520px", margin: "auto" }}>
-        <FormikStepper
-          initialValues={{
-            firstName: "",
-            lastName: "",
-            dataValid: false,
-            // description: "",
-          }}
-          onSubmit={async (values) => {
-            await sleep(3000);
-            console.log("values", values);
-          }}
-        >
-          <FormikStep label="Personal Data">
-            <Box paddingBottom={8} style={{ marginBottom: "10px" }}>
-              <Field
-                fullWidth
-                name="firstName"
-                component={TextField}
-                label="First Name"
-              />
-            </Box>
-            <Box paddingBottom={2}>
-              <Field
-                fullWidth
-                name="lastName"
-                component={TextField}
-                label="Last Name"
-              />
-            </Box>
-            <Box paddingBottom={2}>
-              <Field
-                name="dataValid"
-                type="checkbox"
-                component={CheckboxWithLabel}
-                Label={{ label: "Data is Valid" }}
-              />
-            </Box>
-          </FormikStep>
-          <FormikStep label="More Info">
-            <ComponentToShowFullName />
-            <Box paddingBottom={2} paddingTop={2} style={{ margin: "20px 0" }}>
-              <Field
-                fullWidth
-                name="contact"
-                component={TextField}
-                label="Contact Number"
-              />
-            </Box>
-            <Box paddingBottom={2} paddingTop={2} style={{ margin: "20px 0" }}>
-              <Field
-                fullWidth
-                name="address"
-                component={TextField}
-                label="Address"
-              />
-            </Box>
-            <Box paddingBottom={2} paddingTop={2} style={{ margin: "20px 0" }}>
-              <Field fullWidth name="city" component={TextField} label="City" />
-            </Box>
-            <Box paddingBottom={2} paddingTop={2} style={{ margin: "20px 0" }}>
-              <Field
-                fullWidth
-                name="portal code"
-                component={TextField}
-                label="Portal Code"
-              />
-            </Box>
-          </FormikStep>
-        </FormikStepper>
-      </CardContent>
-    </Card>
+      <Card>
+        <CardContent style={{ maxWidth: "1520px", margin: "auto" }}>
+      <h1>Product Shipping</h1>
+          <FormikStepper
+            initialValues={{
+              firstName: "",
+              lastName: "",
+              dataValid: false,
+              // description: "",
+            }}
+            onSubmit={async (values) => {
+              await sleep(3000);
+              console.log("values", values);
+            }}
+          >
+            <FormikStep label="Personal Data">
+              <Box paddingBottom={8} style={{ marginBottom: "10px" }}>
+                <Field
+                  fullWidth
+                  name="firstName"
+                  component={TextField}
+                  label="First Name"
+                />
+              </Box>
+              <Box paddingBottom={2}>
+                <Field
+                  fullWidth
+                  name="lastName"
+                  component={TextField}
+                  label="Last Name"
+                />
+              </Box>
+              <Box paddingBottom={2}>
+                <Field
+                  name="dataValid"
+                  type="checkbox"
+                  component={CheckboxWithLabel}
+                  Label={{ label: "Data is Valid" }}
+                />
+              </Box>
+            </FormikStep>
+            <FormikStep label="More Info">
+              <ComponentToShowFullName />
+              <Box paddingBottom={2} paddingTop={2} style={{ margin: "20px 0" }}>
+                <Field
+                  fullWidth
+                  name="contact"
+                  component={TextField}
+                  label="Contact Number"
+                />
+              </Box>
+              <Box paddingBottom={2} paddingTop={2} style={{ margin: "20px 0" }}>
+                <Field
+                  fullWidth
+                  name="address"
+                  component={TextField}
+                  label="Address"
+                />
+              </Box>
+              <Box paddingBottom={2} paddingTop={2} style={{ margin: "20px 0" }}>
+                <Field fullWidth name="city" component={TextField} label="City" />
+              </Box>
+              <Box paddingBottom={2} paddingTop={2} style={{ margin: "20px 0" }}>
+                <Field
+                  fullWidth
+                  name="portal code"
+                  component={TextField}
+                  label="Portal Code"
+                />
+              </Box>
+            </FormikStep>
+          </FormikStepper>
+        </CardContent>
+      </Card>
   );
 }
 
@@ -151,6 +153,7 @@ export function FormikStepper({ children, ...props }) {
               </Grid>
             ) : null}
             <Grid item>
+              
               <Button
                 startIcon={
                   isSubmitting ? <CircularProgress size="1rem" /> : null
@@ -160,7 +163,9 @@ export function FormikStepper({ children, ...props }) {
                 color="primary"
                 type="submit"
               >
+                <Link to='/check-trans'>
                 {isSubmitting ? "Submitting" : isLastStep() ? "Submit" : "Next"}
+                </Link>
               </Button>
             </Grid>
           </Grid>
