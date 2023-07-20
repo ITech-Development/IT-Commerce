@@ -54,22 +54,6 @@ class ProductCartController {
 
 
   static async decrementQtyProductCart(req, res, next) {
-    // const t = await sequelize.transaction();
-    // let id = req.params.id;
-    // try {
-    //   let dec = await ProductCart.findOne({ where: { id } });
-    //   if (dec) {
-    //     await dec.decrement("quantity", { by: 1, transaction: t });
-    //   }
-    //   let find = await Product.findOne({ where: { id: dec.productId } });
-    //   if (find) {
-    //     await find.increment("stock", { by: 1, transaction: t });
-    //   }
-    //   await t.commit();
-    // } catch (error) {
-    //   await t.rollback();
-    //   next(error);
-    // }
     const t = await sequelize.transaction();
     let id = req.params.id;
     try {
