@@ -5,6 +5,7 @@ const { OAuth2Client } = require('google-auth-library');
 const bcryptjs = require('bcryptjs')
 const salt = bcryptjs.genSaltSync(10);
 const midtransClient = require('midtrans-client');
+const axios = require('axios')
 
 class UserController {
     static async getAllUsers(req, res, next) {
@@ -151,6 +152,71 @@ class UserController {
             res.status(200).json({ access_token, fullName: user.fullName })
         } catch (error) {
             next(error)
+        }
+    }
+
+    static async getCost(req, res, next) {
+        try {
+            let courier = "jne"
+            const { destination } = req.query;
+            const data = {
+                origin: "291",
+                destination,
+                weight: 1000,
+                courier,
+            };
+            const cost = await axios({
+                method: "POST",
+                url: "https://api.rajaongkir.com/starter/cost",
+                data,
+                headers: { key: 'ec5b962e838da1d32426edf5175bcb11' },
+            });
+            // console.log(cost.data.rajaongkir.results[0].costs[0].cost[0].value,'<<<<');
+            const result = cost.data;
+            totalOngkir += cost.data.rajaongkir.results[0].costs[0].cost[0].value
+            res.status(200).json(result);
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async getProvince(req, res, next) {
+        try {
+            const province = await axios
+                .get("https://api.rajaongkir.com/starter/province", {
+                    headers: { key: 'ec5b962e838da1d32426edf5175bcb11' },
+                })
+                .then((response) => {
+                    return response.data.rajaongkir.results;
+                })
+                .catch((err) => {
+                    throw err;
+                });
+            res.status(200).json(province);
+        } catch (error) {
+            // console.log(error);
+            next(error);
+        }
+    }
+
+    static async getCity(req, res, next) {
+        try {
+            const { id } = req.params;
+            // console.log(req.params);
+            const city = await axios
+                .get("https://api.rajaongkir.com/starter/city", {
+                    params: { province: id },
+                    headers: { key: 'ec5b962e838da1d32426edf5175bcb11' },
+                })
+                .then((response) => {
+                    return response.data.rajaongkir.results;
+                })
+                .catch((err) => {
+                    throw err;
+                });
+            res.status(200).json({ data: city });
+        } catch (error) {
+            next(error);
         }
     }
 

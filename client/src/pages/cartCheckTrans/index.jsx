@@ -148,25 +148,25 @@ const Cart = () => {
             </div>
             <div class="cart-summary">
               <button class="clear-cart" onClick={() => handlerClear()}>Clear Cart</button>
-              <div class="cart-checkout">
+              <div class="cart-checkout"style={{lineHeight: "30px"}} >
                 <div class="subtotal">
-                  <span>Subtotal</span>
+                  <span>Subtotal :</span>
                   <span class="amount">Rp.{calculateSubtotal()}</span>
                 </div>
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <div style={{display: 'flex', justifyContent: 'space-between',fontStyle: 'italic'}}>
                 <span>PPN 11% :</span>
-                <span className="amount"> Rp. {calculatePPN()}</span>
+                <span className="amount" > Rp. {calculatePPN()}</span>
                 </div>
                 <div class="subtotal">
-                  <span>Total</span>
-                  <span class="amount">{calculateTotal()}</span>
+                  <span>Total :</span>
+                  <span style={{fontWeight: '700'}} class="amount">{calculateTotal()}</span>
                 </div>
-                <div class="start-shopping">
+                {/* <div class="start-shopping">
                   <a href="/productlist">
                     <span>&lt;</span>
                     <span>Continue Shopping</span>
                   </a>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

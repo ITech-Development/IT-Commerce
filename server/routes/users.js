@@ -190,6 +190,11 @@ router.delete('/:id', UserController.deleteUser)
  */
 router.put('/:id', UserController.updateUser)
 router.post('/google', UserController.googleLogin)
+
+router.get('/cost', authenticationUser, UserController.getCost)
+router.get('/province', authenticationUser, UserController.getProvince)
 router.post('/midtrans', authenticationUser, UserController.midtransToken)
+router.get('/city/:id', authenticationUser, UserController.getCity)
+
 
 module.exports = router

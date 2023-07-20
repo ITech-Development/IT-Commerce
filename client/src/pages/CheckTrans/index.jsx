@@ -1,6 +1,6 @@
 import React from "react";
 import "./styless.css";
-import CartCheckTrans from '../cartCheckTrans'
+import CartCheckTrans from "../cartCheckTrans";
 
 function index() {
   return (
@@ -29,16 +29,36 @@ function index() {
           </div>
         </div>
       </div>
-      <div className="alamat" style={{marginTop: '20px', marginBottom: '20px'}}>
+      <div
+        className="alamat"
+        style={{ marginTop: "20px", marginBottom: "20px" }}
+      >
         <h2>Produk Dipesan</h2>
-        <CartCheckTrans/>
+        <CartCheckTrans />
+        <div
+          className="calcongkir"
+          style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
+        >
+          <h2>Pilih Metode Pengiriman</h2>
+          <div>
+            <h4>Connect to Raja Ongkir</h4>
+          </div>
+        </div>
+        <div style={{textAlign: 'end', padding: '20px 65px', fontSize: '20px'}}>
+          <span>Total Bayar : </span>
+          <span style={{ fontWeight: "700" }} class="amount">
+            Rp.50.000
+          </span>
+        </div>
       </div>
-    
-      <div className="alamat" style={{marginTop: '20px', marginBottom: '50px'}}>
+
+      <div
+        className="alamat"
+        style={{ marginTop: "20px", marginBottom: "50px" }}
+      >
         <h2>Metode Pembayaran</h2>
         <div>
           <h4>Connect to Midtrans</h4>
-          
         </div>
       </div>
     </div>
