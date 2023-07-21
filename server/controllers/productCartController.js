@@ -2,11 +2,10 @@ const { ProductCart, Cart, Product } = require("../models");
 let { sequelize } = require("../models/");
 
 class ProductCartController {
-
   static async getAllProductCarts(req, res, next) {
     try {
       let findedCart = await Cart.findOne({
-        where: { userId: req.user.id }
+        where: { userId: req.user.id },
       });
       let cartId = findedCart.id;
       const productCarts = await ProductCart.findAll({
@@ -14,13 +13,13 @@ class ProductCartController {
         include: [
           {
             model: Product,
-            as: 'product'
+            as: "product",
           },
           {
             model: Cart,
-            as: 'cart'
-          }
-        ]
+            as: "cart",
+          },
+        ],
       });
       res.status(200).json(productCarts);
     } catch (error) {
@@ -33,11 +32,11 @@ class ProductCartController {
     let id = req.params.id;
     try {
       let productCart = await ProductCart.findOne({
-        where: { id }
+        where: { id },
       });
       if (productCart) {
         let product = await Product.findOne({
-          where: { id: productCart.productId }
+          where: { id: productCart.productId },
         });
         if (product && product.stock > 0) {
           await productCart.increment("quantity", { by: 1, transaction: t });
@@ -46,12 +45,11 @@ class ProductCartController {
       }
       await t.commit();
     } catch (error) {
-      console.log(error, 'error increment');
+      console.log(error, "error increment");
       await t.rollback();
       next(error);
     }
   }
-
 
   static async decrementQtyProductCart(req, res, next) {
     const t = await sequelize.transaction();
@@ -78,26 +76,27 @@ class ProductCartController {
     try {
       const productC = await ProductCart.findOne({ where: { id } });
       if (!productC) {
-        res.status(404).json({ message: 'Product not found in cart' });
+        res.status(404).json({ message: "Product not found in cart" });
       }
 
-      const product = await Product.findOne({ where: { id: productC.productId } });
+      const product = await Product.findOne({
+        where: { id: productC.productId },
+      });
       if (product) {
         // Menambahkan stok produk yang dihapus
         await product.increment("stock", { by: productC.quantity });
 
         await productC.destroy();
 
-        return res.status(200).json({ message: 'Product removed from cart' });
+        return res.status(200).json({ message: "Product removed from cart" });
       } else {
-        res.status(404).json({ message: 'Product not found' });
+        res.status(404).json({ message: "Product not found" });
       }
     } catch (error) {
-      console.log(error, 'remooooove');
+      console.log(error, "remooooove");
       next(error);
     }
   }
-
 
   static async clearProductCart(req, res, next) {
     try {
@@ -106,19 +105,21 @@ class ProductCartController {
 
       // Mengembalikan stok produk yang dihapus
       for (const productCart of deletedProductCarts) {
-        const product = await Product.findOne({ where: { id: productCart.productId } });
+        const product = await Product.findOne({
+          where: { id: productCart.productId },
+        });
         if (product) {
           await product.increment("stock", { by: productCart.quantity });
         }
       }
 
-      return res.status(200).json({ message: 'All products removed from cart' });
+      return res
+        .status(200)
+        .json({ message: "All products removed from cart" });
     } catch (error) {
-      console.log(error, 'removed all');
+      console.log(error, "removed all");
       next(error);
     }
-
-
   }
 
   static async addProductCart(req, res, next) {
@@ -129,7 +130,10 @@ class ProductCartController {
       let idTemp;
 
       if (!findedCart) {
-        let createdC = await Cart.create({ userId: req.user.id }, { transaction: t });
+        let createdC = await Cart.create(
+          { userId: req.user.id },
+          { transaction: t }
+        );
         idTemp = createdC.id;
       } else {
         idTemp = findedCart.id;
@@ -145,11 +149,14 @@ class ProductCartController {
       if (checkPC) {
         await checkPC.increment("quantity", { by: 1, transaction: t });
       } else {
-        await ProductCart.create({
-          cartId: idTemp,
-          productId: id,
-          quantity: 1,
-        }, { transaction: t });
+        await ProductCart.create(
+          {
+            cartId: idTemp,
+            productId: id,
+            quantity: 1,
+          },
+          { transaction: t }
+        );
       }
 
       let findedProduct = await Product.findOne({ where: { id } });
@@ -162,6 +169,5 @@ class ProductCartController {
       next(error);
     }
   }
-
 }
 module.exports = ProductCartController;

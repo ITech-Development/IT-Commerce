@@ -100,7 +100,7 @@ const Cart = () => {
           console.log(error);
         })
     }
-    // console.log(carts);
+    console.log(carts);
   },)
 
 
