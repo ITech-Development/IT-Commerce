@@ -101,7 +101,7 @@ const Cart = () => {
         })
     }
     // console.log(carts);
-  },)
+  },[])
 
 
   return (
