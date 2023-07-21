@@ -1,12 +1,11 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import { getTotals } from "../../features/cartSlice";
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { getTotals } from "../../features/cartSlice";
 
 const Cart = () => {
-  let [carts, setCarts] = useState([]);
+  const [carts, setCarts] = useState([]);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -14,175 +13,148 @@ const Cart = () => {
     dispatch(getTotals());
   }, [cart, dispatch]);
 
+  useEffect(() => {
+    const fetchCarts = async () => {
+      const accessToken = localStorage.getItem("access_token");
+      if (accessToken) {
+        try {
+          const response = await axios.get(
+            "http://localhost:3100/product-carts",
+            { headers: { access_token: accessToken } }
+          );
+          setCarts(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchCarts();
+  }, []);
+
   const handlerInc = (id) => {
+    handleCartAction("increment", id);
+  };
+
+  const handlerDec = (id) => {
+    handleCartAction("decrement", id);
+  };
+
+  const handlerRemove = (id) => {
+    handleCartAction("remove", id);
+  };
+
+  const handlerClear = () => {
+    handleCartAction("clear");
+  };
+
+  const handleCartAction = (action, id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "http://localhost:3100/product-carts/increment/" + id;
-      axios({ url, method: "patch", headers: { access_token: accessToken } })
+      let url = `http://localhost:3100/product-carts/${action}/${id}`;
+      axios
+        .patch(url, null, { headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data);
         })
         .catch((error) => {
-          console.log("incrementttt");
-        });
-    }
-  };
-
-  const handlerDec = (id) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/product-carts/decrement/" + id;
-      axios({ url, method: "patch", headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data, "ASdasdas");
-        })
-        .catch((error) => {
-          console.log("asdasd");
-        });
-    }
-  };
-
-  const handlerRemove = (id) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/product-carts/remove/" + id;
-      axios({ url, method: "delete", headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data, "remooove");
-        })
-        .catch((error) => {
-          console.log("asdasd remove");
-        });
-    }
-  };
-
-  const handlerClear = () => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/product-carts/clear/";
-      axios({ url, method: "delete", headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data, "remooove all");
-        })
-        .catch((error) => {
-          console.log("asdasd remove all");
+          console.log(`${action} error`, error);
         });
     }
   };
 
   const calculateSubtotal = () => {
-    let subtotal = 0;
-    carts.forEach((e) => {
-      const productPrice = e.product.unitPrice;
-      const quantity = e.quantity;
-      const totalProductPrice = productPrice * quantity;
-      subtotal += totalProductPrice;
-    });
-    return subtotal;
+    return carts.reduce((total, cartItem) => {
+      const productPrice = cartItem.product.unitPrice;
+      const quantity = cartItem.quantity;
+      return total + productPrice * quantity;
+    }, 0);
   };
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
-    const ppn = subtotal * 0.11; // menghitung nilai ppn (11% dari subtotal)
-    const total = subtotal + ppn; // menghitung total(subtotal + ppn)
-    return total.toFixed(2); // mengembalikan nilai total menjadi nilaidesimal
+    const ppn = subtotal * 0.11;
+    const total = subtotal + ppn;
+    return total.toFixed(2);
   };
 
   const calculatePPN = () => {
     const subtotal = calculateSubtotal();
-    const ppn = subtotal * 0.11; // menghitung nilai ppn (11% dari subtotal)
+    const ppn = subtotal * 0.11;
     return ppn.toFixed(2);
   };
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/product-carts";
-      axios({ url, headers: { access_token: accessToken } })
-        .then(async ({ data }) => {
-          setCarts(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    // console.log(carts);
-  });
-
   return (
     <>
-      <div class="cart-container">
+      <div className="cart-container" style={{position: 'relative', top: '80px'}}>
         <h2>Shopping Cart</h2>
         {carts.length === 0 ? (
-          <div class="cart-empty">
+          <div className="cart-empty">
             <p>Your cart is empty</p>
-            <div class="start-shopping">
-              <a href="/productlist">
+            <div className="start-shopping">
+              <Link to="/productlist">
                 <span>&lt;</span>
                 <span>Start Shopping</span>
-              </a>
+              </Link>
             </div>
           </div>
         ) : (
           <div>
-            <div class="titles">
-              <h3 class="product-title">Product</h3>
-              <h3 class="price">Price</h3>
-              <h3 class="quantity">Quantity</h3>
-              <h3 class="total">Total</h3>
+            <div className="titles">
+              <h3 className="product-title">Product</h3>
+              <h3 className="price">Price</h3>
+              <h3 className="quantity">Quantity</h3>
+              <h3 className="total">Total</h3>
             </div>
-            <div class="cart-items">
-              {carts?.map((e) => (
-                <div class="cart-item">
-                  <div class="cart-product">
-                    <img src={e.product.image} alt={e.product.image} />
+            <div className="cart-items">
+              {carts?.map((cartItem) => (
+                <div key={cartItem.id} className="cart-item">
+                  <div className="cart-product">
+                    <img src={cartItem.product.image} alt={cartItem.product.image} />
                     <div>
-                      <h3>{e.product.name}</h3>
-                      <p>{e.product.description}</p>
-                      <button onClick={() => handlerRemove(e.id)}>
+                      <h3>{cartItem.product.name}</h3>
+                      <p>{cartItem.product.description}</p>
+                      <button onClick={() => handlerRemove(cartItem.id)}>
                         Remove
                       </button>
                     </div>
                   </div>
-                  <div class="cart-product-price">Rp.{e.product.unitPrice}</div>
-                  <div class="cart-product-quantity">
-                    <button onClick={() => handlerDec(e.id)}>-</button>
-                    <div class="count">{e.quantity}</div>
-                    <button onClick={() => handlerInc(e.id)}>+</button>
+                  <div className="cart-product-price">Rp.{cartItem.product.unitPrice}</div>
+                  <div className="cart-product-quantity">
+                    <button onClick={() => handlerDec(cartItem.id)}>-</button>
+                    <div className="count">{cartItem.quantity}</div>
+                    <button onClick={() => handlerInc(cartItem.id)}>+</button>
                   </div>
-                  <div class="cart-product-total-price">
-                    Rp.{e.quantity * e.product.unitPrice}
+                  <div className="cart-product-total-price">
+                    Rp.{cartItem.quantity * cartItem.product.unitPrice}
                   </div>
                 </div>
               ))}
             </div>
-            <div class="cart-summary">
-              <button class="clear-cart" onClick={() => handlerClear()}>
+            <div className="cart-summary">
+              <button className="clear-cart" onClick={handlerClear}>
                 Clear Cart
               </button>
-              <div class="cart-checkout">
-                <div class="subtotal">
+              <div className="cart-checkout">
+                <div className="subtotal">
                   <span>Subtotal</span>
-                  <span class="amount">Rp.{calculateSubtotal()}</span>
+                  <span className="amount">Rp.{calculateSubtotal()}</span>
                 </div>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <span>PPN 11% :</span>
                   <span className="amount"> Rp. {calculatePPN()}</span>
                 </div>
-                <div class="subtotal">
+                <div className="subtotal">
                   <span>Total</span>
-                  <span class="amount">{calculateTotal()}</span>
+                  <span className="amount">{calculateTotal()}</span>
                 </div>
                 <button>
                   <Link to="/shipping">Check Out</Link>
                 </button>
-                <div class="start-shopping">
-                  <a href="/productlist">
+                <div className="start-shopping">
+                  <Link to="/productlist">
                     <span>&lt;</span>
                     <span>Continue Shopping</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

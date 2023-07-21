@@ -12,6 +12,8 @@ import Service from '../../components/sections/services/cardItems'
 function index() {
   return (
     <>
+    <div style={{position: 'relative', top: '60px'}}>
+
         {/* <Navbar/> */}
         <HeroSection/>
         <CommitQuote/>
@@ -21,6 +23,7 @@ function index() {
         <Quote/>
         <ComeRegis/>
         <Service/>
+    </div>
     </>
   )
 }
