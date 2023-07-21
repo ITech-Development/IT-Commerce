@@ -135,9 +135,10 @@ function Index() {
                   id="contactChoice1"
                   name="contact"
                 />
-                <p>{el.service}</p>
-                <label for="contactChoice1">{el.cost[0].value}</label>
-                <p>{el.description}</p>
+                <label for="contactChoice1">Shipping Cost: Rp.{el.cost[0].value}</label>
+                <p>Service: {el.service}</p>
+                <p>Descritption: {el.description}</p>
+                <p>Etd: {el.cost[0].etd}</p>
               </>
             }) : null}
 
@@ -148,7 +149,7 @@ function Index() {
         >
           <span>Total Bayar : </span>
           <span style={{ fontWeight: "700" }} className="amount">
-            Rp.50.000
+            Rp.
           </span>
         </div>
       </div>
