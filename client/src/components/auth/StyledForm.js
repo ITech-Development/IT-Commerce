@@ -18,6 +18,7 @@ export const StyledForm = styled.form`
     border-radius: 5px;
     border: 1px solid rgb(220, 220, 220);
     margin-bottom: 1rem;
+    transition: border-color 0.2s ease-in-out; /* Added transition property */
 
     &:focus {
       border: 1px solid rgb(0, 208, 255);

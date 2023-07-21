@@ -50,30 +50,30 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+    <div className='div'>
+      <h2 className='h2'>Login</h2>
+      <form onSubmit={handleSubmit} className='form'>
         <div>
-          <label htmlFor="email">Email:</label>
+          <label className='label' htmlFor="email">Email : </label>
           <input
             type="email"
             id="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)} className='inputEmail'
           />
         </div>
         <div>
-          <label htmlFor="password">Password:</label>
+          <label className='label' htmlFor="password">Password : </label>
           <input
             type="password"
             id="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)} className='input'
           />
         </div>
-        <button type="submit">Login</button>
+        <button className='button' type="submit">Login</button>
       </form>
-      <p>Don't have an account? <Link to="/register">Register</Link></p>
+      <p className='p'>Don't have an account? <Link to="/register">Register</Link></p>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import './style.css'
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
@@ -11,13 +11,13 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
-  const [imageProfile, setImageProfile] = useState('');
+  // const [imageProfile, setImageProfile] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Perform validation
-    if (!fullName || !email || !password || !phoneNumber || !address || !imageProfile) {
+    if (!fullName || !email || !password || !phoneNumber || !address) {
       alert('Please fill in all fields.');
       return;
     }
@@ -29,7 +29,7 @@ const Register = () => {
       password,
       phoneNumber,
       address,
-      imageProfile,
+      // imageProfile,
     };
 
     try {
@@ -43,7 +43,7 @@ const Register = () => {
       setPassword('');
       setPhoneNumber('');
       setAddress('');
-      setImageProfile('');
+      // setImageProfile('');
 
       // Display success message or redirect to another page
       alert('Registration successful!');
@@ -57,66 +57,66 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
+    <div className='div'>
+      <h2 className='h2'>Register</h2>
+      <form onSubmit={handleSubmit} className='form'>
         <div>
-          <label htmlFor="fullName">Full Name:</label>
+          <label className='label' htmlFor="fullName">Full Name : </label>
           <input
             type="text"
             id="fullName"
             value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
+            onChange={(e) => setFullName(e.target.value)} className='inputFull'
           />
         </div>
         <div>
-          <label htmlFor="email">Email:</label>
+          <label className='label' htmlFor="email">Email : </label>
           <input
             type="email"
             id="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)} className='inputEmail'
           />
         </div>
         <div>
-          <label htmlFor="password">Password:</label>
+          <label className='label' htmlFor="password">Password : </label>
           <input
             type="password"
             id="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)} className='inputPass'
           />
         </div>
         <div>
-          <label htmlFor="phoneNumber">Phone Number:</label>
+          <label className='label' htmlFor="phoneNumber">Phone Number : </label>
           <input
             type="tel"
             id="phoneNumber"
             value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            onChange={(e) => setPhoneNumber(e.target.value)} className='inputPhone'
           />
         </div>
         <div>
-          <label htmlFor="address">Address:</label>
+          <label className='label' htmlFor="address">Address : </label>
           <input
             type="text"
             id="address"
             value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={(e) => setAddress(e.target.value)} className='inputAddress'
           />
         </div>
-        <div>
-          <label htmlFor="imageProfile">Image Profile:</label>
+        {/* <div>
+          <label className='label' htmlFor="imageProfile">Image Profile:</label>
           <input
             type="text"
             id="imageProfile"
             value={imageProfile}
-            onChange={(e) => setImageProfile(e.target.value)}
+            onChange={(e) => setImageProfile(e.target.value)} className='inputProfiel'
           />
-        </div>
-        <button type="submit">Register</button>
+        </div> */}
+        <button className='button' type="submit">Register</button>
       </form>
-      <p>Already have an account? <Link to="/login">Login</Link></p>
+      <p className='p'>Already have an account? <Link to="/login">Login</Link></p>
     </div>
   );
 };

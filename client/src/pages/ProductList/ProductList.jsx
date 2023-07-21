@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios'
+import axios from "axios";
 import "../../App.css";
 import { useGetAllProductsQuery } from "../../features/productsApi";
 import Hero from "../../components/sections/heroProductList";
@@ -7,7 +7,7 @@ import Hero from "../../components/sections/heroProductList";
 // import { addToCart } from "../../features/cartSlice";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const ProductList = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
@@ -17,12 +17,19 @@ const ProductList = () => {
   const handleAddToCart = (product) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = 'http://localhost:3100/product-carts'
-      axios({ url, method: 'post', data: product, headers: { access_token: accessToken } })
+      let url = "http://localhost:3100/product-carts";
+      axios({
+        url,
+        method: "post",
+        data: product,
+        headers: { access_token: accessToken },
+      })
         .then(({ data }) => {
-          console.log(data, ' ???Asdas');
+          console.log(data, " ???Asdas");
         })
-        .catch((err) => { console.log('asdsad') })
+        .catch((err) => {
+          console.log("asdsad");
+        });
       // dispatch(addToCart(product));
       // navigate("/cart");
     } else {
@@ -84,7 +91,10 @@ const ProductList = () => {
                         width: "100%",
                       }}
                     >
-                      <Link to={`/products/${product.id}`} className="view-product-button">
+                      <Link
+                        to={`/products/${product.id}`}
+                        className="view-product-button"
+                      >
                         {"View Product"}
                       </Link>
                     </button>
