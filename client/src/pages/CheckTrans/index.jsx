@@ -22,6 +22,7 @@ function Index() {
   }, [cart, dispatch]);
 
   const process = async (data) => {
+    const bayar = calculateTotalBayar()
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -29,7 +30,7 @@ function Index() {
       }
     }
 
-    const response = await axios.post('http://localhost:3100/users/midtrans', data, config)
+    const response = await axios.post(`http://localhost:3100/users/midtrans?total=${bayar}`, data, config)
     setToken(response.data.token);
   }
 
@@ -130,6 +131,7 @@ function Index() {
       const totalProductPrice = productPrice * quantity
       subtotal += totalProductPrice
     })
+    console.log(typeof subtotal, 'subtotalllllllllll');
     return subtotal
   }
 
@@ -140,14 +142,16 @@ function Index() {
     return subtotalPpn.toFixed(2) // mengembalikan nilai total menjadi nilaidesimal 
   }
   const calculateTotalBayar = () => {
-    const totalBayar = totalShippingCost + calculateTotal();
-    const totalBayarNumber = Number(totalBayar); // Konversi nilai ke tipe data Number
-    return totalBayarNumber.toFixed(2);// mengembalikan nilai total menjadi nilaidesimal 
+    let total = calculateTotal();
+    let intCalculateTotal = parseInt(total, 10)
+    let result = intCalculateTotal + totalShippingCost
+    return result
   }
 
   const calculatePPN = () => {
     const subtotal = calculateSubtotal()
     const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
+
     return ppn.toFixed(2) // mengembalikan nilai total menjadi nilaidesimal 
   }
 
@@ -395,7 +399,11 @@ function Index() {
           <span style={{ fontWeight: "700" }} className="amount">
             Rp. {calculateTotalBayar()}
           </span>
-          <button onClick={() => process()}>Payment</button>
+          {totalShippingCost === 0 ?
+            <p><i>Silahkan pilih metode pengiriman</i></p> :
+            <button onClick={() => process()}>Payment</button>
+          }
+
         </div>
       </div>
 

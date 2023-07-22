@@ -230,7 +230,7 @@ class UserController {
           order_id:
             "INDOTEKNIK-ORDERID-" +
             Math.floor(1000000 + Math.random() * 9000000), //harus unique
-          gross_amount: 10000, //kalkulasikan total harga di sini
+          gross_amount: +req.query.total, //kalkulasikan total harga di sini
         },
         credit_card: {
           secure: true,
