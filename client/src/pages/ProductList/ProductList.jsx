@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 
 import "../../App.css";
-import Hero from "../../components/sections/heroProductList";
+import Hero from '../../assets/bannerproduct1.jpg';
 
 const checkoutButtonStyle = {
   backgroundColor: "#4b70e2",
@@ -29,6 +29,7 @@ const checkoutButtonStyleDetail = {
   cursor: "pointer",
   marginLeft: "10px",
   textDecoration: "none",
+  fontSize: '11px'
 };
 
 const linkStyle = {
@@ -63,7 +64,8 @@ const ProductCard = ({ product, onAddToCart }) => {
         <button
           style={{
             marginTop: "10px",
-            padding: "8px 16px",
+            padding: "8px 10px",
+            fontSize: '11px',
             ...checkoutButtonStyle,
           }}
           onClick={() => onAddToCart(product)}
@@ -89,10 +91,12 @@ const searchContainerStyle = {
   display: "flex",
   alignItems: "center",
   marginBottom: "20px",
+  width: '100%',
 };
 
 const searchInputStyle = {
   padding: "8px",
+  height: '30px',
   borderRadius: "4px",
   border: "1px solid #ccc",
   marginRight: "10px",
@@ -101,6 +105,8 @@ const searchInputStyle = {
 
 const sortSelectStyle = {
   padding: "8px",
+  height: '48px',
+  fontWeight: '500',
   borderRadius: "4px",
   border: "1px solid #ccc",
   minWidth: "200px",
@@ -158,8 +164,8 @@ const ProductList = () => {
 
   return (
     <>
-      <div style={{ marginTop: "80px" }}>
-        <Hero />
+      <div style={{ marginTop: "60px" }}>
+        <img src={Hero} alt="" />
         <div className="productlist-container">
           {isLoading ? (
             <p>Loading...</p>
@@ -183,9 +189,9 @@ const ProductList = () => {
                   onChange={handleSortOptionChange}
                   style={sortSelectStyle}
                 >
-                  <option value="name">Sort by Name</option>
-                  <option value="price">Sort by Price</option>
-                  <option value="stock">Sort by Stock</option>
+                  <option value="name">Berdasarkan Nama</option>
+                  <option value="price">Harga Terendah - Tertinggi</option>
+                  <option value="stock">Stok Paling Sedikit - Terbanyak</option>
                 </select>
               </div>
               <div className="products">

@@ -9,10 +9,63 @@ const Cart = () => {
   let [carts, setCarts] = useState([])
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const [token, setToken] = useState('')
 
   useEffect(() => {
     dispatch(getTotals());
   }, [cart, dispatch]);
+
+  const process = async (data) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        access_token: localStorage.getItem("access_token")
+      }
+    }
+
+    const response = await axios.post('http://localhost:3100/users/midtrans', data, config)
+    setToken(response.data.token);
+  }
+
+  useEffect(() => {
+    if (token) {
+      window.snap.pay(token, {
+        onSuccess: (result) => {
+          localStorage.setItem('Pembayaran', JSON.stringify(result))
+          setToken('')
+        },
+        onPending: (result) => {
+          localStorage.setItem('Pembayaran', JSON.stringify(result))
+          setToken('')
+        },
+        onError: (error) => {
+          console.log(error);
+          setToken('')
+        },
+        onClose: () => {
+          console.log('Anda belum menyelesaikan pembayaran');
+          setToken('')
+        }
+      })
+    }
+  }, [token])
+
+
+  useEffect(() => {
+    const midtransUrl = 'https://app.sandbox.midtrans.com/snap/snap.js'
+
+    let scriptTag = document.createElement('script')
+    scriptTag.src = midtransUrl
+
+    const midtransClientKey = 'SB-Mid-client-5sjWc9AhHLstKFML'
+    scriptTag.setAttribute('data-client-key', midtransClientKey)
+
+    document.body.appendChild(scriptTag)
+
+    return () => {
+      document.body.removeChild(scriptTag)
+    }
+  })
 
   const handlerInc = (id) => {
     const accessToken = localStorage.getItem("access_token")
@@ -80,7 +133,7 @@ const Cart = () => {
     const total = subtotal + ppn // menghitung total(subtotal + ppn)
     return total.toFixed(2) // mengembalikan nilai total menjadi nilaidesimal 
   }
-  
+
   const calculatePPN = () => {
     const subtotal = calculateSubtotal()
     const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
@@ -100,8 +153,8 @@ const Cart = () => {
           console.log(error);
         })
     }
-    console.log(carts);
-  },)
+    // console.log(carts);
+  }, [])
 
 
   return (
@@ -148,19 +201,20 @@ const Cart = () => {
             </div>
             <div class="cart-summary">
               <button class="clear-cart" onClick={() => handlerClear()}>Clear Cart</button>
-              <div class="cart-checkout"style={{lineHeight: "30px"}} >
+              <div class="cart-checkout" style={{ lineHeight: "30px" }} >
                 <div class="subtotal">
                   <span>Subtotal :</span>
                   <span class="amount">Rp.{calculateSubtotal()}</span>
                 </div>
-                <div style={{display: 'flex', justifyContent: 'space-between',fontStyle: 'italic'}}>
-                <span>PPN 11% :</span>
-                <span className="amount" > Rp. {calculatePPN()}</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontStyle: 'italic' }}>
+                  <span>PPN 11% :</span>
+                  <span className="amount" > Rp. {calculatePPN()}</span>
                 </div>
                 <div class="subtotal">
                   <span>Total :</span>
-                  <span style={{fontWeight: '700'}} class="amount">{calculateTotal()}</span>
+                  <span style={{ fontWeight: '700' }} class="amount">{calculateTotal()}</span>
                 </div>
+                <button onClick={() => process()}>midtrans</button>
                 {/* <div class="start-shopping">
                   <a href="/productlist">
                     <span>&lt;</span>

@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import axios from 'axios';
-
+import './style.css'
 import { UserContext } from '../../App.jsx'
 
 const Login = () => {
@@ -68,7 +68,7 @@ const Login = () => {
             type="password"
             id="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)} className='input'
+            onChange={(e) => setPassword(e.target.value)} className='inputPass'
           />
         </div>
         <button className='button' type="submit">Login</button>

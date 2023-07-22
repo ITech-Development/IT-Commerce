@@ -9,17 +9,17 @@ const ProductDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  // align-items: center;
   position: relative;
   top: 80px;
-  `;
-  
-  const ProductDetailWrapper = styled.div`
+`;
+
+const ProductDetailWrapper = styled.div`
   max-width: 1420px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  margin: 20px;
+  margin: auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -35,10 +35,11 @@ const ProductImage = styled.img`
 const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 80px;
 `;
 
 const ProductName = styled.h2`
-  margin: 0;
+  margin-top: 10px
   margin-bottom: 10px;
 `;
 
@@ -64,16 +65,19 @@ const SpecificationItem = styled.div`
 `;
 
 const Description = styled.div`
-  max-width: 800px;
-  margin: 20px;
-  padding: 20px;
+  max-width: 1420px;
+  width: 100%;
+  display: flex;
+  margin: 20px auto;
+  flex-direction: column;
+  padding: 0 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 `;
 
 const BuyNowButton = styled.button`
-  padding: 10px 20px;
+  padding: 12px 35px;
   margin-right: 10px;
   background-color: #4caf50;
   color: #fff;
@@ -83,7 +87,8 @@ const BuyNowButton = styled.button`
 `;
 
 const AddToCartButton = styled.button`
-  padding: 10px 20px;
+  padding: 12px 35px;
+  margin-left: 5px;
   background-color: ${(props) => (props.disabled ? "#ccc" : "#007bff")};
   color: #fff;
   border: none;
@@ -136,21 +141,46 @@ const ProductDetailPage = () => {
 
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
-          <Price>Harga: <strong>Rp. {product.unitPrice}</strong></Price>
-          <Stock>Stok Tersisa: <strong>{product.stock}</strong></Stock>
+          <Price>
+            Harga: <strong>Rp. {product.unitPrice}</strong>
+          </Price>
+          <Stock>
+            Stok Tersisa: <strong>{product.stock}</strong>
+          </Stock>
+          <hr />
           <Specifications>
-            <SpecificationItem>Kategori: <strong>{product.categories?.name}</strong></SpecificationItem>
-            <SpecificationItem>Tipe: <strong>{product.types?.name}</strong></SpecificationItem>
-            <SpecificationItem>Kondisi: <strong>{product.condition}</strong></SpecificationItem>
-            <SpecificationItem>Minimum Order: <strong>{product.minimumOrder}</strong></SpecificationItem>
-            <SpecificationItem>Status: <strong>{product.status}</strong></SpecificationItem>
-            <SpecificationItem>Lebar: <strong>{product.weight} cm</strong></SpecificationItem>
-            <SpecificationItem>Ukuran: <strong>{product.size} cm</strong></SpecificationItem>
-            <SpecificationItem>Asuransi Pengiriman: <strong>{product.shippingInsurance}</strong></SpecificationItem>
-            <SpecificationItem>Layanan Pengiriman: <strong>{product.deliveryService}</strong></SpecificationItem>
-            <SpecificationItem>Author ID: <strong>{product.authorId}</strong></SpecificationItem>
+            <SpecificationItem>
+              Kategori: <strong>{product.categories?.name}</strong>
+            </SpecificationItem>
+            <SpecificationItem>
+              Tipe: <strong>{product.types?.name}</strong>
+            </SpecificationItem>
+            <SpecificationItem>
+              Kondisi: <strong>{product.condition}</strong>
+            </SpecificationItem>
+            <SpecificationItem>
+              Minimum Order: <strong>{product.minimumOrder}</strong>
+            </SpecificationItem>
+            <SpecificationItem>
+              Status: <strong>{product.status}</strong>
+            </SpecificationItem>
+            <SpecificationItem>
+              Lebar: <strong>{product.weight} cm</strong>
+            </SpecificationItem>
+            <SpecificationItem>
+              Ukuran: <strong>{product.size} cm</strong>
+            </SpecificationItem>
+            <SpecificationItem>
+              Asuransi Pengiriman: <strong>{product.shippingInsurance}</strong>
+            </SpecificationItem>
+            <SpecificationItem>
+              Layanan Pengiriman: <strong>{product.deliveryService}</strong>
+            </SpecificationItem>
+            <SpecificationItem>
+              Author ID: <strong>{product.authorId}</strong>
+            </SpecificationItem>
           </Specifications>
-          <div>
+          <div style={{ marginTop: "30px" }}>
             <BuyNowButton>Buy Now</BuyNowButton>
             <AddToCartButton
               onClick={handleAddToCart}

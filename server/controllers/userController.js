@@ -169,20 +169,20 @@ class UserController {
         method: "POST",
         url: "https://api.rajaongkir.com/starter/cost",
         data: obj,
-        headers: { key: "ec5b962e838da1d32426edf5175bcb11" },
+        headers: { key: "b2a87672564c42280e6666ad152083b6" },
       });
       res.status(200).json(data.rajaongkir.results[0].costs);
     } catch (error) {
-      console.log(error, "getcost.");
       next(error);
     }
   }
 
   static async getProvince(req, res, next) {
     try {
+      console.log('masuk');
       const province = await axios
         .get("https://api.rajaongkir.com/starter/province", {
-          headers: { key: "ec5b962e838da1d32426edf5175bcb11" },
+          headers: { key: "b2a87672564c42280e6666ad152083b6" },
         })
         .then((response) => {
           return response.data.rajaongkir.results;
@@ -192,7 +192,6 @@ class UserController {
         });
       res.status(200).json(province);
     } catch (error) {
-      // console.log(error);
       next(error);
     }
   }
@@ -200,11 +199,10 @@ class UserController {
   static async getCity(req, res, next) {
     try {
       const { id } = req.params;
-      // console.log(req.params);
       const city = await axios
         .get("https://api.rajaongkir.com/starter/city", {
           params: { province: id },
-          headers: { key: "ec5b962e838da1d32426edf5175bcb11" },
+          headers: { key: "b2a87672564c42280e6666ad152083b6" },
         })
         .then((response) => {
           return response.data.rajaongkir.results;
@@ -232,7 +230,7 @@ class UserController {
           order_id:
             "INDOTEKNIK-ORDERID-" +
             Math.floor(1000000 + Math.random() * 9000000), //harus unique
-          gross_amount: 10000, //kalkulasikan total harga di sini
+          gross_amount: +req.query.total, //kalkulasikan total harga di sini
         },
         credit_card: {
           secure: true,
