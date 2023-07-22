@@ -196,5 +196,4 @@ router.get('/cost', authenticationUser, UserController.getCost)
 router.get('/province', authenticationUser, UserController.getProvince)
 router.get('/city/:id', authenticationUser, UserController.getCity)
 
-
 module.exports = router
