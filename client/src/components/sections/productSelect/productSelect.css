@@ -1,16 +1,32 @@
+/* productSelect.css */
 .views {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   border: 1px solid gray;
   border-radius: 15px;
   max-width: 1180px;
-  margin: auto;
-  padding: 30px;
-  flex-direction: column;
+  margin: 30px auto;
+  padding: 20px;
   box-shadow: 0 4px 8px #b6cdd6;
   background-color: #F5F5F5;
   transition: 0.3s;
 }
+
 h4 {
-    max-width: 300px;
-    font-weight: 448;
+  font-weight: bold;
+  text-align: center;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .views {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  h4 {
+    font-size: 16px;
+  }
 }

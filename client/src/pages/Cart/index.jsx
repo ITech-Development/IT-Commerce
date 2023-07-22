@@ -184,7 +184,7 @@ const Cart = () => {
                   </span>
                 </div>
                 <button style={checkoutButtonStyle}>
-                  <Link to="/shipping" style={linkStyle}>
+                  <Link to="/check-trans" style={linkStyle}>
                     Check Out
                   </Link>
                 </button>

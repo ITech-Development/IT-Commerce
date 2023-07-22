@@ -1,6 +1,7 @@
 import React from "react";
 import AdminProf from "../../../assets/adminProf.png";
 import "./AdminProf.css";
+import { Link } from "@mui/material";
 
 export default function index() {
   return (
@@ -12,6 +13,7 @@ export default function index() {
           margin: "auto",
           maxWidth: "1320px",
           alignItems: "center",
+          marginTop: '230px'
         }}
       >
         <img src={AdminProf} alt="" />
@@ -43,7 +45,7 @@ export default function index() {
             <button
               className="btn"
               style={{
-                padding: "20px  50px",
+                padding: "12px 24px",
                 cursor: "pointer",
                 backgroundColor: "#243A73",
                 color: "white",
@@ -51,20 +53,8 @@ export default function index() {
                 borderRadius: "10px",
               }}
             >
-              DAFTAR
-            </button>
-            <button
-              style={{
-                border: "none",
-                backgroundColor: "white",
-                cursor: "pointer",
-                color: "#0E538C",
-                fontWeight: "750",
-                fontSize: "16px",
-                paddingLeft: "30px",
-              }}
-            >
               Baca Selengkapnya
+
             </button>
           </div>
         </div>

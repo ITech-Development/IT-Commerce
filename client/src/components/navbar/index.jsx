@@ -1,10 +1,13 @@
 import React, { useState, useRef } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../../assets/Logo.png";
-import ShopIcon from "../../assets/shopIcon.png";
-import PhotoProfileIcon from "../../assets/user.png";
+// import ShopIcon from "../../assets/shopIcon.png";
+// import PhotoProfileIcon from "../../assets/user.png";
+import ProfileIcon from "../../assets/icon.svg";
+
 
 import { useSelector } from "react-redux";
 
@@ -47,23 +50,9 @@ export default function Navigation() {
         {showCart && (
           <li>
             <Link to="/cart">
-              <img
-                style={{ height: "50px", color: "blue", cursor: "pointer" }}
-                src={ShopIcon}
-                alt=""
-              />
-              <span
-                style={{
-                  position: "relative",
-                  backgroundColor: "yellow",
-                  border: "1px solid yellow",
-                  borderRadius: "50px",
-                  padding: "3px 10px",
-                  textDecoration: "none",
-                  top: "-30px",
-                  right: "26px",
-                }}
-              >
+              {/* Use the Font Awesome icon component */}
+              <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
+              <span className="cart-quantity">
                 {cartTotalQuantity}
               </span>
             </Link>
@@ -75,13 +64,13 @@ export default function Navigation() {
               <img
                 onClick={toggleDropdown}
                 style={{ height: "50px", color: "blue", cursor: "pointer" }}
-                src={PhotoProfileIcon}
+                src={ProfileIcon}
                 alt=""
               />
               {isDropdownOpen && (
                 <ul className="dropdown-menu">
                   <li>
-                    <Link to="/photo-profile">Profile</Link>
+                    <Link to="/profile-update">Profile</Link>
                   </li>
                   <li>
                     <Link onClick={handleLogout}>Logout</Link>
