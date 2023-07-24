@@ -57,7 +57,7 @@ const router = express.Router()
  *               items:
  *                 $ref: '#/components/schemas/User'
  */
-router.get('/', UserController.getAllUsers)
+router.get('/', authenticationUser,UserController.getAllUsers)
 
 /**
  * @swagger
@@ -147,7 +147,7 @@ router.post('/login', UserController.loginUser)
  *         description: Internal server error
  */
 router.delete('/:id', UserController.deleteUser)
-router.get('/:id', UserController.detailsUser)
+router.get('/:id',authenticationUser, UserController.detailsUser)
 
 /**
  * @swagger

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const UpdateUser = () => {
-  const { id } = useParams();
   
   const [formData, setFormData] = useState({
     email: '',
@@ -23,7 +22,6 @@ const UpdateUser = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    console.log(file, 'filllellelelelle');
     setFormData((prevState) => ({
       ...prevState,
       imageProfile: file,
@@ -42,8 +40,8 @@ const UpdateUser = () => {
       formDataToSend.append('address', formData.address);
       formDataToSend.append('imageProfile', formData.imageProfile);
 
-      // const userId = 1; // Replace with the authenticated user's ID
-      const response = await fetch(`http://localhost:3100/users/${id}`, {
+      const userId = 1; // Replace with the authenticated user's ID
+      const response = await fetch(`http://localhost:3100/users/${userId}`, {
         method: 'PUT',
         body: formDataToSend,
         headers: {

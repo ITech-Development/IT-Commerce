@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from 'axios'
 import Logo from "../../assets/Logo.png";
 import ShopIcon from "../../assets/shopIcon.png";
@@ -40,11 +40,6 @@ export default function Navigation() {
   const RenderMenu = () => {
     const token = localStorage.getItem("access_token");
     const showCart = token ? true : false;
-
-    const { id } = useParams();
-
-    // Membuat tautan profil dinamis berdasarkan 'id'
-    const profileLink = `/profile-update/${id}`;
 
     return (
       <>
@@ -99,7 +94,7 @@ export default function Navigation() {
               {isDropdownOpen && (
                 <ul className="dropdown-menu">
                   <li>
-                    <Link to={profileLink}>Profile</Link>
+                    <Link to="/profile-update">Profile</Link>
                   </li>
                   <li>
                     <Link onClick={handleLogout}>Logout</Link>
