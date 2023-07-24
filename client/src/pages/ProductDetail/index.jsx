@@ -18,6 +18,19 @@ function ProductDetailPage() {
       });
   }, [id]);
 
+  const handleCheckTrans = () => {
+    // Penggunaan useNavigate untuk melakukan navigasi programatik
+    navigate("/check-trans");
+    // Menggunakan Promise untuk menunggu navigasi selesai sebelum menjalankan handleAddToCart
+    return new Promise((resolve) => {
+      resolve();
+    }).then(() => {
+      // Setelah navigasi selesai, jalankan handleAddToCart
+      handleAddToCart(product);
+    });
+  };
+
+
   const handleAddToCart = (product) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
@@ -91,22 +104,24 @@ function ProductDetailPage() {
                 <div>
                   <p>
                     Kategori{" "}
-                    <strong style={{paddingLeft: '80px' }}> : {product && product.categories && product.categories.name}</strong>
+                    <strong style={{ paddingLeft: '80px' }}> : {product && product.categories && product.categories.name}</strong>
                   </p>
-                  <p>Tipe  <strong style={{paddingLeft: '110px' }}> : {product.types?.name}</strong></p>
-                  <p>Kondisi  <strong style={{paddingLeft: '89px' }}> : {product.condition}</strong></p>
-                  <p>Minimum Order  <strong style={{paddingLeft: '28px' }}> : {product.minimumOrder}</strong></p>
-                  <p>Status  <strong style={{paddingLeft: '98px' }}> :  {product.status} </strong></p>
+                  <p>Tipe  <strong style={{ paddingLeft: '110px' }}> : {product.types?.name}</strong></p>
+                  <p>Kondisi  <strong style={{ paddingLeft: '89px' }}> : {product.condition}</strong></p>
+                  <p>Minimum Order  <strong style={{ paddingLeft: '28px' }}> : {product.minimumOrder}</strong></p>
+                  <p>Status  <strong style={{ paddingLeft: '98px' }}> :  {product.status} </strong></p>
                 </div>
                 <div style={{ paddingRight: "20%" }}>
-                  <p>Lebar<strong style={{paddingLeft: '106px' }}> : {product.weight} cm</strong></p>
-                  <p>Ukuran<strong style={{paddingLeft: '94px' }}> : {product.size} cm</strong></p>
-                  <p>Asuransi Pengiriman<strong style={{paddingLeft: '1px' }}> : {product.shippingInsurance}</strong></p>
-                  <p>Layanan Pengiriman<strong style={{paddingLeft: '4px' }}> : {product.deliveryService}</strong></p>
-                  <p>Author ID<strong style={{paddingLeft: '77px' }}> : {product.authorId}</strong></p>
+                  <p>Lebar<strong style={{ paddingLeft: '106px' }}> : {product.weight} cm</strong></p>
+                  <p>Ukuran<strong style={{ paddingLeft: '94px' }}> : {product.size} cm</strong></p>
+                  <p>Asuransi Pengiriman<strong style={{ paddingLeft: '1px' }}> : {product.shippingInsurance}</strong></p>
+                  <p>Layanan Pengiriman<strong style={{ paddingLeft: '4px' }}> : {product.deliveryService}</strong></p>
+                  <p>Author ID<strong style={{ paddingLeft: '77px' }}> : {product.authorId}</strong></p>
                 </div>
               </div>
+
               <button
+                onClick={() => handleCheckTrans()}
                 style={{
                   cursor: "pointer",
                   padding: "13px 25px",
@@ -118,6 +133,7 @@ function ProductDetailPage() {
               >
                 Buy Now
               </button>
+
               <button
                 style={{
                   cursor: "pointer",

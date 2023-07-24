@@ -82,7 +82,7 @@ const Cart = () => {
     const total = subtotal + ppn // menghitung total(subtotal + ppn)
     return total.toFixed(2) // mengembalikan nilai total menjadi nilaidesimal 
   }
-  
+
   const calculatePPN = () => {
     const subtotal = calculateSubtotal()
     const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
@@ -132,7 +132,9 @@ const Cart = () => {
               {carts?.map(e => (
                 < div class="cart-item" >
                   <div class="cart-product">
-                    <img src={e.product.image} alt={e.product.image} />
+                    <Link to={`/products/${e.product.id}`}>
+                      <img src={e.product.image} alt={e.product.name} />
+                    </Link>
                     <div>
                       <h3>{e.product.name}</h3>
                       <p>{e.product.description}</p>
@@ -156,9 +158,9 @@ const Cart = () => {
                   <span>Subtotal</span>
                   <span class="amount">Rp.{calculateSubtotal()}</span>
                 </div>
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <span>PPN 11% :</span>
-                <span className="amount"> Rp. {calculatePPN()}</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>PPN 11% :</span>
+                  <span className="amount"> Rp. {calculatePPN()}</span>
                 </div>
                 <div class="subtotal">
                   <span>Total</span>

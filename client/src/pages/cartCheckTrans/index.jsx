@@ -26,6 +26,7 @@ const Cart = () => {
     }
 
     const response = await axios.post('http://localhost:3100/users/midtrans', data, config)
+    console.log(response.data, 'dari fe');
     setToken(response.data.token);
   }
 

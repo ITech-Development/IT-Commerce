@@ -27,10 +27,14 @@ const { User, Product, SuperAdmin } = require('../models')
 async function authenticationUser(req, res, next) {
     try {
         let { access_token } = req.headers
+        // console.log(req.headers.headers, 'headersssssssssssssssssssss');
+        // console.log(access_token, 'accessssssssssssssssssstoken');
         let verify = verifyToken(access_token)
+        // console.log(verify, 'verifyyyyyyyyyyyyyyyyyyyy');
         let user = await User.findOne({
             where: {id: verify.id}
         })
+        // console.log(user, 'userrrrrrrrrrrrrrrrrrrrrrrr');
         if (!user) {
             throw { name: 'ForbiddenError' }
         }
@@ -39,6 +43,7 @@ async function authenticationUser(req, res, next) {
         }
         next()
     } catch (error) {
+        console.log(error, 'eror midle ware');
         next(error);
     }
 }

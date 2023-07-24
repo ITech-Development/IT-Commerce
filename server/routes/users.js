@@ -147,6 +147,7 @@ router.post('/login', UserController.loginUser)
  *         description: Internal server error
  */
 router.delete('/:id', UserController.deleteUser)
+router.get('/:id', UserController.detailsUser)
 
 /**
  * @swagger
@@ -188,10 +189,11 @@ router.delete('/:id', UserController.deleteUser)
  *       500:
  *         description: Internal server error
  */
-router.put('/:id', UserController.updateUser)
+router.put('/:id', authenticationUser, UserController.updateUser)
 router.post('/google', UserController.googleLogin)
 
 router.post('/midtrans', authenticationUser, UserController.midtransToken)
+router.post('/pay', authenticationUser, UserController.pay)
 router.get('/cost', authenticationUser, UserController.getCost)
 router.get('/province', authenticationUser, UserController.getProvince)
 router.get('/city/:id', authenticationUser, UserController.getCity)
