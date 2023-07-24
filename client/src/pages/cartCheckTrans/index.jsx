@@ -2,11 +2,13 @@ import { useDispatch, useSelector } from "react-redux";
 // import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { getTotals } from "../../features/cartSlice";
 import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 import axios from 'axios'
 
 const Cart = () => {
 
   let [carts, setCarts] = useState([])
+  console.log(carts, 'testtttttttttttcart');
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [token, setToken] = useState('')
@@ -153,7 +155,6 @@ const Cart = () => {
           console.log(error);
         })
     }
-    // console.log(carts);
   }, [])
 
 
@@ -182,7 +183,9 @@ const Cart = () => {
               {carts?.map(e => (
                 < div class="cart-item" >
                   <div class="cart-product">
-                    <img src={e.product.image} alt={e.product.image} />
+                    <Link to={`/products/${e.product.id}`}>
+                      <img src={e.product.image} alt={e.product.name} />
+                    </Link>
                     <div>
                       <h3>{e.product.name}</h3>
                       <p>{e.product.description}</p>

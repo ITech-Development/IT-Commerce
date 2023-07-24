@@ -50,7 +50,15 @@ export default function Home() {
 
   return (
     <Card>
-      <CardContent style={{ maxWidth: "1520px", margin: "auto", position: 'relative', top: '120px', height: '800px'}}>
+      <CardContent
+        style={{
+          maxWidth: "1520px",
+          margin: "auto",
+          position: "relative",
+          top: "120px",
+          height: "800px",
+        }}
+      >
         <FormikStepper
           initialValues={{
             firstName: "",

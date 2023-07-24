@@ -10,7 +10,9 @@ export default function Index() {
           <strong>Perusahaan Layanan dan Eksekusi Terpadu</strong>
         </h1>
         <p className="subtitle">Satu Atap Pertama di Indonesia</p>
-        <p className="description">Memberdayakan pembelian, penjualan, dan layanan Anda</p>
+        <p className="description">
+          Memberdayakan pembelian, penjualan, dan layanan Anda
+        </p>
         <button className="cta-button">Get Started</button>
       </div>
       <div className="hero-image-container">

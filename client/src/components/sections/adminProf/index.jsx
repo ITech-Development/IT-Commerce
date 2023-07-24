@@ -1,7 +1,6 @@
 import React from "react";
 import AdminProf from "../../../assets/adminProf.png";
 import "./AdminProf.css";
-import { Link } from "@mui/material";
 
 export default function index() {
   return (
@@ -13,7 +12,7 @@ export default function index() {
           margin: "auto",
           maxWidth: "1320px",
           alignItems: "center",
-          marginTop: '230px'
+          marginTop: "230px",
         }}
       >
         <img src={AdminProf} alt="" />
@@ -54,7 +53,6 @@ export default function index() {
               }}
             >
               Baca Selengkapnya
-
             </button>
           </div>
         </div>

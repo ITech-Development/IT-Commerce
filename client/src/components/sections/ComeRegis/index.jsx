@@ -71,10 +71,16 @@ export default function Index() {
             ))}
           </div>
           <div style={{ paddingTop: "30px" }}>
-            <button className="btn" style={{ ...styles.btn, ...styles.btnPrimary }}>
+            <button
+              className="btn"
+              style={{ ...styles.btn, ...styles.btnPrimary }}
+            >
               MASUK
             </button>
-            <button className="btn" style={{ ...styles.btn, ...styles.btnSecondary }}>
+            <button
+              className="btn"
+              style={{ ...styles.btn, ...styles.btnSecondary }}
+            >
               DAFTAR
             </button>
           </div>

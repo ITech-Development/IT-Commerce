@@ -4,7 +4,7 @@ import { useGetAllProductsQuery } from "../../features/productsApi";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
-import Corousel from '../../components/corousel/product'
+import Corousel from '../../components/corousel/services'
 
 import "../../App.css";
 // import Hero from "../../assets/bannerproduct1.jpg";
@@ -177,7 +177,7 @@ const ProductList = () => {
           ) : (
             <>
               <h2 style={{ margin: "30px 0 20px 0", textAlign: "start" }}>
-                Produk Rekomendasi
+                Semua Servis
               </h2>
               <div style={searchContainerStyle}>
                 <input
@@ -185,7 +185,7 @@ const ProductList = () => {
                   value={searchQuery}
                   onChange={handleSearchInputChange}
                   style={searchInputStyle}
-                  placeholder="Cari Produk Berdasarkan Nama..."
+                  placeholder="Cari Servis Berdasarkan Nama..."
                 />
                 <select
                   value={sortOption}

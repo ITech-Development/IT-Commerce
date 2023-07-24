@@ -17,10 +17,10 @@ const initialState = {
 
 // Fungsi Async Thunk untuk registrasi
 export const registerUser = createAsyncThunk(
-  'auth/register',
+  "auth/register",
   async (userData, thunkAPI) => {
     try {
-      const response = await axios.post('/api/register', userData);
+      const response = await axios.post("/api/register", userData);
       return response.data; // Mengembalikan data dari respons API jika berhasil
     } catch (error) {
       // Mengembalikan pesan error jika terjadi kesalahan
@@ -83,7 +83,7 @@ const authSlice = createSlice({
       } else return { ...state, userLoaded: true };
     },
     logoutUser(state, action) {
-      localStorage.getItem("access_token")
+      localStorage.getItem("access_token");
       return {
         ...state,
         token: "",

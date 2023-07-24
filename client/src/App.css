@@ -250,11 +250,13 @@
   cursor: pointer;
 }
 
-.continue-shopping, .start-shopping {
+.continue-shopping,
+.start-shopping {
   margin-top: 1rem;
 }
 
-.continue-shopping a, .start-shopping a {
+.continue-shopping a,
+.start-shopping a {
   display: flex;
   color: gray;
   text-decoration: none;
@@ -262,7 +264,8 @@
   /* align-items: center; */
 }
 
-.continue-shopping a span, .start-shopping a span{
+.continue-shopping a span,
+.start-shopping a span {
   /* margin-left: 0.5rem; */
   display: flex;
   align-items: center;

@@ -23,7 +23,12 @@ export default function index() {
         <img
           src={ShopIcon}
           alt=""
-          style={{ width: "400px", display: "flex", borderRadius: '30%', border: '1px solid #F5F5F5'  }}
+          style={{
+            width: "400px",
+            display: "flex",
+            borderRadius: "30%",
+            border: "1px solid #F5F5F5",
+          }}
         />
       </div>
     </div>

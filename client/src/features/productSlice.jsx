@@ -10,9 +10,7 @@ export const productsFetch = createAsyncThunk(
   "products/productsFetch",
   async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3100/products"
-      );
+      const response = await axios.get("http://localhost:3100/products");
       return response.data;
     } catch (error) {
       console.log(error);
@@ -23,7 +21,7 @@ export const productsFetch = createAsyncThunk(
 export const addToCartPost = createAsyncThunk(
   "orders/addToCartPost",
   async (data) => {
-    console.log(data, 'dataaaaaaaaaaaaa');
+    console.log(data, "dataaaaaaaaaaaaa");
     console.log(`http://localhost:3100/orders/${data.id}`);
     try {
       const response = await axios.post(
@@ -31,11 +29,11 @@ export const addToCartPost = createAsyncThunk(
         data,
         {
           headers: {
-            access_token: localStorage.getItem('access_token')
-          }
+            access_token: localStorage.getItem("access_token"),
+          },
         }
       );
-      console.log(response, 'responseeeeeeeeeeeeeeeeeeee');
+      console.log(response, "responseeeeeeeeeeeeeeeeeeee");
       return response.data;
     } catch (error) {
       console.log(error);

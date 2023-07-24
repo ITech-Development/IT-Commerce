@@ -7,7 +7,7 @@ const NotFound = () => {
         flexDirection: "column",
         textAlign: "center",
         alignItems: "center",
-        justifyContent: 'space-between'
+        justifyContent: "space-between",
       }}
     >
       <h1>404</h1>

@@ -18,7 +18,8 @@ import ProductShipping from "./pages/productShipping";
 import FirstStep from "./pages/productShipping/firstStep";
 import SecondStep from "./pages/productShipping/secondStep";
 import CheckTrans from "./pages/CheckTrans";
-import ProfileUpdate from './pages/profileUpdate'
+import ProfileUpdate from "./pages/profileUpdate";
+import ServiceList from './pages/ServiceList'
 
 import { initialState, reducer } from "./reducer/UseReducer";
 
@@ -39,7 +40,8 @@ const Routing = () => {
       <Route path="/shipping" element={<FirstStep />} />
       <Route path="/shippingSecond" element={<SecondStep />} />
       <Route path="/check-trans" element={<CheckTrans />} />
-            <Route path="/profile-update" element={<ProfileUpdate />} />
+      <Route path="/profile-update" element={<ProfileUpdate />} />
+      <Route path="/services" element={<ServiceList />} />
 
     </Routes>
   );

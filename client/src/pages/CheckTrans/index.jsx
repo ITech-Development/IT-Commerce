@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTotals } from "../../features/cartSlice";
 import "./styless.css";
-// import CartCheckTrans from "../cartCheckTrans";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 function Index() {
   let [carts, setCarts] = useState([])
@@ -140,7 +139,7 @@ function Index() {
     const subtotal = calculateSubtotal()
     const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
     const subtotalPpn = subtotal + ppn // menghitung total(subtotal + ppn)
-    return subtotalPpn.toFixed(2) // mengembalikan nilai total menjadi nilaidesimal 
+    return subtotalPpn
   }
   const calculateTotalBayar = () => {
     const total = parseFloat(calculateTotal()); // Convert total to a number
@@ -156,9 +155,10 @@ function Index() {
 
   const calculatePPN = () => {
     const subtotal = calculateSubtotal()
+    console.log(typeof subtotal, 'hei subtotalllll');
     const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
 
-    return ppn.toFixed(2) // mengembalikan nilai total menjadi nilaidesimal 
+    return ppn
   }
 
   useEffect(() => {
@@ -303,7 +303,9 @@ function Index() {
                 {carts?.map(e => (
                   < div class="cart-item" >
                     <div class="cart-product">
-                      <img src={e.product.image} alt={e.product.image} />
+                      <Link to={`/products/${e.product.id}`}>
+                        <img src={e.product.image} alt={e.product.name} />
+                      </Link>
                       <div>
                         <h3>{e.product.name}</h3>
                         <p>{e.product.description}</p>
@@ -357,6 +359,7 @@ function Index() {
               name="province"
               id="province"
               onChange={handleProvinceChange}
+              className="province"
             >
               <option value="">Select Province</option>
               {province.map((item) => (
@@ -365,7 +368,8 @@ function Index() {
                 </option>
               ))}
             </select>
-            <select name="city" id="city" onChange={handlerGetCost}>
+            <select name="city" id="city" onChange={handlerGetCost}
+            className="city">
               <option value="">Select City</option>
               {Array.isArray(city) &&
                 city.map((item) => (
@@ -374,7 +378,7 @@ function Index() {
                   </option>
                 ))}
             </select>
-            <select onChange={handlerSetCourier}>
+            <select onChange={handlerSetCourier} className="cost">
               <option value="jne">jne</option>
               <option value="tiki">tiki</option>
               <option value="pos">pos</option>
@@ -411,7 +415,6 @@ function Index() {
             <p><i>Silahkan pilih metode pengiriman</i></p> :
             <button onClick={() => process()}>Payment</button>
           }
-
         </div>
       </div>
 

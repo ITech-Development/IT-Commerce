@@ -18,3 +18,23 @@
   border: 1px solid rgb(244, 238, 238);
   border-radius: 10px;
 }
+
+.province {
+  padding: 10px 15px;
+  border: none;
+  background-color: rgb(242, 242, 242);
+  border-radius: 8px;
+}
+.city {
+  padding: 10px 15px;
+  border: none;
+  background-color: rgb(242, 242, 242);
+  border-radius: 8px;
+  margin: 0 14px;
+}
+.cost {
+  padding: 10px 15px;
+  border: none;
+  background-color: rgb(242, 242, 242);
+  border-radius: 8px;
+}

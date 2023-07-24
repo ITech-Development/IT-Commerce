@@ -26,11 +26,11 @@
 }
 
 .h1 {
-  color: #010F52;
+  color: #010f52;
 }
 
 .span {
-  color: #243A73;
+  color: #243a73;
   font-size: 15px;
   font-weight: 600;
 }
@@ -42,9 +42,9 @@
 .btnPrimary {
   padding: 20px 50px;
   cursor: pointer;
-  background-color: #243A73;
+  background-color: #243a73;
   color: white;
-  border: 1px solid #243A73;
+  border: 1px solid #243a73;
   border-radius: 10px;
 }
 
@@ -52,7 +52,7 @@
   border: none;
   background-color: white;
   cursor: pointer;
-  color: #0E538C;
+  color: #0e538c;
   font-weight: 750;
   font-size: 16px;
   padding-left: 30px;

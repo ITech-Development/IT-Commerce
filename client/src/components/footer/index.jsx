@@ -1,7 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTwitter, faFacebookF, faInstagram, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
+import React from "react";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTwitter,
+  faFacebookF,
+  faInstagram,
+  faLinkedinIn,
+} from "@fortawesome/free-brands-svg-icons";
 
 // Styled components for the Footer
 const FooterContainer = styled.footer`
@@ -9,7 +14,7 @@ const FooterContainer = styled.footer`
   color: #fff;
   padding: 20px;
   text-align: center;
-  margin-Top: 30px;
+  margin-top: 30px;
 `;
 
 const FooterText = styled.p`
@@ -36,7 +41,9 @@ const SocialIcon = styled.a`
 const Footer = () => {
   return (
     <FooterContainer>
-      <FooterText>&copy; 2023 PT. ITech Persada Nusantara. All rights reserved.</FooterText>
+      <FooterText>
+        &copy; 2023 PT. ITech Persada Nusantara. All rights reserved.
+      </FooterText>
       <SocialIconsContainer>
         <SocialIcon href="#" target="_blank">
           <FontAwesomeIcon icon={faTwitter} />

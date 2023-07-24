@@ -102,7 +102,7 @@ const Cart = () => {
     <>
       <div
         className="cart-container"
-        style={{ position: "relative", top: "80px" }}
+        style={{ position: "relative", top: "50px" }}
       >
         <h2>Shopping Cart</h2>
         {carts.length === 0 ? (

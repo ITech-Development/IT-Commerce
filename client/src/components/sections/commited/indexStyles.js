@@ -2,7 +2,7 @@ const indexStyles = {
   container: {
     maxWidth: "100%",
     padding: "0 20px",
-    textAlign: 'center',
+    textAlign: "center",
   },
   title: {
     fontSize: "26px",
@@ -11,10 +11,10 @@ const indexStyles = {
     display: "flex",
     marginBottom: "10px",
     flexDirection: "column",
-    padding: '20px'
+    padding: "20px",
   },
   subtitle: {
-    paddingTop: '10px',
+    paddingTop: "10px",
     fontSize: "16px",
     color: "#777",
   },

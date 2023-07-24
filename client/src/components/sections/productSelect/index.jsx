@@ -41,7 +41,7 @@ const styles = {
     justifyContent: "center",
     transform: "rotate(-5deg)",
     marginTop: "30px", // Add some space between the subheading and the button
-    marginBottom: '10px'
+    marginBottom: "10px",
   },
   "@keyframes moveButton": {
     "0%": {
@@ -70,7 +70,6 @@ const styles = {
   },
 };
 
-
 export default function Index() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
@@ -79,11 +78,9 @@ export default function Index() {
     setCursorPosition({ x: e.clientX, y: e.clientY });
   };
   return (
-    <div style={styles.views}
-    onMouseMove={handleMouseMove} >
-      
-       {/* Floating cursor icon */}
-       <div
+    <div style={styles.views} onMouseMove={handleMouseMove}>
+      {/* Floating cursor icon */}
+      <div
         style={{
           ...styles.cursorContainer,
           transform: `translate(${cursorPosition.x - 12}px, ${
@@ -100,11 +97,11 @@ export default function Index() {
       </h4>
       <div style={styles.buttonWrapper}>
         <Button
-        variant="contained"
-        color="primary"
-        component={Link}
-        to="/productlist"
-        style={styles.button}
+          variant="contained"
+          color="primary"
+          component={Link}
+          to="/productlist"
+          style={styles.button}
         >
           Belanja & Dapatkan Promo Produk
         </Button>

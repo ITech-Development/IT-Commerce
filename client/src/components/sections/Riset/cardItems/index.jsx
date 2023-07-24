@@ -5,19 +5,23 @@ import Execution from "../../../../assets/execution.png";
 import Delivery from "../../../../assets/delivery.png";
 import Feedback from "../../../../assets/feedback.png";
 import Step from "../../../../assets/step.png";
-import  Tunjuk from '../../../../assets/tunjuk.png'
+import Tunjuk from "../../../../assets/tunjuk.png";
 
 export default function index() {
   return (
     <>
       <div>
-    <img src={Tunjuk} alt="" style={{
+        <img
+          src={Tunjuk}
+          alt=""
+          style={{
             position: "relative",
             width: "80px",
             height: "100px",
             left: "-270px",
-            top: '-40px'
-          }}/>
+            top: "-40px",
+          }}
+        />
         <img
           src={Step}
           alt=""
@@ -26,7 +30,7 @@ export default function index() {
             width: "80px",
             height: "90px",
             right: "160px",
-            top: '110px'
+            top: "110px",
           }}
         />
         <img

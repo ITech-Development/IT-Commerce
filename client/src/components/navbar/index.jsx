@@ -1,18 +1,33 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect,useRef, useState } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import axios from 'axios'
 import Logo from "../../assets/Logo.png";
 // import ShopIcon from "../../assets/shopIcon.png";
 // import PhotoProfileIcon from "../../assets/user.png";
 import ProfileIcon from "../../assets/icon.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
-
-import { useSelector } from "react-redux";
 
 export default function Navigation() {
-  const { cartTotalQuantity } = useSelector((state) => state.cart);
+  const [carts, setCarts] = useState([])
+
+  const totalQuantity = carts.reduce((total, item) => total + item.quantity, 0);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      let url = 'http://localhost:3100/product-carts'
+      axios({ url, headers: { access_token: accessToken } })
+        .then(async ({ data }) => {
+          setCarts(data)
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+  }, [])
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -44,16 +59,28 @@ export default function Navigation() {
             <Link to="/productlist">Products</Link>
           </li>
           <li>
-            <Link to="/service">Services</Link>
+            <Link to="/services">Services</Link>
           </li>
         </div>
         {showCart && (
           <li>
             <Link to="/cart">
-              {/* Use the Font Awesome icon component */}
-              <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
-              <span className="cart-quantity">
-                {cartTotalQuantity}
+            <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
+              <span
+                style={{
+                  position: "relative",
+                  backgroundColor: "#2EEDF5",
+                  border: "1px solid #2EEDF5",
+                  borderRadius: "50px",
+                  padding: "4px 9px",
+                  textDecoration: "none",
+                  color: 'black',
+                  top: "-8px",
+                  right: "8px",
+                  fontSize: '13px'
+                }}
+              >
+                {totalQuantity}
               </span>
             </Link>
           </li>
