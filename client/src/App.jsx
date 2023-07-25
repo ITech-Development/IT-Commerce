@@ -7,7 +7,7 @@ import Navbar from "./components/navbar";
 import ProductDetails from "./pages/ProductDetail";
 import NotFound from "./components/sections/notFound";
 import { ToastContainer } from "react-toastify";
-import Cart from "./pages/Cart";
+import Cart from "./pages/Cart"; // Correct import statement for default export
 import "react-toastify/dist/ReactToastify.css";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";

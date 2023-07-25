@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
 import axios from 'axios'
@@ -17,7 +17,7 @@ export default function Navigation() {
       let url = 'http://localhost:3100/product-carts'
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
-          setCarts(data)
+          dsetCarts(data)
         })
         .catch((error) => {
           console.log(error);
@@ -26,6 +26,7 @@ export default function Navigation() {
   }, [])
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -84,7 +85,7 @@ export default function Navigation() {
         )}
         {token ? (
           <li>
-            <div className="dropdown">
+            <div className="dropdown" ref={dropdownRef}>
               <img
                 onClick={toggleDropdown}
                 style={{ height: "50px", color: "blue", cursor: "pointer" }}
@@ -121,9 +122,12 @@ export default function Navigation() {
           <img style={{ height: "50px" }} src={Logo} alt="" />
         </Link>
         <div className="navigation-menu">
-          <ul>
+          <ul className={isDropdownOpen ? "expanded" : ""}>
             <RenderMenu />
           </ul>
+          <button className="hamburger" onClick={toggleDropdown}>
+            <i className="fas fa-bars"></i>
+          </button>
         </div>
       </nav>
     </>

@@ -1,80 +1,89 @@
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import axios from "axios";
 import { getTotals } from "../../features/cartSlice";
-import { useEffect, useState } from "react";
-import axios from 'axios'
+import styled from "styled-components";
+
+const ContinueShoppingContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+`;
+
+const ContinueShoppingIcon = styled.span`
+  margin-right: 5px;
+`;
 
 const Cart = () => {
-
-  let [carts, setCarts] = useState([])
+  const [carts, setCarts] = useState([]);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTotals());
-    console.log('test----------');
   }, [cart, dispatch]);
 
-  const handlerInc = (id) => {
-    const accessToken = localStorage.getItem("access_token")
-    if (accessToken) {
-      let url = 'http://localhost:3100/product-carts/increment/' + id
-      axios({ url, method: 'patch', headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch(error => { console.log('incrementttt'); })
-    }
-  }
+  useEffect(() => {
+    const fetchCarts = async () => {
+      const accessToken = localStorage.getItem("access_token");
+      if (accessToken) {
+        try {
+          const response = await axios.get(
+            "http://localhost:3100/product-carts",
+            { headers: { access_token: accessToken } }
+          );
+          setCarts(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchCarts();
+  }, []);
 
+  const handleIncrement = (id) => {
+    updateCartItemQuantity(id, "increment");
+  };
 
-  const handlerDec = (id) => {
+  const handleDecrement = (id) => {
+    updateCartItemQuantity(id, "decrement");
+  };
+
+  const handleRemove = (id) => {
+    updateCartItemQuantity(id, "remove");
+  };
+
+  const handleClear = () => {
+    updateCartItemQuantity(null, "clear");
+  };
+
+  const updateCartItemQuantity = async (id, action) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = 'http://localhost:3100/product-carts/decrement/' + id
-      axios({ url, method: 'patch', headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data, 'ASdasdas');
-        })
-        .catch(error => { console.log('asdasd'); })
-    }
-  }
+      let url = `http://localhost:3100/product-carts/${action}`;
+      if (id) {
+        url += `/${id}`;
+      }
 
-  const handlerRemove = (id) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = 'http://localhost:3100/product-carts/remove/' + id
-      axios({ url, method: 'delete', headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data, 'remooove');
-        })
-        .catch(error => { console.log('asdasd remove'); })
+      try {
+        const response = await axios.patch(url, null, {
+          headers: { access_token: accessToken },
+        });
+        setCarts(response.data);
+      } catch (error) {
+        console.log(`${action} error`, error);
+      }
     }
-  }
-
-  const handlerClear = () => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = 'http://localhost:3100/product-carts/clear/'
-      axios({ url, method: 'delete', headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data, 'remooove all');
-        })
-        .catch(error => { console.log('asdasd remove all'); })
-    }
-  }
+  };
 
   const calculateSubtotal = () => {
-    let subtotal = 0
-    carts.forEach((e) => {
-      const productPrice = e.product.unitPrice
-      const quantity = e.quantity
-      const totalProductPrice = productPrice * quantity
-      subtotal += totalProductPrice
-    })
-    return subtotal
-  }
+    return carts.reduce((total, cartItem) => {
+      const productPrice = cartItem.product.unitPrice;
+      const quantity = cartItem.quantity;
+      return total + productPrice * quantity;
+    }, 0);
+  };
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal()
@@ -84,49 +93,35 @@ const Cart = () => {
   }
 
   const calculatePPN = () => {
-    const subtotal = calculateSubtotal()
-    const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
-    return ppn.toFixed(2)
-  }
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = 'http://localhost:3100/product-carts'
-      axios({ url, headers: { access_token: accessToken } })
-        .then(async ({ data }) => {
-          setCarts(data)
-
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    }
-    console.log(carts);
-  }, [])
-
+    const subtotal = calculateSubtotal();
+    const ppn = subtotal * 0.11;
+    return ppn.toFixed(2);
+  };
 
   return (
     <>
-      <div class="cart-container">
+      <div
+        className="cart-container"
+        style={{ position: "relative", top: "80px" }}
+      >
         <h2>Shopping Cart</h2>
         {carts.length === 0 ? (
-          <div class="cart-empty">
+          <div className="cart-empty">
             <p>Your cart is empty</p>
-            <div class="start-shopping">
-              <a href="/productlist">
+            <div className="start-shopping">
+              <Link to="/productlist">
                 <span>&lt;</span>
                 <span>Start Shopping</span>
-              </a>
+              </Link>
             </div>
           </div>
         ) : (
           <div>
-            <div class="titles">
-              <h3 class="product-title">Product</h3>
-              <h3 class="price">Price</h3>
-              <h3 class="quantity">Quantity</h3>
-              <h3 class="total">Total</h3>
+            <div className="titles">
+              <h3 className="product-title">Product</h3>
+              <h3 className="price">Price</h3>
+              <h3 className="quantity">Quantity</h3>
+              <h3 className="total">Total</h3>
             </div>
             <div class="cart-items">
               {carts?.map(e => (
@@ -136,52 +131,81 @@ const Cart = () => {
                       <img src={e.product.image} alt={e.product.name} />
                     </Link>
                     <div>
-                      <h3>{e.product.name}</h3>
-                      <p>{e.product.description}</p>
-                      <button onClick={() => handlerRemove(e.id)}>Remove</button>
+                      <h3>{cartItem.product.name}</h3>
+                      <p>{cartItem.product.description}</p>
+                      <button onClick={() => handleRemove(cartItem.id)}>
+                        Remove
+                      </button>
                     </div>
                   </div>
-                  <div class="cart-product-price">Rp.{e.product.unitPrice}</div>
-                  <div class="cart-product-quantity">
-                    <button onClick={() => handlerDec(e.id)}>-</button>
-                    <div class="count">{e.quantity}</div>
-                    <button onClick={() => handlerInc(e.id)}>+</button>
+                  <div className="cart-product-price">
+                    Rp.{cartItem.product.unitPrice}
                   </div>
-                  <div class="cart-product-total-price">Rp.{e.quantity * e.product.unitPrice}</div>
+                  <div className="cart-product-quantity">
+                    <button onClick={() => handleDecrement(cartItem.id)}>
+                      -
+                    </button>
+                    <div className="count">{cartItem.quantity}</div>
+                    <button onClick={() => handleIncrement(cartItem.id)}>
+                      +
+                    </button>
+                  </div>
+                  <div className="cart-product-total-price">
+                    Rp.{cartItem.quantity * cartItem.product.unitPrice}
+                  </div>
                 </div>
               ))}
             </div>
-            <div class="cart-summary">
-              <button class="clear-cart" onClick={() => handlerClear()}>Clear Cart</button>
-              <div class="cart-checkout">
-                <div class="subtotal">
-                  <span>Subtotal</span>
-                  <span class="amount">Rp.{calculateSubtotal()}</span>
+            <div className="cart-summary">
+              <button className="clear-cart" onClick={handleClear}>
+                Clear Cart
+              </button>
+              <div className="cart-checkout">
+                <div className="subtotal">
+                  <span>Subtotal :</span>
+                  <span className="amount">Rp.{calculateSubtotal()}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span>PPN 11% :</span>
                   <span className="amount"> Rp. {calculatePPN()}</span>
                 </div>
-                <div class="subtotal">
-                  <span>Total</span>
-                  <span class="amount">{calculateTotal()}</span>
+                <div className="subtotal" style={{ paddingBottom: "10px" }}>
+                  <span>Total :</span>
+                  <span style={{ fontWeight: "700" }} className="amount">
+                    {calculateTotal()}
+                  </span>
                 </div>
-                <button><Link to='/shipping'>Check Out
-                </Link>
+                <button style={checkoutButtonStyle}>
+                  <Link to="/shipping" style={linkStyle}>
+                    Check Out
+                  </Link>
                 </button>
-                <div class="start-shopping">
-                  <a href="/productlist">
-                    <span>&lt;</span>
-                    <span>Continue Shopping</span>
-                  </a>
-                </div>
+                <ContinueShoppingContainer>
+                  <ContinueShoppingIcon>&lt;</ContinueShoppingIcon>
+                  <Link to="/productlist">Continue Shopping</Link>
+                </ContinueShoppingContainer>
               </div>
             </div>
           </div>
         )}
-      </div >
+      </div>
     </>
   );
+};
+
+const checkoutButtonStyle = {
+  backgroundColor: "blue",
+  color: "white",
+  padding: "10px 20px",
+  border: "none",
+  borderRadius: "4px",
+  cursor: "pointer",
+  textDecoration: "none",
+};
+
+const linkStyle = {
+  color: "white",
+  textDecoration: "none",
 };
 
 export default Cart;

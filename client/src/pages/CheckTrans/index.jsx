@@ -244,12 +244,13 @@ function Index() {
     setCourier(courier);
   };
 
+function index() {
   return (
     <div>
       <div className="alamat">
         <h2>Alamat Pengiriman</h2>
+          <h4 style={{padding :'10px 0'}}>Evans (+62) 8162626267</h4>
         <div>
-          <h4>Evans (+62) 8162626267</h4>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <p>
               Indo Teknik, Jalan Riau Ujung No. 898 904, Payung Sekaki, KOTA
@@ -398,9 +399,7 @@ function Index() {
 
           </div>
         </div>
-        <div
-          style={{ textAlign: "end", padding: "20px 65px", fontSize: "20px" }}
-        >
+        <div style={{textAlign: 'end', padding: '20px 65px', fontSize: '20px'}}>
           <span>Total Bayar : </span>
           <span style={{ fontWeight: "700" }} className="amount">
             Rp. {calculateTotalBayar()}
