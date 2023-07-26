@@ -10,13 +10,14 @@
 }
 
 .calcongkir {
-  position: relative;
-  top: 20px;
-  max-width: 1260px;
-  margin: auto;
-  padding: 10px 20px;
-  border: 1px solid rgb(244, 238, 238);
-  border-radius: 10px;
+ 
+    position: relative;
+    top: 20px;
+    max-width: 1260px;
+    margin: auto;
+    padding: 10px 20px;
+    border: 1px solid rgb(244, 238, 238);
+    border-radius: 10px;
 }
 
 .province {

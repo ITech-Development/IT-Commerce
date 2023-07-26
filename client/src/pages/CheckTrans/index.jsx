@@ -35,25 +35,31 @@ function Index() {
 
   useEffect(() => {
     if (token) {
-      window.snap.pay(token, {
-        onSuccess: (result) => {
-          localStorage.setItem('Pembayaran', JSON.stringify(result))
-          setToken('')
+      // snap.pay(token, {
+      //   onSuccess: (result) => {
+      //     console.log('test embed');
+      //   },
+      //   onPending: (result) => {
+      //     localStorage.setItem('Pembayaran', JSON.stringify(result))
+      //     setToken('')
+      //   },
+      //   onError: (error) => {
+      //     console.log(error);
+      //     setToken('')
+      //   },
+      //   onClose: () => {
+      //     console.log('Anda belum menyelesaikan pembayaran');
+      //     setToken('')
+      //   }
+      // })
+      snap.pay(token, {
+        onSuccess: function (result) {
+          // return changeStatus();
+          console.log('snap payyyyyyyyyyy');
         },
-        onPending: (result) => {
-          localStorage.setItem('Pembayaran', JSON.stringify(result))
-          setToken('')
-        },
-        onError: (error) => {
-          console.log(error);
-          setToken('')
-        },
-        onClose: () => {
-          console.log('Anda belum menyelesaikan pembayaran');
-          setToken('')
-        }
       })
     }
+
   }, [token])
 
 
@@ -410,10 +416,10 @@ function Index() {
           <span style={{ fontWeight: "700" }} className="amount">
             Rp. {calculateTotalBayar()}
           </span>
-          {totalShippingCost === 0 ?
+          {/* {totalShippingCost === 0 ? */}
             <p><i>Silahkan pilih metode pengiriman</i></p> :
             <button onClick={() => process()}>Payment</button>
-          }
+          {/* } */}
         </div>
       </div>
 

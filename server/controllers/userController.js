@@ -21,6 +21,16 @@ class UserController {
 
   static async detailsUser(req, res, next) {
     try {
+      const authenticatedUserId = req.user.id;
+      const requestedUserId = +req.params.id;
+
+      if (authenticatedUserId !== requestedUserId) {
+        return res.status(403).send({
+          status: "error",
+          message: "You are not authorized to update this user's data.",
+        });
+      }
+
       const user = await User.findOne({
         where: {
           id: req.params.id

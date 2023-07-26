@@ -45,11 +45,6 @@ export default function Navigation() {
     const token = localStorage.getItem("access_token");
     const showCart = token ? true : false;
 
-    const { id } = useParams();
-
-    // Membuat tautan profil dinamis berdasarkan 'id'
-    const profileLink = `/profile-update/${id}`;
-
     return (
       <>
         <div style={{ display: "flex", alignItems: "center" }}>
