@@ -1,11 +1,13 @@
 const { compare } = require("../helpers/bcryptjs");
 const { createToken } = require("../helpers/jwt");
-const { User } = require("../models/index");
+const { User, Checkout, CheckoutProduct, Product } = require("../models/index");
 const { OAuth2Client } = require("google-auth-library");
 const bcryptjs = require("bcryptjs");
+const helpers = require('../helpers/index')
 const salt = bcryptjs.genSaltSync(10);
 const midtransClient = require("midtrans-client");
 const axios = require("axios");
+let { sequelize } = require("../models/");
 
 class UserController {
   static async getAllUsers(req, res, next) {
@@ -14,6 +16,24 @@ class UserController {
       res.status(200).json(users);
     } catch (error) {
       next(error);
+    }
+  }
+
+  static async detailsUser(req, res, next) {
+    try {
+      const user = await User.findOne({
+        where: {
+          id: req.params.id
+        }
+      })
+
+      if (user) {
+        res.status(200).json(user)
+      } else {
+        throw { name: 'NotFoundError' }
+      }
+    } catch (error) {
+      next(error)
     }
   }
 
@@ -85,18 +105,65 @@ class UserController {
   }
 
   static async updateUser(req, res, next) {
+    // try {
+    //   if (req.body.password) {
+    //     const hashedPassword = bcryptjs.hashSync(req.body.password, salt);
+    //     req.body.password = hashedPassword;
+    //   }
+    //   let filename = null;
+    //   try {
+    //     filename = req.file.filename;
+    //   } catch (error) {
+    //     filename = req.body.imageProfile;
+    //   }
+    //   User.update(
+    //     {
+    //       email: req.body.email,
+    //       password: req.body.password,
+    //       fullName: req.body.fullName,
+    //       phoneNumber: req.body.phoneNumber,
+    //       address: req.body.address,
+    //       imageProfile: filename,
+    //     },
+    //     {
+    //       where: {
+    //         id: req.params.id,
+    //       },
+    //     }
+    //   ).then((user) => {
+    //     res.send({
+    //       status: "success",
+    //       data: {
+    //         id: req.params.id,
+    //       },
+    //     });
+    //   });
+    // } catch (error) {
+    //   next(error);
+    // }
     try {
-      if (req.body.password) {
-        const hashedPassword = bcryptjs.hashSync(req.body.password, salt);
-        req.body.password = hashedPassword;
+      const authenticatedUserId = req.user.id;
+      const requestedUserId = +req.params.id;
+
+      if (authenticatedUserId !== requestedUserId) {
+        return res.status(403).send({
+          status: "error",
+          message: "You are not authorized to update this user's data.",
+        });
       }
+
+      if (req.body.password) {
+        req.body.password = hashPassword(req.body.password);
+      }
+
       let filename = null;
       try {
         filename = req.file.filename;
       } catch (error) {
         filename = req.body.imageProfile;
       }
-      User.update(
+
+      await User.update(
         {
           email: req.body.email,
           password: req.body.password,
@@ -107,16 +174,16 @@ class UserController {
         },
         {
           where: {
-            id: req.params.id,
+            id: requestedUserId,
           },
         }
-      ).then((user) => {
-        res.send({
-          status: "success",
-          data: {
-            id: req.params.id,
-          },
-        });
+      );
+
+      res.send({
+        status: "success",
+        data: {
+          id: requestedUserId,
+        },
       });
     } catch (error) {
       next(error);
@@ -160,7 +227,7 @@ class UserController {
       console.log(courier);
       let destination = +req.query.destination;
       const obj = {
-        origin: "291",
+        origin: "351",
         destination,
         weight: 1000,
         courier,
@@ -217,7 +284,10 @@ class UserController {
   }
 
   static async midtransToken(req, res, next) {
+    const t = await sequelize.transaction();
+    // console.log(req.user.id);
     try {
+      let temp = []
       const user = await User.findByPk(req.user.id);
       let snap = new midtransClient.Snap({
         // Set to true if you want Production Environment (accept real transaction).
@@ -246,9 +316,87 @@ class UserController {
       };
 
       const midtransToken = await snap.createTransaction(parameter);
-      res.status(201).json(midtransToken);
+      // console.log(midtransToken, 'midtranstokennnnnnnnnn');
+      const createCheckout = await Checkout.create({
+        userId: req.user.id,
+        midtransCode: midtransToken.token,
+        transaction: t
+      })
+      req.body.carts.forEach(async (el) => {
+        temp.push({
+          // id: await helpers.getId(),
+          checkoutId: createCheckout.id,
+          productId: el.id,
+          quantity: el.quantity,
+          createdAt: new Date(),
+          updateAt: new Date(),
+        })
+        let dec = await Product.findOne({ where: { id: el.id } });
+        console.log(dec.stock, 'dec quantityyyyyyy');
+        console.log(el.quantity, 'el quantityyyyyyy');
+        if (dec && dec.stock > el.quantity) {
+          await dec.decrement("stock", { by: el.quantity, transaction: t });
+        } else {
+          console.log('erorrrrrrrrrrrrrr');
+          throw ({ message: 'Data yang anda minta tidak atau terlalu banyak dari stok produk' })
+        }
+      })
+      await CheckoutProduct.create({
+        checkoutId: createCheckout.id,
+        productId: 10,
+        quantity: 1,
+        transaction: t
+      })
+      // console.log(temp, 'cartsmidtransssssssssssss');
+      let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t })
+      console.log(bulkCreate, 'bulkkkkkkkkkkkkkkkkkkkkkk');
+      await t.commit()
+      res.status(201).json({ token: midtransToken.token })
     } catch (error) {
-      console.log(error);
+      console.log(error, 'testerror');
+      await t.rollback()
+      res.status(500).json(error)
+    }
+    // try {
+    //   const user = await User.findByPk(req.user.id);
+    //   let snap = new midtransClient.Snap({
+    //     // Set to true if you want Production Environment (accept real transaction).
+    //     isProduction: false,
+    //     serverKey: "SB-Mid-server-ZQU4wWb0ZkWhko2QA8_bZZGZ",
+    //   });
+
+    //   let parameter = {
+    //     transaction_details: {
+    //       order_id:
+    //         "INDOTEKNIK-ORDERID-" +
+    //         Math.floor(1000000 + Math.random() * 9000000), //harus unique
+    //       gross_amount: +req.query.total, //kalkulasikan total harga di sini
+    //     },
+    //     credit_card: {
+    //       secure: true,
+    //     },
+    //     customer_details: {
+    //       fullName: user.fullName,
+    //       email: user.email,
+    //       password: user.password,
+    //       phoneNumber: user.phoneNumber,
+    //       address: user.address,
+    //       imageProfile: user.imageProfile,
+    //     },
+    //   };
+
+    //   const midtransToken = await snap.createTransaction(parameter);
+    //   res.status(201).json(midtransToken);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  }
+
+  static async pay(req, res, next) {
+    try {
+
+    } catch (error) {
+
     }
   }
 }

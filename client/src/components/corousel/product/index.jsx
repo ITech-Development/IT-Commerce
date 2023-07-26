@@ -18,15 +18,15 @@ const divStyle = {
 }
 const slideImages = [
   {
-    url: 'https://res.cloudinary.com/dcbryptkx/image/upload/v1690185873/IndoTeknikMarketplace/product/banner/6_vj5jrs.jpg',
+    url: 'https://res.cloudinary.com/dcbryptkx/image/upload/v1690188800/IndoTeknikMarketplace/product/banner/A_sybvhf.jpg',
     caption: 'Slide 1'
   },
   {
-    url: 'https://res.cloudinary.com/dcbryptkx/image/upload/v1690185873/IndoTeknikMarketplace/product/banner/1_lprffj.jpg',
+    url: 'https://res.cloudinary.com/dcbryptkx/image/upload/v1690188802/IndoTeknikMarketplace/product/banner/B_ei3pep.jpg',
     caption: 'Slide 2'
   },
   {
-    url: 'https://res.cloudinary.com/dcbryptkx/image/upload/v1690185873/IndoTeknikMarketplace/product/banner/3_wktcxx.jpg',
+    url: 'https://res.cloudinary.com/dcbryptkx/image/upload/v1690188796/IndoTeknikMarketplace/product/banner/C_c4cdon.jpg',
     caption: 'Slide 3'
   },
 ];

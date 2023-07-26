@@ -24,13 +24,12 @@ function Index() {
   const process = async (data) => {
     const bayar = calculateTotalBayar()
     const config = {
-      headers: {
-        "Content-Type": "application/json",
-        access_token: localStorage.getItem("access_token")
-      }
+      "Content-Type": "application/json",
+      access_token: localStorage.getItem("access_token")
     }
 
-    const response = await axios.post(`http://localhost:3100/users/midtrans?total=${bayar}`, data, config)
+    const response = await axios({ url: `http://localhost:3100/users/midtrans?total=${bayar}`, data: { carts }, headers: config, method: 'post' })
+    console.log(response.data, 'dari front end');
     setToken(response.data.token);
   }
 
@@ -131,7 +130,7 @@ function Index() {
       const totalProductPrice = productPrice * quantity
       subtotal += totalProductPrice
     })
-    console.log(typeof subtotal, 'subtotalllllllllll');
+    // console.log(typeof subtotal, 'subtotalllllllllll');
     return subtotal
   }
 

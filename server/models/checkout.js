@@ -25,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     address: DataTypes.STRING,
     city: DataTypes.STRING,
     postalCode: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
+    midtransCode: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Checkout',

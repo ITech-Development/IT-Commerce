@@ -123,36 +123,35 @@ const Cart = () => {
               <h3 className="quantity">Quantity</h3>
               <h3 className="total">Total</h3>
             </div>
-            <div className="cart-items">
-              {carts?.map((cartItem) => (
-                <div key={cartItem.id} className="cart-item">
-                  <div className="cart-product">
-                    <img
-                      src={cartItem.product.image}
-                      alt={cartItem.product.image}
-                    />
+            <div class="cart-items">
+              {carts?.map(e => (
+                < div class="cart-item" >
+                  <div class="cart-product">
+                    <Link to={`/products/${e.product.id}`}>
+                      <img src={e.product.image} alt={e.product.name} />
+                    </Link>
                     <div>
-                      <h3>{cartItem.product.name}</h3>
-                      <p>{cartItem.product.description}</p>
-                      <button onClick={() => handleRemove(cartItem.id)}>
+                      <h3>{e.product.name}</h3>
+                      <p>{e.product.description}</p>
+                      <button onClick={() => handleRemove(e.id)}>
                         Remove
                       </button>
                     </div>
                   </div>
                   <div className="cart-product-price">
-                    Rp.{cartItem.product.unitPrice}
+                    Rp.{e.product.unitPrice}
                   </div>
                   <div className="cart-product-quantity">
-                    <button onClick={() => handleDecrement(cartItem.id)}>
+                    <button onClick={() => handleDecrement(e.id)}>
                       -
                     </button>
-                    <div className="count">{cartItem.quantity}</div>
-                    <button onClick={() => handleIncrement(cartItem.id)}>
+                    <div className="count">{e.quantity}</div>
+                    <button onClick={() => handleIncrement(e.id)}>
                       +
                     </button>
                   </div>
                   <div className="cart-product-total-price">
-                    Rp.{cartItem.quantity * cartItem.product.unitPrice}
+                    Rp.{e.quantity * e.product.unitPrice}
                   </div>
                 </div>
               ))}

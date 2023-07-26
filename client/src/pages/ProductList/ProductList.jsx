@@ -185,7 +185,7 @@ const ProductList = () => {
                   value={searchQuery}
                   onChange={handleSearchInputChange}
                   style={searchInputStyle}
-                  placeholder="Cari Produk Berdasarkan Nama..."
+                  placeholder="Cari Produk Berdasarkan Namab..."
                 />
                 <select
                   value={sortOption}

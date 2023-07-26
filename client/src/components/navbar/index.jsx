@@ -1,7 +1,7 @@
-import React, { useEffect,useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./style.css";
-import { Link } from "react-router-dom";
-import axios from 'axios'
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 import Logo from "../../assets/Logo.png";
 // import ShopIcon from "../../assets/shopIcon.png";
 // import PhotoProfileIcon from "../../assets/user.png";
@@ -9,25 +9,24 @@ import ProfileIcon from "../../assets/icon.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
-
 export default function Navigation() {
-  const [carts, setCarts] = useState([])
+  const [carts, setCarts] = useState([]);
 
   const totalQuantity = carts.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = 'http://localhost:3100/product-carts'
+      let url = "http://localhost:3100/product-carts";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
-          setCarts(data)
+          setCarts(data);
         })
         .catch((error) => {
           console.log(error);
-        })
+        });
     }
-  }, [])
+  }, []);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -45,6 +44,11 @@ export default function Navigation() {
   const RenderMenu = () => {
     const token = localStorage.getItem("access_token");
     const showCart = token ? true : false;
+
+    const { id } = useParams();
+
+    // Membuat tautan profil dinamis berdasarkan 'id'
+    const profileLink = `/profile-update/${id}`;
 
     return (
       <>
@@ -65,7 +69,7 @@ export default function Navigation() {
         {showCart && (
           <li>
             <Link to="/cart">
-            <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
+              <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
               <span
                 style={{
                   position: "relative",
@@ -74,10 +78,10 @@ export default function Navigation() {
                   borderRadius: "50px",
                   padding: "4px 9px",
                   textDecoration: "none",
-                  color: 'black',
+                  color: "black",
                   top: "-8px",
                   right: "8px",
-                  fontSize: '13px'
+                  fontSize: "13px",
                 }}
               >
                 {totalQuantity}
@@ -98,6 +102,7 @@ export default function Navigation() {
                 <ul className="dropdown-menu">
                   <li>
                     <Link to="/profile-update">Profile</Link>
+                    {/* <Link to={profileLink}>Profile</Link> */}
                   </li>
                   <li>
                     <Link onClick={handleLogout}>Logout</Link>
