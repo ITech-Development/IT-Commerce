@@ -1,5 +1,5 @@
 const { verifyToken } = require("../helpers/jwt")
-const { User, Product, SuperAdmin } = require('../models')
+const { User, Product, SuperAdmin, AdminSeller } = require('../models')
 
 // async function authentication(req, res, next) {
 //     try {
@@ -27,14 +27,10 @@ const { User, Product, SuperAdmin } = require('../models')
 async function authenticationUser(req, res, next) {
     try {
         let { access_token } = req.headers
-        // console.log(req.headers.headers, 'headersssssssssssssssssssss');
-        // console.log(access_token, 'accessssssssssssssssssstoken');
         let verify = verifyToken(access_token)
-        // console.log(verify, 'verifyyyyyyyyyyyyyyyyyyyy');
         let user = await User.findOne({
-            where: {id: verify.id}
+            where: { id: verify.id }
         })
-        // console.log(user, 'userrrrrrrrrrrrrrrrrrrrrrrr');
         if (!user) {
             throw { name: 'ForbiddenError' }
         }
@@ -43,7 +39,7 @@ async function authenticationUser(req, res, next) {
         }
         next()
     } catch (error) {
-        console.log(error, 'eror midle ware');
+
         next(error);
     }
 }
@@ -52,6 +48,7 @@ async function authentication(req, res, next) {
     try {
         const { access_token } = req.headers
         const verify = verifyToken(access_token)
+
         const superAdmin = await SuperAdmin.findOne({
             where: { id: verify.id }
         })
@@ -64,6 +61,29 @@ async function authentication(req, res, next) {
             id: superAdmin.id,
             role: superAdmin.role,
             email: superAdmin.email
+        }
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+}
+
+async function authenticationAdminSeller(req, res, next) {
+    try {
+        const { access_token } = req.headers
+        const verify = verifyToken(access_token)
+        const adminSeller = await AdminSeller.findOne({
+            where: { id: verify.id }
+        })
+
+        if (!adminSeller) {
+            throw { name: 'ForbiddenError' }
+        }
+        req.adminSeller = {
+            id: adminSeller.id,
+            role: adminSeller.role,
+            email: adminSeller.email
         }
         next()
     } catch (error) {
@@ -97,8 +117,20 @@ async function authentication(req, res, next) {
 
 async function authorization(req, res, next) {
     try {
-        console.log(req, 'heiiiiiiiiiiiii');
-        if (req.superAdmin.role === 'superAdmin') {
+        if (req.superAdmin.role === "superAdmin") {
+            next();
+        } else {
+            throw { name: 'ForbiddenError' };
+        }
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+}
+
+async function authorizationAdminSeller(req, res, next) {
+    try {
+        if (req.adminSeller.role === 'adminSeller') {
             next();
         } else {
             throw { name: 'ForbiddenError' };
@@ -112,4 +144,4 @@ async function authorization(req, res, next) {
 
 
 
-module.exports = { authentication, authorization, authenticationUser }
+module.exports = { authentication, authorization, authenticationUser, authenticationAdminSeller, authorizationAdminSeller }

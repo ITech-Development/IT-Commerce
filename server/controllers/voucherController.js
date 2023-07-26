@@ -15,14 +15,14 @@ class VoucherController {
         try {
             const {
                 image,
-                price,
+                discount,
                 duration,
                 description,
             } = req.body
 
             const newVoucher = await Voucher.create({
                 image,
-                price,
+                discount,
                 duration,
                 description
             })

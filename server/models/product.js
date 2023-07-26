@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'typeId',
         as: 'types'
       });
+      Product.belongsTo(models.Voucher, {
+        foreignKey: 'voucherId',
+        as: 'vouchers',
+      });
       Product.belongsTo(models.SuperAdmin, {
         foreignKey: 'authorId'
       });
@@ -42,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     shippingInsurance: DataTypes.STRING,
     deliveryService: DataTypes.STRING,
     authorId: DataTypes.INTEGER,
+    voucherId: DataTypes.INTEGER,
     brand: DataTypes.STRING
   }, {
     sequelize,

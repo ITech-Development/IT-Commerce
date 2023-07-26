@@ -41,7 +41,8 @@ class ProductController {
                 shippingInsurance: req.body.shippingInsurance,
                 deliveryService: req.body.deliveryService,
                 authorId: req.superAdmin.id,
-                brand: req.body.brand
+                brand: req.body.brand,
+                voucherId: req.body.voucherId
             })
             res.status(201).json(newProduct)
         } catch (error) {

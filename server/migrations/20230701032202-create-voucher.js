@@ -9,10 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      voucherCode: {
+        type: Sequelize.STRING
+      },
       image: {
         type: Sequelize.STRING
       },
-      price: {
+      discount: {
         type: Sequelize.INTEGER
       },
       duration: {
@@ -20,6 +23,13 @@ module.exports = {
       },
       description: {
         type: Sequelize.STRING
+      },
+      authorId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'AdminSellers',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

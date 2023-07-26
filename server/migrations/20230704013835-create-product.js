@@ -66,6 +66,15 @@ module.exports = {
           key: 'id'
         }
       },
+      voucherId: {
+        type: Sequelize.INTEGER,
+        allowNull: true, // Izinkan nilai voucherId null
+        defaultValue: null, // Atur default value menjadi null,
+        references: {
+          model: 'Vouchers',
+          key: 'id'
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

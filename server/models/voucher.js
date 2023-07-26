@@ -11,11 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Voucher.hasMany(models.Product, {
+        foreignKey: 'voucherId',
+        as: 'products', // Nama asosiasi untuk akses relasi ke Product
+      });
     }
   }
   Voucher.init({
+    voucherCode: DataTypes.STRING,
     image: DataTypes.STRING,
-    price: DataTypes.INTEGER,
+    discount: DataTypes.INTEGER,
     duration: DataTypes.INTEGER,
     description: DataTypes.STRING
   }, {
