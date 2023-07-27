@@ -1,17 +1,23 @@
 import React from "react";
-import HeroImage from "../../../assets/Stepping up.png";
+import HeroImage from "../../../assets/ilus.png";
 import "./heroSec.css";
 
-export default function index() {
+export default function Index() {
   return (
-    <div className="container">
-      <div className="content">
-        <p className="title" style={{ color: "#010F52" }}>
-          <strong>Perusahaan layanan dan eksekusi terpadu</strong> satu atap pertama di Indonesia
+    <div className="hero-container">
+      <div className="hero-content">
+        <h1 className="title">
+          <strong>Perusahaan Layanan dan Eksekusi Terpadu</strong>
+        </h1>
+        <p className="subtitle">Satu Atap Pertama di Indonesia</p>
+        <p className="description">
+          Memberdayakan pembelian, penjualan, dan layanan Anda
         </p>
-        <p>Memberdayakan pembelian, Penjualan, dan Layanan Anda</p>
+        <button className="cta-button">Get Started</button>
       </div>
-      <img src={HeroImage} alt="" />
+      <div className="hero-image-container">
+        <img src={HeroImage} alt="" className="hero-image" />
+      </div>
     </div>
   );
 }

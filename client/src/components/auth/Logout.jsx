@@ -1,22 +1,22 @@
-import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../App.jsx';
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../App.jsx";
 
 const Logout = () => {
-  const { state, dispatch } = useContext(UserContext);
+  const { dispatch } = useContext(UserContext);
   const navigate = useNavigate();
 
   const logout = () => {
     // TODO: Show a confirmation modal to ask the user if they are sure they want to log out.
 
     // Remove access token from local storage
-    localStorage.removeItem('access_token');
+    localStorage.removeItem("access_token");
 
     // Dispatch action to update user state
-    dispatch({ type: 'LOGOUT' }); // Use a constant like 'LOGOUT' for action type
+    dispatch({ type: "LOGOUT" }); // Use a constant like 'LOGOUT' for action type
 
     // Redirect to the login page
-    navigate('/login');
+    navigate("/login");
   };
 
   return (

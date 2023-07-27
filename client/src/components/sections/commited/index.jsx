@@ -1,15 +1,17 @@
 import React from "react";
-import "./commitStyle.css";
 import Items from "./items";
+import indexStyles from "./indexStyles";
 
-export default function index() {
+export default function Index() {
   return (
-    <div className="checked">
-      <h1 className="title">
+    <div style={indexStyles.container}>
+      <h2 style={indexStyles.title}>
         Apa pun kepada siapa pun dari mana saja
         <br />
-        <span className="subtitle">Dapatkan semua produk dan layanan otomotif bersama kami</span>
-      </h1>
+        <span style={indexStyles.subtitle}>
+          Dapatkan semua produk dan layanan otomotif bersama kami
+        </span>
+      </h2>
       <Items />
     </div>
   );

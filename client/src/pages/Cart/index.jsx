@@ -86,11 +86,11 @@ const Cart = () => {
   };
 
   const calculateTotal = () => {
-    const subtotal = calculateSubtotal()
-    const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
-    const total = subtotal + ppn // menghitung total(subtotal + ppn)
-    return total.toFixed(2) // mengembalikan nilai total menjadi nilaidesimal 
-  }
+    const subtotal = calculateSubtotal();
+    const ppn = subtotal * 0.11;
+    const total = subtotal + ppn;
+    return total.toFixed(2);
+  };
 
   const calculatePPN = () => {
     const subtotal = calculateSubtotal();
@@ -102,7 +102,7 @@ const Cart = () => {
     <>
       <div
         className="cart-container"
-        style={{ position: "relative", top: "80px" }}
+        style={{ position: "relative", top: "50px" }}
       >
         <h2>Shopping Cart</h2>
         {carts.length === 0 ? (
@@ -131,27 +131,27 @@ const Cart = () => {
                       <img src={e.product.image} alt={e.product.name} />
                     </Link>
                     <div>
-                      <h3>{cartItem.product.name}</h3>
-                      <p>{cartItem.product.description}</p>
-                      <button onClick={() => handleRemove(cartItem.id)}>
+                      <h3>{e.product.name}</h3>
+                      <p>{e.product.description}</p>
+                      <button onClick={() => handleRemove(e.id)}>
                         Remove
                       </button>
                     </div>
                   </div>
                   <div className="cart-product-price">
-                    Rp.{cartItem.product.unitPrice}
+                    Rp.{e.product.unitPrice}
                   </div>
                   <div className="cart-product-quantity">
-                    <button onClick={() => handleDecrement(cartItem.id)}>
+                    <button onClick={() => handleDecrement(e.id)}>
                       -
                     </button>
-                    <div className="count">{cartItem.quantity}</div>
-                    <button onClick={() => handleIncrement(cartItem.id)}>
+                    <div className="count">{e.quantity}</div>
+                    <button onClick={() => handleIncrement(e.id)}>
                       +
                     </button>
                   </div>
                   <div className="cart-product-total-price">
-                    Rp.{cartItem.quantity * cartItem.product.unitPrice}
+                    Rp.{e.quantity * e.product.unitPrice}
                   </div>
                 </div>
               ))}
@@ -165,7 +165,14 @@ const Cart = () => {
                   <span>Subtotal :</span>
                   <span className="amount">Rp.{calculateSubtotal()}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontStyle: "italic",
+                    padding: "8px 0",
+                  }}
+                >
                   <span>PPN 11% :</span>
                   <span className="amount"> Rp. {calculatePPN()}</span>
                 </div>
@@ -176,7 +183,7 @@ const Cart = () => {
                   </span>
                 </div>
                 <button style={checkoutButtonStyle}>
-                  <Link to="/shipping" style={linkStyle}>
+                  <Link to="/check-trans" style={linkStyle}>
                     Check Out
                   </Link>
                 </button>

@@ -52,8 +52,9 @@
 
 .product {
   margin: 15px 10px;
-  width: auto;
+  /* width: auto; */
   height: auto;
+  width: 233px;
   padding: 0.9em;
   background: #f5f5f5;
   position: relative;
@@ -61,7 +62,6 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   border: 1px solid #f5f5f5;
   border-radius: 10px;
-  width: 280px;
 }
 
 .product p {
@@ -250,11 +250,13 @@
   cursor: pointer;
 }
 
-.continue-shopping, .start-shopping {
+.continue-shopping,
+.start-shopping {
   margin-top: 1rem;
 }
 
-.continue-shopping a, .start-shopping a {
+.continue-shopping a,
+.start-shopping a {
   display: flex;
   color: gray;
   text-decoration: none;
@@ -262,7 +264,8 @@
   /* align-items: center; */
 }
 
-.continue-shopping a span, .start-shopping a span{
+.continue-shopping a span,
+.start-shopping a span {
   /* margin-left: 0.5rem; */
   display: flex;
   align-items: center;

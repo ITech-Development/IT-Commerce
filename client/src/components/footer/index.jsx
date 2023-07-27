@@ -1,23 +1,65 @@
-import React from 'react';
+import React from "react";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTwitter,
+  faFacebookF,
+  faInstagram,
+  faLinkedinIn,
+} from "@fortawesome/free-brands-svg-icons";
 
+// Styled components for the Footer
+const FooterContainer = styled.footer`
+  background-color: #222;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  margin-top: 30px;
+`;
+
+const FooterText = styled.p`
+  margin: 0;
+`;
+
+const SocialIconsContainer = styled.div`
+  margin-top: 10px;
+`;
+
+const SocialIcon = styled.a`
+  display: inline-block;
+  margin: 0 5px;
+  font-size: 24px;
+  color: #fff;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #ffcc00;
+  }
+`;
+
+// Footer component
 const Footer = () => {
   return (
-    <div style={styles.footer}>
-      <p>© {new Date().getFullYear()} Powered by PT. Itech Persada Nusantara. All rights reserved.</p>
-    </div>
+    <FooterContainer>
+      <FooterText>
+        &copy; 2023 PT. ITech Persada Nusantara. All rights reserved.
+      </FooterText>
+      <SocialIconsContainer>
+        <SocialIcon href="#" target="_blank">
+          <FontAwesomeIcon icon={faTwitter} />
+        </SocialIcon>
+        <SocialIcon href="#" target="_blank">
+          <FontAwesomeIcon icon={faFacebookF} />
+        </SocialIcon>
+        <SocialIcon href="#" target="_blank">
+          <FontAwesomeIcon icon={faInstagram} />
+        </SocialIcon>
+        <SocialIcon href="#" target="_blank">
+          <FontAwesomeIcon icon={faLinkedinIn} />
+        </SocialIcon>
+      </SocialIconsContainer>
+    </FooterContainer>
   );
-};
-
-const styles = {
-  footer: {
-    backgroundColor: '#f0f0f0',
-    padding: '10px',
-    textAlign: 'center',
-    position: 'fixed',
-    bottom: 0,
-    left: 0,
-    width: '100%',
-  },
 };
 
 export default Footer;

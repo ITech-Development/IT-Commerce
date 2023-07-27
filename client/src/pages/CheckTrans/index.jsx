@@ -147,9 +147,16 @@ function Index() {
     return subtotalPpn
   }
   const calculateTotalBayar = () => {
-    let result = totalShippingCost + calculateTotal();
-    return result
-  }
+    const total = parseFloat(calculateTotal()); // Convert total to a number
+    const result = (total + parseFloat(totalShippingCost)).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+    return result;
+  };
+  
+  
+  
 
   const calculatePPN = () => {
     const subtotal = calculateSubtotal()
@@ -244,6 +251,7 @@ function Index() {
     setCourier(courier);
   };
 
+<<<<<<< HEAD
   function index() {
     return (
       <div>
@@ -269,6 +277,33 @@ function Index() {
                 Edit
               </button>
             </div>
+=======
+  return (
+    <div>
+      <div className="alamat">
+        <h2>Alamat Pengiriman</h2>
+        <div>
+          <h4 style={{textAlign: "start", position: 'relative', top: '15px'}}>Evans (+62) 8162626267</h4>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <p>
+              Indo Teknik, Jalan Riau Ujung No. 898 904, Payung Sekaki, KOTA
+              PEKANBARU - PAYUNG SEKAKI, RIAU, ID 28292
+            </p>
+            <button
+              style={{
+                border: "none",
+                background: "none",
+                cursor: "pointer",
+                fontWeight: "700",
+                color: "blue",
+                fontSize: "18px",
+              }}
+            >
+              <Link to='/profile-update'> 
+              Edit
+              </Link>
+            </button>
+>>>>>>> 2667a5cda15ce02a14b9e978d5e71b2f1a1dfe58
           </div>
         </div>
         <div
@@ -344,6 +379,7 @@ function Index() {
                   </div>
                 </div>
               </div>
+<<<<<<< HEAD
             )}
           </div >
           <div
@@ -396,15 +432,84 @@ function Index() {
                   <p>Est: {el.cost[0].etd} Days</p>
                 </div>
               )) : null}
+=======
+            </div>
+          )}
+        </div >
+        <div
+          className="calcongkir"
+          style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
+        >
+          <h2>Pilih Metode Pengiriman</h2>
+          <div>
+            <select
+              name="province"
+              id="province"
+              onChange={handleProvinceChange}
+              className="province"
+            >
+              <option value="">Select Province</option>
+              {province.map((item) => (
+                <option key={item.province_id} value={item.province_id}>
+                  {item.province}
+                </option>
+              ))}
+            </select>
+            <select name="city" id="city" onChange={handlerGetCost}
+            className="city">
+              <option value="">Select City</option>
+              {Array.isArray(city) &&
+                city.map((item) => (
+                  <option key={item.city_id} value={item.city_id}>
+                    {item.city_name}
+                  </option>
+                ))}
+            </select>
+            <select onChange={handlerSetCourier} className="cost">
+              <option value="jne">jne</option>
+              <option value="tiki">tiki</option>
+              <option value="pos">pos</option>
+            </select>
+            {pengiriman ? pengiriman.map((el, index) => (
+              <div key={index}>
+                <input
+                  type="radio"
+                  id={`shippingChoice${index}`}
+                  name="shipping"
+                  value={el.cost[0].value}
+                  checked={selectedShippingCost === el.cost[0].value}
+                  onChange={handleShippingCostChange}
+                />
+                <label htmlFor={`shippingChoice${index}`}>
+                  Shipping Cost: Rp.{el.cost[0].value}
+                </label>
+                <p>Service: {el.service}</p>
+                <p>Description: {el.description}</p>
+                <p>Est: {el.cost[0].etd} Days</p>
+              </div>
+            )) : null}
+>>>>>>> 2667a5cda15ce02a14b9e978d5e71b2f1a1dfe58
 
             </div>
           </div>
+<<<<<<< HEAD
           <div style={{ textAlign: 'end', padding: '20px 65px', fontSize: '20px' }}>
             <span>Total Bayar : </span>
             <span style={{ fontWeight: "700" }} className="amount">
               Rp. {calculateTotalBayar()}
             </span>
             {/* {totalShippingCost === 0 ? */}
+=======
+        </div>
+        <div
+          style={{ textAlign: "end", padding: "20px 65px", fontSize: "20px" }}
+        >
+          <span>Total Bayar : </span>
+          <span style={{ fontWeight: "700" }} className="amount">
+            Rp. {calculateTotalBayar()}
+          </span>
+          {/* {totalShippingCost === 0 ? */}
+>>>>>>> 2667a5cda15ce02a14b9e978d5e71b2f1a1dfe58
             <p><i>Silahkan pilih metode pengiriman</i></p> :
             <button onClick={() => process()}>Payment</button>
             {/* } */}

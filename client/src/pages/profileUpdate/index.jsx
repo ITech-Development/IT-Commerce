@@ -1,95 +1,158 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+// ProfileForm.js
+import React, { useState } from "react";
+import styled from "styled-components";
 
-const UpdateUser = () => {
-  
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    fullName: '',
-    phoneNumber: '',
-    address: '',
-    imageProfile: null,
-  });
+const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 90px auto;
+  padding: 20px 70px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+const Heading = styled.h1`
+  margin-bottom: 30px;
+  color: #007bff;
+`;
+
+const Label = styled.label`
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+`;
+
+const Input = styled.input`
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+
+  &:focus {
+    border-color: #007bff;
+  }
+`;
+
+const TextArea = styled.textarea`
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  resize: vertical;
+
+  &:focus {
+    border-color: #007bff;
+  }
+`;
+
+const Button = styled.button`
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+const ProfilePicture = styled.img`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  object-fit: cover;
+  border: 2px solid #007bff;
+`;
+
+const ProfileForm = () => {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // Here, you can implement the logic to handle form submission.
+    // You can access the form data (fullName, email, phone, address, profilePicture)
+    // and perform the necessary actions (e.g., sending data to the server, etc.).
+
+    // For this example, we'll just display the data in the console.
+    console.log("Full Name:", fullName);
+    console.log("Email:", email);
+    console.log("Phone:", phone);
+    console.log("Address:", address);
+    console.log("Profile Picture URL:", profilePicture);
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFormData((prevState) => ({
-      ...prevState,
-      imageProfile: file,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const formDataToSend = new FormData();
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('password', formData.password);
-      formDataToSend.append('fullName', formData.fullName);
-      formDataToSend.append('phoneNumber', formData.phoneNumber);
-      formDataToSend.append('address', formData.address);
-      formDataToSend.append('imageProfile', formData.imageProfile);
-
-      const userId = 1; // Replace with the authenticated user's ID
-      const response = await fetch(`http://localhost:3100/users/${userId}`, {
-        method: 'PUT',
-        body: formDataToSend,
-        headers: {
-          access_token: localStorage.getItem('access_token')
-        }
-      });
-
-      if (response.ok) {
-        // Pembaruan berhasil, lakukan sesuatu, misalnya tampilkan notifikasi
-        console.log('User data updated successfully!');
-      } else {
-        // Tangani kasus jika ada masalah pada pembaruan data
-        console.error('Failed to update user data.');
-      }
-    } catch (error) {
-      console.error('An error occurred while updating user data:', error);
-    }
+  const handleProfilePictureChange = (event) => {
+    const file = event.target.files[0];
+    setProfilePicture(file);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Email:</label>
-        <input type="email" name="email" value={formData.email} onChange={handleChange} />
-      </div>
-      <div>
-        <label>Password:</label>
-        <input type="password" name="password" value={formData.password} onChange={handleChange} />
-      </div>
-      <div>
-        <label>Full Name:</label>
-        <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} />
-      </div>
-      <div>
-        <label>Phone Number:</label>
-        <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
-      </div>
-      <div>
-        <label>Address:</label>
-        <textarea name="address" value={formData.address} onChange={handleChange} />
-      </div>
-      <div>
-        <label>Image Profile:</label>
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-      </div>
-      <button type="submit">Update User</button>
-    </form>
+    <FormContainer>
+      <Heading>Update Your Profile</Heading>
+      <form onSubmit={handleSubmit}>
+        <Label>Full Name</Label>
+        <Input
+          type="text"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+        />
+
+        <Label>Email</Label>
+        <Input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <Label>Phone</Label>
+        <Input
+          type="tel"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+
+        <Label>Address</Label>
+        <TextArea
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          rows={4}
+        />
+
+        <Label>Profile Picture</Label>
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={handleProfilePictureChange}
+        />
+
+        {profilePicture && (
+          <ProfilePicture
+            src={URL.createObjectURL(profilePicture)}
+            alt="Profile"
+          />
+        )}
+
+        <Button type="submit">Update Profile</Button>
+      </form>
+    </FormContainer>
   );
 };
 
-export default UpdateUser;
+export default ProfileForm;

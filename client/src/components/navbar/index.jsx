@@ -1,29 +1,32 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./style.css";
-import { Link } from "react-router-dom";
-import axios from 'axios'
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 import Logo from "../../assets/Logo.png";
-import ShopIcon from "../../assets/shopIcon.png";
-import PhotoProfileIcon from "../../assets/user.png";
+// import ShopIcon from "../../assets/shopIcon.png";
+// import PhotoProfileIcon from "../../assets/user.png";
+import ProfileIcon from "../../assets/icon.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 export default function Navigation() {
-  const [carts, setCarts] = useState([])
+  const [carts, setCarts] = useState([]);
 
   const totalQuantity = carts.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = 'http://localhost:3100/product-carts'
+      let url = "http://localhost:3100/product-carts";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
-          dsetCarts(data)
+          setCarts(data);
         })
         .catch((error) => {
           console.log(error);
-        })
+        });
     }
-  }, [])
+  }, []);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -55,27 +58,25 @@ export default function Navigation() {
             <Link to="/productlist">Products</Link>
           </li>
           <li>
-            <Link to="/service">Services</Link>
+            <Link to="/services">Services</Link>
           </li>
         </div>
         {showCart && (
           <li>
             <Link to="/cart">
-              <img
-                style={{ height: "50px", color: "blue", cursor: "pointer" }}
-                src={ShopIcon}
-                alt=""
-              />
+              <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
               <span
                 style={{
                   position: "relative",
-                  backgroundColor: "yellow",
-                  border: "1px solid yellow",
+                  backgroundColor: "#2EEDF5",
+                  border: "1px solid #2EEDF5",
                   borderRadius: "50px",
-                  padding: "3px 10px",
+                  padding: "4px 9px",
                   textDecoration: "none",
-                  top: "-30px",
-                  right: "26px",
+                  color: "black",
+                  top: "-8px",
+                  right: "8px",
+                  fontSize: "13px",
                 }}
               >
                 {totalQuantity}
@@ -89,13 +90,14 @@ export default function Navigation() {
               <img
                 onClick={toggleDropdown}
                 style={{ height: "50px", color: "blue", cursor: "pointer" }}
-                src={PhotoProfileIcon}
+                src={ProfileIcon}
                 alt=""
               />
               {isDropdownOpen && (
                 <ul className="dropdown-menu">
                   <li>
                     <Link to="/profile-update">Profile</Link>
+                    {/* <Link to={profileLink}>Profile</Link> */}
                   </li>
                   <li>
                     <Link onClick={handleLogout}>Logout</Link>

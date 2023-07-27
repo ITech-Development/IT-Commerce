@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 
 import productsReducer, { productsFetch } from "./features/productSlice";
 import { productsApi } from "./features/productsApi";
-import cartReducer, {getTotals} from "./features/cartSlice";
+import cartReducer, { getTotals } from "./features/cartSlice";
 
 const store = configureStore({
   reducer: {
@@ -17,13 +17,12 @@ const store = configureStore({
     cart: cartReducer,
     [productsApi.reducerPath]: productsApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => 
-    getDefaultMiddleware().concat(productsApi.middleware)
-  
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(productsApi.middleware),
 });
 
 store.dispatch(productsFetch());
-store.dispatch(getTotals())
+store.dispatch(getTotals());
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
