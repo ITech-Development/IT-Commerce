@@ -7,6 +7,9 @@ router.get('/', VoucherController.getAllVouchers)
 router.post('/', authentication, authenticationAdminSeller, authorization, authorizationAdminSeller, VoucherController.addVoucher)
 router.get('/:id', VoucherController.detailsVoucher)
 router.put('/:id', authentication, authenticationAdminSeller, authorization, authorizationAdminSeller, VoucherController.editVoucher)
-router.delete('/:id', VoucherController.deleteVoucher)
+
+if (router.use(authentication, authorization) || router.use(authenticationAdminSeller, authorizationAdminSeller)) {
+    router.delete('/:id', VoucherController.deleteVoucher)
+}
 
 module.exports = router

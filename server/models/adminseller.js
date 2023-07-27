@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'adminSellerId',
         as: 'adminSeller'
       })
+      AdminSeller.hasMany(models.Voucher, { foreignKey: 'authorId' })
     }
   }
   AdminSeller.init({
@@ -41,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      
+
     },
     phoneNumber: DataTypes.STRING,
     address: DataTypes.STRING,

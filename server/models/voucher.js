@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const adminseller = require('./adminseller');
 module.exports = (sequelize, DataTypes) => {
   class Voucher extends Model {
     /**
@@ -15,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'voucherId',
         as: 'products', // Nama asosiasi untuk akses relasi ke Product
       });
+      Voucher.belongsTo(models.AdminSeller, {
+        foreignKey: 'authorId'
+      });
     }
   }
   Voucher.init({
@@ -22,7 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     image: DataTypes.STRING,
     discount: DataTypes.INTEGER,
     duration: DataTypes.INTEGER,
-    description: DataTypes.STRING
+    description: DataTypes.STRING,
+    authorId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Voucher',

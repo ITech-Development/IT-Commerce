@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      SuperAdmin.hasMany(models.Product, { foreignKey: 'authorId'})
+      SuperAdmin.hasMany(models.Product, { foreignKey: 'authorId' })
     }
   }
   SuperAdmin.init({

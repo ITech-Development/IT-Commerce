@@ -18,13 +18,17 @@ class VoucherController {
                 discount,
                 duration,
                 description,
+                voucherCode,
+                authorId
             } = req.body
 
             const newVoucher = await Voucher.create({
                 image,
                 discount,
                 duration,
-                description
+                voucherCode,
+                description,
+                authorId
             })
 
             res.status(201).json(newVoucher)
