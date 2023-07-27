@@ -1,6 +1,7 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import './App.css';
 import Navbar from "./components/navbar"
+import AddProduct from "./pages/addProduct"
 import Login from "./components/auth/Login";
 import Dashboard from "./pages/dashboard";
 import React, { createContext, useEffect, useReducer } from "react";
@@ -11,11 +12,19 @@ import { initialState, reducer } from "./reducer/UseReducer";
 
 export const UserContext = createContext();
 
+const isLoggedIn = localStorage.getItem('access_token')
+
 const Routing = () => {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route
+        path="/"
+        element={
+          isLoggedIn ? <Navigate to="/dashboard" /> : <Login />
+        }
+      />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/add-product" element={<AddProduct />} />
     </Routes>
   );
 }
