@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
         as: 'vouchers',
       });
       Product.belongsTo(models.SuperAdmin, {
-        foreignKey: 'authorId'
+        foreignKey: 'authorId',
+        as: 'superAdmins'
       });
       Product.hasMany(models.OrderProduct, {
         foreignKey: 'productId',

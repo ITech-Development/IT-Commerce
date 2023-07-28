@@ -6,6 +6,15 @@ const salt = bcryptjs.genSaltSync(10);
 
 class AdminSellerController {
 
+    static async getAllAdminSellers(req, res, next) {
+        try {
+            const adminSellers = await AdminSeller.findAll()
+            res.status(200).json(adminSellers)
+        } catch (error) {
+            next(error)
+        }
+    }
+
     static async registerAdminSeller(req, res, next) {
         try {
             const {

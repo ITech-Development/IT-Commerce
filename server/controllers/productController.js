@@ -1,5 +1,5 @@
 
-const { Product, ProductCategory, ProductType, User } = require('../models')
+const { Product, ProductCategory, ProductType, User, SuperAdmin } = require('../models')
 
 class ProductController {
 
@@ -14,6 +14,10 @@ class ProductController {
                     {
                         model: ProductType,
                         as: 'types'
+                    },
+                    {
+                        model: SuperAdmin,
+                        as: 'superAdmins'
                     }
                 ]
             });

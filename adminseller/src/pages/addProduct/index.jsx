@@ -1,174 +1,223 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 const AddProduct = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        categoryId: '',
-        typeId: '',
-        // Add more fields here according to your requirements
-    });
+    const navigate = useNavigate()
+    const [name, setName] = useState('')
+    const [categories, setCategories] = useState([])
+    const [types, setTypes] = useState([])
+    const [image, setImage] = useState('')
+    const [condition, setCondition] = useState('')
+    const [description, setDescription] = useState('')
+    const [minimumOrder, setMinimumOrder] = useState(1)
+    const [unitPrice, setUnitPrice] = useState(0)
+    const [status, setStatus] = useState('')
+    const [stock, setStock] = useState(1)
+    const [weight, setWeight] = useState(0)
+    const [deliveryService, setDeliveryService] = useState('')
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-    };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // Handle form submission here, e.g., send formData to the server
-        console.log(formData);
+    useEffect(() => {
+        // Fetch categories and types from the API backend
+        const fetchCategoriesAndTypes = async () => {
+            try {
+                const categoriesResponse = await axios.get('http://localhost:3100/product-categories');
+                const typesResponse = await axios.get('http://localhost:3100/product-types');
+                console.log(categoriesResponse.data, 'categoriessssssssss');
+                setCategories(categoriesResponse.data); // Set nilai state categories dengan data kategori dari API
+                setTypes(typesResponse.data); // Set nilai state types dengan data tipe produk dari API
+            } catch (error) {
+                console.log(error, 'error fetching categories and types');
+            }
+        };
+
+        fetchCategoriesAndTypes();
+    }, []);
+
+
+    const handleAddToProduct = async (product) => {
+        product.preventDefault()
+
+        const productData = {
+            name,
+            categories,
+            types,
+            image,
+            condition,
+            description,
+            minimumOrder,
+            unitPrice,
+            status,
+            stock,
+            weight,
+            deliveryService,
+        };
+        const accessToken = localStorage.getItem('access_token')
+        if (accessToken) {
+            const url = "http://localhost:3100/products"
+            try {
+                const response = await axios.post(url, product, {
+                    headers: { access_token: accessToken }
+                })
+                console.log(response.data, 'data dari handleAddToProduct');
+                clearForm();
+            } catch (error) {
+                console.log(error, 'error dari handleAddToProduct');
+            }
+        }
+    }
+
+    const clearForm = () => {
+        setName('');
+        setCategories('');
+        setTypes('');
+        setImage('');
+        setCondition('');
+        setDescription('');
+        setMinimumOrder(0);
+        setUnitPrice(0);
+        setStatus('');
+        setStock(0);
+        setWeight(0);
+        setDeliveryService('');
+
+        // setVouchers('');
     };
 
     return (
         <div>
             <h2>Add Product</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleAddToProduct}>
                 <div>
-                    <label>Name:</label>
+                    <label>Name: {' '}</label>
                     <input
                         type="text"
                         name="name"
-                        value={formData.name}
-                        onChange={handleChange}
+                        value={name}
+                        onChange={(product) => setName(product.target.value)}
                         required
                     />
                 </div>
                 <div>
-                    <label>Categories</label>
-                    <input
-                        type="number"
-                        name="categoryId"
-                        value={formData.categoryId}
-                        onChange={handleChange}
+                    <label>Categories: {' '}</label>
+                    <select
+                        name="categories"
+                        value={categories}
+                        onChange={(product) => setCategories(product.target.value)}
                         required
-                    />
-                    <select name="" id="">
-                        <option value="">test</option>
-                        <option value="">tis</option>
+                    >
+                        <option value="">-- Select a category --</option>
+                        {categories.map((category) => ( 
+                            <option key={category.id} value={category.id}>
+                                {category.name}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div>
-                    <label>Types</label>
-                    <input
-                        type="number"
-                        name="typeId"
-                        value={formData.typeId}
-                        onChange={handleChange}
+                    <label>Types: {' '}</label>
+                    <select
+                        name="types"
+                        value={types}
+                        onChange={(product) => setTypes(product.target.value)}
                         required
-                    />
-                    <select name="" id="">
-                        <option value="">test</option>
-                        <option value="">tis</option>
+                    >
+                        <option value="">-- Select a type --</option>
+                        {types.map((type) => (
+                            <option key={type.id} value={type.id}>
+                                {type.name}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div>
-                    <label>Image:</label>
+                    <label>Image: {' '}</label>
                     <input
                         type="text"
                         name="image"
-                        value={formData.image}
-                        onChange={handleChange}
+                        value={image}
+                        onChange={(product) => setImage(product.target.value)}
                         required
                     />
                 </div>
                 <div>
-                    <label>Condition:</label>
+                    <label>Condition: {' '}</label>
                     <input
                         type="text"
                         name="condition"
-                        value={formData.condition}
-                        onChange={handleChange}
+                        value={condition}
+                        onChange={(product) => setCondition(product.target.value)}
                         required
                     />
                 </div>
                 <div>
-                    <label>Description:</label>
+                    <label>Description: {' '}</label>
                     <input
                         type="text"
                         name="description"
-                        value={formData.description}
-                        onChange={handleChange}
+                        value={description}
+                        onChange={(product) => setDescription(product.target.value)}
                         required
                     />
                 </div>
                 <div>
-                    <label>Minimum Order:</label>
+                    <label>Minimum Order: {' '}</label>
                     <input
                         type="number"
                         name="minimumOrder"
-                        value={formData.minimumOrder}
-                        onChange={handleChange}
+                        value={minimumOrder}
+                        onChange={(product) => setMinimumOrder(product.target.value)}
                         required
                     />
                 </div>
                 <div>
-                    <label>Unit Price:</label>
+                    <label>Unit Price: {' '}</label>
                     <input
                         type="number"
                         name="unitPrice"
-                        value={formData.unitPrice}
-                        onChange={handleChange}
+                        value={unitPrice}
+                        onChange={(product) => setUnitPrice(product.target.value)}
                         required
                     />
                 </div>
                 <div>
-                    <label>Status:</label>
+                    <label>Status: {' '}</label>
                     <input
                         type="text"
                         name="status"
-                        value={formData.status}
-                        onChange={handleChange}
+                        value={status}
+                        onChange={(product) => setStatus(product.target.value)}
                         required
                     />
                 </div>
                 <div>
-                    <label>Stock:</label>
+                    <label>Stock: {' '}</label>
                     <input
                         type="number"
                         name="stock"
-                        value={formData.stock}
-                        onChange={handleChange}
+                        value={stock}
+                        onChange={(product) => setStock(product.target.value)}
                         required
                     />
                 </div>
                 <div>
-                    <label>Weight:</label>
+                    <label>Weight: {' '}</label>
                     <input
                         type="number"
                         name="weight"
-                        value={formData.weight}
-                        onChange={handleChange}
+                        value={weight}
+                        onChange={(product) => setWeight(product.target.value)}
                         required
                     />
                 </div>
                 <div>
-                    <label>Delivery Service:</label>
+                    <label>Delivery Service: {' '}</label>
                     <input
                         type="text"
                         name="deliveryService"
-                        value={formData.deliveryService}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Author:</label>
-                    <input
-                        type="text"
-                        name="authorId"
-                        value={formData.authorId}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Voucher:</label>
-                    <input
-                        type="text"
-                        name="vucherId"
-                        value={formData.vucherId}
-                        onChange={handleChange}
+                        value={deliveryService}
+                        onChange={(product) => setDeliveryService(product.target.value)}
                         required
                     />
                 </div>
@@ -178,7 +227,7 @@ const AddProduct = () => {
                 </div>
                 <div>
                     <Link to="/dashboard">
-                    <button>Cancel</button>
+                        <button>Cancel</button>
                     </Link>
                 </div>
             </form>

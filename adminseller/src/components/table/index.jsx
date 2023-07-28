@@ -72,7 +72,7 @@ const TableComponent = () => {
               <TableCell>{row.stock}</TableCell>
               <TableCell>{row.weight}</TableCell>
               <TableCell>{row.size}</TableCell>
-              <TableCell>{row.authorId}</TableCell>
+              <TableCell>{row.superAdmins.fullName}</TableCell>
               <TableCell>{row.voucherId === null ? "null" : row.voucherId}</TableCell>
             </TableRow>
           ))}
