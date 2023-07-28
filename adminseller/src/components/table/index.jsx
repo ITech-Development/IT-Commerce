@@ -7,14 +7,6 @@ import axios from 'axios'
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const TableComponent = () => {
-  // const { id } = useParams();
-  const [data, setData] = useState([
-    { id: 1, name: 'John Doe', age: 30, email: 'john@example.com' },
-    { id: 2, name: 'Jane Smith', age: 25, email: 'jane@example.com' },
-    { id: 3, name: 'Bob Johnson', age: 35, email: 'bob@example.com' },
-    { id: 4, name: 'Alice Williams', age: 28, email: 'alice@example.com' },
-  ]);
-
   const [product, setProduct] = useState(null)
 
   useEffect(() => {
@@ -28,8 +20,20 @@ const TableComponent = () => {
       });
   }, []);
 
-  const handleAddData = (newData) => {
-    setData((prevData) => [...prevData, newData]);
+  const deleteProduct = (id) => {
+    axios
+      .delete(`${API_URL}/products/${id}`, {
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+      .then(() => {
+        // Remove the deleted product from the state
+        setProduct((prevProducts) => prevProducts.filter((item) => item.id !== id));
+      })
+      .catch((error) => {
+        console.error(error, "There was an error while deleting the product.");
+      });
   };
 
   return (
@@ -52,6 +56,7 @@ const TableComponent = () => {
             <TableCell>Size</TableCell>
             <TableCell>Author</TableCell>
             <TableCell>Voucher</TableCell>
+            <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -74,6 +79,9 @@ const TableComponent = () => {
               <TableCell>{row.size}</TableCell>
               <TableCell>{row.superAdmins.fullName}</TableCell>
               <TableCell>{row.voucherId === null ? "null" : row.voucherId}</TableCell>
+              <TableCell>
+                <button onClick={() => deleteProduct(row.id)}>Delete</button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
