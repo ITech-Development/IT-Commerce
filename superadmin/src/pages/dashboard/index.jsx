@@ -1,13 +1,17 @@
+// Dashboard.js
 import React from 'react';
+import Header from '../../components/header';
+import MainContent from '../../components/mainContent';
 
-function App() {
-    return (
-        <div className="container">
-            <h1>Welcome to Indoteknik</h1>
-            <p>wakwaaaaw</p>
-            <h2>Super Admin</h2>
-        </div>
-    );
-}
+const Dashboard = () => {
+  return (
+    <div>
+      <Header />
+      <div style={{ display: 'flex' }}>
+        <MainContent />
+      </div>
+    </div>
+  );
+};
 
-export default App;
+export default Dashboard;

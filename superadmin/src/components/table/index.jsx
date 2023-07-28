@@ -59,8 +59,8 @@ const TableComponent = () => {
             <TableRow key={row.id}>
               <TableCell>{row.id}</TableCell>
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.categories?.name}</TableCell>
-              <TableCell>{row.types?.name}</TableCell>
+              <TableCell>{row.categories.name}</TableCell>
+              <TableCell>{row.types.name}</TableCell>
               <TableCell>
                 <img src={row.image} alt="" style={{ maxWidth: '100px', maxHeight: '100px' }} />
               </TableCell>
