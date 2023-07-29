@@ -1,6 +1,7 @@
 // MainContent.js
 import React, { useState } from 'react';
-import TableComponent from '../table';
+// import TableComponent from '../table';
+import CardComponent from '../cardDasboard'
 import { Link } from 'react-router-dom'
 
 const MainContent = () => {
@@ -20,12 +21,12 @@ const MainContent = () => {
 
   return (
     <main>
-      <h2>List Products</h2>
-      <p>Welcome to the List Products!</p>
-      <Link to="/add-product">
-        <button>Add</button>
+      <h2>Dashboard</h2>
+      <p>Welcome to the Indo Teknik, Dashboard!</p>
+      <Link to="/products">
+        <button>Products</button>
       </Link>
-      <TableComponent />
+      <CardComponent/>
     </main>
   );
 };

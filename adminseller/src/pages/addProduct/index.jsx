@@ -156,7 +156,7 @@ const AddProductPage = () => {
                 <br />
 
                 <button type="submit">Tambahkan Produk</button>
-                <Link to='/dashboard'>
+                <Link to='/products'>
                 <button >Kembali</button>
                 </Link>
             </form>

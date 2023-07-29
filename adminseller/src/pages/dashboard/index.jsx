@@ -1,14 +1,14 @@
 // Dashboard.js
 import React from 'react';
-import Header from '../../components/header';
-import MainContent from '../../components/mainContent';
+import HeaderDashboard from '../../components/headerDashboard';
+import MainContentDashboard from '../../components/mainContentDashboard';
 
 const Dashboard = () => {
   return (
     <div>
-      <Header />
+      <HeaderDashboard />
       <div style={{ display: 'flex' }}>
-        <MainContent />
+        <MainContentDashboard />
       </div>
     </div>
   );

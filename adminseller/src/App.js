@@ -5,10 +5,10 @@ import AddProduct from "./pages/addProduct"
 import EditProduct from "./pages/editProduct"
 import Login from "./components/auth/Login";
 import Dashboard from "./pages/dashboard";
+import GetProduct from "./pages/getProducts";
 import React, { createContext, useEffect, useReducer } from "react";
 import { loadUser } from "./features/authslice";
 import { useDispatch } from "react-redux";
-
 import { initialState, reducer } from "./reducer/UseReducer";
 
 export const UserContext = createContext();
@@ -24,6 +24,7 @@ const Routing = () => {
           isLoggedIn ? <Navigate to="/dashboard" /> : <Login />
         }
       />
+      <Route path="/products" element={<GetProduct />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/add-product" element={<AddProduct />} />
       <Route path="/edit/:id" element={<EditProduct />} />

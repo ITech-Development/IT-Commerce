@@ -168,7 +168,7 @@ const EditProductPage = () => {
                 <br />
 
                 <button type="submit">Simpan Perubahan</button>
-                <Link to="/dashboard">
+                <Link to="/products">
                     <button>Kembali</button>
                 </Link>
             </form>
