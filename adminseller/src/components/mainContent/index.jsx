@@ -4,25 +4,24 @@ import { Link } from "react-router-dom";
 
 const MainContent = () => {
   return (
-    <main>
-      <h2>Main Content</h2>
-      <p>Welcome to the dashboard!</p>
-      <Link
-        to="/add-product"
-        style={{ padding: "10px", display: "flex", justifyContent: "end" }}
-      >
+    <main style={{ display: "flex", margin: "auto", flexDirection: "column" }}>
+      <h2>List Products</h2>
+      <Link to="/add-product">
         <button
           style={{
+            display: "flex",
             padding: "10px 20px",
-            flex: 1,
-            maxWidth: "100px",
             background: "blue",
             color: "white",
-            border: "none",
-            borderRadius: "5px",
+            justifyContent: "end",
+            marginBottom: "30px",
+            border: 'none',
+            borderRadius: '5px',
+            width: 'auto',
+            cursor: 'pointer'
           }}
         >
-          Add
+          Add Product
         </button>
       </Link>
       <TableComponent />

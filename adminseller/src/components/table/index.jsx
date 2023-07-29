@@ -1,4 +1,6 @@
+// Table.js
 import React, { useEffect, useState } from "react";
+// import { useParams } from "react-router-dom";
 import {
   TableContainer,
   Table,
@@ -9,6 +11,7 @@ import {
   Paper,
 } from "@mui/material";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
@@ -57,21 +60,32 @@ const TableComponent = () => {
       const filteredData = product.filter(
         (item) =>
           item.name.toLowerCase().includes(filterText.toLowerCase()) ||
-          item.categories?.name.toLowerCase().includes(filterText.toLowerCase()) ||
+          item.categories?.name
+            .toLowerCase()
+            .includes(filterText.toLowerCase()) ||
           item.types?.name.toLowerCase().includes(filterText.toLowerCase()) ||
           item.condition.toLowerCase().includes(filterText.toLowerCase()) ||
           item.description.toLowerCase().includes(filterText.toLowerCase()) ||
-          (item.voucherId !== null && item.voucherId.toLowerCase().includes(filterText.toLowerCase()))
+          (item.voucherId !== null &&
+            item.voucherId.toLowerCase().includes(filterText.toLowerCase()))
       );
       setFilteredProduct(filteredData);
     }
   };
 
   return (
-    <TableContainer component={Paper} style={{ margin: "20px auto", maxWidth: "1400px" }}>
-      <div style={{ padding: '10px', display: 'flex', justifyContent: 'end' }}>
+    <TableContainer
+      component={Paper}
+      style={{
+        margin: "auto",
+        maxWidth: "1400px",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <div style={{ padding: "10px", display: "flex", justifyContent: "end" }}>
         <input
-          style={{ padding: '10px 20px', flex: 1, maxWidth: "500px" }}
+          style={{ padding: "10px 20px", flex: 1, maxWidth: "500px" }}
           type="text"
           placeholder="Search by name, category, type, and more.."
           onChange={(e) => handleFilter(e.target.value)}
@@ -108,7 +122,7 @@ const TableComponent = () => {
               <TableCell>
                 <img
                   src={row.image}
-                  alt=""
+                  alt={row.image}
                   style={{ maxWidth: "100px", maxHeight: "100px" }}
                 />
               </TableCell>
@@ -125,12 +139,10 @@ const TableComponent = () => {
                 {row.voucherId === null ? "null" : row.voucherId}
               </TableCell>
               <TableCell>
-                <button
-                  onClick={() => deleteProduct(row.id)}
-                  style={{ padding: "5px 10px", cursor: "pointer" }}
-                >
-                  Delete
-                </button>
+                <Link to={`/edit/${row.id}`}>
+                  <button>Edit</button>
+                </Link>
+                <button onClick={() => deleteProduct(row.id)}>Delete</button>
               </TableCell>
             </TableRow>
           ))}

@@ -1,216 +1,317 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import "./addProductStyle.css";
 
-const AddProduct = () => {
-    // const navigate = useNavigate();
-    const [name, setName] = useState('');
-    const [categoryId, setCategoryId] = useState('');
-    const [typeId, setTypeId] = useState('');
-    const [image, setImage] = useState('');
-    const [condition, setCondition] = useState('');
-    const [description, setDescription] = useState('');
-    const [minimumOrder, setMinimumOrder] = useState(1);
-    const [unitPrice, setUnitPrice] = useState(0);
-    const [status, setStatus] = useState('');
-    const [stock, setStock] = useState(1);
-    const [weight, setWeight] = useState(0);
-    const [deliveryService, setDeliveryService] = useState('');
+const AddProductPage = () => {
+  // State untuk menyimpan data produk yang akan ditambahkan
+  const [newProduct, setNewProduct] = useState({
+    name: "",
+    categoryId: 0,
+    typeId: 0,
+    image: "",
+    condition: "",
+    description: "",
+    minimumOrder: 1,
+    unitPrice: 0,
+    status: "",
+    stock: 1,
+    weight: 1,
+    size: 1,
+    shippingInsurance: "",
+    deliveryService: "",
+    brand: "",
+    // Tambahkan atribut lainnya jika perlu
+  });
 
-    useEffect(() => {
-        // Fetch categories data from the API
-        const fetchCategories = async () => {
-            try {
-                const response = await axios.get('http://localhost:3100/product-categories');
-                setCategoryId(response.data); // Assuming the API returns an array of categories objects
-            } catch (error) {
-                console.log(error); // Handle error appropriately (e.g., show error message)
-            }
-        };
-        fetchCategories();
-    }, []);
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [typeOptions, setTypeOptions] = useState([]);
 
-    const handleAddToProduct = async (event) => {
-        event.preventDefault();
+  useEffect(() => {
+    // Ambil data kategori dari server saat komponen dipasang (mounted)
+    fetchCategories();
+    fetchTypes();
+  }, []);
 
-        // Prepare product data
-        const productData = {
-            name,
-            categoryId,
-            typeId,
-            image,
-            condition,
-            description,
-            minimumOrder,
-            unitPrice,
-            status,
-            stock,
-            weight,
-            deliveryService,
-        };
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3100/product-categories"
+      );
+      setCategoryOptions(response.data);
+    } catch (error) {
+      console.error("Terjadi kesalahan saat mengambil data kategori:", error);
+    }
+  };
+  const fetchTypes = async () => {
+    try {
+      const response = await axios.get("http://localhost:3100/product-types");
+      setTypeOptions(response.data);
+    } catch (error) {
+      console.error("Terjadi kesalahan saat mengambil data kategori:", error);
+    }
+  };
 
-        // Check for an access token
-        const accessToken = localStorage.getItem('access_token');
-        if (accessToken) {
-            const url = 'http://localhost:3100/products';
-            try {
-                const response = await axios.post(url, productData, {
-                    headers: { access_token: accessToken },
-                });
-                console.log(response.data, 'data dari handleAddToProduct');
-                clearForm(); // Reset form fields after successful product addition
-            } catch (error) {
-                console.log(error, 'error dari handleAddToProduct');
-            }
+  // Handler untuk mengubah nilai input pada form
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewProduct({ ...newProduct, [name]: value });
+  };
+
+  // Handler untuk mengirimkan data produk baru
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:3100/products",
+        newProduct,
+        {
+          headers: {
+            "Content-Type": "application/json", // Contoh: mengatur tipe konten
+            access_token: localStorage.getItem("access_token"), // Contoh: mengatur token otorisasi
+            // Tambahkan header lainnya sesuai kebutuhan
+          },
         }
-    };
+      );
 
-    const clearForm = () => {
-        setName('');
-        setCategoryId('');
-        setTypeId('');
-        setImage('');
-        setCondition('');
-        setDescription('');
-        setMinimumOrder(0);
-        setUnitPrice(0);
-        setStatus('');
-        setStock(0);
-        setWeight(0);
-        setDeliveryService('');
-    };
+      if (response.status === 201) {
+        // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil tambah produk.
+        // Contoh:
+        window.location.href = "/dashboard";
+        console.log("Produk berhasil ditambahkan.");
+      } else {
+        // Jika terjadi kesalahan saat menyimpan produk di server, Anda dapat menampilkan pesan error atau melakukan tindakan lainnya.
+        console.error("Terjadi kesalahan saat menyimpan produk.");
+      }
+    } catch (error) {
+      console.error("Terjadi kesalahan:", error);
+    }
+  };
 
-    return (
-        <div>
-            <h2>Add Product</h2>
-            <form onSubmit={handleAddToProduct}>
-                <div>
-                    <label>Name: {' '}</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={name}
-                        onChange={(product) => setName(product.target.value)}
-
-                    />
-                </div>
-                <div>
-                    <label>Categories: {' '}</label>
-                    <select
-                        name="categoryId"
-                        value={categoryId}
-                        onChange={(event) => setCategoryId(event.target.value)}
-                    >
-                        <option value="">Select a category</option>
-                        <option value={categoryId.id}>{categoryId.name}</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label>Types: {' '}</label>
-
-                </div>
-                <div>
-                    <label>Image: {' '}</label>
-                    <input
-                        type="text"
-                        name="image"
-                        value={image}
-                        onChange={(product) => setImage(product.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>Condition: {' '}</label>
-                    <input
-                        type="text"
-                        name="condition"
-                        value={condition}
-                        onChange={(product) => setCondition(product.target.value)}
-
-                    />
-                </div>
-                <div>
-                    <label>Description: {' '}</label>
-                    <input
-                        type="text"
-                        name="description"
-                        value={description}
-                        onChange={(product) => setDescription(product.target.value)}
-
-                    />
-                </div>
-                <div>
-                    <label>Minimum Order: {' '}</label>
-                    <input
-                        type="number"
-                        name="minimumOrder"
-                        value={minimumOrder}
-                        onChange={(product) => setMinimumOrder(product.target.value)}
-
-                    />
-                </div>
-                <div>
-                    <label>Unit Price: {' '}</label>
-                    <input
-                        type="number"
-                        name="unitPrice"
-                        value={unitPrice}
-                        onChange={(product) => setUnitPrice(product.target.value)}
-
-                    />
-                </div>
-                <div>
-                    <label>Status: {' '}</label>
-                    <input
-                        type="text"
-                        name="status"
-                        value={status}
-                        onChange={(product) => setStatus(product.target.value)}
-
-                    />
-                </div>
-                <div>
-                    <label>Stock: {' '}</label>
-                    <input
-                        type="number"
-                        name="stock"
-                        value={stock}
-                        onChange={(product) => setStock(product.target.value)}
-
-                    />
-                </div>
-                <div>
-                    <label>Weight: {' '}</label>
-                    <input
-                        type="number"
-                        name="weight"
-                        value={weight}
-                        onChange={(product) => setWeight(product.target.value)}
-
-                    />
-                </div>
-                <div>
-                    <label>Delivery Service: {' '}</label>
-                    <input
-                        type="text"
-                        name="deliveryService"
-                        value={deliveryService}
-                        onChange={(product) => setDeliveryService(product.target.value)}
-
-                    />
-                </div>
-                {/* Add more input fields for other product details here */}
-                <div>
-                    <button type="submit">Add Product</button>
-                </div>
-                <div>
-                    <Link to="/dashboard">
-                        <button>Cancel</button>
-                    </Link>
-                </div>
-            </form>
+  return (
+    <div className="add-product-container">
+      <h1>Tambah Produk Baru</h1>
+      <form className="add-product-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="name">Nama Produk : </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={newProduct.name}
+            onChange={handleChange}
+            required
+          />
+          <br />
         </div>
-    );
+
+        <div style={{ margin: "10px 0 " }}>
+          <label htmlFor="category">Kategori : </label>
+          <select
+            id="category"
+            name="categoryId"
+            value={newProduct.categoryId}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Pilih Kategori</option>
+            {categoryOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.name}
+              </option>
+            ))}
+          </select>
+          <br />
+        </div>
+
+        <div style={{ margin: "10px 0 " }}>
+          <label htmlFor="type">Type : </label>
+          <select
+            id="type"
+            name="typeId"
+            value={newProduct.typeId}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Pilih Type</option>
+            {typeOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.name}
+              </option>
+            ))}
+          </select>
+          <br />
+        </div>
+
+        {/* Tambahkan input form lainnya sesuai atribut yang ada pada produk */}
+        <div className="form-group">
+          <label htmlFor="image">Gambar : </label>
+          <input
+            type="text"
+            id="image"
+            name="image"
+            value={newProduct.image}
+            onChange={handleChange}
+            required
+          />
+          <br />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="condition">Kondisi : </label>
+          <input
+            type="text"
+            id="condition"
+            name="condition"
+            value={newProduct.condition}
+            onChange={handleChange}
+            required
+          />
+          <br />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="description">Deskripsi : </label>
+          <textarea
+            id="description"
+            name="description"
+            value={newProduct.description}
+            onChange={handleChange}
+            required
+          />
+          <br />
+        </div>
+        <div className="form-group">
+          <label htmlFor="minimumOrder">Minimum Order : </label>
+          <input
+            type="number"
+            id="minimumOrder"
+            name="minimumOrder"
+            value={newProduct.minimumOrder}
+            onChange={handleChange}
+            min="1"
+            required
+          />
+          <br />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="unitPrice">Harga Satuan : </label>
+          <input
+            type="number"
+            id="unitPrice"
+            name="unitPrice"
+            value={newProduct.unitPrice}
+            onChange={handleChange}
+            min="0"
+            required
+          />
+          <br />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="status">Status : </label>
+          <input
+            type="text"
+            id="unitPrice"
+            name="status"
+            value={newProduct.status}
+            onChange={handleChange}
+            required
+          />
+          <br />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="stock">Stok : </label>
+          <input
+            type="number"
+            id="stock"
+            name="stock"
+            value={newProduct.stock}
+            onChange={handleChange}
+            min="1"
+            required
+          />
+          <br />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="weight">Berat : </label>
+          <input
+            type="number"
+            id="weight"
+            name="weight"
+            value={newProduct.weight}
+            onChange={handleChange}
+            min="1"
+            required
+          />
+          <br />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="size">Ukuran : </label>
+          <input
+            type="number"
+            id="size"
+            name="size"
+            value={newProduct.size}
+            onChange={handleChange}
+            min="1"
+            required
+          />
+          <br />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="shippingInsurance">Asuransi Pengiriman : </label>
+          <input
+            type="text"
+            id="shippingInsurance"
+            name="shippingInsurance"
+            value={newProduct.shippingInsurance}
+            onChange={handleChange}
+            required
+          />
+          <br />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="deliveryService">Layanan Pengiriman : </label>
+          <input
+            type="text"
+            id="deliveryService"
+            name="deliveryService"
+            value={newProduct.deliveryService}
+            onChange={handleChange}
+            required
+          />
+          <br />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="brand">Brand : </label>
+          <input
+            type="text"
+            id="brand"
+            name="brand"
+            value={newProduct.brand}
+            onChange={handleChange}
+            required
+          />
+          <br />
+        </div>
+
+        <div className="button-group">
+          <button type="submit">Tambahkan Produk</button>
+          <Link to="/products">
+            <button>Kembali</button>
+          </Link>
+        </div>
+      </form>
+    </div>
+  );
 };
 
-export default AddProduct;
+export default AddProductPage;
