@@ -2,6 +2,7 @@ import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import './App.css';
 import Navbar from "./components/navbar"
 import AddProduct from "./pages/addProduct"
+import EditProduct from "./pages/editProduct"
 import Login from "./components/auth/Login";
 import Dashboard from "./pages/dashboard";
 import React, { createContext, useEffect, useReducer } from "react";
@@ -25,6 +26,7 @@ const Routing = () => {
       />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/add-product" element={<AddProduct />} />
+      <Route path="/edit/:id" element={<EditProduct />} />
     </Routes>
   );
 }

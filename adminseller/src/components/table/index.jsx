@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
@@ -67,7 +68,7 @@ const TableComponent = () => {
               <TableCell>{row.categories?.name}</TableCell>
               <TableCell>{row.types?.name}</TableCell>
               <TableCell>
-                <img src={row.image} alt="" style={{ maxWidth: '100px', maxHeight: '100px' }} />
+                <img src={row.image} alt={row.image} style={{ maxWidth: '100px', maxHeight: '100px' }} />
               </TableCell>
               <TableCell>{row.condition}</TableCell>
               <TableCell>{row.description}</TableCell>
@@ -80,6 +81,9 @@ const TableComponent = () => {
               <TableCell>{row.superAdmins.fullName}</TableCell>
               <TableCell>{row.voucherId === null ? "null" : row.voucherId}</TableCell>
               <TableCell>
+                <Link to={`/edit/${row.id}`}>
+                  <button>Edit</button>
+                </Link>
                 <button onClick={() => deleteProduct(row.id)}>Delete</button>
               </TableCell>
             </TableRow>

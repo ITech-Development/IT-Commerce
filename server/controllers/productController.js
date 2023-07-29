@@ -19,7 +19,8 @@ class ProductController {
                         model: SuperAdmin,
                         as: 'superAdmins'
                     }
-                ]
+                ],
+                order: [['createdAt', 'DESC']]
             });
             res.status(200).json(products);
         } catch (error) {
