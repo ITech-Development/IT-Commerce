@@ -1,127 +1,216 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const ProductForm = () => {
-    const [product, setProduct] = useState({
-        name: '',
-        categoryId: '',
-        typeId: '',
-        image: '',
-        condition: '',
-        description: '',
-        minimumOrder: 1,
-        unitPrice: 0,
-        status: '',
-        weight: 0,
-        size: 0,
-        stock: 0,
-        shippingInsurance: '',
-        deliveryService: '',
-        brand: '',
-        voucherId: null,
-    });
-
-    const [categories, setCategories] = useState([]);
+const AddProduct = () => {
+    // const navigate = useNavigate();
+    const [name, setName] = useState('');
+    const [categoryId, setCategoryId] = useState('');
+    const [typeId, setTypeId] = useState('');
+    const [image, setImage] = useState('');
+    const [condition, setCondition] = useState('');
+    const [description, setDescription] = useState('');
+    const [minimumOrder, setMinimumOrder] = useState(1);
+    const [unitPrice, setUnitPrice] = useState(0);
+    const [status, setStatus] = useState('');
+    const [stock, setStock] = useState(1);
+    const [weight, setWeight] = useState(0);
+    const [deliveryService, setDeliveryService] = useState('');
 
     useEffect(() => {
-        // Panggil API endpoint untuk mendapatkan daftar kategori
-        axios.get('http://localhost:3100/product-categories')
-            .then((response) => {
-                // Setel state 'categories' dengan data kategori dari backend
-                setCategories(response.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching categories:', error);
-            });
-    }, []); // Hanya akan dijalankan saat komponen pertama kali dimuat
+        // Fetch categories data from the API
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get('http://localhost:3100/product-categories');
+                setCategoryId(response.data); // Assuming the API returns an array of categories objects
+            } catch (error) {
+                console.log(error); // Handle error appropriately (e.g., show error message)
+            }
+        };
+        fetchCategories();
+    }, []);
 
+    const handleAddToProduct = async (event) => {
+        event.preventDefault();
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setProduct({
-            ...product,
-            [name]: value,
-        });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        // Mengatur headers untuk permintaan POST
-        const headers = {
-            access_token: localStorage.getItem('access_token')
-            // Jika diperlukan, Anda juga dapat menambahkan header otorisasi di sini
-            // 'Authorization': 'Bearer ' + YOUR_ACCESS_TOKEN,
+        // Prepare product data
+        const productData = {
+            name,
+            categoryId,
+            typeId,
+            image,
+            condition,
+            description,
+            minimumOrder,
+            unitPrice,
+            status,
+            stock,
+            weight,
+            deliveryService,
         };
 
-        // Kirim data produk ke backend menggunakan Axios (metode POST)
-        axios.post('http://localhost:3100/products', product, { headers })
-            .then((response) => {
-                // Berhasil menambahkan produk ke backend, lakukan sesuatu jika perlu
-                console.log('Product added successfully:', response.data);
-                // Reset form setelah produk berhasil ditambahkan
-                setProduct({
-                    name: '',
-                    categoryId: '',
-                    typeId: '',
-                    image: '',
-                    condition: '',
-                    description: '',
-                    minimumOrder: 1,
-                    unitPrice: 0,
-                    status: '',
-                    weight: 0,
-                    size: 0,
-                    stock: 0,
-                    shippingInsurance: '',
-                    deliveryService: '',
-                    brand: '',
-                    voucherId: null,
+        // Check for an access token
+        const accessToken = localStorage.getItem('access_token');
+        if (accessToken) {
+            const url = 'http://localhost:3100/products';
+            try {
+                const response = await axios.post(url, productData, {
+                    headers: { access_token: accessToken },
                 });
-            })
-            .catch((error) => {
-                // Gagal menambahkan produk ke backend, tangani kesalahan jika perlu
-                console.error('Error adding product:', error);
-            });
+                console.log(response.data, 'data dari handleAddToProduct');
+                clearForm(); // Reset form fields after successful product addition
+            } catch (error) {
+                console.log(error, 'error dari handleAddToProduct');
+            }
+        }
+    };
+
+    const clearForm = () => {
+        setName('');
+        setCategoryId('');
+        setTypeId('');
+        setImage('');
+        setCondition('');
+        setDescription('');
+        setMinimumOrder(0);
+        setUnitPrice(0);
+        setStatus('');
+        setStock(0);
+        setWeight(0);
+        setDeliveryService('');
     };
 
     return (
         <div>
             <h2>Add Product</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Name:
+            <form onSubmit={handleAddToProduct}>
+                <div>
+                    <label>Name: {' '}</label>
                     <input
                         type="text"
                         name="name"
-                        value={product.name}
-                        onChange={handleChange}
+                        value={name}
+                        onChange={(product) => setName(product.target.value)}
+
                     />
-                </label>
-                <br />
-                <label>
-                    Category:
+                </div>
+                <div>
+                    <label>Categories: {' '}</label>
                     <select
                         name="categoryId"
-                        value={product.categoryId}
-                        onChange={handleChange}
+                        value={categoryId}
+                        onChange={(event) => setCategoryId(event.target.value)}
                     >
                         <option value="">Select a category</option>
-                        {categories.map((category) => (
-                            <option key={category.id} value={category.id}>
-                                {category.name}
-                            </option>
-                        ))}
+                        <option value={categoryId.id}>{categoryId.name}</option>
                     </select>
-                </label>
-                <br />
-                {/* Add more input fields for other properties as needed */}
-                <br />
-                <button type="submit">Add Product</button>
+                </div>
+
+                <div>
+                    <label>Types: {' '}</label>
+
+                </div>
+                <div>
+                    <label>Image: {' '}</label>
+                    <input
+                        type="text"
+                        name="image"
+                        value={image}
+                        onChange={(product) => setImage(product.target.value)}
+                    />
+                </div>
+                <div>
+                    <label>Condition: {' '}</label>
+                    <input
+                        type="text"
+                        name="condition"
+                        value={condition}
+                        onChange={(product) => setCondition(product.target.value)}
+
+                    />
+                </div>
+                <div>
+                    <label>Description: {' '}</label>
+                    <input
+                        type="text"
+                        name="description"
+                        value={description}
+                        onChange={(product) => setDescription(product.target.value)}
+
+                    />
+                </div>
+                <div>
+                    <label>Minimum Order: {' '}</label>
+                    <input
+                        type="number"
+                        name="minimumOrder"
+                        value={minimumOrder}
+                        onChange={(product) => setMinimumOrder(product.target.value)}
+
+                    />
+                </div>
+                <div>
+                    <label>Unit Price: {' '}</label>
+                    <input
+                        type="number"
+                        name="unitPrice"
+                        value={unitPrice}
+                        onChange={(product) => setUnitPrice(product.target.value)}
+
+                    />
+                </div>
+                <div>
+                    <label>Status: {' '}</label>
+                    <input
+                        type="text"
+                        name="status"
+                        value={status}
+                        onChange={(product) => setStatus(product.target.value)}
+
+                    />
+                </div>
+                <div>
+                    <label>Stock: {' '}</label>
+                    <input
+                        type="number"
+                        name="stock"
+                        value={stock}
+                        onChange={(product) => setStock(product.target.value)}
+
+                    />
+                </div>
+                <div>
+                    <label>Weight: {' '}</label>
+                    <input
+                        type="number"
+                        name="weight"
+                        value={weight}
+                        onChange={(product) => setWeight(product.target.value)}
+
+                    />
+                </div>
+                <div>
+                    <label>Delivery Service: {' '}</label>
+                    <input
+                        type="text"
+                        name="deliveryService"
+                        value={deliveryService}
+                        onChange={(product) => setDeliveryService(product.target.value)}
+
+                    />
+                </div>
+                {/* Add more input fields for other product details here */}
+                <div>
+                    <button type="submit">Add Product</button>
+                </div>
+                <div>
+                    <Link to="/dashboard">
+                        <button>Cancel</button>
+                    </Link>
+                </div>
             </form>
         </div>
-    )
-
+    );
 };
 
-export default ProductForm;
+export default AddProduct;

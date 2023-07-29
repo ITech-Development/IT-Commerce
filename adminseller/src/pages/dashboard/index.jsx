@@ -7,7 +7,7 @@ const Dashboard = () => {
   return (
     <div>
       <Header />
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', margin: 'auto', maxWidth: '1420px' }}>
         <MainContent />
       </div>
     </div>

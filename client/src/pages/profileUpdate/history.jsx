@@ -28,28 +28,6 @@ const TableComponent = () => {
       });
   }, []);
 
-  const deleteProduct = (id) => {
-    axios
-      .delete(`${API_URL}/products/${id}`, {
-        headers: {
-          access_token: localStorage.getItem("access_token"),
-        },
-      })
-      .then(() => {
-        // Remove the deleted product from the state
-        setProduct((prevProducts) =>
-          prevProducts.filter((item) => item.id !== id)
-        );
-        // Remove the deleted product from the filtered state
-        setFilteredProduct((prevProducts) =>
-          prevProducts.filter((item) => item.id !== id)
-        );
-      })
-      .catch((error) => {
-        console.error(error, "There was an error while deleting the product.");
-      });
-  };
-
   const handleFilter = (filterText) => {
     if (!filterText) {
       setFilteredProduct(product);
@@ -68,7 +46,7 @@ const TableComponent = () => {
   };
 
   return (
-    <TableContainer component={Paper} style={{ margin: "20px auto", maxWidth: "1400px" }}>
+    <TableContainer component={Paper}>
       <div style={{ padding: '10px', display: 'flex', justifyContent: 'end' }}>
         <input
           style={{ padding: '10px 20px', flex: 1, maxWidth: "500px" }}
@@ -87,15 +65,9 @@ const TableComponent = () => {
             <TableCell>Image</TableCell>
             <TableCell>Condition</TableCell>
             <TableCell>Description</TableCell>
-            <TableCell>Minimum Order</TableCell>
+            <TableCell>Qty</TableCell>
             <TableCell>Unit Price</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Stock</TableCell>
-            <TableCell>Weight</TableCell>
-            <TableCell>Size</TableCell>
-            <TableCell>Author</TableCell>
             <TableCell>Voucher</TableCell>
-            <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -116,21 +88,8 @@ const TableComponent = () => {
               <TableCell>{row.description}</TableCell>
               <TableCell>{row.minimumOrder}</TableCell>
               <TableCell>{row.unitPrice}</TableCell>
-              <TableCell>{row.status}</TableCell>
-              <TableCell>{row.stock}</TableCell>
-              <TableCell>{row.weight}</TableCell>
-              <TableCell>{row.size}</TableCell>
-              <TableCell>{row.superAdmins.fullName}</TableCell>
               <TableCell>
                 {row.voucherId === null ? "null" : row.voucherId}
-              </TableCell>
-              <TableCell>
-                <button
-                  onClick={() => deleteProduct(row.id)}
-                  style={{ padding: "5px 10px", cursor: "pointer" }}
-                >
-                  Delete
-                </button>
               </TableCell>
             </TableRow>
           ))}

@@ -53,6 +53,7 @@ const Login = () => {
 
   return (
     <div className="div">
+      <h1 className="h1">Admin Seller</h1>
       <h2 className="h2">Login</h2>
       <form onSubmit={handleSubmit} className="form">
         <div>

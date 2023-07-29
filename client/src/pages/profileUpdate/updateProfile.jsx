@@ -1,17 +1,17 @@
 // ProfileForm.js
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+//   align-items: center;
   max-width: 400px;
-  margin: 90px auto;
+  margin: 90px 30px ;
   padding: 20px 70px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+//   background-color: #f4f4f4;
+//   border-radius: 8px;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const Heading = styled.h1`
@@ -77,11 +77,11 @@ const ProfilePicture = styled.img`
 `;
 
 const ProfileForm = () => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [profilePicture, setProfilePicture] = useState('');
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -91,41 +91,64 @@ const ProfileForm = () => {
     // and perform the necessary actions (e.g., sending data to the server, etc.).
 
     // For this example, we'll just display the data in the console.
-    console.log('Full Name:', fullName);
-    console.log('Email:', email);
-    console.log('Phone:', phone);
-    console.log('Address:', address);
-    console.log('Profile Picture URL:', profilePicture);
+    console.log("Full Name:", fullName);
+    console.log("Email:", email);
+    console.log("Phone:", phone);
+    console.log("Address:", address);
+    console.log("Profile Picture URL:", profilePicture);
   };
-  
-const handleProfilePictureChange = (event) => {
+
+  const handleProfilePictureChange = (event) => {
     const file = event.target.files[0];
     setProfilePicture(file);
   };
 
   return (
     <FormContainer>
-      <Heading>Update Your Profile</Heading>
+      <Heading>Profile</Heading>
       <form onSubmit={handleSubmit}>
-        <Label>Full Name</Label>
-        <Input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} />
-
-        <Label>Email</Label>
-        <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-
-        <Label>Phone</Label>
-        <Input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
-
-        <Label>Address</Label>
-        <TextArea value={address} onChange={(e) => setAddress(e.target.value)} rows={4} />
-    
-        <Label>Profile Picture</Label>
-        <Input type="file" accept="image/*" onChange={handleProfilePictureChange} />
+      <Label>Profile Picture</Label>
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={handleProfilePictureChange}
+        />
 
         {profilePicture && (
-          <ProfilePicture src={URL.createObjectURL(profilePicture)} alt="Profile" />
-        )}
+          <ProfilePicture
+            src={URL.createObjectURL(profilePicture)}
+            alt="Profile"
+          />
 
+        )}
+        <Label>Full Name</Label>
+        <Input
+          type="text"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+        />
+
+        <Label>Email</Label>
+        <Input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <Label>Phone</Label>
+        <Input
+          type="tel"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+
+        <Label>Address</Label>
+        <TextArea
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          rows={4}
+        />
+       
 
         <Button type="submit">Update Profile</Button>
       </form>
@@ -133,4 +156,4 @@ const handleProfilePictureChange = (event) => {
   );
 };
 
-export default ProfileForm;
+export default ProfileForm;

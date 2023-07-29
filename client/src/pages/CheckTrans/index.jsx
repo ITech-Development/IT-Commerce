@@ -52,6 +52,7 @@ function Index() {
       //     setToken('')
       //   }
       // })
+      // eslint-disable-next-line no-undef
       snap.pay(token, {
         onSuccess: function (result) {
           // return changeStatus();
