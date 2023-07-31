@@ -12,7 +12,7 @@ const AddProductPage = () => {
         condition: '',
         description: '',
         minimumOrder: 1,
-        unitPrice: 0,
+        unitPrice: 1,
         status: '',
         stock: 1,
         weight: 1,
@@ -70,7 +70,7 @@ const AddProductPage = () => {
             if (response.status === 201) {
                 // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil tambah produk.
                 // Contoh:
-                window.location.href = '/dashboard';
+                window.location.href = '/products';
                 console.log('Produk berhasil ditambahkan.');
             } else {
                 // Jika terjadi kesalahan saat menyimpan produk di server, Anda dapat menampilkan pesan error atau melakukan tindakan lainnya.

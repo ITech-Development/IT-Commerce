@@ -15,10 +15,7 @@ class ProductController {
                         model: ProductType,
                         as: 'types'
                     },
-                    {
-                        model: SuperAdmin,
-                        as: 'superAdmins'
-                    }
+                    
                 ],
                 order: [['createdAt', 'DESC']]
             });
@@ -45,12 +42,12 @@ class ProductController {
                 stock: req.body.stock,
                 shippingInsurance: req.body.shippingInsurance,
                 deliveryService: req.body.deliveryService,
-                authorId: req.superAdmin.id,
                 brand: req.body.brand,
-                voucherId: req.body.voucherId
+                // voucherId: req.body.voucherId
             })
             res.status(201).json(newProduct)
         } catch (error) {
+            console.log(error, 'hehehehhe');
             console.log(error);
         }
     }

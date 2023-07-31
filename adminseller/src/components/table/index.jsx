@@ -55,8 +55,8 @@ const TableComponent = () => {
             <TableCell>Stock</TableCell>
             <TableCell>Weight</TableCell>
             <TableCell>Size</TableCell>
-            <TableCell>Author</TableCell>
             <TableCell>Voucher</TableCell>
+            <TableCell>Brand</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
@@ -78,8 +78,8 @@ const TableComponent = () => {
               <TableCell>{row.stock}</TableCell>
               <TableCell>{row.weight}</TableCell>
               <TableCell>{row.size}</TableCell>
-              <TableCell>{row.superAdmins.fullName}</TableCell>
               <TableCell>{row.voucherId === null ? "null" : row.voucherId}</TableCell>
+              <TableCell>{row.brand}</TableCell>
               <TableCell>
                 <Link to={`/edit/${row.id}`}>
                   <button>Edit</button>

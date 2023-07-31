@@ -21,12 +21,15 @@ const MainContent = () => {
 
   return (
     <main>
-      <h2>Dashboard</h2>
-      <p>Welcome to the Indo Teknik, Dashboard!</p>
-      <Link to="/products">
-        <button>Products</button>
-      </Link>
-      <CardComponent/>
+
+        <h2>Dashboard</h2>
+        <p>Welcome to the Indo Teknik, Dashboard!</p>
+        <Link to="/products">
+          <button>Products</button>
+        </Link>
+      
+        <CardComponent />
+      
     </main>
   );
 };

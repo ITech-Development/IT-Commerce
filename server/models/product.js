@@ -16,10 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'voucherId',
         as: 'vouchers',
       });
-      Product.belongsTo(models.SuperAdmin, {
-        foreignKey: 'authorId',
-        as: 'superAdmins'
-      });
       Product.hasMany(models.OrderProduct, {
         foreignKey: 'productId',
         as: 'product_orders'
@@ -46,7 +42,6 @@ module.exports = (sequelize, DataTypes) => {
     size: DataTypes.INTEGER,
     shippingInsurance: DataTypes.STRING,
     deliveryService: DataTypes.STRING,
-    authorId: DataTypes.INTEGER,
     voucherId: DataTypes.INTEGER,
     brand: DataTypes.STRING
   }, {

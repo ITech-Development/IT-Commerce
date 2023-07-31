@@ -5,17 +5,17 @@ const router = express.Router()
 
 router.get('/', ProductController.getAllProducts);
 router.post('/',
-    authentication,
-    authorization,
+    authenticationAdminSeller,
+    authorizationAdminSeller,
     ProductController.addProduct)
 router.get('/:id', ProductController.detailsProduct)
 router.delete('/:id',
-    authentication,
-    authorization,
+    authenticationAdminSeller,
+    authorizationAdminSeller,
     ProductController.deleteProduct)
 router.put('/:id',
-    authentication,
-    authorization,
+    authenticationAdminSeller,
+    authorizationAdminSeller,
     ProductController.editProduct)
 
 module.exports = router

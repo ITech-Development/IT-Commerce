@@ -79,7 +79,7 @@ const EditProductPage = () => {
             if (response.status === 201) {
                 // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil edit produk.
                 // Contoh:
-                window.location.href = '/dashboard';
+                window.location.href = '/products';
                 console.log('Produk berhasil diupdate.');
             } else {
                 console.error('Terjadi kesalahan saat mengupdate produk.');

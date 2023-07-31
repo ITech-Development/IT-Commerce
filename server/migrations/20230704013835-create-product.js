@@ -59,13 +59,6 @@ module.exports = {
       deliveryService: {
         type: Sequelize.STRING
       },
-      authorId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'SuperAdmins',
-          key: 'id'
-        }
-      },
       voucherId: {
         type: Sequelize.INTEGER,
         allowNull: true, // Izinkan nilai voucherId null

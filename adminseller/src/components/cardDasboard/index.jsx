@@ -6,7 +6,6 @@ const Card = () => {
 
     const [products, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
-    console.log(setProducts, 'heheheh');
 
     useEffect(() => {
         // Fungsi untuk mengambil data dari API backend
