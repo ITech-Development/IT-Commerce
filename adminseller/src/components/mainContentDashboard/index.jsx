@@ -1,10 +1,9 @@
 // MainContent.js
-import React from 'react';
-import CardComponent from '../cardDasboard'
-import { Link } from 'react-router-dom'
+import React from "react";
+import CardComponent from "../cardDasboard";
+import { Link } from "react-router-dom";
 
 const MainContent = () => {
-
   return (
     <main>
       <h2>Dashboard</h2>
@@ -12,7 +11,7 @@ const MainContent = () => {
       <Link to="/products">
         <button>Products</button>
       </Link>
-      <CardComponent/>
+      <CardComponent />
     </main>
   );
 };
