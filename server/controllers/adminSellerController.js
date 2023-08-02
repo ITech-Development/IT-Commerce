@@ -23,7 +23,8 @@ class AdminSellerController {
                 fullName,
                 phoneNumber,
                 address,
-                imageProfile
+                imageProfile,
+                voucherCode
             } = req.body
             const adminSeller = await AdminSeller.create({
                 email,
@@ -32,7 +33,8 @@ class AdminSellerController {
                 role: 'adminSeller',
                 phoneNumber,
                 address,
-                imageProfile
+                imageProfile,
+                voucherCode
             })
             res.status(201).json({ adminSeller })
         } catch (error) {

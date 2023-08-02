@@ -10,5 +10,6 @@ router.delete("/clear/", ProductCartController.clearProductCart)
 router.patch("/decrement/:id", ProductCartController.decrementQtyProductCart);
 router.patch("/increment/:id", ProductCartController.incrementQtyProductCart)
 router.delete("/remove/:id", ProductCartController.removeProductCart)
+router.get("/:id", ProductCartController.detailsProductCart);
 
 module.exports = router;

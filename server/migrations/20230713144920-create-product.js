@@ -29,9 +29,6 @@ module.exports = {
       image: {
         type: Sequelize.STRING
       },
-      condition: {
-        type: Sequelize.STRING
-      },
       description: {
         type: Sequelize.TEXT
       },
@@ -41,30 +38,29 @@ module.exports = {
       unitPrice: {
         type: Sequelize.INTEGER
       },
-      status: {
-        type: Sequelize.STRING
-      },
       stock: {
         type: Sequelize.INTEGER
       },
       weight: {
         type: Sequelize.INTEGER
       },
-      size: {
+      height: {
         type: Sequelize.INTEGER
       },
-      shippingInsurance: {
-        type: Sequelize.STRING
+      width: {
+        type: Sequelize.INTEGER
       },
-      deliveryService: {
-        type: Sequelize.STRING
-      },
-      voucherId: {
+      productOwnerId: {
         type: Sequelize.INTEGER,
-        allowNull: true, // Izinkan nilai voucherId null
-        defaultValue: null, // Atur default value menjadi null,
         references: {
-          model: 'Vouchers',
+          model: 'ProductOwners',
+          key: 'id'
+        }
+      },
+      authorId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'WarehouseAdmins',
           key: 'id'
         }
       },

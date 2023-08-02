@@ -24,10 +24,10 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      authorId: {
+      productCartId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'AdminSellers',
+          model: 'Vouchers',
           key: 'id'
         }
       },

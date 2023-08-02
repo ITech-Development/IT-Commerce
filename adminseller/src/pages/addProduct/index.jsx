@@ -160,7 +160,6 @@ const AddProductPage = () => {
                 <button >Kembali</button>
                 </Link>
             </form>
-
         </div>
     );
 };

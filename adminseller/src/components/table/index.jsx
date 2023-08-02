@@ -47,17 +47,15 @@ const TableComponent = () => {
             <TableCell>Categories</TableCell>
             <TableCell>Types</TableCell>
             <TableCell>Image</TableCell>
-            <TableCell>Condition</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Minimum Order</TableCell>
             <TableCell>Unit Price</TableCell>
-            <TableCell>Status</TableCell>
             <TableCell>Stock</TableCell>
             <TableCell>Weight</TableCell>
-            <TableCell>Size</TableCell>
-            <TableCell>Voucher</TableCell>
-            <TableCell>Brand</TableCell>
-            <TableCell>Action</TableCell>
+            <TableCell>Height</TableCell>
+            <TableCell>Width</TableCell>
+            <TableCell>Product Owner</TableCell>
+            <TableCell>Author</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -70,22 +68,15 @@ const TableComponent = () => {
               <TableCell>
                 <img src={row.image} alt={row.image} style={{ maxWidth: '100px', maxHeight: '100px' }} />
               </TableCell>
-              <TableCell>{row.condition}</TableCell>
               <TableCell>{row.description}</TableCell>
               <TableCell>{row.minimumOrder}</TableCell>
               <TableCell>{row.unitPrice}</TableCell>
-              <TableCell>{row.status}</TableCell>
               <TableCell>{row.stock}</TableCell>
               <TableCell>{row.weight}</TableCell>
-              <TableCell>{row.size}</TableCell>
-              <TableCell>{row.voucherId === null ? "null" : row.voucherId}</TableCell>
-              <TableCell>{row.brand}</TableCell>
-              <TableCell>
-                <Link to={`/edit/${row.id}`}>
-                  <button>Edit</button>
-                </Link>
-                <button onClick={() => deleteProduct(row.id)}>Delete</button>
-              </TableCell>
+              <TableCell>{row.height}</TableCell>
+              <TableCell>{row.width}</TableCell>
+              <TableCell>{row.product_owners?.name}</TableCell>
+              <TableCell>{row.authors?.fullName}</TableCell>
             </TableRow>
           ))}
         </TableBody>

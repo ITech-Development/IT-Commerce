@@ -15,11 +15,25 @@ function Index() {
   const [token, setToken] = useState('')
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
-  const [courier, setCourier] = useState('jne');
+  const [courier, setCourier] = useState('');
   const [pengiriman, setPengiriman] = useState([]);
   const [selectedShippingCost, setSelectedShippingCost] = useState(null);
   const [totalShippingCost, setTotalShippingCost] = useState(0);
   const [selectedVoucher, setSelectedVoucher] = useState(null);
+  const [vouchers, setVouchers] = useState([]);
+  console.log(vouchers, 'haloooooo voucher');
+
+  useEffect(() => {
+    const fetchVouchers = async () => {
+      try {
+        const response = await axios.get("http://localhost:3100/admin-sellers");
+        setVouchers(response.data);
+      } catch (error) {
+        console.log("Error fetching vouchers:", error);
+      }
+    };
+    fetchVouchers();
+  }, []);
 
   const handleVoucherChange = (event) => {
     setSelectedVoucher(event.target.value);
@@ -407,38 +421,39 @@ function Index() {
 
         <div>
           <h2>Pilih Kode Voucher</h2>
-          <label>
+          <label key={vouchers[0]?.id}>
             <input
               type="radio"
-              value="Voucher 1"
-              checked={selectedVoucher === "Voucher 1"}
+              value={vouchers[0]?.voucherCode}
+              checked={selectedVoucher === vouchers[0]?.voucherCode}
               onChange={handleVoucherChange}
             />
-            Voucher 1
+            {vouchers[0]?.voucherCode}
             <img src={VCR1} alt="IT 01" width="150" />
           </label>
           <br />
-          <label>
+          <label key={vouchers[1]?.id}>
             <input
               type="radio"
-              value="Voucher 2"
-              checked={selectedVoucher === "Voucher 2"}
+              value={vouchers[1]?.voucherCode}
+              checked={selectedVoucher === vouchers[1]?.voucherCode}
               onChange={handleVoucherChange}
             />
-            Voucher 2
+            {vouchers[1]?.voucherCode}
             <img src={VCR2} alt="MS 01" width="150" />
           </label>
           <br />
-          <label>
+          <label key={vouchers[2]?.id}>
             <input
               type="radio"
-              value="Voucher 3"
-              checked={selectedVoucher === "Voucher 3"}
+              value={vouchers[2]?.voucherCode}
+              checked={selectedVoucher === vouchers[2]?.voucherCode}
               onChange={handleVoucherChange}
             />
-            Voucher 3
+            {vouchers[2]?.voucherCode}
             <img src={VCR3} alt="MS 01" width="150" />
           </label>
+          <br />
         </div>
 
 
@@ -469,7 +484,7 @@ function Index() {
                   </option>
                 ))}
             </select>
-            <select onChange={handlerSetCourier}>
+            <select value={courier} onChange={handlerSetCourier}>
               <option value="jne">jne</option>
               <option value="tiki">tiki</option>
               <option value="pos">pos</option>

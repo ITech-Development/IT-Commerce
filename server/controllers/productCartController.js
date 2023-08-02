@@ -1,4 +1,4 @@
-const { ProductCart, Cart, Product } = require("../models");
+const { ProductCart, Cart, Product, User } = require("../models");
 let { sequelize } = require("../models/");
 
 class ProductCartController {
@@ -24,6 +24,29 @@ class ProductCartController {
       res.status(200).json(productCarts);
     } catch (error) {
       next(error);
+    }
+  }
+
+  static async detailsProductCart(req, res, next) {
+    try {
+      const productCart = await ProductCart.findOne({
+        where: {
+          id: req.params.id
+        },
+        include: [
+          {
+            model: Cart,
+            as: "cart"
+          },
+        ]
+      })
+      if (productCart) {
+        res.status(200).json(productCart)
+      } else {
+        throw { name: 'NotFoundError' }
+      }
+    } catch (error) {
+      next(error)
     }
   }
 
