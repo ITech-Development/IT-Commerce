@@ -9,7 +9,6 @@ const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const TableComponent = () => {
   const [product, setProduct] = useState(null)
-  console.log(product, 'isi productttttttttt');
 
   useEffect(() => {
     axios

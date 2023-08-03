@@ -10,6 +10,7 @@ class ProductShippingController {
             next(error)
         }
     }
+    
 
     static async addProductShipping(req, res, next) {
         try {
