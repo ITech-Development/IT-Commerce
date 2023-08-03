@@ -62,11 +62,17 @@ const TableComponent = () => {
           {product?.map((row) => (
             <TableRow key={row.id}>
               <TableCell>{row.id}</TableCell>
-              <TableCell>{row.name}</TableCell>
+              <TableCell>
+                <Link to={`/product/${row.id}`}>
+                  {row.name}
+                </Link>
+              </TableCell>
               <TableCell>{row.categories?.name}</TableCell>
               <TableCell>{row.types?.name}</TableCell>
               <TableCell>
-                <img src={row.image} alt={row.image} style={{ maxWidth: '100px', maxHeight: '100px' }} />
+                <Link to={`/product/${row.id}`}>
+                  <img src={row.image} alt={row.image} style={{ maxWidth: '100px', maxHeight: '100px' }} />
+                </Link>
               </TableCell>
               <TableCell>{row.description}</TableCell>
               <TableCell>{row.minimumOrder}</TableCell>
