@@ -1,33 +1,31 @@
 // MainContent.js
-import React, { useState } from 'react';
+import React from 'react';
 import TableComponent from '../tableProduct';
 import { Link } from 'react-router-dom'
 
 const MainContent = () => {
-  // const [showAddForm, setShowAddForm] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    age: '',
-    email: '',
-  });
-
-  const handleFormChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   return (
-    <main>
-      <h2>List Products</h2>
-      <p>Welcome to the List Products!</p>
+    <main style={{display: 'flex', margin: '10px 40px', flexDirection: 'column'}}>
+      <h2>Dashboard Produk INDOTEKNIK</h2>
+      <p><strong>Catatan!</strong> Masukkan semua produk dengan BENAR</p>
       <Link to="/add-product">
-        <button>Add</button>
-      </Link>
-      <Link to="/dashboard">
-        <button>Dashboard</button>
-      </Link>
+      <button
+          style={{
+            display: "flex",
+            padding: "10px 20px",
+            background: "blue",
+            color: "white",
+            justifyContent: "end",
+            marginBottom: "30px",
+            border: 'none',
+            borderRadius: '5px',
+            width: 'auto',
+            cursor: 'pointer'
+          }}
+        >
+          Add Product
+        </button>      </Link>
       <TableComponent />
     </main>
   );

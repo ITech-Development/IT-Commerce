@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSpring, animated } from "react-spring";
-
+  
 const Card = ({ imageUrl, title, count }) => {
   const [visible, setVisible] = useState(false);
 

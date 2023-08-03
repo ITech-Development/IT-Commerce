@@ -1,5 +1,4 @@
-// MainContent.js
-import React from "react";
+import React, { useState } from "react";
 import CardComponent from "../cardDasboard";
 import { Link } from "react-router-dom";
 
@@ -11,6 +10,7 @@ const MainContent = () => {
       <Link to="/products">
         <button>Products</button>
       </Link>
+
       <CardComponent />
     </main>
   );
