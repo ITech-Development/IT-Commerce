@@ -24,7 +24,7 @@ const MainContent = () => {
 
         <h2>Dashboard</h2>
         <p>Welcome to the Indo Teknik, Dashboard!</p>
-        <Link to="/products">
+        <Link to="/product">
           <button>Products</button>
         </Link>
       
