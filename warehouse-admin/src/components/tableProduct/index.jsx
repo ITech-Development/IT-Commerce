@@ -354,7 +354,9 @@ const TableComponent = () => {
               {filteredProduct?.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell>{row.id}</TableCell>
-                  <TableCell>{row.name}</TableCell>
+                  <TableCell>
+                  <Link to={`/product/${row.id}`}>
+{row.name}</Link></TableCell>
                   <TableCell>{row.categories?.name}</TableCell>
                   <TableCell>{row.types?.name}</TableCell>
                   <TableCell>

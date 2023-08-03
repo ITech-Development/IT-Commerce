@@ -11,6 +11,7 @@ import {
   Paper,
 } from "@mui/material";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
@@ -92,7 +93,11 @@ const TableComponent = () => {
           {filteredProduct?.map((row) => (
             <TableRow key={row.id}>
               <TableCell>{row.id}</TableCell>
-              <TableCell>{row.name}</TableCell>
+              <TableCell>
+                <Link to={`/product/${row.id}`}>
+                  {row.name}
+                </Link>
+              </TableCell>
               <TableCell>{row.categories?.name}</TableCell>
               <TableCell>{row.types?.name}</TableCell>
               <TableCell>

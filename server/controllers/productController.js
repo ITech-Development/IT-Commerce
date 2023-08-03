@@ -82,13 +82,22 @@ class ProductController {
                 include: [
                     {
                         model: ProductCategory,
-                        as: 'categories'
+                        as: 'categories' // Nama asosiasi yang sama dengan yang didefinisikan di model Product
                     },
                     {
                         model: ProductType,
                         as: 'types'
-                    }
-                ]
+                    },
+                    {
+                        model: ProductOwner,
+                        as: 'product_owners'
+                    },
+                    {
+                        model: WarehouseAdmin,
+                        as: 'authors'
+                    },
+
+                ],
             })
             if (product) {
                 res.status(200).json(product)
