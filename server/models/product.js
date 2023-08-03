@@ -12,10 +12,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'typeId',
         as: 'types'
       });
-      Product.belongsTo(models.Voucher, {
-        foreignKey: 'voucherId',
-        as: 'vouchers',
-      });
       Product.hasMany(models.OrderProduct, {
         foreignKey: 'productId',
         as: 'product_orders'
@@ -24,6 +20,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'productId',
         as: 'product_carts'
       })
+      Product.belongsTo(models.ProductOwner, {
+        foreignKey: 'productOwnerId',
+        as: 'product_owners'
+      })
+      Product.belongsTo(models.WarehouseAdmin, {
+        foreignKey: 'authorId',
+        as: 'authors'
+      })
     }
   }
 
@@ -31,19 +35,19 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     categoryId: DataTypes.INTEGER,
     typeId: DataTypes.INTEGER,
-    image: DataTypes.STRING,
-    condition: DataTypes.STRING,
+    image: { 
+      type: DataTypes.STRING,
+      allowNull: false
+     },
     description: DataTypes.TEXT,
     minimumOrder: DataTypes.INTEGER,
     unitPrice: DataTypes.INTEGER,
-    status: DataTypes.STRING,
     stock: DataTypes.INTEGER,
     weight: DataTypes.INTEGER,
-    size: DataTypes.INTEGER,
-    shippingInsurance: DataTypes.STRING,
-    deliveryService: DataTypes.STRING,
-    voucherId: DataTypes.INTEGER,
-    brand: DataTypes.STRING
+    height: DataTypes.INTEGER,
+    width: DataTypes.INTEGER,
+    productOwnerId: DataTypes.INTEGER,
+    authorId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Product',

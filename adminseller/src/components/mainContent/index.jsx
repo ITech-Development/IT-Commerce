@@ -24,6 +24,8 @@ const MainContent = () => {
           Add Product
         </button>
       </Link>
+      <p>Welcome to the List Products!</p>
+
       <Link to="/dashboard">
         <button>Dashboard</button>
       </Link>

@@ -11,7 +11,6 @@ import {
   Paper,
 } from "@mui/material";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
@@ -31,27 +30,6 @@ const TableComponent = () => {
       });
   }, []);
 
-  const deleteProduct = (id) => {
-    axios
-      .delete(`${API_URL}/products/${id}`, {
-        headers: {
-          access_token: localStorage.getItem("access_token"),
-        },
-      })
-      .then(() => {
-        // Remove the deleted product from the state
-        setProduct((prevProducts) =>
-          prevProducts.filter((item) => item.id !== id)
-        );
-        // Remove the deleted product from the filtered state
-        setFilteredProduct((prevProducts) =>
-          prevProducts.filter((item) => item.id !== id)
-        );
-      })
-      .catch((error) => {
-        console.error(error, "There was an error while deleting the product.");
-      });
-  };
 
   const handleFilter = (filterText) => {
     if (!filterText) {
@@ -99,17 +77,15 @@ const TableComponent = () => {
             <TableCell>Categories</TableCell>
             <TableCell>Types</TableCell>
             <TableCell>Image</TableCell>
-            <TableCell>Condition</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Minimum Order</TableCell>
             <TableCell>Unit Price</TableCell>
-            <TableCell>Status</TableCell>
             <TableCell>Stock</TableCell>
             <TableCell>Weight</TableCell>
-            <TableCell>Size</TableCell>
-            <TableCell>Owner</TableCell>
-            <TableCell>Brand</TableCell>
-            <TableCell>Action</TableCell>
+            <TableCell>Height</TableCell>
+            <TableCell>Width</TableCell>
+            <TableCell>Product Owner</TableCell>
+            <TableCell>Author</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -126,22 +102,15 @@ const TableComponent = () => {
                   style={{ maxWidth: "100px", maxHeight: "100px" }}
                 />
               </TableCell>
-              <TableCell>{row.condition}</TableCell>
               <TableCell>{row.description}</TableCell>
               <TableCell>{row.minimumOrder}</TableCell>
               <TableCell>{row.unitPrice}</TableCell>
-              <TableCell>{row.status}</TableCell>
               <TableCell>{row.stock}</TableCell>
               <TableCell>{row.weight}</TableCell>
-              <TableCell>{row.size}</TableCell>
-              <TableCell>{row.voucherId === null ? "null" : row.voucherId}</TableCell>
-              <TableCell>{row.brand}</TableCell>
-              <TableCell>
-                <Link to={`/edit/${row.id}`}>
-                  <button>Edit</button>
-                </Link>
-                <button onClick={() => deleteProduct(row.id)}>Delete</button>
-              </TableCell>
+              <TableCell>{row.height}</TableCell>
+              <TableCell>{row.width}</TableCell>
+              <TableCell>{row.product_owners?.name}</TableCell>
+              <TableCell>{row.authors?.fullName}</TableCell>
             </TableRow>
           ))}
         </TableBody>

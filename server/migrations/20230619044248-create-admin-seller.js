@@ -43,6 +43,9 @@ module.exports = {
       role: {
         type: Sequelize.STRING
       },
+      voucherCode: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

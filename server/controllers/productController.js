@@ -1,5 +1,7 @@
 
-const { Product, ProductCategory, ProductType, User, SuperAdmin } = require('../models')
+const { Product, ProductCategory, ProductType, User, SuperAdmin, ProductOwner, WarehouseAdmin } = require('../models')
+const { validationResult } = require('express-validator')
+
 
 class ProductController {
 
@@ -15,7 +17,15 @@ class ProductController {
                         model: ProductType,
                         as: 'types'
                     },
-                    
+                    {
+                        model: ProductOwner,
+                        as: 'product_owners'
+                    },
+                    {
+                        model: WarehouseAdmin,
+                        as: 'authors'
+                    },
+
                 ],
                 order: [['createdAt', 'DESC']]
             });
@@ -27,28 +37,39 @@ class ProductController {
 
     static async addProduct(req, res, next) {
         try {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                const err = new Error('Input value tidak sesuai')
+                err.errorStatus = 400
+                err.data = errors.array()
+                throw err
+            }
+
+            if (!req.file) {
+                const err = new Error('Image harus diupload')
+                err.errorStatus = 422
+                throw err
+            }
+
             const newProduct = await Product.create({
                 name: req.body.name,
                 categoryId: req.body.categoryId,
                 typeId: req.body.typeId,
-                image: req.body.image,
-                condition: req.body.condition,
+                image: req.file.path,
                 description: req.body.description,
                 minimumOrder: req.body.minimumOrder,
                 unitPrice: req.body.unitPrice,
-                status: req.body.status,
                 weight: req.body.weight,
-                size: req.body.size,
+                height: req.body.height,
+                width: req.body.width,
                 stock: req.body.stock,
-                shippingInsurance: req.body.shippingInsurance,
-                deliveryService: req.body.deliveryService,
-                brand: req.body.brand,
-                // voucherId: req.body.voucherId
+                productOwnerId: req.body.productOwnerId,
+                authorId: req.warehouseAdmin.id,
             })
             res.status(201).json(newProduct)
         } catch (error) {
-            console.log(error, 'hehehehhe');
             console.log(error);
+            next(error)
         }
     }
 
@@ -100,38 +121,22 @@ class ProductController {
     static async editProduct(req, res, next) {
         try {
             const productId = req.params.id
-            const {
-                name,
-                categoryId,
-                typeId,
-                image,
-                condition,
-                description,
-                minimumOrder,
-                unitPrice,
-                status,
-                stock,
-                weight,
-                size,
-                shippingInsurance,
-                deliveryService,
-            } = req.body
+
 
             await Product.update({
-                name,
-                categoryId,
-                typeId,
-                image,
-                condition,
-                description,
-                minimumOrder,
-                unitPrice,
-                status,
-                stock,
-                weight,
-                size,
-                shippingInsurance,
-                deliveryService,
+                name: req.body.name,
+                categoryId: req.body.categoryId,
+                typeId: req.body.typeId,
+                image: req.body.image,
+                description: req.body.description,
+                minimumOrder: req.body.minimumOrder,
+                unitPrice: req.body.unitPrice,
+                weight: req.body.weight,
+                height: req.body.height,
+                width: req.body.width,
+                stock: req.body.stock,
+                productOwnerId: req.body.productOwnerId,
+                authorId: req.warehouseAdmin.id,
             },
                 {
                     where: {

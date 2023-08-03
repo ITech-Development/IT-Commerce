@@ -26,11 +26,13 @@ const EditProductPage = () => {
 
     const [categoryOptions, setCategoryOptions] = useState([]);
     const [typeOptions, setTypeOptions] = useState([]);
-
+    const [productOwnerOptions, setProductOwnerOptions] = useState([]);
+    
     useEffect(() => {
         fetchCategories();
         fetchTypes();
         fetchProductData();
+        fetchProductOwners();
     }, []);
 
     const fetchCategories = async () => {
@@ -46,6 +48,15 @@ const EditProductPage = () => {
         try {
             const response = await axios.get('http://localhost:3100/product-types');
             setTypeOptions(response.data);
+        } catch (error) {
+            console.error('Terjadi kesalahan saat mengambil data kategori:', error);
+        }
+    };
+
+    const fetchProductOwners = async () => {
+        try {
+            const response = await axios.get('http://localhost:3100/product-owners');
+            setProductOwnerOptions(response.data);
         } catch (error) {
             console.error('Terjadi kesalahan saat mengambil data kategori:', error);
         }
@@ -124,10 +135,6 @@ const EditProductPage = () => {
                 <input type="text" id="image" name="image" value={product.image} onChange={handleChange} required />
                 <br />
 
-                <label htmlFor="condition">Kondisi:</label>
-                <input type="text" id="condition" name="condition" value={product.condition} onChange={handleChange} required />
-                <br />
-
                 <label htmlFor="description">Deskripsi:</label>
                 <textarea id="description" name="description" value={product.description} onChange={handleChange} required />
                 <br />
@@ -139,10 +146,6 @@ const EditProductPage = () => {
                 <input type="number" id="unitPrice" name="unitPrice" value={product.unitPrice} onChange={handleChange} min="0" required />
                 <br />
 
-                <label htmlFor="status">Status:</label>
-                <input type="text" id="status" name="status" value={product.status} onChange={handleChange} required />
-                <br />
-
                 <label htmlFor="stock">Stok:</label>
                 <input type="number" id="stock" name="stock" value={product.stock} onChange={handleChange} min="1" required />
                 <br />
@@ -151,20 +154,23 @@ const EditProductPage = () => {
                 <input type="number" id="weight" name="weight" value={product.weight} onChange={handleChange} min="1" required />
                 <br />
 
-                <label htmlFor="size">Ukuran:</label>
-                <input type="number" id="size" name="size" value={product.size} onChange={handleChange} min="1" required />
+                <label htmlFor="height">Tinggi:</label>
+                <input type="number" id="height" name="height" value={product.height} onChange={handleChange} min="1" required />
                 <br />
 
-                <label htmlFor="shippingInsurance">Asuransi Pengiriman:</label>
-                <input type="text" id="shippingInsurance" name="shippingInsurance" value={product.shippingInsurance} onChange={handleChange} required />
+                <label htmlFor="width">Lebar:</label>
+                <input type="number" id="width" name="width" value={product.width} onChange={handleChange} min="1" required />
                 <br />
 
-                <label htmlFor="deliveryService">Layanan Pengiriman:</label>
-                <input type="text" id="deliveryService" name="deliveryService" value={product.deliveryService} onChange={handleChange} required />
-                <br />
-
-                <label htmlFor="brand">Brand:</label>
-                <input type="text" id="brand" name="brand" value={product.brand} onChange={handleChange} required />
+                <label htmlFor="productOwner">Product Owner:</label>
+                <select id="productOwner" name="productOwnerId" value={product.productOwnerId} onChange={handleChange} required>
+                    <option value="">Pilih Type</option>
+                    {productOwnerOptions.map((option) => (
+                        <option key={option.id} value={option.id}>
+                            {option.name}
+                        </option>
+                    ))}
+                </select>
                 <br />
 
                 <button type="submit">Simpan Perubahan</button>

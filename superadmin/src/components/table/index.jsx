@@ -1,19 +1,11 @@
 // Table.js
 import React, { useEffect, useState } from 'react';
-import { useParams } from "react-router-dom";
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 import axios from 'axios'
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const TableComponent = () => {
-  // const { id } = useParams();
-  const [data, setData] = useState([
-    { id: 1, name: 'John Doe', age: 30, email: 'john@example.com' },
-    { id: 2, name: 'Jane Smith', age: 25, email: 'jane@example.com' },
-    { id: 3, name: 'Bob Johnson', age: 35, email: 'bob@example.com' },
-    { id: 4, name: 'Alice Williams', age: 28, email: 'alice@example.com' },
-  ]);
 
   const [product, setProduct] = useState(null)
 
@@ -28,9 +20,6 @@ const TableComponent = () => {
       });
   }, []);
 
-  const handleAddData = (newData) => {
-    setData((prevData) => [...prevData, newData]);
-  };
 
   return (
     <TableContainer component={Paper}>
@@ -72,7 +61,7 @@ const TableComponent = () => {
               <TableCell>{row.stock}</TableCell>
               <TableCell>{row.weight}</TableCell>
               <TableCell>{row.size}</TableCell>
-              <TableCell>{row.superAdmins.fullName}</TableCell>
+              <TableCell>{row.superAdmins?.fullName}</TableCell>
               <TableCell>{row.voucherId === null ? "null" : row.voucherId}</TableCell>
             </TableRow>
           ))}

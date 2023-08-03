@@ -12,12 +12,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Voucher.hasMany(models.Product, {
-        foreignKey: 'voucherId',
-        as: 'products', // Nama asosiasi untuk akses relasi ke Product
-      });
-      Voucher.belongsTo(models.AdminSeller, {
-        foreignKey: 'authorId'
+      Voucher.belongsTo(models.ProductCart, {
+        foreignKey: 'productCartId',
+        as: 'productCart',
       });
     }
   }
@@ -27,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     discount: DataTypes.INTEGER,
     duration: DataTypes.INTEGER,
     description: DataTypes.STRING,
-    authorId: DataTypes.INTEGER
+    productCartId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Voucher',

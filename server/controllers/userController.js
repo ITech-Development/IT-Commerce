@@ -244,7 +244,7 @@ class UserController {
       };
       const { data } = await axios({
         method: "POST",
-        url: "https://api.rajaongkir.com/starter/cost",
+        url: "https://pro.rajaongkir.com/api/cost",
         data: obj,
         headers: { key: "d72cd1e873513a95c328ba6489efb224" },
       });
@@ -258,7 +258,7 @@ class UserController {
     try {
       console.log('masuk');
       const province = await axios
-        .get("https://api.rajaongkir.com/starter/province", {
+        .get("https://pro.rajaongkir.com/api/province", {
           headers: { key: "d72cd1e873513a95c328ba6489efb224" },
         })
         .then((response) => {
@@ -279,7 +279,7 @@ class UserController {
     try {
       const { id } = req.params;
       const city = await axios
-        .get("https://api.rajaongkir.com/starter/city", {
+        .get("https://pro.rajaongkir.com/api/city", {
           params: { province: id },
           headers: { key: "d72cd1e873513a95c328ba6489efb224" },
         })

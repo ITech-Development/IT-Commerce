@@ -1,5 +1,5 @@
 const { verifyToken } = require("../helpers/jwt")
-const { User, Product, SuperAdmin, AdminSeller } = require('../models')
+const { User, Product, SuperAdmin, AdminSeller, WarehouseAdmin } = require('../models')
 
 // async function authentication(req, res, next) {
 //     try {
@@ -40,6 +40,25 @@ async function authenticationUser(req, res, next) {
         next()
     } catch (error) {
         console.log(error, 'dari middleware');
+        next(error);
+    }
+}
+
+async function authenticationWarehouseAdmin(req, res, next) {
+    try {
+        let { access_token } = req.headers
+        let verify = verifyToken(access_token)
+        let warehouseAdmin = await WarehouseAdmin.findOne({
+            where: { id: verify.id }
+        })
+        if (!warehouseAdmin) {
+            throw { name: 'ForbiddenError' }
+        }
+        req.warehouseAdmin = {
+            id: warehouseAdmin.id, role: warehouseAdmin.role, email: warehouseAdmin.email
+        }
+        next()
+    } catch (error) {
         next(error);
     }
 }
@@ -130,7 +149,7 @@ async function authorization(req, res, next) {
 
 async function authorizationAdminSeller(req, res, next) {
     try {
-        if (req.adminSeller.role === 'adminSeller' || req.superAdmin.role === "superAdmin") {
+        if (req.adminSeller.role === 'adminSeller') {
             next();
         } else {
             throw { name: 'ForbiddenError' };
@@ -140,8 +159,24 @@ async function authorizationAdminSeller(req, res, next) {
     }
 }
 
+async function authorizationWarehouseAdmin(req, res, next) {
+    try {
+        if (req.warehouseAdmin.role === 'warehouseAdmin') {
+            next();
+        } else {
+            throw { name: 'ForbiddenError' };
+        }
+    } catch (error) {
+        next(error);
+    }
+}
 
-
-
-
-module.exports = { authentication, authorization, authenticationUser, authenticationAdminSeller, authorizationAdminSeller }
+module.exports = {
+    authentication,
+    authorization,
+    authenticationUser,
+    authenticationAdminSeller,
+    authorizationWarehouseAdmin,
+    authorizationAdminSeller,
+    authenticationWarehouseAdmin
+}
