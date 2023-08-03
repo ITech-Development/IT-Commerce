@@ -9,6 +9,7 @@ const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const TableComponent = () => {
   const [product, setProduct] = useState(null)
+  console.log(product, 'isi productttttttttt');
 
   useEffect(() => {
     axios
@@ -67,7 +68,11 @@ const TableComponent = () => {
               <TableCell>{row.categories?.name}</TableCell>
               <TableCell>{row.types?.name}</TableCell>
               <TableCell>
-                <img src={row.image} alt={row.image} style={{ maxWidth: '100px', maxHeight: '100px' }} />
+                {row.image ? (
+                  <img src={row.image} alt={row.image} style={{ maxWidth: '100px', maxHeight: '100px' }} />
+                ) : (
+                  <span>No Image</span>
+                )}
               </TableCell>
               <TableCell>{row.description}</TableCell>
               <TableCell>{row.minimumOrder}</TableCell>

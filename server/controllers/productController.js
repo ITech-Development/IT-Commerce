@@ -1,6 +1,7 @@
 
-const { Product, ProductCategory, ProductType, User, SuperAdmin, ProductOwner,WarehouseAdmin } = require('../models')
-const multer = require('multer');
+const { Product, ProductCategory, ProductType, User, SuperAdmin, ProductOwner, WarehouseAdmin } = require('../models')
+const { validationResult } = require('express-validator')
+
 
 class ProductController {
 
@@ -36,6 +37,20 @@ class ProductController {
 
     static async addProduct(req, res, next) {
         try {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                const err = new Error('Input value tidak sesuai')
+                err.errorStatus = 400
+                err.data = errors.array()
+                throw err
+            }
+
+            if (!req.file) {
+                const err = new Error('Image harus diupload')
+                err.errorStatus = 422
+                throw err
+            }
+
             const newProduct = await Product.create({
                 name: req.body.name,
                 categoryId: req.body.categoryId,
