@@ -246,7 +246,7 @@ class UserController {
         method: "POST",
         url: "https://api.rajaongkir.com/starter/cost",
         data: obj,
-        headers: { key: "b2a87672564c42280e6666ad152083b6" },
+        headers: { key: "d72cd1e873513a95c328ba6489efb224" },
       });
       res.status(200).json(data.rajaongkir.results[0].costs);
     } catch (error) {
@@ -259,9 +259,10 @@ class UserController {
       console.log('masuk');
       const province = await axios
         .get("https://api.rajaongkir.com/starter/province", {
-          headers: { key: "b2a87672564c42280e6666ad152083b6" },
+          headers: { key: "d72cd1e873513a95c328ba6489efb224" },
         })
         .then((response) => {
+          console.log('masuk oioioi');
           return response.data.rajaongkir.results;
         })
         .catch((err) => {
@@ -269,6 +270,7 @@ class UserController {
         });
       res.status(200).json(province);
     } catch (error) {
+      console.log(error, 'dari get province');
       next(error);
     }
   }
@@ -279,7 +281,7 @@ class UserController {
       const city = await axios
         .get("https://api.rajaongkir.com/starter/city", {
           params: { province: id },
-          headers: { key: "b2a87672564c42280e6666ad152083b6" },
+          headers: { key: "d72cd1e873513a95c328ba6489efb224" },
         })
         .then((response) => {
           return response.data.rajaongkir.results;

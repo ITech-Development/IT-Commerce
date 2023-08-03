@@ -176,9 +176,6 @@ const ProductDetailPage = () => {
             <SpecificationItem>
               Layanan Pengiriman: <strong>{product.deliveryService}</strong>
             </SpecificationItem>
-            <SpecificationItem>
-              Author ID: <strong>{product.authorId}</strong>
-            </SpecificationItem>
           </Specifications>
           <div style={{ marginTop: "30px" }}>
             <BuyNowButton>Buy Now</BuyNowButton>

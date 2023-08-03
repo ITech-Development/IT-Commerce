@@ -24,6 +24,9 @@ const MainContent = () => {
           Add Product
         </button>
       </Link>
+      <Link to="/dashboard">
+        <button>Dashboard</button>
+      </Link>
       <TableComponent />
     </main>
   );

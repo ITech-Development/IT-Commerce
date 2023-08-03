@@ -111,6 +111,15 @@ export default function Navigation() {
     //     )}
     //   </>
     // );
+    // if (token) {
+    //   return (
+    //     <>
+    //       <li>
+    //         <button className="login-button" onClick={handleLogout()}>Logout</button>
+    //       </li>
+    //     </>
+    //   )
+    // } 
   };
 
   return (

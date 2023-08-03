@@ -39,7 +39,7 @@ async function authenticationUser(req, res, next) {
         }
         next()
     } catch (error) {
-
+        console.log(error, 'dari middleware');
         next(error);
     }
 }
@@ -130,7 +130,7 @@ async function authorization(req, res, next) {
 
 async function authorizationAdminSeller(req, res, next) {
     try {
-        if (req.adminSeller.role === 'adminSeller') {
+        if (req.adminSeller.role === 'adminSeller' || req.superAdmin.role === "superAdmin") {
             next();
         } else {
             throw { name: 'ForbiddenError' };

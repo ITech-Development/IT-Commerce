@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import "./addProductStyle.css";
 
 const AddProductPage = () => {
-  // State untuk menyimpan data produk yang akan ditambahkan
   const [newProduct, setNewProduct] = useState({
     name: "",
     categoryId: 0,
@@ -13,7 +12,7 @@ const AddProductPage = () => {
     condition: "",
     description: "",
     minimumOrder: 1,
-    unitPrice: 0,
+    unitPrice: 1,
     status: "",
     stock: 1,
     weight: 1,
@@ -28,37 +27,33 @@ const AddProductPage = () => {
   const [typeOptions, setTypeOptions] = useState([]);
 
   useEffect(() => {
-    // Ambil data kategori dari server saat komponen dipasang (mounted)
     fetchCategories();
     fetchTypes();
   }, []);
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3100/product-categories"
-      );
+      const response = await axios.get("http://localhost:3100/product-categories");
       setCategoryOptions(response.data);
     } catch (error) {
       console.error("Terjadi kesalahan saat mengambil data kategori:", error);
     }
   };
+
   const fetchTypes = async () => {
     try {
       const response = await axios.get("http://localhost:3100/product-types");
       setTypeOptions(response.data);
     } catch (error) {
-      console.error("Terjadi kesalahan saat mengambil data kategori:", error);
+      console.error("Terjadi kesalahan saat mengambil data tipe:", error);
     }
   };
 
-  // Handler untuk mengubah nilai input pada form
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewProduct({ ...newProduct, [name]: value });
   };
 
-  // Handler untuk mengirimkan data produk baru
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -67,20 +62,17 @@ const AddProductPage = () => {
         newProduct,
         {
           headers: {
-            "Content-Type": "application/json", // Contoh: mengatur tipe konten
-            access_token: localStorage.getItem("access_token"), // Contoh: mengatur token otorisasi
+            "Content-Type": "application/json",
+            access_token: localStorage.getItem("access_token"),
             // Tambahkan header lainnya sesuai kebutuhan
           },
         }
       );
 
       if (response.status === 201) {
-        // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil tambah produk.
-        // Contoh:
-        window.location.href = "/dashboard";
+        window.location.href = "/products";
         console.log("Produk berhasil ditambahkan.");
       } else {
-        // Jika terjadi kesalahan saat menyimpan produk di server, Anda dapat menampilkan pesan error atau melakukan tindakan lainnya.
         console.error("Terjadi kesalahan saat menyimpan produk.");
       }
     } catch (error) {
@@ -93,7 +85,7 @@ const AddProductPage = () => {
       <h1>Tambah Produk Baru</h1>
       <form className="add-product-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Nama Produk : </label>
+          <label htmlFor="name">Nama Produk:</label>
           <input
             type="text"
             id="name"
@@ -105,8 +97,8 @@ const AddProductPage = () => {
           <br />
         </div>
 
-        <div style={{ margin: "10px 0 " }}>
-          <label htmlFor="category">Kategori : </label>
+        <div className="form-group">
+          <label htmlFor="category">Kategori:</label>
           <select
             id="category"
             name="categoryId"
@@ -124,8 +116,8 @@ const AddProductPage = () => {
           <br />
         </div>
 
-        <div style={{ margin: "10px 0 " }}>
-          <label htmlFor="type">Type : </label>
+        <div className="form-group">
+          <label htmlFor="type">Type:</label>
           <select
             id="type"
             name="typeId"
@@ -145,7 +137,7 @@ const AddProductPage = () => {
 
         {/* Tambahkan input form lainnya sesuai atribut yang ada pada produk */}
         <div className="form-group">
-          <label htmlFor="image">Gambar : </label>
+          <label htmlFor="image">Gambar:</label>
           <input
             type="text"
             id="image"
@@ -158,7 +150,7 @@ const AddProductPage = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="condition">Kondisi : </label>
+          <label htmlFor="condition">Kondisi:</label>
           <input
             type="text"
             id="condition"
@@ -171,7 +163,7 @@ const AddProductPage = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="description">Deskripsi : </label>
+          <label htmlFor="description">Deskripsi:</label>
           <textarea
             id="description"
             name="description"
@@ -181,8 +173,9 @@ const AddProductPage = () => {
           />
           <br />
         </div>
+
         <div className="form-group">
-          <label htmlFor="minimumOrder">Minimum Order : </label>
+          <label htmlFor="minimumOrder">Minimum Order:</label>
           <input
             type="number"
             id="minimumOrder"
@@ -196,7 +189,7 @@ const AddProductPage = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="unitPrice">Harga Satuan : </label>
+          <label htmlFor="unitPrice">Harga Satuan:</label>
           <input
             type="number"
             id="unitPrice"
@@ -210,10 +203,10 @@ const AddProductPage = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="status">Status : </label>
+          <label htmlFor="status">Status:</label>
           <input
             type="text"
-            id="unitPrice"
+            id="status"
             name="status"
             value={newProduct.status}
             onChange={handleChange}
@@ -223,7 +216,7 @@ const AddProductPage = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="stock">Stok : </label>
+          <label htmlFor="stock">Stok:</label>
           <input
             type="number"
             id="stock"
@@ -237,7 +230,7 @@ const AddProductPage = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="weight">Berat : </label>
+          <label htmlFor="weight">Berat:</label>
           <input
             type="number"
             id="weight"
@@ -251,7 +244,7 @@ const AddProductPage = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="size">Ukuran : </label>
+          <label htmlFor="size">Ukuran:</label>
           <input
             type="number"
             id="size"
@@ -265,7 +258,7 @@ const AddProductPage = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="shippingInsurance">Asuransi Pengiriman : </label>
+          <label htmlFor="shippingInsurance">Asuransi Pengiriman:</label>
           <input
             type="text"
             id="shippingInsurance"
@@ -278,7 +271,7 @@ const AddProductPage = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="deliveryService">Layanan Pengiriman : </label>
+          <label htmlFor="deliveryService">Layanan Pengiriman:</label>
           <input
             type="text"
             id="deliveryService"
@@ -291,7 +284,7 @@ const AddProductPage = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="brand">Brand : </label>
+          <label htmlFor="brand">Brand :</label>
           <input
             type="text"
             id="brand"
