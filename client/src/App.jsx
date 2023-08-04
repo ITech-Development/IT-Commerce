@@ -19,9 +19,9 @@ import FirstStep from "./pages/productShipping/firstStep";
 import SecondStep from "./pages/productShipping/secondStep";
 import CheckTrans from "./pages/CheckTrans";
 import ProfileUpdate from "./pages/profileUpdate";
-import ServiceList from './pages/ServiceList'
+import ServiceList from "./pages/ServiceList";
 import { initialState, reducer } from "./reducer/UseReducer";
-import Chat from './pages/Chat'
+import Chat from "./pages/Chat";
 
 export const UserContext = createContext();
 
