@@ -4,7 +4,7 @@ import { useGetAllProductsQuery } from "../../features/productsApi";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
-import Corousel from '../../components/corousel/product'
+import Corousel from "../../components/corousel/product";
 
 import "../../App.css";
 // import Hero from "../../assets/bannerproduct1.jpg";
@@ -118,8 +118,6 @@ const ProductList = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
-  const [selectedCategory, setSelectedCategory] = useState("");
-
 
   const handleAddToCart = async (product) => {
     const accessToken = localStorage.getItem("access_token");
@@ -148,37 +146,27 @@ const ProductList = () => {
   };
 
   const filteredAndSortedData = data
-  ? data
-      .filter((product) =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      .filter((product) =>
-        selectedCategory !== ""
-          ? product.category === selectedCategory
-          : true
-      )
-      .sort((a, b) => {
-        switch (sortOption) {
-          case "price":
-            return a.unitPrice - b.unitPrice;
-          case "stock":
-            return a.stock - b.stock;
-          default:
-            // Sort by name by default
-            return a.name.localeCompare(b.name);
-        }
-      })
-  : [];
-
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-  };
-
+    ? data
+        .filter((product) =>
+          product.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .sort((a, b) => {
+          switch (sortOption) {
+            case "price":
+              return a.unitPrice - b.unitPrice;
+            case "stock":
+              return a.stock - b.stock;
+            default:
+              // Sort by name by default
+              return a.name.localeCompare(b.name);
+          }
+        })
+    : [];
   return (
     <>
-        <Corousel/>
+      <Corousel />
 
-      <div >
+      <div>
         {/* <img src={Hero} alt="" /> */}
         <div className="productlist-container">
           {isLoading ? (
@@ -208,42 +196,7 @@ const ProductList = () => {
                   <option value="stock">Stok Paling Sedikit - Terbanyak</option>
                 </select>
               </div>
-              <div style={{display: "flex", justifyContent: 'space-arround', margin: 'auto', }}>
-              <div
-          style={{
-            border: "1px solid gray",
-            borderRadius: "8px",
-            padding: "5px 20px",
-            cursor: "pointer",
-          }}
-          onClick={() => handleCategoryClick("2")}
-        >
-          <p>categori 1</p>
-        </div>
-        <div
-          style={{
-            border: "1px solid gray",
-            borderRadius: "8px",
-            padding: "5px 20px",
-            cursor: "pointer",
-            margin: "0 30px",
-          }}
-          onClick={() => handleCategoryClick("4")}
-        >
-          <p>categori 2</p>
-        </div>
-        <div
-          style={{
-            border: "1px solid gray",
-            borderRadius: "8px",
-            padding: "5px 20px",
-            cursor: "pointer",
-          }}
-          onClick={() => handleCategoryClick("3")}
-        >
-          <p>categori 3</p>
-        </div>
-              </div>
+              
               <div className="products">
                 {filteredAndSortedData.map((product) => (
                   <ProductCard
