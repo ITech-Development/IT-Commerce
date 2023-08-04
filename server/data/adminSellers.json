@@ -1,36 +1,38 @@
 [
-    {
-      "fullName": "Seller 1",
-      "email": "seller1@example.com",
-      "password": "password123",
-      "phoneNumber": "1234567890",
-      "address": "123 Main Street, City, Country",
-      "imageProfile": "image_url_1",
-      "role": "adminSeller",
-      "createdAt": "2023-07-14T00:00:00Z",
-      "updatedAt": "2023-07-14T00:00:00Z"
-    },
-    {
-      "fullName": "Seller 2",
-      "email": "seller2@example.com",
-      "password": "password456",
-      "phoneNumber": "0987654321",
-      "address": "456 Park Avenue, City, Country",
-      "imageProfile": "image_url_2",
-      "role": "adminSeller",
-      "createdAt": "2023-07-14T00:00:00Z",
-      "updatedAt": "2023-07-14T00:00:00Z"
-    },
-    {
-      "fullName": "Seller 3",
-      "email": "seller3@example.com",
-      "password": "password789",
-      "phoneNumber": "5555555555",
-      "address": "789 Elm Street, City, Country",
-      "imageProfile": "image_url_3",
-      "role": "adminSeller",
-      "createdAt": "2023-07-14T00:00:00Z",
-      "updatedAt": "2023-07-14T00:00:00Z"
-    }
-  ]
-  
+  {
+    "fullName": "John Doe",
+    "email": "john.doe@example.com",
+    "password": "hashed_password_here",
+    "phoneNumber": "+1234567890",
+    "address": "123 Main Street",
+    "imageProfile": "profile_image_url_here",
+    "role": "adminSeller",
+    "voucherCode": "VCR1",
+    "createdAt": "2023-08-04T12:34:56Z",
+    "updatedAt": "2023-08-04T12:34:56Z"
+  },
+  {
+    "fullName": "Jane Smith",
+    "email": "jane.smith@example.com",
+    "password": "hashed_password_here",
+    "phoneNumber": "+9876543210",
+    "address": "456 Park Avenue",
+    "imageProfile": "profile_image_url_here",
+    "role": "adminSeller",
+    "voucherCode": "VCR2",
+    "createdAt": "2023-08-04T12:34:56Z",
+    "updatedAt": "2023-08-04T12:34:56Z"
+  },
+  {
+    "fullName": "Michael Johnson",
+    "email": "michael.johnson@example.com",
+    "password": "hashed_password_here",
+    "phoneNumber": "+1112223333",
+    "address": "789 Oak Road",
+    "imageProfile": "profile_image_url_here",
+    "role": "adminSeller",
+    "voucherCode": "VCR3",
+    "createdAt": "2023-08-04T12:34:56Z",
+    "updatedAt": "2023-08-04T12:34:56Z"
+  }
+]
