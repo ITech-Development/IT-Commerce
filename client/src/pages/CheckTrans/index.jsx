@@ -3,25 +3,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTotals } from "../../features/cartSlice";
 import "./styless.css";
 import axios from "axios";
-import { Link } from 'react-router-dom';
-import VCR1 from '../../assets/IT01.png'
-import VCR2 from '../../assets/MS01.png'
-import VCR3 from '../../assets/TK01.png'
+import { Link } from "react-router-dom";
+import VCR1 from "../../assets/IT01.png";
+import VCR2 from "../../assets/MS01.png";
+import VCR3 from "../../assets/TK01.png";
 
 function Index() {
-  let [carts, setCarts] = useState([])
+  let [carts, setCarts] = useState([]);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const [token, setToken] = useState('')
+  const [token, setToken] = useState("");
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
   const [subdistrict, setSubdistrict] = useState([]);
-  const [courier, setCourier] = useState('jne');
+  const [courier, setCourier] = useState("jne");
   const [pengiriman, setPengiriman] = useState([]);
   const [selectedShippingCost, setSelectedShippingCost] = useState(null);
   const [totalShippingCost, setTotalShippingCost] = useState(0);
   const [selectedVoucher, setSelectedVoucher] = useState(null);
   const [vouchers, setVouchers] = useState([]);
+  console.log(vouchers, "tandain");
   const [profile, setProfile] = useState([]);
 
   useEffect(() => {
@@ -59,16 +60,21 @@ function Index() {
   }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
-    const bayar = calculateTotalBayar()
+    const bayar = calculateTotalBayar();
     const config = {
       "Content-Type": "application/json",
-      access_token: localStorage.getItem("access_token")
-    }
+      access_token: localStorage.getItem("access_token"),
+    };
 
-    const response = await axios({ url: `http://localhost:3100/users/midtrans?total=${bayar}`, data: { carts }, headers: config, method: 'post' })
-    console.log(response.data, 'dari front end');
+    const response = await axios({
+      url: `http://localhost:3100/users/midtrans?total=${bayar}`,
+      data: { carts },
+      headers: config,
+      method: "post",
+    });
+    console.log(response.data, "dari front end");
     setToken(response.data.token);
-  }
+  };
 
   useEffect(() => {
     if (token) {
@@ -93,9 +99,9 @@ function Index() {
       snap.pay(token, {
         onSuccess: function (result) {
           // return changeStatus();
-          console.log('snap payyyyyyyyyyy');
+          console.log("snap payyyyyyyyyyy");
         },
-      })
+      });
       // snap.pay(token, {
       //   onSuccess: function (result) {
       //     // return changeStatus();
@@ -103,97 +109,87 @@ function Index() {
       //   },
       // })
     }
-
-  }, [token])
-
+  }, [token]);
 
   useEffect(() => {
-    const midtransUrl = 'https://app.sandbox.midtrans.com/snap/snap.js'
+    const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
 
-    let scriptTag = document.createElement('script')
-    scriptTag.src = midtransUrl
+    let scriptTag = document.createElement("script");
+    scriptTag.src = midtransUrl;
 
-    const midtransClientKey = 'SB-Mid-client-5sjWc9AhHLstKFML'
-    scriptTag.setAttribute('data-client-key', midtransClientKey)
+    const midtransClientKey = "SB-Mid-client-5sjWc9AhHLstKFML";
+    scriptTag.setAttribute("data-client-key", midtransClientKey);
 
-    document.body.appendChild(scriptTag)
+    document.body.appendChild(scriptTag);
 
     return () => {
-      document.body.removeChild(scriptTag)
-    }
-  })
+      document.body.removeChild(scriptTag);
+    };
+  });
 
   const handlerInc = (id) => {
-    const accessToken = localStorage.getItem("access_token")
+    const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = 'http://localhost:3100/product-carts/increment/' + id
-      axios({ url, method: 'patch', headers: { access_token: accessToken } })
+      let url = "http://localhost:3100/product-carts/increment/" + id;
+      axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data);
         })
-        .catch(error => { console.log('incrementttt'); })
+        .catch((error) => {
+          console.log("incrementttt");
+        });
     }
-  }
-
+  };
 
   const handlerDec = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = 'http://localhost:3100/product-carts/decrement/' + id
-      axios({ url, method: 'patch', headers: { access_token: accessToken } })
+      let url = "http://localhost:3100/product-carts/decrement/" + id;
+      axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
-          console.log(data, 'ASdasdas');
+          console.log(data, "ASdasdas");
         })
-        .catch(error => { console.log('asdasd'); })
+        .catch((error) => {
+          console.log("asdasd");
+        });
     }
-  }
+  };
 
   const handlerRemove = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = 'http://localhost:3100/product-carts/remove/' + id
-      axios({ url, method: 'delete', headers: { access_token: accessToken } })
+      let url = "http://localhost:3100/product-carts/remove/" + id;
+      axios({ url, method: "delete", headers: { access_token: accessToken } })
         .then(({ data }) => {
-          console.log(data, 'remooove');
+          console.log(data, "remooove");
         })
-        .catch(error => { console.log('asdasd remove'); })
+        .catch((error) => {
+          console.log("asdasd remove");
+        });
     }
-  }
-
-  const handlerClear = () => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = 'http://localhost:3100/product-carts/clear/'
-      axios({ url, method: 'delete', headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data, 'remooove all');
-        })
-        .catch(error => { console.log('asdasd remove all'); })
-    }
-  }
+  };
 
   const calculateSubtotal = () => {
-    let subtotal = 0
+    let subtotal = 0;
     carts.forEach((e) => {
-      const productPrice = e.product.unitPrice
-      const quantity = e.quantity
-      const totalProductPrice = productPrice * quantity
-      subtotal += totalProductPrice
-    })
-    return subtotal
-  }
+      const productPrice = e.product.unitPrice;
+      const quantity = e.quantity;
+      const totalProductPrice = productPrice * quantity;
+      subtotal += totalProductPrice;
+    });
+    return subtotal;
+  };
 
   const calculateVoucher = () => {
     if (!selectedVoucher) {
-      return 0
+      return 0;
     }
     const subtotal = calculateSubtotal(); // Panggil fungsi calculateSubtotal untuk mendapatkan nilai subtotal
     const voucherPercentage = 3;
     const discountAmount = (subtotal * voucherPercentage) / 100;
     // const result = subtotal - discountAmount;
-    return discountAmount
+    return discountAmount;
   };
-
 
   // const calculatePPN = () => {
   //   let subtotal = calculateVoucher()
@@ -244,26 +240,24 @@ function Index() {
   //   return result;
   // };
   const calculateTotalBayar = () => {
-    const total = calculateTotal()
-    const result = total + totalShippingCost
-    return result
-  }
-
+    const total = calculateTotal();
+    const result = total + totalShippingCost;
+    return result;
+  };
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = 'http://localhost:3100/product-carts'
+      let url = "http://localhost:3100/product-carts";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
-          setCarts(data)
-
+          setCarts(data);
         })
         .catch((error) => {
           console.log(error);
-        })
+        });
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     // Fetch province data from the server
@@ -341,9 +335,8 @@ function Index() {
     const value = parseFloat(event.target.value);
     setSelectedShippingCost(value);
     setTotalShippingCost(value);
-    console.log(value, 'valuvalue');
+    console.log(value, "valuvalue");
   };
-
 
   const handlerSetCourier = async (event) => {
     const courier = event.target.value;
@@ -354,27 +347,21 @@ function Index() {
     <div>
       <div className="alamat">
         <h2>Alamat Pengiriman</h2>
-        <h4 style={{ padding: '10px 0' }}>Full Name: {profile.user?.fullName}, Phone Number: {profile.user?.phoneNumber}</h4>
-        <div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <p>
-              {profile.user?.address}
-            </p>
-            <button
-              style={{
-                border: "none",
-                background: "none",
-                cursor: "pointer",
-                fontWeight: "700",
-                color: "blue",
-                fontSize: "18px",
-              }}
-            >
-              Edit
-            </button>
-          </div>
+        <div className="address-info">
+          <h4>Full Name:</h4>
+          <p>{profile.user?.fullName}</p>
+        </div>
+        <div className="address-info">
+          <h4>Phone Number:</h4>
+          <p>{profile.user?.phoneNumber}</p>
+        </div>
+        <div className="address-info">
+          <h4>Address:</h4>
+          <p>{profile.user?.address}</p>
+          <button className="edit-button">Edit</button>
         </div>
       </div>
+
       <div
         className="alamat"
         style={{ marginTop: "20px", marginBottom: "20px" }}
@@ -401,8 +388,8 @@ function Index() {
                 <h3 class="total">Total</h3>
               </div>
               <div class="cart-items">
-                {carts?.map(e => (
-                  < div class="cart-item" >
+                {carts?.map((e) => (
+                  <div class="cart-item">
                     <div class="cart-product">
                       <Link to={`/products/${e.product.id}`}>
                         <img src={e.product.image} alt={e.product.name} />
@@ -410,22 +397,28 @@ function Index() {
                       <div>
                         <h3>{e.product.name}</h3>
                         <p>{e.product.description}</p>
-                        <button onClick={() => handlerRemove(e.id)}>Remove</button>
+                        <button onClick={() => handlerRemove(e.id)}>
+                          Remove
+                        </button>
                       </div>
                     </div>
-                    <div class="cart-product-price">Rp.{e.product.unitPrice}</div>
+                    <div class="cart-product-price">
+                      Rp.{e.product.unitPrice}
+                    </div>
                     <div class="cart-product-quantity">
                       <button onClick={() => handlerDec(e.id)}>-</button>
                       <div class="count">{e.quantity}</div>
                       <button onClick={() => handlerInc(e.id)}>+</button>
                     </div>
-                    <div class="cart-product-total-price">Rp.{e.quantity * e.product.unitPrice}</div>
+                    <div class="cart-product-total-price">
+                      Rp.{e.quantity * e.product.unitPrice}
+                    </div>
                   </div>
                 ))}
               </div>
               <div class="cart-summary">
-                <button class="clear-cart" onClick={() => handlerClear()}>Clear Cart</button>
-                <div class="cart-checkout" style={{ lineHeight: "30px" }} >
+                <p></p>
+                <div class="cart-checkout" style={{ lineHeight: "30px" }}>
                   <div class="subtotal">
                     <span>Subtotal :</span>
                     <span class="amount">Rp.{calculateSubtotal()}</span>
@@ -434,13 +427,21 @@ function Index() {
                     <span>Voucher 3% :</span>
                     <span class="amount">Rp. {calculateVoucher()}</span>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontStyle: 'italic' }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      fontStyle: "italic",
+                    }}
+                  >
                     <span>PPN 11% :</span>
-                    <span className="amount" > Rp. {calculatePPN()}</span>
+                    <span className="amount"> Rp. {calculatePPN()}</span>
                   </div>
                   <div class="subtotal">
                     <span>Total :</span>
-                    <span style={{ fontWeight: '700' }} class="amount">{calculateTotal()}</span>
+                    <span style={{ fontWeight: "700" }} class="amount">
+                      {calculateTotal()}
+                    </span>
                   </div>
 
                   {/* <div class="start-shopping">
@@ -453,45 +454,49 @@ function Index() {
               </div>
             </div>
           )}
-        </div >
+        </div>
 
         <div>
           <h2>Pilih Kode Voucher</h2>
-          <label key={vouchers[0]?.id}>
-            <input
-              type="radio"
-              value={vouchers[0]?.voucherCode}
-              checked={selectedVoucher === vouchers[0]?.voucherCode}
-              onChange={handleVoucherChange}
-            />
-            {vouchers[0]?.voucherCode}
-            <img src={VCR1} alt="IT 01" width="150" />
-          </label>
-          <br />
-          <label key={vouchers[1]?.id}>
-            <input
-              type="radio"
-              value={vouchers[1]?.voucherCode}
-              checked={selectedVoucher === vouchers[1]?.voucherCode}
-              onChange={handleVoucherChange}
-            />
-            {vouchers[1]?.voucherCode}
-            <img src={VCR2} alt="MS 01" width="150" />
-          </label>
-          <br />
-          <label key={vouchers[2]?.id}>
-            <input
-              type="radio"
-              value={vouchers[2]?.voucherCode}
-              checked={selectedVoucher === vouchers[2]?.voucherCode}
-              onChange={handleVoucherChange}
-            />
-            {vouchers[2]?.voucherCode}
-            <img src={VCR3} alt="MS 01" width="150" />
-          </label>
-          <br />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-arround",
+              marginBottom: "30px",
+            }}
+          >
+            <label key={vouchers[0]?.id}>
+              <input
+                type="radio"
+                value={vouchers[0]?.voucherCode}
+                checked={selectedVoucher === vouchers[0]?.voucherCode}
+                onChange={handleVoucherChange}
+              />
+              {vouchers[0]?.voucherCode}
+              <img src={VCR1} alt="IT 01" width="150" />
+            </label>
+            <label key={vouchers[1]?.id}>
+              <input
+                type="radio"
+                value={vouchers[1]?.voucherCode}
+                checked={selectedVoucher === vouchers[1]?.voucherCode}
+                onChange={handleVoucherChange}
+              />
+              {vouchers[1]?.voucherCode}
+              <img src={VCR2} alt="MS 01" width="150" />
+            </label>
+            <label key={vouchers[2]?.id}>
+              <input
+                type="radio"
+                value={vouchers[2]?.voucherCode}
+                checked={selectedVoucher === vouchers[2]?.voucherCode}
+                onChange={handleVoucherChange}
+              />
+              {vouchers[2]?.voucherCode}
+              <img src={VCR3} alt="MS 01" width="150" />
+            </label>
+          </div>
         </div>
-
 
         <div
           className="calcongkir"
@@ -499,76 +504,123 @@ function Index() {
         >
           <h2>Pilih Metode Pengiriman</h2>
           <div>
-            <select value={courier} onChange={handlerSetCourier}>
-              <option value="jne">jne</option>
-              <option value="tiki">tiki</option>
-              <option value="pos">pos</option>
-              <option value="jnt">jnt</option>
+            <select
+              value={courier}
+              onChange={handlerSetCourier}
+              className="methodDeliverySelect"
+            >
+              <option className="methodDeliveryOption" value="jne">
+                jne
+              </option>
+              <option className="methodDeliveryOption" value="tiki">
+                tiki
+              </option>
+              <option className="methodDeliveryOption" value="pos">
+                pos
+              </option>
+              <option className="methodDeliveryOption" value="jnt">
+                jnt
+              </option>
             </select>
             <select
               name="province"
               id="province"
               onChange={handleProvinceChange}
+              className="methodDeliverySelect"
             >
-              <option value="">Select Province</option>
+              <option className="methodDeliveryOption" value="">
+                Select Province
+              </option>
               {province.map((item) => (
-                <option key={item.province_id} value={item.province_id}>
+                <option
+                  className="methodDeliveryOption"
+                  key={item.province_id}
+                  value={item.province_id}
+                >
                   {item.province}
                 </option>
               ))}
             </select>
-            <select name="city" id="city" onChange={handleCityChange}>
-              <option value="">Select City</option>
+            <select
+              name="city"
+              id="city"
+              onChange={handleCityChange}
+              className="methodDeliverySelect"
+            >
+              <option className="methodDeliveryOption" value="">
+                Select City
+              </option>
               {Array.isArray(city) &&
                 city.map((item) => (
-                  <option key={item.city_id} value={item.city_id}>
+                  <option
+                    className="methodDeliveryOption"
+                    key={item.city_id}
+                    value={item.city_id}
+                  >
                     {item.city_name}
                   </option>
                 ))}
             </select>
-            <select name="subdistrict" id="subdistrict" onChange={handlerGetCost}>
-              <option value="">Select Subdistrict</option>
+            <select
+              name="subdistrict"
+              id="subdistrict"
+              onChange={handlerGetCost}
+              className="methodDeliverySelect"
+            >
+              <option className="methodDeliveryOption" value="">
+                Select Subdistrict
+              </option>
               {Array.isArray(subdistrict) &&
                 subdistrict.map((item) => (
-                  <option key={item.subdistrict_id} value={item.subdistrict_id}>
+                  <option
+                    className="methodDeliveryOption"
+                    key={item.subdistrict_id}
+                    value={item.subdistrict_id}
+                  >
                     {item.subdistrict_name}
                   </option>
                 ))}
             </select>
-            {pengiriman ? pengiriman.map((el, index) => (
-              <div key={index}>
-                <input
-                  type="radio"
-                  id={`shippingChoice${index}`}
-                  name="shipping"
-                  value={el.cost[0].value}
-                  checked={selectedShippingCost === el.cost[0].value}
-                  onChange={handleShippingCostChange}
-                />
-                <label htmlFor={`shippingChoice${index}`}>
-                  Shipping Cost: Rp.{el.cost[0].value}
-                </label>
-                <p>Service: {el.service}</p>
-                <p>Description: {el.description}</p>
-                <p>Est: {el.cost[0].etd} Days</p>
-              </div>
-            )) : null}
-
+            {pengiriman
+              ? pengiriman.map((el, index) => (
+                  <div key={index}>
+                    <input
+                      type="radio"
+                      id={`shippingChoice${index}`}
+                      name="shipping"
+                      value={el.cost[0].value}
+                      checked={selectedShippingCost === el.cost[0].value}
+                      onChange={handleShippingCostChange}
+                    />
+                    <label htmlFor={`shippingChoice${index}`}>
+                      Shipping Cost: Rp.{el.cost[0].value}
+                    </label>
+                    <p>Service: {el.service}</p>
+                    <p>Description: {el.description}</p>
+                    <p>Est: {el.cost[0].etd} Days</p>
+                  </div>
+                ))
+              : null}
           </div>
         </div>
-        <div style={{ textAlign: 'end', padding: '20px 65px', fontSize: '20px' }}>
+
+        <div
+          style={{ textAlign: "end", padding: "20px 65px", fontSize: "20px" }}
+        >
           <span>Total Bayar : </span>
           <span style={{ fontWeight: "700" }} className="amount">
             Rp. {calculateTotalBayar()}
           </span>
-          {totalShippingCost === 0 ?
-            <p><i>Silahkan pilih metode pengiriman</i></p> :
+          {totalShippingCost === 0 ? (
+            <p>
+              <i>Silahkan pilih metode pengiriman</i>
+            </p>
+          ) : (
             <button onClick={() => handlePaymentProcess()}>Payment</button>
-          }
+          )}
         </div>
       </div>
-    </div >
+    </div>
   );
-
 }
 export default Index;
