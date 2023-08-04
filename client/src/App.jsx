@@ -45,6 +45,7 @@ const Routing = () => {
       <Route path="/profile-update/:id" element={<ProfileUpdate />} />
       <Route path="/chat" element={<Chat />} />
 
+      {/* <Route path="/profile-update/:id" element={<ProfileUpdate />} /> */}
     </Routes>
   );
 };

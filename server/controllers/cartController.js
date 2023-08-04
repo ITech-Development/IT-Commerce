@@ -16,17 +16,17 @@ class CartController {
     } catch (error) {
       next(error);
     }
-  }
+  } 
 
   static async addCart(req, res, next) {
     try {
       let user_id = req.user.id;
       let createCart = await Cart.create({
-        userId: user_id,
+        userId: user_id, 
       });
       res.status(201).json(createCart);
     } catch (error) {
-      next(error);
+      next(error); 
     }
   }
 }
