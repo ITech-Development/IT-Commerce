@@ -21,6 +21,7 @@ import CheckTrans from "./pages/CheckTrans";
 import ProfileUpdate from "./pages/profileUpdate";
 import ServiceList from './pages/ServiceList'
 import { initialState, reducer } from "./reducer/UseReducer";
+import Chat from './pages/Chat'
 
 export const UserContext = createContext();
 
@@ -42,6 +43,7 @@ const Routing = () => {
       <Route path="/profile-update" element={<ProfileUpdate />} />
       <Route path="/services" element={<ServiceList />} />
       <Route path="/profile-update/:id" element={<ProfileUpdate />} />
+      <Route path="/chat" element={<Chat />} />
 
     </Routes>
   );
