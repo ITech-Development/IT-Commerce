@@ -15,13 +15,28 @@ function Index() {
   const [token, setToken] = useState('')
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
-  const [courier, setCourier] = useState('');
+  const [subdistrict, setSubdistrict] = useState([]);
+  const [courier, setCourier] = useState('jne');
   const [pengiriman, setPengiriman] = useState([]);
   const [selectedShippingCost, setSelectedShippingCost] = useState(null);
   const [totalShippingCost, setTotalShippingCost] = useState(0);
   const [selectedVoucher, setSelectedVoucher] = useState(null);
   const [vouchers, setVouchers] = useState([]);
-  console.log(vouchers, 'haloooooo voucher');
+  const [profile, setProfile] = useState([]);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      let url = "http://localhost:3100/profiles";
+      axios({ url, headers: { access_token: accessToken } })
+        .then(async ({ data }) => {
+          setProfile(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
 
   useEffect(() => {
     const fetchVouchers = async () => {
@@ -278,6 +293,21 @@ function Index() {
     }
   };
 
+  const handleCityChange = async (event) => {
+    const selectedCityId = event.target.value;
+    try {
+      const response = await axios.get(
+        `http://localhost:3100/users/subdistrict/${selectedCityId}`,
+        {
+          headers: { access_token: localStorage.getItem("access_token") },
+        }
+      );
+      setSubdistrict(response.data.data);
+    } catch (error) {
+      console.log("Error fetching subdistricts:", error);
+    }
+  };
+
   const handlerGetCost = async (event) => {
     let access_token = localStorage.getItem("access_token");
     const selectedCityId = event.target.value;
@@ -317,12 +347,11 @@ function Index() {
     <div>
       <div className="alamat">
         <h2>Alamat Pengiriman</h2>
-        <h4 style={{ padding: '10px 0' }}>Evans (+62) 8162626267</h4>
+        <h4 style={{ padding: '10px 0' }}>Full Name: {profile.user?.fullName}, Phone Number: {profile.user?.phoneNumber}</h4>
         <div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <p>
-              Indo Teknik, Jalan Riau Ujung No. 898 904, Payung Sekaki, KOTA
-              PEKANBARU - PAYUNG SEKAKI, RIAU, ID 28292
+              {profile.user?.address}
             </p>
             <button
               style={{
@@ -475,7 +504,7 @@ function Index() {
                 </option>
               ))}
             </select>
-            <select name="city" id="city" onChange={handlerGetCost}>
+            <select name="city" id="city" onChange={handleCityChange}>
               <option value="">Select City</option>
               {Array.isArray(city) &&
                 city.map((item) => (
@@ -484,7 +513,16 @@ function Index() {
                   </option>
                 ))}
             </select>
-            <select value={courier} onChange={handlerSetCourier}>
+            <select name="subdistrict" id="subdistrict" onChange={handlerGetCost}>
+              <option value="">Select Subdistrict</option>
+              {Array.isArray(subdistrict) &&
+                subdistrict.map((item) => (
+                  <option key={item.subdistrict_id} value={item.subdistrict_id}>
+                    {item.subdistrict_name}
+                  </option>
+                ))}
+            </select>
+            <select value="" onChange={handlerSetCourier}>
               <option value="jne">jne</option>
               <option value="tiki">tiki</option>
               <option value="pos">pos</option>

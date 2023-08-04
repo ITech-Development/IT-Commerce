@@ -1,6 +1,6 @@
 const { compare } = require("../helpers/bcryptjs");
 const { createToken } = require("../helpers/jwt");
-const { User, Checkout, CheckoutProduct, Product } = require("../models/index");
+const { User, Profile, Checkout, CheckoutProduct, Product } = require("../models/index");
 const { OAuth2Client } = require("google-auth-library");
 const bcryptjs = require("bcryptjs");
 const helpers = require('../helpers/index')
@@ -18,6 +18,8 @@ class UserController {
       next(error);
     }
   }
+
+
 
   static async detailsUser(req, res, next) {
     try {
@@ -48,6 +50,24 @@ class UserController {
   }
 
   static async registerUser(req, res, next) {
+    // try {
+    //   let { email, password, fullName, phoneNumber, address, imageProfile } =
+    //     req.body;
+
+    //   let user = await User.create({
+    //     email,
+    //     password,
+    //     fullName,
+    //     role: "user",
+    //     phoneNumber,
+    //     address,
+    //     imageProfile,
+    //   });
+    //   res.status(201).json({ user });
+    // } catch (error) {
+    //   next(error);
+    // }
+
     try {
       let { email, password, fullName, phoneNumber, address, imageProfile } =
         req.body;
@@ -61,6 +81,11 @@ class UserController {
         address,
         imageProfile,
       });
+
+      await Profile.create({
+        userId: user.id,
+      })
+
       res.status(201).json({ user });
     } catch (error) {
       next(error);
@@ -231,29 +256,6 @@ class UserController {
     }
   }
 
-  static async getCost(req, res, next) {
-    try {
-      let { courier } = req.query;
-      console.log(courier);
-      let destination = +req.query.destination;
-      const obj = {
-        origin: "351",
-        destination,
-        weight: 1000,
-        courier,
-      };
-      const { data } = await axios({
-        method: "POST",
-        url: "https://pro.rajaongkir.com/api/cost",
-        data: obj,
-        headers: { key: "d72cd1e873513a95c328ba6489efb224" },
-      });
-      res.status(200).json(data.rajaongkir.results[0].costs);
-    } catch (error) {
-      next(error);
-    }
-  }
-
   static async getProvince(req, res, next) {
     try {
       console.log('masuk');
@@ -275,6 +277,8 @@ class UserController {
     }
   }
 
+
+
   static async getCity(req, res, next) {
     try {
       const { id } = req.params;
@@ -290,6 +294,50 @@ class UserController {
           throw err;
         });
       res.status(200).json({ data: city });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getSubdistrict(req, res, next) {
+    try {
+      const { id } = req.params;
+      const city = await axios
+        .get("https://pro.rajaongkir.com/api/subdistrict", {
+          params: { city: id },
+          headers: { key: "d72cd1e873513a95c328ba6489efb224" },
+        })
+        .then((response) => {
+          return response.data.rajaongkir.results;
+        })
+        .catch((err) => {
+          throw err;
+        });
+      res.status(200).json({ data: city });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getCost(req, res, next) {
+    try {
+      let { courier } = req.query;
+      let destination = +req.query.destination;
+      const obj = {
+        origin: "351",
+        // originType: 'city',
+        destination,
+        // destinationType: 'subdistrict',
+        weight: 1000,
+        courier,
+      };
+      const { data } = await axios({
+        method: "POST",
+        url: "https://pro.rajaongkir.com/api/cost",
+        data: obj,
+        headers: { key: "d72cd1e873513a95c328ba6489efb224" },
+      });
+      res.status(200).json(data.rajaongkir.results[0].costs);
     } catch (error) {
       next(error);
     }
@@ -328,7 +376,6 @@ class UserController {
       };
 
       const midtransToken = await snap.createTransaction(parameter);
-      // console.log(midtransToken, 'midtranstokennnnnnnnnn');
       const createCheckout = await Checkout.create({
         userId: req.user.id,
         midtransCode: midtransToken.token,

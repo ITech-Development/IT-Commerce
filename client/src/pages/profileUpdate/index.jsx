@@ -1,58 +1,159 @@
-import React from "react";
-import { InputText } from 'primereact/inputtext';
-import { Dialog } from 'primereact/dialog';
-import { useState } from "react";
-import porfile from "./profile.png"
+// ProfileForm.js
+import React, { useState } from "react";
+import styled from "styled-components";
 
-const Profile = () => {
-    const [image, setImage] = useState("")
-    const [imageCrop, setImageCrop] = useState("")
+const ProfileForm = () => {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // Here, you can implement the logic to handle form submission.
+    // You can access the form data (fullName, email, phone, address, profilePicture)
+    // and perform the necessary actions (e.g., sending data to the server, etc.).
+
+    // For this example, we'll just display the data in the console.
+    console.log("Full Name:", fullName);
+    console.log("Email:", email);
+    console.log("Phone:", phone);
+    console.log("Address:", address);
+    console.log("Profile Picture URL:", profilePicture);
+  };
+
+  const handleProfilePictureChange = (event) => {
+    const file = event.target.files[0];
+    setProfilePicture(file);
+  };
+
+  return (
+    <FormContainer>
+      <Heading>Update Your Profile</Heading>
+      <form onSubmit={handleSubmit}>
+        <Label>Full Name</Label>
+        <Input
+          type="text"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+        />
+
+        <Label>Email</Label>
+        <Input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <Label>Phone</Label>
+        <Input
+          type="tel"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+
+        <Label>Address</Label>
+        <TextArea
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          rows={4}
+        />
+
+        <Label>Profile Picture</Label>
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={handleProfilePictureChange}
+        />
+
+        {profilePicture && (
+          <ProfilePicture
+            src={URL.createObjectURL(profilePicture)}
+            alt="Profile"
+          />
+        )}
+
+        <Button type="submit">Update Profile</Button>
+      </form>
+    </FormContainer>
+  );
+};
+
+export default ProfileForm;
 
 
-    return (
+const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 90px auto;
+  padding: 20px 70px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
 
-        <div className="profile_img text-center p-4">
-            <div className="flex flex-column justify-content-center align-items-center">
-                <img
-                    style={{
-                        width: "200px",
-                        height: "200px",
-                        borderRadius: "50%",
-                        objectFit: "cover",
-                        border: "4px solid green",
-                    }}
-                    src={porfile} alt="" />
-                <label htmlFor="" className="mt-3 font-semibold text-5xl">Yana Syahrudin</label>
+const Heading = styled.h1`
+  margin-bottom: 30px;
+  color: #007bff;
+`;
 
-                <Dialog
-                    visible={imageCrop}
-                    header={() => (
-                        <p htmlFor="" className="text-2xl font-semibold textcolor">
-                            Update Profile
-                        </p>
-                        )}
-                        onHide={()=> setImageCrop(false)}
-                    >
-                        <p>hi</p>
+const Label = styled.label`
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+`;
 
-            </Dialog >
+const Input = styled.input`
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
 
-            <InputText
-                type="file"
-                accept="/image/*"
-                onChange={(event) => {
-                    const file = event.target.files[0];
-                    if (file && file.type.substring(0, 5) === "image") {
-                        setImage(file);
-                    } else {
-                        setImage(null)
-                    }
-                }}
-            />
-        </div>
-        </div >
+  &:focus {
+    border-color: #007bff;
+  }
+`;
 
-    )
-}
+const TextArea = styled.textarea`
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  resize: vertical;
 
-export default Profile;
+  &:focus {
+    border-color: #007bff;
+  }
+`;
+
+const Button = styled.button`
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+const ProfilePicture = styled.img`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  object-fit: cover;
+  border: 2px solid #007bff;
+`;
