@@ -41,8 +41,7 @@ const Routing = () => {
       <Route path="/check-trans" element={<CheckTrans />} />
       <Route path="/profile-update" element={<ProfileUpdate />} />
       <Route path="/services" element={<ServiceList />} />
-      <Route path="/profile-update/:id" element={<ProfileUpdate />} />
-
+      {/* <Route path="/profile-update/:id" element={<ProfileUpdate />} /> */}
     </Routes>
   );
 };
