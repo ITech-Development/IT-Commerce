@@ -11,6 +11,7 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 export default function Navigation() {
   const [carts, setCarts] = useState([]);
+  const [profile, setProfile] = useState([]);
 
   const totalQuantity = carts.reduce((total, item) => total + item.quantity, 0);
 
@@ -21,6 +22,20 @@ export default function Navigation() {
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
           setCarts(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      let url = "http://localhost:3100/profiles";
+      axios({ url, headers: { access_token: accessToken } })
+        .then(async ({ data }) => {
+          setProfile(data);
         })
         .catch((error) => {
           console.log(error);
@@ -96,7 +111,7 @@ export default function Navigation() {
               {isDropdownOpen && (
                 <ul className="dropdown-menu">
                   <li>
-                    <Link to="/profile-update">Profile</Link>
+                    <Link to="/profile-update">{profile.user?.fullName}</Link>
                     {/* <Link to={profileLink}>Profile</Link> */}
                   </li>
                   <li>

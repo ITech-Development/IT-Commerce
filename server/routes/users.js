@@ -13,6 +13,7 @@ router.post('/pay', authenticationUser, UserController.pay)
 router.get('/cost', authenticationUser, UserController.getCost)
 router.get('/province', authenticationUser, UserController.getProvince)
 router.get('/city/:id', authenticationUser, UserController.getCity)
+router.get('/subdistrict/:id', authenticationUser, UserController.getSubdistrict)
 
 router.delete('/:id', authentication, authorization, UserController.deleteUser)
 router.get('/:id', authenticationUser, UserController.detailsUser)

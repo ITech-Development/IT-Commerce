@@ -3,7 +3,7 @@ const ProfileController = require('../controllers/profileController');
 const { authenticationUser } = require('../middlewares/auth');
 const router = express.Router()
 
-router.get('/', ProfileController.getAllProfiles);
+router.get('/', authenticationUser,ProfileController.getProfileByUserId);
 router.post('/', authenticationUser, ProfileController.addProfile);
 router.patch('/:id', authenticationUser, ProfileController.updateProfile);
 
