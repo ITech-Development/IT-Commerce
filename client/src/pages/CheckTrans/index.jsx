@@ -492,6 +492,12 @@ function Index() {
         >
           <h2>Pilih Metode Pengiriman</h2>
           <div>
+            <select value={courier} onChange={handlerSetCourier}>
+              <option value="jne">jne</option>
+              <option value="tiki">tiki</option>
+              <option value="pos">pos</option>
+              <option value="jnt">jnt</option>
+            </select>
             <select
               name="province"
               id="province"
@@ -521,11 +527,6 @@ function Index() {
                     {item.subdistrict_name}
                   </option>
                 ))}
-            </select>
-            <select value="" onChange={handlerSetCourier}>
-              <option value="jne">jne</option>
-              <option value="tiki">tiki</option>
-              <option value="pos">pos</option>
             </select>
             {pengiriman ? pengiriman.map((el, index) => (
               <div key={index}>

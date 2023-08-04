@@ -325,9 +325,9 @@ class UserController {
       let destination = +req.query.destination;
       const obj = {
         origin: "351",
-        // originType: 'city',
+        originType: 'city',
         destination,
-        // destinationType: 'subdistrict',
+        destinationType: 'subdistrict',
         weight: 1000,
         courier,
       };
