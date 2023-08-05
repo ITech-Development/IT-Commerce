@@ -156,25 +156,22 @@ const ProductDetailPage = () => {
               Tipe: <strong>{product.types?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Kondisi: <strong>{product.condition}</strong>
-            </SpecificationItem>
-            <SpecificationItem>
               Minimum Order: <strong>{product.minimumOrder}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Status: <strong>{product.status}</strong>
+              Berat: <strong>{product.weight} cm</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Lebar: <strong>{product.weight} cm</strong>
+              Tinggi: <strong>{product.height} cm</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Ukuran: <strong>{product.size} cm</strong>
+              Lebar: <strong>{product.width} cm</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Asuransi Pengiriman: <strong>{product.shippingInsurance}</strong>
+              Product Owner: <strong>{product.product_owners?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Layanan Pengiriman: <strong>{product.deliveryService}</strong>
+              Author: <strong>{product.authors?.fullName}</strong>
             </SpecificationItem>
           </Specifications>
           <div style={{ marginTop: "30px" }}>
