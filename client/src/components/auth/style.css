@@ -3,9 +3,16 @@
 /* Styling for the container */
 .div {
   max-width: 600px;
-  margin: 10% auto;
-  padding: 40px 25px;
-  border: 1px solid #ccc;
+  margin: 4% auto 0 auto;
+  padding: 30px 65px;
+  border: 1px solid #ece9e9;
+  border-radius: 5px;
+}
+.divLogin {
+  max-width: 600px;
+  margin: 8% auto 0 auto;
+  padding: 50px 65px;
+  border: 1px solid #ece9e9;
   border-radius: 5px;
 }
 

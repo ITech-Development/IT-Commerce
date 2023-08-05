@@ -472,7 +472,7 @@ function Index() {
                 checked={selectedVoucher === vouchers[0]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {vouchers[0]?.voucherCode}
+              {/* {vouchers[0]?.voucherCode} */}
               <img src={VCR1} alt="IT 01" width="150" />
             </label>
             <label key={vouchers[1]?.id}>
@@ -482,7 +482,7 @@ function Index() {
                 checked={selectedVoucher === vouchers[1]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {vouchers[1]?.voucherCode}
+              {/* {vouchers[1]?.voucherCode} */}
               <img src={VCR2} alt="MS 01" width="150" />
             </label>
             <label key={vouchers[2]?.id}>
@@ -492,7 +492,7 @@ function Index() {
                 checked={selectedVoucher === vouchers[2]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {vouchers[2]?.voucherCode}
+              {/* {vouchers[2]?.voucherCode} */}
               <img src={VCR3} alt="MS 01" width="150" />
             </label>
           </div>

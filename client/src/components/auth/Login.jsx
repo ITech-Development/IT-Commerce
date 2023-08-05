@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./style.css";
 import { UserContext } from "../../App.jsx";
+import Regis from "../../assets/regis.png";
 
 const Login = () => {
   const { dispatch } = useContext(UserContext);
@@ -52,40 +53,61 @@ const Login = () => {
   };
 
   return (
-    <div className="div">
-      <h2 className="h2">Login</h2>
-      <form onSubmit={handleSubmit} className="form">
-        <div>
-          <label className="label" htmlFor="email">
-            Email :{" "}
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="inputEmail"
-          />
-        </div>
-        <div>
-          <label className="label" htmlFor="password">
-            Password :{" "}
-          </label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="inputPass"
-          />
-        </div>
-        <button className="button" type="submit">
-          Login
-        </button>
-      </form>
-      <p className="p">
-        Don't have an account? <Link to="/register">Register</Link>
-      </p>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignContent: "center",
+        marginTop: '50px'
+      }}
+    >
+      <div className="divLogin">
+        <h2 className="h2">Login</h2>
+        <form onSubmit={handleSubmit} className="form">
+          <div>
+            <label className="label" htmlFor="email">
+              Email :{" "}
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="inputEmail"
+            />
+          </div>
+          <div>
+            <label className="label" htmlFor="password">
+              Password :{" "}
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="inputPass"
+            />
+          </div>
+          <button className="button" type="submit">
+            Login
+          </button>
+        </form>
+        <p className="p">
+          Don't have an account? <Link to="/register">Register</Link>
+        </p>
+      </div>
+      <div>
+        <img
+          style={{
+            maxWidth: "500px",
+          position: 'relative',
+           top: "150px",
+           right: '150px'
+          }}
+          src={Regis}
+          alt=""
+        />
+      </div>
     </div>
   );
 };
