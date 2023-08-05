@@ -8,6 +8,54 @@
   height: 570px;
 }
 
+/* @keyframes typing {
+  from {
+    width: 0;
+  }
+}
+
+@keyframes blinking {
+  50% {
+    border-right-color: transparent;
+  }
+}
+
+.hero-content h1,
+.hero-content p {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.hero-content h1.animate-text,
+.hero-content p.animate-text {
+  animation: typing 2s steps(30, end),
+    blinking 1s step-end infinite alternate;
+  border-right: 0.1em solid;
+} */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+}
+
+@keyframes blinking {
+  50% {
+    border-right-color: transparent;
+  }
+}
+
+.hero-content h1 {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.hero-content h1.animate-text {
+  animation: typing 2s steps(30, end), blinking 1s step-end infinite alternate;
+  border-right: 0.1em solid;
+}
+
+
+
 .hero-content {
   flex: 1;
   max-width: 50%;

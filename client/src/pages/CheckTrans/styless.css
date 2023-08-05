@@ -1,41 +1,146 @@
+/* styless.css */
+
+/* Styles for the address section */
 .alamat {
-  /* display: flex; */
   position: relative;
   top: 100px;
+  max-width: auto;
+  margin: 0 20px;
+  padding: 30px;
+  border: 1px solid rgb(232, 215, 215);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+/* Styles for the address container */
+.address-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Styles for address information */
+.address-info {
+  display: flex;
+  align-items: center;
+}
+
+.address-info h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.address-info p {
+  margin: 0;
+  font-size: 16px;
+  color: #666;
+}
+
+.edit-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: blue;
+  font-size: 18px;
+  text-decoration: underline;
+}
+
+/* Styles for the shipping method selection section */
+.calcongkir {
   max-width: 1420px;
   margin: auto;
-  padding: 30px 30px;
-  border: 1px solid rgb(232, 215, 215);
+  padding: 20px;
+  border: 1px solid rgb(244, 238, 238);
+  background-color: #f0f0f5;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for the select elements in the shipping method section */
+.methodDeliverySelect {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+  width: 100%;
+}
+
+/* Styles for the select options in the shipping method section */
+.methodDeliveryOption {
+  padding: 8px;
+  font-size: 16px;
+}
+
+/* Styles for the radio labels and shipping cost section */
+.shipping-cost-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.calcongkir input[type="radio"] {
+  display: none;
+}
+
+.calcongkir input[type="radio"] + label {
+  padding: 10px 15px;
+  background-color: #f0f0f5;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.calcongkir input[type="radio"]:checked + label {
+  border-color: #007bff;
+  background-color: #fff;
+}
+
+.calcongkir input[type="radio"] + label p {
+  margin: 5px 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Styles for the payment summary section */
+.payment-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
   border-radius: 10px;
 }
 
-.calcongkir {
- 
-    position: relative;
-    top: 20px;
-    max-width: 1260px;
-    margin: auto;
-    padding: 10px 20px;
-    border: 1px solid rgb(244, 238, 238);
-    border-radius: 10px;
+.payment-summary .amount {
+  font-size: 24px;
+  font-weight: bold;
 }
 
-.province {
-  padding: 10px 15px;
+/* Styles for the "Payment" button in the payment summary section */
+.payment-summary button {
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #007bff;
   border: none;
-  background-color: rgb(242, 242, 242);
   border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
-.city {
-  padding: 10px 15px;
-  border: none;
-  background-color: rgb(242, 242, 242);
-  border-radius: 8px;
-  margin: 0 14px;
-}
-.cost {
-  padding: 10px 15px;
-  border: none;
-  background-color: rgb(242, 242, 242);
-  border-radius: 8px;
+
+.payment-summary button:hover {
+  background-color: #f0f0f5;
 }

@@ -1,21 +1,21 @@
-import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-import './App.css';
-import Navbar from "./components/navbar"
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import "./App.css";
+import Navbar from "./components/navbar";
 import Login from "./components/auth/Login";
 import Dashboard from "./pages/dashboard";
 import GetProduct from "./pages/getProducts";
 import DetailsProduct from "./pages/detailsProduct";
-import NotFound from "./pages/notFound"
+import NotFound from "./pages/notFound";
 import React, { createContext, useEffect, useReducer } from "react";
 import { loadUser } from "./features/authslice";
 import { useDispatch } from "react-redux";
 import { initialState, reducer } from "./reducer/UseReducer";
+import Chat from "./pages/Chat";
 
 export const UserContext = createContext();
 
-
 const Routing = () => {
-  const accessToken = localStorage.getItem('access_token')
+  const accessToken = localStorage.getItem("access_token");
   return (
     <Routes>
       {!accessToken ? (
@@ -29,11 +29,12 @@ const Routing = () => {
           <Route path="/product" element={<GetProduct />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/product/:id" element={<DetailsProduct />} />
+          <Route path="/chat" element={<Chat />} />
         </>
       )}
     </Routes>
   );
-}
+};
 
 function App() {
   const dispatchRedux = useDispatch();

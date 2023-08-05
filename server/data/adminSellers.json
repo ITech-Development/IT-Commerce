@@ -7,7 +7,7 @@
     "address": "123 Main Street",
     "imageProfile": "profile_image_url_here",
     "role": "adminSeller",
-    "voucherCode": "VCR1",
+    "voucherCode": "IT01",
     "createdAt": "2023-08-04T12:34:56Z",
     "updatedAt": "2023-08-04T12:34:56Z"
   },
@@ -19,7 +19,7 @@
     "address": "456 Park Avenue",
     "imageProfile": "profile_image_url_here",
     "role": "adminSeller",
-    "voucherCode": "VCR2",
+    "voucherCode": "MS01",
     "createdAt": "2023-08-04T12:34:56Z",
     "updatedAt": "2023-08-04T12:34:56Z"
   },
@@ -31,7 +31,7 @@
     "address": "789 Oak Road",
     "imageProfile": "profile_image_url_here",
     "role": "adminSeller",
-    "voucherCode": "VCR3",
+    "voucherCode": "TK01",
     "createdAt": "2023-08-04T12:34:56Z",
     "updatedAt": "2023-08-04T12:34:56Z"
   }

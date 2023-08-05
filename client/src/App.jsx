@@ -19,8 +19,9 @@ import FirstStep from "./pages/productShipping/firstStep";
 import SecondStep from "./pages/productShipping/secondStep";
 import CheckTrans from "./pages/CheckTrans";
 import ProfileUpdate from "./pages/profileUpdate";
-import ServiceList from './pages/ServiceList'
+import ServiceList from "./pages/ServiceList";
 import { initialState, reducer } from "./reducer/UseReducer";
+import Chat from "./pages/Chat";
 
 export const UserContext = createContext();
 
@@ -41,6 +42,9 @@ const Routing = () => {
       <Route path="/check-trans" element={<CheckTrans />} />
       <Route path="/profile-update" element={<ProfileUpdate />} />
       <Route path="/services" element={<ServiceList />} />
+      <Route path="/profile-update/:id" element={<ProfileUpdate />} />
+      <Route path="/chat" element={<Chat />} />
+
       {/* <Route path="/profile-update/:id" element={<ProfileUpdate />} /> */}
     </Routes>
   );

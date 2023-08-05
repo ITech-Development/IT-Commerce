@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./style.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Regis from "../../assets/regis.png";
+
 
 const Register = () => {
   const navigate = useNavigate();
@@ -60,6 +62,14 @@ const Register = () => {
   };
 
   return (
+<div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignContent: "center",
+        marginTop: '50px'
+      }}
+    >
     <div className="div">
       <h2 className="h2">Register</h2>
       <form onSubmit={handleSubmit} className="form">
@@ -139,6 +149,19 @@ const Register = () => {
       <p className="p">
         Already have an account? <Link to="/login">Login</Link>
       </p>
+    </div>
+    <div>
+        <img
+          style={{
+            maxWidth: "500px",
+          position: 'relative',
+           top: "150px",
+           right: '150px'
+          }}
+          src={Regis}
+          alt=""
+        />
+      </div>
     </div>
   );
 };

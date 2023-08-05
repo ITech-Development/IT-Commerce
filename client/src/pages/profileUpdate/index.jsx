@@ -131,6 +131,7 @@ const TextArea = styled.textarea`
   outline: none;
   resize: vertical;
 
+export default Profile;
   &:focus {
     border-color: #007bff;
   }

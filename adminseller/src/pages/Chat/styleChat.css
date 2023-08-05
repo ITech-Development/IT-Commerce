@@ -1,0 +1,76 @@
+/* chatStyle.css */
+
+.chat-container {
+  margin-top: 120px;
+  display: flex;
+}
+
+.chat-user-info {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  flex-direction: column;
+}
+
+.chat-user-info img {
+  width: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.chat-messages-container {
+  width: 180px;
+  padding: 10px 10px 0 100px;
+
+}
+
+.clopmess {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10 30px;
+}
+
+.chat-message {
+  margin: 30px 0 10px 30px;
+  
+}
+
+.chat-message img {
+  width: 40px;
+  border-radius: 50%;
+  margin: 5px;
+}
+
+.chat-message h3 {
+  margin: 0;
+}
+
+.chat-message p {
+  margin: 0;
+  color: #777;
+}
+
+.chat-right {
+  text-align: right;
+}
+
+.chat-input-container {
+  margin-left: 20px;
+}
+
+.chat-input-container input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.chat-input-container button {
+  margin-top: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}

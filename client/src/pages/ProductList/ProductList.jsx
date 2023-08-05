@@ -4,7 +4,7 @@ import { useGetAllProductsQuery } from "../../features/productsApi";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
-import Corousel from '../../components/corousel/product'
+import Corousel from "../../components/corousel/product";
 
 import "../../App.css";
 // import Hero from "../../assets/bannerproduct1.jpg";
@@ -162,12 +162,11 @@ const ProductList = () => {
           }
         })
     : [];
-
   return (
     <>
-        <Corousel/>
+      <Corousel />
 
-      <div >
+      <div>
         {/* <img src={Hero} alt="" /> */}
         <div className="productlist-container">
           {isLoading ? (
@@ -197,6 +196,7 @@ const ProductList = () => {
                   <option value="stock">Stok Paling Sedikit - Terbanyak</option>
                 </select>
               </div>
+              
               <div className="products">
                 {filteredAndSortedData.map((product) => (
                   <ProductCard

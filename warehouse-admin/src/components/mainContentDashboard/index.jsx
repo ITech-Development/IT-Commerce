@@ -1,35 +1,33 @@
 // MainContent.js
-import React, { useState } from 'react';
+import React from 'react';
 // import TableComponent from '../table';
 import CardComponent from '../cardDasboard'
 import { Link } from 'react-router-dom'
 
 const MainContent = () => {
-  // const [showAddForm, setShowAddForm] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    age: '',
-    email: '',
-  });
-
-  const handleFormChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   return (
-    <main>
-
-        <h2>Dashboard</h2>
-        <p>Welcome to the Indo Teknik, Dashboard!</p>
-        <Link to="/product">
-          <button>Products</button>
-        </Link>
-      
-        <CardComponent />
-      
+     <main style={{ display: "flex", margin: "auto", flexDirection: "column" }}>
+      <h2>List Products</h2>
+      <Link to="/add-product">
+        <button
+          style={{
+            display: "flex",
+            padding: "10px 20px",
+            background: "blue",
+            color: "white",
+            justifyContent: "end",
+            marginBottom: "30px",
+            border: 'none',
+            borderRadius: '5px',
+            width: 'auto',
+            cursor: 'pointer'
+          }}
+        >
+          Add Product
+        </button>
+      </Link>
+      <CardComponent />
     </main>
   );
 };

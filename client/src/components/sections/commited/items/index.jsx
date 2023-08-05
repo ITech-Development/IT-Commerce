@@ -17,8 +17,9 @@ export default function index() {
         <div className="card-content">
           <h3>Kualitas Tinggi</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Diproduksi dengan standar ketat dan mengikuti regulasi industri
+            terkini. Setiap produk kami melalui serangkaian uji kualitas untuk
+            memastikan keandalan dan daya tahan luar biasa.
           </p>
         </div>
       </div>
@@ -29,8 +30,9 @@ export default function index() {
         <div className="card-content">
           <h3>Bantuan 24/7</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Membantu Anda 24 jam sehari, 7 hari seminggu. Layanan bantuan kami
+            siap sedia menanggapi setiap kebutuhan Anda, kapan pun dan di mana
+            pun Anda berada.
           </p>
         </div>
       </div>
@@ -41,8 +43,9 @@ export default function index() {
         <div className="card-content">
           <h3>Transaksi Praktis</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Segala sesuatu menjadi lebih mudah. Cukup buka perangkat seluler
+            Anda atau duduk di depan komputer, dan Anda dapat dengan mudah
+            mengakses layanan kami kapan saja dan di mana saja.
           </p>
         </div>
       </div>
@@ -53,8 +56,9 @@ export default function index() {
         <div className="card-content">
           <h3>Pengadaan yang Cerdas</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Pengadaan produk yang cepat, tanggap dan sesuai dengan kebutuhan
+            serta mudah didapat. Kami menyediakan produk-produk sparepart diesel
+            dengan menganalisis kebutuhan pasar untuk membantu anda.
           </p>
         </div>
       </div>
@@ -65,8 +69,9 @@ export default function index() {
         <div className="card-content">
           <h3>Respon Cepat</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Dengan layanan respon cepat kami, Anda memiliki solusi tepat dalam
+            sekejap. Percayakan kebutuhan Anda kepada kami, dan nikmati
+            kemudahan dan kepuasan yang kami hadirkan.
           </p>
         </div>
       </div>
@@ -77,8 +82,9 @@ export default function index() {
         <div className="card-content">
           <h3>Dukungan Teknologi</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Sistem Manajemen Stok yang Canggih, Platform E-Commerce yang
+            Responsif, Analitik Data untuk Pengambilan Keputusan Cerdas, Layanan
+            Pelanggan yang Responsif
           </p>
         </div>
       </div>
