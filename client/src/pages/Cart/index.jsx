@@ -5,19 +5,14 @@ import axios from "axios";
 import { getTotals } from "../../features/cartSlice";
 import styled from "styled-components";
 
-const ContinueShoppingContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-`;
-
-const ContinueShoppingIcon = styled.span`
-  margin-right: 5px;
-`;
-
 const Cart = () => {
   const [carts, setCarts] = useState([]);
-  console.log(carts, 'testsssssssssssssssssssssssssss');
+  const [cartsJuvindo, setCartsJuvindo] = useState([]);
+  console.log(cartsJuvindo, 'dari juvindo');
+  const [cartsItech, setCartsItech] = useState([]);
+  console.log(cartsItech, 'dari itech');
+  const [cartsIndoRiau, setCartsIndoRiau] = useState([]);
+  console.log(cartsIndoRiau, 'dari indo riau');
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -31,7 +26,7 @@ const Cart = () => {
       if (accessToken) {
         try {
           const response = await axios.get(
-            "http://localhost:3100/product-carts",
+            "http://localhost:3100/product-carts/",
             { headers: { access_token: accessToken } }
           );
           setCarts(response.data);
@@ -42,6 +37,61 @@ const Cart = () => {
     };
     fetchCarts();
   }, []);
+
+  useEffect(() => {
+    const fetchCartsJuvindo = async () => {
+      const accessToken = localStorage.getItem("access_token");
+      if (accessToken) {
+        try {
+          const response = await axios.get(
+            "http://localhost:3100/product-carts/juvindo",
+            { headers: { access_token: accessToken } }
+          );
+          setCartsJuvindo(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchCartsJuvindo();
+  }, []);
+
+  useEffect(() => {
+    const fetchCartsItech = async () => {
+      const accessToken = localStorage.getItem("access_token");
+      if (accessToken) {
+        try {
+          const response = await axios.get(
+            "http://localhost:3100/product-carts/itech",
+            { headers: { access_token: accessToken } }
+          );
+          setCartsItech(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchCartsItech();
+  }, []);
+
+  useEffect(() => {
+    const fetchCartsIndoRiau = async () => {
+      const accessToken = localStorage.getItem("access_token");
+      if (accessToken) {
+        try {
+          const response = await axios.get(
+            "http://localhost:3100/product-carts/indo-riau",
+            { headers: { access_token: accessToken } }
+          );
+          setCartsIndoRiau(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchCartsIndoRiau();
+  }, []);
+
 
   const handleIncrement = (id) => {
     updateCartItemQuantity(id, "increment");
@@ -86,6 +136,7 @@ const Cart = () => {
     }, 0);
   };
 
+  
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     const ppn = subtotal * 0.11;
@@ -93,20 +144,74 @@ const Cart = () => {
     return total.toFixed(2);
   };
 
+  
   const calculatePPN = () => {
     const subtotal = calculateSubtotal();
     const ppn = subtotal * 0.11;
     return ppn.toFixed(2);
   };
 
-  // const calculateTotalWeight = () => {
-  //   return carts.reduce((totalWeight, cartItem) => {
-  //     const productWeightInGrams = cartItem.product.weight; // Pastikan produk memiliki properti "weight" yang berisi berat dalam gram
-  //     const quantity = cartItem.quantity;
-  //     return totalWeight + productWeightInGrams * quantity;
-  //   }, 0);
-  // };
+  //juvindo
+  const calculateSubtotalJuvindo = () => {
+    return cartsJuvindo.reduce((total, cartItem) => {
+      const productPrice = cartItem.product.unitPrice;
+      const quantity = cartItem.quantity;
+      return total + productPrice * quantity;
+    }, 0);
+  };
+  const calculateTotalJuvindo = () => {
+    const subtotal = calculateSubtotalJuvindo();
+    const ppn = subtotal * 0.11;
+    const total = subtotal + ppn;
+    return total.toFixed(2);
+  };
+  const calculatePPNJuvindo = () => {
+    const subtotal = calculateSubtotalJuvindo();
+    const ppn = subtotal * 0.11;
+    return ppn.toFixed(2);
+  };
 
+
+  //Itech
+  const calculateSubtotalItech = () => {
+    return cartsItech.reduce((total, cartItem) => {
+      const productPrice = cartItem.product.unitPrice;
+      const quantity = cartItem.quantity;
+      return total + productPrice * quantity;
+    }, 0);
+  };
+  const calculateTotalItech = () => {
+    const subtotal = calculateSubtotalItech();
+    const ppn = subtotal * 0.11;
+    const total = subtotal + ppn;
+    return total.toFixed(2);
+  };
+  const calculatePPNItech = () => {
+    const subtotal = calculateSubtotalItech();
+    const ppn = subtotal * 0.11;
+    return ppn.toFixed(2);
+  };
+
+  //IndoRiau
+  const calculateSubtotalIndoRiau = () => {
+    return cartsIndoRiau.reduce((total, cartItem) => {
+      const productPrice = cartItem.product.unitPrice;
+      const quantity = cartItem.quantity;
+      return total + productPrice * quantity;
+    }, 0);
+  };
+  const calculateTotalIndoRiau = () => {
+    const subtotal = calculateSubtotalIndoRiau();
+    const ppn = subtotal * 0.11;
+    const total = subtotal + ppn;
+    return total.toFixed(2);
+  };
+  const calculatePPNIndoRiau = () => {
+    const subtotal = calculateSubtotalIndoRiau();
+    const ppn = subtotal * 0.11;
+    return ppn.toFixed(2);
+  };
+  
   return (
     <>
       <div
@@ -114,7 +219,7 @@ const Cart = () => {
         style={{ position: "relative", top: "50px" }}
       >
         <h2>ITech Store</h2>
-        {carts.length === 0 ? (
+        {cartsItech.length === 0 ? (
           <div className="cart-empty">
             <p>Your cart is empty</p>
             <div className="start-shopping">
@@ -133,7 +238,7 @@ const Cart = () => {
               <h3 className="total">Total</h3>
             </div>
             <div class="cart-items">
-              {carts?.map(e => (
+              {cartsItech?.map(e => (
                 < div class="cart-item" >
                   <div class="cart-product">
                     <Link to={`/products/${e.product.id}`}>
@@ -172,7 +277,7 @@ const Cart = () => {
               <div className="cart-checkout">
                 <div className="subtotal">
                   <span>Subtotal :</span>
-                  <span className="amount">Rp.{calculateSubtotal()}</span>
+                  <span className="amount">Rp.{calculateSubtotalItech()}</span>
                 </div>
                 <div
                   style={{
@@ -183,12 +288,12 @@ const Cart = () => {
                   }}
                 >
                   <span>PPN 11% :</span>
-                  <span className="amount"> Rp. {calculatePPN()}</span>
+                  <span className="amount"> Rp. {calculatePPNItech()}</span>
                 </div>
                 <div className="subtotal" style={{ paddingBottom: "10px" }}>
                   <span>Total :</span>
                   <span style={{ fontWeight: "700" }} className="amount">
-                    {calculateTotal()}
+                    {calculateTotalItech()}
                   </span>
                 </div>
                 <button style={checkoutButtonStyle}>
@@ -210,7 +315,7 @@ const Cart = () => {
         style={{ position: "relative", top: "50px" }}
       >
         <h2>Indo Riau Store</h2>
-        {carts.length === 0 ? (
+        {cartsIndoRiau.length === 0 ? (
           <div className="cart-empty">
             <p>Your cart is empty</p>
             <div className="start-shopping">
@@ -229,7 +334,7 @@ const Cart = () => {
               <h3 className="total">Total</h3>
             </div>
             <div class="cart-items">
-              {carts?.map(e => (
+              {cartsIndoRiau?.map(e => (
                 < div class="cart-item" >
                   <div class="cart-product">
                     <Link to={`/products/${e.product.id}`}>
@@ -268,7 +373,7 @@ const Cart = () => {
               <div className="cart-checkout">
                 <div className="subtotal">
                   <span>Subtotal :</span>
-                  <span className="amount">Rp.{calculateSubtotal()}</span>
+                  <span className="amount">Rp.{calculateSubtotalIndoRiau()}</span>
                 </div>
                 <div
                   style={{
@@ -279,12 +384,12 @@ const Cart = () => {
                   }}
                 >
                   <span>PPN 11% :</span>
-                  <span className="amount"> Rp. {calculatePPN()}</span>
+                  <span className="amount"> Rp. {calculatePPNIndoRiau()}</span>
                 </div>
                 <div className="subtotal" style={{ paddingBottom: "10px" }}>
                   <span>Total :</span>
                   <span style={{ fontWeight: "700" }} className="amount">
-                    {calculateTotal()}
+                    {calculateTotalIndoRiau()}
                   </span>
                 </div>
                 <button style={checkoutButtonStyle}>
@@ -306,7 +411,7 @@ const Cart = () => {
         style={{ position: "relative", top: "50px" }}
       >
         <h2>Juvindo Internusa Store</h2>
-        {carts.length === 0 ? (
+        {cartsJuvindo.length === 0 ? (
           <div className="cart-empty">
             <p>Your cart is empty</p>
             <div className="start-shopping">
@@ -325,7 +430,7 @@ const Cart = () => {
               <h3 className="total">Total</h3>
             </div>
             <div class="cart-items">
-              {carts?.map(e => (
+              {cartsJuvindo?.map(e => (
                 < div class="cart-item" >
                   <div class="cart-product">
                     <Link to={`/products/${e.product.id}`}>
@@ -364,7 +469,7 @@ const Cart = () => {
               <div className="cart-checkout">
                 <div className="subtotal">
                   <span>Subtotal :</span>
-                  <span className="amount">Rp.{calculateSubtotal()}</span>
+                  <span className="amount">Rp.{calculateSubtotalJuvindo()}</span>
                 </div>
                 <div
                   style={{
@@ -375,7 +480,7 @@ const Cart = () => {
                   }}
                 >
                   <span>PPN 11% :</span>
-                  <span className="amount"> Rp. {calculatePPN()}</span>
+                  <span className="amount"> Rp. {calculatePPNJuvindo()}</span>
                 </div>
                 <div
                   style={{
@@ -391,7 +496,7 @@ const Cart = () => {
                 <div className="subtotal" style={{ paddingBottom: "10px" }}>
                   <span>Total :</span>
                   <span style={{ fontWeight: "700" }} className="amount">
-                    {calculateTotal()}
+                    {calculateTotalJuvindo()}
                   </span>
                 </div>
                 <button style={checkoutButtonStyle}>
@@ -426,5 +531,15 @@ const linkStyle = {
   color: "white",
   textDecoration: "none",
 };
+
+const ContinueShoppingContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+`;
+
+const ContinueShoppingIcon = styled.span`
+  margin-right: 5px;
+`;
 
 export default Cart;

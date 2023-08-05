@@ -27,6 +27,84 @@ class ProductCartController {
     }
   }
 
+  static async getAllProductItechs(req, res, next) {
+    try {
+      let findedCart = await Cart.findOne({
+        where: { userId: req.user.id },
+      });
+      let cartId = findedCart.id;
+      const productCarts = await ProductCart.findAll({
+        where: { cartId },
+        include: [
+          {
+            model: Product,
+            as: "product",
+            where: { productOwnerId: 3 },
+          },
+          {
+            model: Cart,
+            as: "cart",
+          },
+        ],
+      });
+      res.status(200).json(productCarts);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async getAllProductIndoRiaus(req, res, next) {
+    try {
+      let findedCart = await Cart.findOne({
+        where: { userId: req.user.id },
+      });
+      let cartId = findedCart.id;
+      const productCarts = await ProductCart.findAll({
+        where: { cartId },
+        include: [
+          {
+            model: Product,
+            as: "product",
+            where: { productOwnerId: 1 },
+          },
+          {
+            model: Cart,
+            as: "cart",
+          },
+        ],
+      });
+      res.status(200).json(productCarts);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async getAllProductJuvindos(req, res, next) {
+    try {
+      let findedCart = await Cart.findOne({
+        where: { userId: req.user.id },
+      });
+      let cartId = findedCart.id;
+      const productCarts = await ProductCart.findAll({
+        where: { cartId },
+        include: [
+          {
+            model: Product,
+            as: "product",
+            where: { productOwnerId: 2 },
+          },
+          {
+            model: Cart,
+            as: "cart",
+          },
+        ],
+      });
+      res.status(200).json(productCarts);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   static async detailsProductCart(req, res, next) {
     try {
       const productCart = await ProductCart.findOne({

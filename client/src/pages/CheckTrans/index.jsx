@@ -525,6 +525,24 @@ function Index() {
               {/* <option value="ide">Ide Express</option> */}
               {/* <option value="anteraja">Anteraja</option>
               <option value="sicepat">Sicepat</option> */}
+              </select>
+            <select
+              value={courier}
+              onChange={handlerSetCourier}
+              className="methodDeliverySelect"
+            >
+              <option className="methodDeliveryOption" value="jne">
+                jne
+              </option>
+              <option className="methodDeliveryOption" value="tiki">
+                tiki
+              </option>
+              <option className="methodDeliveryOption" value="pos">
+                pos
+              </option>
+              <option className="methodDeliveryOption" value="jnt">
+                jnt
+              </option>
             </select>
             <input
               type="number"
