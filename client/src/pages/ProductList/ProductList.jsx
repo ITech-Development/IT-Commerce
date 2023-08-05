@@ -3,35 +3,9 @@ import axios from "axios";
 import { useGetAllProductsQuery } from "../../features/productsApi";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useSpring, animated } from "react-spring";
 import Corousel from "../../components/corousel/product";
-
+import "./productliststyle.css";
 import "../../App.css";
-// import Hero from "../../assets/bannerproduct1.jpg";
-
-const checkoutButtonStyle = {
-  backgroundColor: "#4b70e2",
-  color: "white",
-  padding: "10px 20px",
-  border: "none",
-  borderRadius: "4px",
-  cursor: "pointer",
-  textDecoration: "none",
-};
-
-const checkoutButtonStyleDetail = {
-  backgroundColor: "#4b70e2",
-  position: "relative",
-  top: "-10.8px",
-  color: "white",
-  padding: "10px 10px",
-  border: "none",
-  borderRadius: "4px",
-  cursor: "pointer",
-  marginLeft: "10px",
-  textDecoration: "none",
-  fontSize: "11px",
-};
 
 const linkStyle = {
   color: "white",
@@ -39,52 +13,29 @@ const linkStyle = {
 };
 
 const ProductCard = ({ product, onAddToCart }) => {
-  const fadeAnimationProps = useSpring({
-    opacity: 1,
-    from: { opacity: 0 },
-    delay: 200,
-  });
-
   return (
-    <animated.div style={fadeAnimationProps} className="product">
-      <h3>{product.category}</h3>
-      <img src={product.image} alt={product.name} />
+    <div className="product">
+      <Link
+        to={`/products/${product.id}`}
+        className="view-product-button"
+        style={linkStyle}
+      >
+        <img src={product.image} alt={product.name} />
+      </Link>
       <div className="details">
+        <h3>{product.category}</h3>
         <p>{product.name}</p>
         <span className="price">Rp.{product.unitPrice}</span>
         <p>Stock: {product.stock}</p>
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: "auto",
-        }}
+      <button
+        className="add-to-cart-button"
+        onClick={() => onAddToCart(product)}
+        disabled={product.stock === 0}
       >
-        <button
-          style={{
-            marginTop: "10px",
-            padding: "8px 10px",
-            fontSize: "11px",
-            ...checkoutButtonStyle,
-          }}
-          onClick={() => onAddToCart(product)}
-          disabled={product.stock === 0}
-        >
-          {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
-        </button>
-        <button style={checkoutButtonStyleDetail}>
-          <Link
-            to={`/products/${product.id}`}
-            className="view-product-button"
-            style={linkStyle}
-          >
-            Detail
-          </Link>
-        </button>
-      </div>
-    </animated.div>
+        {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
+      </button>
+    </div>
   );
 };
 
@@ -184,7 +135,7 @@ const ProductList = () => {
                   value={searchQuery}
                   onChange={handleSearchInputChange}
                   style={searchInputStyle}
-                  placeholder="Cari Produk Berdasarkan Namab..."
+                  placeholder="Cari Produk Berdasarkan Nama..."
                 />
                 <select
                   value={sortOption}
@@ -196,7 +147,7 @@ const ProductList = () => {
                   <option value="stock">Stok Paling Sedikit - Terbanyak</option>
                 </select>
               </div>
-              
+
               <div className="products">
                 {filteredAndSortedData.map((product) => (
                   <ProductCard

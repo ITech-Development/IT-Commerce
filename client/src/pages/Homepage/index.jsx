@@ -7,7 +7,7 @@ import Riset from "../../components/sections/Riset";
 import AdminProf from "../../components/sections/adminProf";
 import Quote from "../../components/sections/quote";
 import Footer from "../../components/footer";
-import ClaimVoucher from "../../assets/claimVoucher.jpg";
+import ClaimVoucher from "../../assets/popup.png";
 import { Link } from "react-router-dom";
 
 // Import Chatbot components from react-chatbot-kit
@@ -19,16 +19,16 @@ import ActionProvider from "./chatbot/ActionProvider";
 function Index() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Function to open the modal
-  const openModal = () => {
+   // Function to open the modal
+   const openModal = () => {
     setIsModalOpen(true);
   };
 
   // Function to close the modal
   const closeModal = () => {
     setIsModalOpen(false);
+    document.body.style.overflow = "auto"; // Restore the scroll on the body
   };
-
   // useEffect to open the modal on component mount
   useEffect(() => {
     openModal();
@@ -54,61 +54,51 @@ function Index() {
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Selected Product Image"
+        
         style={{
           overlay: {
             backgroundColor: "rgba(0, 0, 0, 0.75)",
           },
           content: {
-            maxWidth: "350px", // Adjust the width of the modal here
+            maxWidth: "37%", // Adjust the width of the modal here
             margin: "auto",
-            borderRadius: "8px",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.25)",
-          },
+            position: "relative",
+            top: '100px',
+            background: 'none',
+            border: 'none',
+            },
         }}
       >
-        <div
+        {/* Close button */}
+        <button
+          onClick={closeModal}
           style={{
-            textAlign: "center",
-            marginBottom: "20px",
-            marginTop: "40px",
+            position: "absolute",
+            top: "8px",
+            right: "-6px",
+            background: "gray",
+            // border: "none",
+            cursor: "pointer",
+            fontSize: "30px",
+            color: "white",
+            border: '1px solid gray',
+            borderRadius: "50%",
+            padding: '0 8px'
           }}
         >
+          &times;
+        </button>
+        <Link to="/productlist">
           <img
             src={ClaimVoucher}
             alt="Product"
             style={{
-              maxWidth: "100%",
-              maxHeight: "380px",
-              borderRadius: "8px",
+             width: "100%",
             }}
           />
-        </div>
-        <h2 style={{ textAlign: "center" }}>
-          Belanja Sekarang Untuk Bisa Mendapatkan Diskon Spesial!
-        </h2>
-        <Link to="/productlist">
-          <button
-            style={{
-              display: "block",
-              margin: "auto",
-              marginTop: "20px",
-              background: "#010f52",
-              color: "white",
-              fontSize: "14px",
-              padding: "10px 20px",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-              transition: "background-color 0.3s",
-              transform: "0.2s",
-            }}
-            onClick={closeModal}
-          >
-            Ambil Voucher
-          </button>
         </Link>
       </Modal>
-      
+
       {/* Add the Chatbot component */}
       <Chatbot
         config={config}

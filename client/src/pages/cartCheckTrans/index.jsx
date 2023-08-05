@@ -8,7 +8,6 @@ import axios from 'axios'
 const Cart = () => {
 
   let [carts, setCarts] = useState([])
-  console.log(carts, 'testtttttttttttcart');
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [token, setToken] = useState('')

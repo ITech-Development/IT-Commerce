@@ -323,12 +323,13 @@ class UserController {
     try {
       let { courier } = req.query;
       let destination = +req.query.destination;
+      let weight = +req.query.weight;
       const obj = {
         origin: "351",
         originType: 'city',
         destination,
         destinationType: 'subdistrict',
-        weight: 1000,
+        weight,
         courier,
       };
       const { data } = await axios({
