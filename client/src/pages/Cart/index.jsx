@@ -17,6 +17,7 @@ const ContinueShoppingIcon = styled.span`
 
 const Cart = () => {
   const [carts, setCarts] = useState([]);
+  console.log(carts, 'testsssssssssssssssssssssssssss');
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -98,6 +99,14 @@ const Cart = () => {
     return ppn.toFixed(2);
   };
 
+  // const calculateTotalWeight = () => {
+  //   return carts.reduce((totalWeight, cartItem) => {
+  //     const productWeightInGrams = cartItem.product.weight; // Pastikan produk memiliki properti "weight" yang berisi berat dalam gram
+  //     const quantity = cartItem.quantity;
+  //     return totalWeight + productWeightInGrams * quantity;
+  //   }, 0);
+  // };
+
   return (
     <>
       <div
@@ -175,6 +184,17 @@ const Cart = () => {
                 >
                   <span>PPN 11% :</span>
                   <span className="amount"> Rp. {calculatePPN()}</span>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontStyle: "italic",
+                    padding: "8px 0",
+                  }}
+                >
+                  {/* <span>Weight :</span>
+                  <span className="amount">{calculateTotalWeight()} grams</span> */}
                 </div>
                 <div className="subtotal" style={{ paddingBottom: "10px" }}>
                   <span>Total :</span>

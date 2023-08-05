@@ -308,10 +308,22 @@ function Index() {
     }
   };
 
+  const calculateTotalWeight = () => {
+    let totalWeight = 0;
+    carts.forEach((cartItem) => {
+      const productWeight = cartItem.product.weight; // Assuming each product has a 'weight' property
+      const quantity = cartItem.quantity;
+      totalWeight += productWeight * quantity;
+    });
+    console.log(totalWeight, 'dari total wieght');
+    return totalWeight;
+  };
+
   const handlerGetCost = async (event) => {
     let access_token = localStorage.getItem("access_token");
     const selectedCityId = event.target.value;
-    let query = { destination: selectedCityId, courier };
+    const totalWeight = calculateTotalWeight(); // Calculate total weight dynamically
+    let query = { destination: selectedCityId, courier, weight: totalWeight };
     let url = `http://localhost:3100/users/cost`;
     let { data } = await axios({
       url,
@@ -492,12 +504,22 @@ function Index() {
         >
           <h2>Pilih Metode Pengiriman</h2>
           <div>
-            <select value={courier} onChange={handlerSetCourier}>
-              <option value="jne">jne</option>
-              <option value="tiki">tiki</option>
-              <option value="pos">pos</option>
-              <option value="jnt">jnt</option>
+            <select onChange={handlerSetCourier}>
+              <option value={courier} >Select Courier</option>
+              <option value="jne">JNE</option>
+              <option value="tiki">TIKI</option>
+              <option value="pos">Pos Indonesia</option>
+              <option value="jnt">J&T</option>
+              {/* <option value="ide">Ide Express</option> */}
+              {/* <option value="anteraja">Anteraja</option>
+              <option value="sicepat">Sicepat</option> */}
             </select>
+            <input
+              type="number"
+              value={calculateTotalWeight()}
+              readOnly
+              placeholder="Total Weight in Grams"
+            />
             <select
               name="province"
               id="province"
