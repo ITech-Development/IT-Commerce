@@ -22,6 +22,9 @@ import ProfileUpdate from "./pages/profileUpdate";
 import ServiceList from "./pages/ServiceList";
 import { initialState, reducer } from "./reducer/UseReducer";
 import Chat from "./pages/Chat";
+import CheckTransItech from "./pages/CheckTrans/itech";
+import CheckTransIndoRiau from "./pages/CheckTrans/indoRiau";
+import CheckTransJuvindo from "./pages/CheckTrans/juvindo";
 
 export const UserContext = createContext();
 
@@ -44,7 +47,9 @@ const Routing = () => {
       <Route path="/services" element={<ServiceList />} />
       <Route path="/profile-update/:id" element={<ProfileUpdate />} />
       <Route path="/chat" element={<Chat />} />
-
+      <Route path="/check-TransITech" element={<CheckTransItech />} />
+      <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
+      <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
       {/* <Route path="/profile-update/:id" element={<ProfileUpdate />} /> */}
     </Routes>
   );
