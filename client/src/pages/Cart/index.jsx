@@ -8,11 +8,8 @@ import styled from "styled-components";
 const Cart = () => {
   const [carts, setCarts] = useState([]);
   const [cartsJuvindo, setCartsJuvindo] = useState([]);
-  console.log(cartsJuvindo, 'dari juvindo');
   const [cartsItech, setCartsItech] = useState([]);
-  console.log(cartsItech, 'dari itech');
   const [cartsIndoRiau, setCartsIndoRiau] = useState([]);
-  console.log(cartsIndoRiau, 'dari indo riau');
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -211,7 +208,7 @@ const Cart = () => {
     const ppn = subtotal * 0.11;
     return ppn.toFixed(2);
   };
-  
+
   return (
     <>
       <div
@@ -297,7 +294,7 @@ const Cart = () => {
                   </span>
                 </div>
                 <button style={checkoutButtonStyle}>
-                  <Link to="/check-trans" style={linkStyle}>
+                  <Link to="/check-TransITech" style={linkStyle}>
                     Check Out
                   </Link>
                 </button>
@@ -393,7 +390,7 @@ const Cart = () => {
                   </span>
                 </div>
                 <button style={checkoutButtonStyle}>
-                  <Link to="/check-trans" style={linkStyle}>
+                  <Link to="/check-TransIR" style={linkStyle}>
                     Check Out
                   </Link>
                 </button>
@@ -500,7 +497,7 @@ const Cart = () => {
                   </span>
                 </div>
                 <button style={checkoutButtonStyle}>
-                  <Link to="/check-trans" style={linkStyle}>
+                  <Link to="/check-TransJuvindo" style={linkStyle}>
                     Check Out
                   </Link>
                 </button>

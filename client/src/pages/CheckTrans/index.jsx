@@ -248,7 +248,7 @@ function Index() {
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "http://localhost:3100/product-carts";
+      let url = "http://localhost:3100/product-carts/";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
           setCarts(data);

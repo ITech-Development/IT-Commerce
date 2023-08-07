@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTotals } from "../../features/cartSlice";
-import "./styless.css";
+import { getTotals } from "../../../features/cartSlice";
+import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import VCR1 from "../../assets/IT01.png";
-import VCR2 from "../../assets/MS01.png";
-import VCR3 from "../../assets/TK01.png";
+import VCR1 from "../../../assets/IT01.png";
+import VCR2 from "../../../assets/MS01.png";
+import VCR3 from "../../../assets/TK01.png";
 
 function Index() {
   let [carts, setCarts] = useState([]);
@@ -248,7 +248,7 @@ function Index() {
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "http://localhost:3100/product-carts";
+      let url = "http://localhost:3100/product-carts/indo-riau";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
           setCarts(data);
