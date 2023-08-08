@@ -23,6 +23,7 @@ const routeOrders = require('./orders')
 const routeCheckouts = require('./checkouts')
 const routeOrderProducts = require('./orderProducts')
 const routeCheckoutProducts = require('./checkoutProducts')
+const routeMidtrans = require('./midtrans')
 
 router.use('/users', routeUsers)
 router.use('/product-owners', routeProductOwners)
@@ -47,5 +48,6 @@ router.use('/checkouts', routeCheckouts)
 router.use('/orders', routeOrders)
 router.use('/checkout-products', routeCheckoutProducts)
 router.use('/order-products', routeOrderProducts)
+router.use('/midtrans', routeMidtrans)
 
 module.exports = router

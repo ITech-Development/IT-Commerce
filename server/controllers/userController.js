@@ -8,6 +8,7 @@ const salt = bcryptjs.genSaltSync(10);
 const midtransClient = require("midtrans-client");
 const axios = require("axios");
 let { sequelize } = require("../models/");
+const rajaOngkir = process.env.RAJAONGKIR_API_KEY;
 
 class UserController {
   static async getAllUsers(req, res, next) {
@@ -19,6 +20,45 @@ class UserController {
     }
   }
 
+  static async getMeById(req,res, next) {
+    try {
+      const profiles = await User.findOne({
+        where: { id: req.user.id }
+      })
+      res.status(200).json(profiles)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  static async editUser(req, res, next) {
+    const { fullName, email, phoneNumber, address } = req.body;
+  
+    try {
+      // Dapatkan pengguna yang akan diedit berdasarkan ID pengguna yang terautentikasi
+      const user = await User.findByPk(req.user.id);
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Update informasi pengguna dengan nilai-nilai baru
+      user.fullName = fullName || user.fullName;
+      user.email = email || user.email;
+      user.phoneNumber = phoneNumber || user.phoneNumber;
+      user.address = address || user.address;
+  
+      // Simpan perubahan informasi pengguna ke database
+      await user.save();
+  
+      res.status(200).json({ message: 'User information updated successfully' });
+    } catch (error) {
+      console.log(error, 'roar');
+      next(error);
+    }
+  }
+  
+  
 
 
   static async detailsUser(req, res, next) {
@@ -226,7 +266,7 @@ class UserController {
       console.log('masuk');
       const province = await axios
         .get("https://pro.rajaongkir.com/api/province", {
-          headers: { key: "d72cd1e873513a95c328ba6489efb224" },
+          headers: { key: rajaOngkir },
         })
         .then((response) => {
           console.log('masuk oioioi');
@@ -250,7 +290,7 @@ class UserController {
       const city = await axios
         .get("https://pro.rajaongkir.com/api/city", {
           params: { province: id },
-          headers: { key: "d72cd1e873513a95c328ba6489efb224" },
+          headers: { key: rajaOngkir },
         })
         .then((response) => {
           return response.data.rajaongkir.results;
@@ -270,7 +310,7 @@ class UserController {
       const city = await axios
         .get("https://pro.rajaongkir.com/api/subdistrict", {
           params: { city: id },
-          headers: { key: "d72cd1e873513a95c328ba6489efb224" },
+          headers: { key: rajaOngkir },
         })
         .then((response) => {
           return response.data.rajaongkir.results;
@@ -301,7 +341,7 @@ class UserController {
         method: "POST",
         url: "https://pro.rajaongkir.com/api/cost",
         data: obj,
-        headers: { key: "d72cd1e873513a95c328ba6489efb224" },
+        headers: { key: rajaOngkir },
       });
       res.status(200).json(data.rajaongkir.results[0].costs);
     } catch (error) {

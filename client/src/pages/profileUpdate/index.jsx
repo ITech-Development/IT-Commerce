@@ -12,9 +12,8 @@ const ProfileForm = () => {
     address: '',
     // Tambahkan atribut lainnya jika perlu
   });
-  console.log(typeof user.id, 'testtesttest');
+  // console.log(typeof user.id, 'testtesttest');
   // const id = user.id
-  const id  = user.id
 
   useEffect(() => {
     fetchProfileData();
@@ -23,12 +22,12 @@ const ProfileForm = () => {
 
   const fetchProfileData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3100/profiles/`, {
+      const response = await axios.get(`http://localhost:3100/users/me`, {
         headers: {
           access_token: localStorage.getItem('access_token')
         }
       });
-      setUser(response.data.user);
+      setUser(response.data);
     } catch (error) {
       console.error('Terjadi kesalahan saat mengambil data produk:', error);
     }
@@ -42,7 +41,7 @@ const ProfileForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:3100/users/${id}`, user, {
+      const response = await axios.put(`http://localhost:3100/users/me`, user, {
         headers: {
           // 'Content-Type': 'application/json',
           access_token: localStorage.getItem('access_token'),
@@ -50,11 +49,11 @@ const ProfileForm = () => {
         },
       });
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil edit produk.
         // Contoh:
-        window.location.href = '/';
         console.log('Produk berhasil diupdate.');
+        window.location.href = '/profile-update';
       } else {
         console.error('Terjadi kesalahan saat mengupdate produk.');
       }
@@ -87,6 +86,7 @@ const ProfileForm = () => {
           type="email"
           value={user.email}
           onChange={handleChange}
+          readOnly
         // onChange={(e) => setEmail(e.target.value)}
         />
 

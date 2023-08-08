@@ -67,7 +67,7 @@ function Index() {
     };
 
     const response = await axios({
-      url: `http://localhost:3100/users/midtrans?total=${bayar}`,
+      url: `http://localhost:3100/midtrans/indo-riau?total=${bayar}`,
       data: { carts },
       headers: config,
       method: "post",
@@ -525,7 +525,7 @@ function Index() {
               {/* <option value="ide">Ide Express</option> */}
               {/* <option value="anteraja">Anteraja</option>
               <option value="sicepat">Sicepat</option> */}
-              </select>
+            </select>
             <select
               value={courier}
               onChange={handlerSetCourier}
@@ -611,23 +611,23 @@ function Index() {
             </select>
             {pengiriman
               ? pengiriman.map((el, index) => (
-                  <div key={index}>
-                    <input
-                      type="radio"
-                      id={`shippingChoice${index}`}
-                      name="shipping"
-                      value={el.cost[0].value}
-                      checked={selectedShippingCost === el.cost[0].value}
-                      onChange={handleShippingCostChange}
-                    />
-                    <label htmlFor={`shippingChoice${index}`}>
-                      Shipping Cost: Rp.{el.cost[0].value}
-                    </label>
-                    <p>Service: {el.service}</p>
-                    <p>Description: {el.description}</p>
-                    <p>Est: {el.cost[0].etd} Days</p>
-                  </div>
-                ))
+                <div key={index}>
+                  <input
+                    type="radio"
+                    id={`shippingChoice${index}`}
+                    name="shipping"
+                    value={el.cost[0].value}
+                    checked={selectedShippingCost === el.cost[0].value}
+                    onChange={handleShippingCostChange}
+                  />
+                  <label htmlFor={`shippingChoice${index}`}>
+                    Shipping Cost: Rp.{el.cost[0].value}
+                  </label>
+                  <p>Service: {el.service}</p>
+                  <p>Description: {el.description}</p>
+                  <p>Est: {el.cost[0].etd} Days</p>
+                </div>
+              ))
               : null}
           </div>
         </div>
