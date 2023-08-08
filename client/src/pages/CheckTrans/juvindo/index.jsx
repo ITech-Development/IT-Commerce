@@ -66,7 +66,7 @@ function Index() {
     };
 
     const response = await axios({
-      url: `http://localhost:3100/users/midtrans?total=${bayar}`,
+      url: `http://localhost:3100/midtrans/juvindo?total=${bayar}`,
       data: { carts },
       headers: config,
       method: "post",
