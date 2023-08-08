@@ -125,28 +125,28 @@ const Cart = () => {
     }
   };
 
-  const calculateSubtotal = () => {
-    return carts.reduce((total, cartItem) => {
-      const productPrice = cartItem.product.unitPrice;
-      const quantity = cartItem.quantity;
-      return total + productPrice * quantity;
-    }, 0);
-  };
+  // const calculateSubtotal = () => {
+  //   return carts.reduce((total, cartItem) => {
+  //     const productPrice = cartItem.product.unitPrice;
+  //     const quantity = cartItem.quantity;
+  //     return total + productPrice * quantity;
+  //   }, 0);
+  // };
 
   
-  const calculateTotal = () => {
-    const subtotal = calculateSubtotal();
-    const ppn = subtotal * 0.11;
-    const total = subtotal + ppn;
-    return total.toFixed(2);
-  };
+  // const calculateTotal = () => {
+  //   const subtotal = calculateSubtotal();
+  //   const ppn = subtotal * 0.11;
+  //   const total = subtotal + ppn;
+  //   return total.toFixed(2);
+  // };
 
   
-  const calculatePPN = () => {
-    const subtotal = calculateSubtotal();
-    const ppn = subtotal * 0.11;
-    return ppn.toFixed(2);
-  };
+  // const calculatePPN = () => {
+  //   const subtotal = calculateSubtotal();
+  //   const ppn = subtotal * 0.11;
+  //   return ppn.toFixed(2);
+  // };
 
   //juvindo
   const calculateSubtotalJuvindo = () => {

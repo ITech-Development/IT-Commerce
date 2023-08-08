@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import Corousel from "../../components/corousel/product";
 import "./productliststyle.css";
 import "../../App.css";
+import Star from "../../assets/star.png";
+import CartIcon from "../../assets/cart2.png";
 
 const linkStyle = {
   color: "white",
@@ -13,6 +15,7 @@ const linkStyle = {
 };
 
 const ProductCard = ({ product, onAddToCart }) => {
+  const starRating = 5;
   return (
     <div className="product">
       <Link
@@ -24,17 +27,43 @@ const ProductCard = ({ product, onAddToCart }) => {
       </Link>
       <div className="details">
         <h3>{product.category}</h3>
-        <p>{product.name}</p>
-        <span className="price">Rp.{product.unitPrice}</span>
-        <p>Stock: {product.stock}</p>
+        <h3 style={{ padding: "5px 0", margin: "0" }}>{product.name}</h3>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
+            <div style={{ width: "90px" }} className="star-rating">
+              {/* Render star images for the star rating */}
+              {[...Array(starRating)].map((_, index) => (
+                <img
+                  key={index}
+                  style={{ maxWidth: "15px" }}
+                  src={Star} // Replace with your star icon image
+                  alt="rating"
+                />
+              ))}
+            </div>
+            <span className="price">Rp.{product.unitPrice}</span>
+            {/* <p>Stock: {product.stock}</p> */}
+          </div>
+          <button
+          className="cartyes"
+            style={{
+              maxWidth: "40px",
+              border: "none",
+              borderRadius: "50%",
+              background: "#DDEFEF",
+              cursor: "pointer",
+            }}
+            onClick={() => onAddToCart(product)}
+            disabled={product.stock === 0}
+          >
+            {product.stock > 0 ? (
+              <img style={{ maxWidth: "24px" }} src={CartIcon} alt="Cart" />
+            ) : (
+              "Out of Stock"
+            )}
+          </button>
+        </div>
       </div>
-      <button
-        className="add-to-cart-button"
-        onClick={() => onAddToCart(product)}
-        disabled={product.stock === 0}
-      >
-        {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
-      </button>
     </div>
   );
 };
@@ -115,7 +144,7 @@ const ProductList = () => {
     : [];
   return (
     <>
-      <Corousel />
+      <Corousel/>
 
       <div>
         {/* <img src={Hero} alt="" /> */}
