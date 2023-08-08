@@ -1,33 +1,73 @@
 // ProfileForm.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from 'axios'
+import { Link, useParams } from 'react-router-dom';
 
 const ProfileForm = () => {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [profilePicture, setProfilePicture] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const [user, setUser] = useState({
+    fullName: '',
+    phoneNumber: '',
+    address: '',
+    // Tambahkan atribut lainnya jika perlu
+  });
+  console.log(typeof user.id, 'testtesttest');
+  // const id = user.id
+  const id  = user.id
 
-    // Here, you can implement the logic to handle form submission.
-    // You can access the form data (fullName, email, phone, address, profilePicture)
-    // and perform the necessary actions (e.g., sending data to the server, etc.).
+  useEffect(() => {
+    fetchProfileData();
+    // fetchProductOwners();
+  }, []);
 
-    // For this example, we'll just display the data in the console.
-    console.log("Full Name:", fullName);
-    console.log("Email:", email);
-    console.log("Phone:", phone);
-    console.log("Address:", address);
-    console.log("Profile Picture URL:", profilePicture);
+  const fetchProfileData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3100/profiles/`, {
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      });
+      setUser(response.data.user);
+    } catch (error) {
+      console.error('Terjadi kesalahan saat mengambil data produk:', error);
+    }
   };
 
-  const handleProfilePictureChange = (event) => {
-    const file = event.target.files[0];
-    setProfilePicture(file);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(`http://localhost:3100/users/${id}`, user, {
+        headers: {
+          // 'Content-Type': 'application/json',
+          access_token: localStorage.getItem('access_token'),
+          // Tambahkan header lainnya sesuai kebutuhan
+        },
+      });
+
+      if (response.status === 201) {
+        // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil edit produk.
+        // Contoh:
+        window.location.href = '/';
+        console.log('Produk berhasil diupdate.');
+      } else {
+        console.error('Terjadi kesalahan saat mengupdate produk.');
+      }
+    } catch (error) {
+      console.error('Terjadi kesalahan:', error);
+    }
+
+  };
+
+  // const handleProfilePictureChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setProfilePicture(file);
+  // };
 
   return (
     <FormContainer>
@@ -35,45 +75,41 @@ const ProfileForm = () => {
       <form onSubmit={handleSubmit}>
         <Label>Full Name</Label>
         <Input
+          name="fullName"
           type="text"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
+          value={user.fullName}
+          onChange={handleChange}
         />
 
         <Label>Email</Label>
         <Input
+          name="email"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={user.email}
+          onChange={handleChange}
+        // onChange={(e) => setEmail(e.target.value)}
         />
 
         <Label>Phone</Label>
         <Input
+          name="phoneNumber"
           type="tel"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          value={user.phoneNumber}
+          onChange={handleChange}
+        // onChange={(e) => setPhone(e.target.value)}
         />
 
         <Label>Address</Label>
         <TextArea
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          type="text"
+          name="address"
+          value={user.address}
+          onChange={handleChange}
+          // onChange={(e) => setAddress(e.target.value)}
           rows={4}
         />
 
-        <Label>Profile Picture</Label>
-        <Input
-          type="file"
-          accept="image/*"
-          onChange={handleProfilePictureChange}
-        />
 
-        {profilePicture && (
-          <ProfilePicture
-            src={URL.createObjectURL(profilePicture)}
-            alt="Profile"
-          />
-        )}
 
         <Button type="submit">Update Profile</Button>
       </form>

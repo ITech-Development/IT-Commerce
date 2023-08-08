@@ -87,8 +87,9 @@ export default ProfileForm;
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  // align-items: center;
+  align-items: center;
   max-width: 400px;
+  margin: 90px auto;
   padding: 20px 70px;
   background-color: #f4f4f4;
   border-radius: 8px;
@@ -130,6 +131,7 @@ const TextArea = styled.textarea`
   outline: none;
   resize: vertical;
 
+export default Profile;
   &:focus {
     border-color: #007bff;
   }

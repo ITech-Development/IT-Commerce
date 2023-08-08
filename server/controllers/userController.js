@@ -140,42 +140,6 @@ class UserController {
   }
 
   static async updateUser(req, res, next) {
-    // try {
-    //   if (req.body.password) {
-    //     const hashedPassword = bcryptjs.hashSync(req.body.password, salt);
-    //     req.body.password = hashedPassword;
-    //   }
-    //   let filename = null;
-    //   try {
-    //     filename = req.file.filename;
-    //   } catch (error) {
-    //     filename = req.body.imageProfile;
-    //   }
-    //   User.update(
-    //     {
-    //       email: req.body.email,
-    //       password: req.body.password,
-    //       fullName: req.body.fullName,
-    //       phoneNumber: req.body.phoneNumber,
-    //       address: req.body.address,
-    //       imageProfile: filename,
-    //     },
-    //     {
-    //       where: {
-    //         id: req.params.id,
-    //       },
-    //     }
-    //   ).then((user) => {
-    //     res.send({
-    //       status: "success",
-    //       data: {
-    //         id: req.params.id,
-    //       },
-    //     });
-    //   });
-    // } catch (error) {
-    //   next(error);
-    // }
     try {
       const authenticatedUserId = req.user.id;
       const requestedUserId = +req.params.id;
@@ -224,6 +188,7 @@ class UserController {
       next(error);
     }
   }
+  
 
   static async googleLogin(req, res, next) {
     try {
