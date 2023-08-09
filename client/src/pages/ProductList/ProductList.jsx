@@ -8,10 +8,18 @@ import "./productliststyle.css";
 import "../../App.css";
 import Star from "../../assets/star.png";
 import CartIcon from "../../assets/cart2.png";
+import { FadeLoader } from "react-spinners";
 
 const linkStyle = {
   color: "white",
   textDecoration: "none",
+};
+
+const loadingContainerStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  minHeight: "200px", // Atur ketinggian minimum sesuai kebutuhan
 };
 
 const ProductCard = ({ product, onAddToCart }) => {
@@ -45,7 +53,7 @@ const ProductCard = ({ product, onAddToCart }) => {
             {/* <p>Stock: {product.stock}</p> */}
           </div>
           <button
-          className="cartyes"
+            className="cartyes"
             style={{
               maxWidth: "40px",
               border: "none",
@@ -59,7 +67,7 @@ const ProductCard = ({ product, onAddToCart }) => {
             {product.stock > 0 ? (
               <img style={{ maxWidth: "24px" }} src={CartIcon} alt="Cart" />
             ) : (
-              "Out of Stock"
+              <p style={{color: 'black', margin: '0', padding: '0', fontSize: '7px', fontWeight: '700'}}>Out of stock</p>
             )}
           </button>
         </div>
@@ -142,53 +150,50 @@ const ProductList = () => {
           }
         })
     : [];
-  return (
+ return (
     <>
-      <Corousel/>
+      <Corousel />
 
-      <div>
-        {/* <img src={Hero} alt="" /> */}
-        <div className="productlist-container">
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p>An error occurred</p>
-          ) : (
-            <>
-              <h2 style={{ margin: "30px 0 20px 0", textAlign: "start" }}>
-                Produk Rekomendasi
-              </h2>
-              <div style={searchContainerStyle}>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={handleSearchInputChange}
-                  style={searchInputStyle}
-                  placeholder="Cari Produk Berdasarkan Nama..."
+      <div className="productlist-container">
+        {isLoading ? (
+          <div style={loadingContainerStyle}>
+            <FadeLoader color="#007bff" loading={isLoading} size={50} />
+          </div>
+        ) : error ? (
+          <p>An error occurred</p>
+        ) : (
+          <>
+            <h2 className="productlist-title">Produk Rekomendasi</h2>
+            <div style={searchContainerStyle}>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={handleSearchInputChange}
+                style={searchInputStyle}
+                placeholder="Cari Produk Berdasarkan Nama..."
+              />
+              <select
+                value={sortOption}
+                onChange={handleSortOptionChange}
+                style={sortSelectStyle}
+              >
+                <option value="name">Berdasarkan Nama</option>
+                <option value="price">Harga Terendah - Tertinggi</option>
+                <option value="stock">Stok Paling Sedikit - Terbanyak</option>
+              </select>
+            </div>
+
+            <div className="products">
+              {filteredAndSortedData.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onAddToCart={handleAddToCart}
                 />
-                <select
-                  value={sortOption}
-                  onChange={handleSortOptionChange}
-                  style={sortSelectStyle}
-                >
-                  <option value="name">Berdasarkan Nama</option>
-                  <option value="price">Harga Terendah - Tertinggi</option>
-                  <option value="stock">Stok Paling Sedikit - Terbanyak</option>
-                </select>
-              </div>
-
-              <div className="products">
-                {filteredAndSortedData.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onAddToCart={handleAddToCart}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-        </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </>
   );

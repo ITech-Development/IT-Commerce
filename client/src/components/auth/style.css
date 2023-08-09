@@ -1,19 +1,132 @@
-/* Place your CSS code here */
-
 /* Styling for the container */
-.div {
-  max-width: 600px;
-  margin: 4% auto 0 auto;
-  padding: 30px 65px;
-  border: 1px solid #ece9e9;
-  border-radius: 5px;
+.containerlogin {
+  margin: -10px auto 0 280px;
+  position: fixed;
 }
+.containerregis {
+  margin: -10px auto 0 400px;
+  position: fixed;
+}
+
+
+.imgStack {
+  position: relative;
+}
+
+.imglogin {
+  max-width: 830px;
+}
+.imgregis {
+  max-width: 800px;
+}
+
+.img1 {
+  display: flex;
+  margin: auto;
+  align-items: center;
+  align-content: center;
+  padding: 0;
+}
+.img2 {
+  display: flex;
+  margin: auto;
+  align-items: center;
+  align-content: center;
+  padding: 0;
+}
+
+/* Keyframes for animations */
+@keyframes smoke {
+  0% {
+    opacity: 0;
+    transform: translateY(0) rotate(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-100px) rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Styling for the login form container */
 .divLogin {
-  max-width: 600px;
-  margin: 8% auto 0 auto;
-  padding: 50px 65px;
+  background-color: #deeef7;
+  max-width: 395px;
+  padding: 10px 35px 20px 35px;
   border: 1px solid #ece9e9;
   border-radius: 5px;
+  animation: fadeIn 1s ease-out forwards;
+  position: relative;
+  top: -600px;
+  right: -388px;
+}
+
+.divRegis {
+  background-color: #deeef7;
+  max-width: 305px;
+  padding: 8px 25px 18px 25px;
+  border: 1px solid #ece9e9;
+  border-radius: 5px;
+  animation: fadeIn 1s ease-out forwards;
+  position: relative;
+  top: -670px;
+  right: -12px;
+}
+
+/* Add media query for responsiveness */
+@media (max-width: 768px) {
+  .containerregis {
+    margin: 20px auto;
+    max-width: 100%;
+    padding: 0 20px;
+    position: static;
+  }
+
+  .divRegis {
+    top: 80px;
+    right: 300px;
+    left: 0;
+    position: relative;
+    max-width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+  }
+
+  .img2 {
+    display: none; /* Hide the image on mobile screens */
+  }
+}
+
+/* Add media query for responsiveness */
+@media (max-width: 768px) {
+  .containerlogin {
+    margin: 20px auto;
+    max-width: 100%;
+    padding: 0 20px;
+    position: static;
+  }
+
+  .divLogin {
+    top: 80px;
+    right: 300px;
+    left: 0;
+    position: relative;
+    max-width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+  }
+
+  .img1 {
+    display: none; /* Hide the image on mobile screens */
+  }
 }
 
 /* Styling for the login form */
@@ -27,74 +140,29 @@
   margin-bottom: 5px;
 }
 
-.inputTop {
-  padding: 10px;
-  margin-bottom: 15px;
-  margin-left: 29px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  width: 84.7%;
-}
-
-.input {
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  width: 84.5%;
-}
-
-.inputFull {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    width: 96.4%;
-  }
-  
-.inputEmail {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    width: 96.4%;
-  }
-  
+.inputEmail,
 .inputPass {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    width: 96.4%;
-  }
-  
-.inputPhone {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    width:96.4%;
-  }
-  
-.inputAddress {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    width: 96.4%;
-  }
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 96.4%;
+}
+
+.inputEmailRegis,
+.inputPassRegis, .inputFull, .inputPhone, .inputAddress {
+  padding: 7px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 96.4%;
+}
 
 /* Styling for the error message */
 .p {
   color: red;
-  /* margin-bottom: 10px; */
   margin: auto 0;
   padding: 0;
   margin-top: 15px;

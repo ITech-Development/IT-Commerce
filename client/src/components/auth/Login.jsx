@@ -1,11 +1,10 @@
 import React, { useContext, useState } from "react";
-
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import "./style.css";
+import { FiMail, FiLock } from "react-icons/fi";
 import { UserContext } from "../../App.jsx";
-import Regis from "../../assets/regis.png";
+import Background from "./Fuel.png";
+import "./style.css"; // Import your CSS styles
 
 const Login = () => {
   const { dispatch } = useContext(UserContext);
@@ -17,7 +16,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Perform login logic here
     if (!email || !password) {
       alert("Please enter your email and password.");
       return;
@@ -29,21 +27,17 @@ const Login = () => {
     };
 
     try {
-      // Call the API to perform login
       const response = await axios.post(
         "http://localhost:3100/users/login",
         userData
       );
       console.log("Login response:", response.data);
 
-      // Save the access token to local storage
       localStorage.setItem("access_token", response.data.access_token);
 
-      // Clear form fields
       setEmail("");
       setPassword("");
 
-      // Redirect to the Home page
       dispatch({ type: "USER", payload: true });
       navigate("/");
     } catch (error) {
@@ -53,20 +47,16 @@ const Login = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignContent: "center",
-        marginTop: '50px'
-      }}
-    >
+    <div className="containerlogin">
+      <div className="imgStack">
+        <img className="imglogin img1" src={Background} alt="" />
+      </div>
       <div className="divLogin">
         <h2 className="h2">Login</h2>
         <form onSubmit={handleSubmit} className="form">
           <div>
             <label className="label" htmlFor="email">
-              Email :{" "}
+              <FiMail className="icon" /> Email:
             </label>
             <input
               type="email"
@@ -78,7 +68,7 @@ const Login = () => {
           </div>
           <div>
             <label className="label" htmlFor="password">
-              Password :{" "}
+              <FiLock className="icon" /> Password:
             </label>
             <input
               type="password"
@@ -95,18 +85,6 @@ const Login = () => {
         <p className="p">
           Don't have an account? <Link to="/register">Register</Link>
         </p>
-      </div>
-      <div>
-        <img
-          style={{
-            maxWidth: "500px",
-          position: 'relative',
-           top: "150px",
-           right: '150px'
-          }}
-          src={Regis}
-          alt=""
-        />
       </div>
     </div>
   );

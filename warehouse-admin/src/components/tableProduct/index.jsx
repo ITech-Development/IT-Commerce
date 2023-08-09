@@ -111,7 +111,6 @@ const TableComponent = () => {
       imageColumn[i].style.display = "none";
     }
 
-
     const table = document.getElementById("product-table");
     const newWindow = window.open();
     newWindow.document.write(table.outerHTML);
@@ -355,8 +354,8 @@ const TableComponent = () => {
                 <TableRow key={row.id}>
                   <TableCell>{row.id}</TableCell>
                   <TableCell>
-                  <Link to={`/product/${row.id}`}>
-{row.name}</Link></TableCell>
+                    <Link to={`/product/${row.id}`}>{row.name}</Link>
+                  </TableCell>
                   <TableCell>{row.categories?.name}</TableCell>
                   <TableCell>{row.types?.name}</TableCell>
                   <TableCell>
@@ -374,7 +373,7 @@ const TableComponent = () => {
                   <TableCell>{row.minimumOrder}</TableCell>
                   <TableCell>{row.unitPrice}</TableCell>
                   <TableCell>{row.stock} Unit</TableCell>
-                  <TableCell>{row.weight} cm</TableCell>
+                  <TableCell>{row.weight} g</TableCell>
                   <TableCell>{row.height} cm</TableCell>
                   <TableCell>{row.width} cm</TableCell>
                   <TableCell>{row.product_owners?.name}</TableCell>
