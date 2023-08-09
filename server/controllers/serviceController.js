@@ -43,7 +43,7 @@ class ServiceController {
             if (service) {
                 res.status(200).json(service)
             } else {
-                throw { name: 'NotFoundErrorService' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)
@@ -92,7 +92,7 @@ class ServiceController {
                 )
                 res.status(200).json({ message: 'Service successfully deleted' })
             } else {
-                throw { name: 'NotFoundErrorService' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)

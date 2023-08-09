@@ -48,7 +48,7 @@ class VoucherController {
             if (voucher) {
                 res.status(200).json(voucher)
             } else {
-                throw { name: 'NotFoundErrorVoucher' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)
@@ -68,7 +68,7 @@ class VoucherController {
                 )
                 res.status(200).json({ message: 'Vocuher successfully deleted' })
             } else {
-                throw { name: 'NotFoundErrorVoucher' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)

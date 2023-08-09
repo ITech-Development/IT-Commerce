@@ -56,7 +56,7 @@ class TransactionController {
             if (transaction) {
                 res.status(200).json(transaction)
             } else {
-                throw { name: 'NotFoundUserId' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)
@@ -73,7 +73,7 @@ class TransactionController {
             if (transaction) {
                 res.status(200).json(transaction)
             } else {
-                throw { name: 'NotFoundId' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)
@@ -120,7 +120,7 @@ class TransactionController {
                 )
                 res.status(200).json({ message: 'Transaction successfully deleted' })
             } else {
-                throw { name: 'NotFoundTransaction' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)

@@ -36,7 +36,7 @@ class AppointmentController {
             if (appointment) {
                 res.status(200).json(appointment)
             } else {
-                throw { name: 'NotFoundErrorAppointment' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)
