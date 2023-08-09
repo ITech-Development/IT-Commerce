@@ -29,16 +29,12 @@ const fileFilter = (req, file, cb) => {
 };
 
 router.use(bodyParser.json());
-// router.use('/images', express.static(path.join(__dirname, 'images')));
-// router.use('/uploads', express.static('uploads'));
-router.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'),)
+router.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
 
 router.get('/', ProductController.getAllProducts);
 router.post('/',
     authenticationWarehouseAdmin,
-    authorizationWarehouseAdmin, 
-    // '/images', express.static(path.join(__dirname, '..', 'images')),
-    // multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'),
+    authorizationWarehouseAdmin,
     ProductController.addProduct)
 router.get('/:id', ProductController.detailsProduct)
 router.delete('/:id',

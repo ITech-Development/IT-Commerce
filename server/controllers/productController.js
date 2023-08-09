@@ -38,6 +38,7 @@ class ProductController {
     static async addProduct(req, res, next) {
         try {
             const errors = validationResult(req)
+            
             if (!errors.isEmpty()) {
                 const err = new Error('Input value tidak sesuai')
                 err.errorStatus = 400
