@@ -30,9 +30,10 @@ export default function Navigation() {
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "http://localhost:3100/profiles";
+      let url = "http://localhost:3100/users/me";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
+          console.log(data, 'dari profile');
           setProfile(data);
         })
         .catch((error) => {
@@ -106,10 +107,11 @@ export default function Navigation() {
                 src={ProfileIcon}
                 alt=""
               />
+              {profile.fullName}
               {isDropdownOpen && (
                 <ul className="dropdown-menu">
                   <li>
-                    <Link to="/profile-update">{profile.user?.fullName}</Link>
+                    <Link to="/profile-update">Profile</Link>
                     {/* <Link to={profileLink}>Profile</Link> */}
                   </li>
                   <li>

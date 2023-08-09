@@ -39,6 +39,7 @@ class ProductController {
     static async addProduct(req, res, next) {
         try {
             const errors = validationResult(req)
+            
             if (!errors.isEmpty()) {
                 const err = new Error('Input values ​​dont match')
                 err.errorStatus = 400

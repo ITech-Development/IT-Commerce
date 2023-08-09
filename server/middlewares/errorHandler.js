@@ -20,42 +20,6 @@ async function errorHandler(error, req, res, next) {
                 status = 404
                 message = 'Not found'
                 break;
-            case 'NotFoundErrorArticle':
-                status = 404
-                message = 'Article not found'
-                break;
-            case 'NotFoundErrorService':
-                status = 404
-                message = 'Service not found'
-                break;
-            case 'NotFoundErrorVoucher':
-                status = 404
-                message = 'Voucher not found'
-                break;
-            case 'NotFoundErrorAppointment':
-                status = 404
-                message = 'Appointment not found'
-                break;
-            case 'NotFoundUserId':
-                status = 404
-                message = 'UserId not found'
-                break;
-            case 'NotFoundErrorAd':
-                status = 404
-                message = 'Ad not found'
-                break;
-            case 'NotFoundType':
-                status = 404
-                message = 'Type not found'
-                break;
-            case 'NotFoundId':
-                status = 404
-                message = 'Id not found'
-                break;
-            case 'NotFoundTransaction':
-                status = 404
-                message = 'Transaction not found'
-                break;
             case 'UnauthorizedError':
                 status = 401
                 message = 'Unauthorized: email or password error'
