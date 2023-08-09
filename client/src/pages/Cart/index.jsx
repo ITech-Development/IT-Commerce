@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { getTotals } from "../../features/cartSlice";
 import styled from "styled-components";
+const API_URL = "http://localhost:3100"; // Define your API URL here
+
 
 const Cart = () => {
   const [carts, setCarts] = useState([]);
@@ -239,7 +241,7 @@ const Cart = () => {
                 < div class="cart-item" >
                   <div class="cart-product">
                     <Link to={`/products/${e.product.id}`}>
-                      <img src={e.product.image} alt={e.product.name} />
+                      <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
                     </Link>
                     <div>
                       <h3>{e.product.name}</h3>
@@ -335,7 +337,7 @@ const Cart = () => {
                 < div class="cart-item" >
                   <div class="cart-product">
                     <Link to={`/products/${e.product.id}`}>
-                      <img src={e.product.image} alt={e.product.name} />
+                      <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
                     </Link>
                     <div>
                       <h3>{e.product.name}</h3>
@@ -431,7 +433,7 @@ const Cart = () => {
                 < div class="cart-item" >
                   <div class="cart-product">
                     <Link to={`/products/${e.product.id}`}>
-                      <img src={e.product.image} alt={e.product.name} />
+                      <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
                     </Link>
                     <div>
                       <h3>{e.product.name}</h3>

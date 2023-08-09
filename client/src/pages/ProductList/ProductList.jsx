@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Corousel from "../../components/corousel/product";
 import "./productliststyle.css";
 import "../../App.css";
+const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const linkStyle = {
   color: "white",
@@ -20,7 +21,7 @@ const ProductCard = ({ product, onAddToCart }) => {
         className="view-product-button"
         style={linkStyle}
       >
-        <img src={product.image} alt={product.name} />
+        <img src={`${API_URL}/${product.image}`} alt={product.name} />
       </Link>
       <div className="details">
         <h3>{product.category}</h3>

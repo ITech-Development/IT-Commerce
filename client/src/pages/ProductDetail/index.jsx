@@ -151,7 +151,7 @@ const ProductDetailPage = () => {
   return (
     <ProductDetailContainer>
       <ProductDetailWrapper>
-        <ProductImage src={product.image} alt={product.name} />
+        <ProductImage src={`${API_URL}/${product.image}`} alt={product.name} />
 
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
