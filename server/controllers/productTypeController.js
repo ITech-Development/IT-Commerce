@@ -32,7 +32,7 @@ class ProductTypeController {
             if (productTypes) {
                 res.status(200).json(productTypes)
             } else {
-                throw { name: 'NotFoundType' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)
@@ -50,7 +50,7 @@ class ProductTypeController {
                 })
                 res.status(200).json({message: 'Type successfully deleted'})
             } else {
-                throw { name: 'NotFoundType'}
+                throw { name: 'NotFoundError'}
             }
         } catch (error) {
             next(error)

@@ -48,7 +48,7 @@ class CheckoutController {
             if (checkout) {
                 res.status(200).json(checkout)
             } else {
-                throw { name: 'NotFoundErrorProductShipping' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)
@@ -101,7 +101,7 @@ class CheckoutController {
                 )
                 res.status(200).json({ message: 'Checkout successfully deleted' })
             } else {
-                throw { name: 'NotFoundErrorCheckout' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)

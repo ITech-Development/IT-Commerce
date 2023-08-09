@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
@@ -130,6 +131,19 @@ const ProductDetailPage = () => {
     }
   };
 
+  const handleBuyNow = () => {
+    if (product.product_owners?.name === 'Indo Riau') {
+      handleAddToCart()
+      navigate('/check-TransIR')
+    } else if (product.product_owners?.name === 'Juvindo') {
+      handleAddToCart()
+      navigate('/check-TransJuvindo') 
+    } else if (product.product_owners?.name === 'Itech') {
+      handleAddToCart()
+      navigate('/check-TransITech')
+    }
+  }
+
   if (!product) {
     return <p>Loading product details...</p>;
   }
@@ -175,7 +189,7 @@ const ProductDetailPage = () => {
             </SpecificationItem>
           </Specifications>
           <div style={{ marginTop: "30px" }}>
-            <BuyNowButton>Buy Now</BuyNowButton>
+          <BuyNowButton onClick={handleBuyNow}>Buy Now</BuyNowButton>
             <AddToCartButton
               onClick={handleAddToCart}
               disabled={product.stock === 0}

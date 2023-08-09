@@ -42,7 +42,7 @@ class AdController {
             if (ad) {
                 res.status(200).json(ad)
             } else {
-                throw { name: 'NotFoundErrorAd' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)

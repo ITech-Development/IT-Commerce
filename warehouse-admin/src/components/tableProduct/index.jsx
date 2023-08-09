@@ -354,14 +354,14 @@ const TableComponent = () => {
                 <TableRow key={row.id}>
                   <TableCell>{row.id}</TableCell>
                   <TableCell>
-                    <Link to={`/product/${row.id}`}>{row.name}</Link>
-                  </TableCell>
+                    <Link to={`/product/${row.id}`}>
+                      {row.name}</Link></TableCell>
                   <TableCell>{row.categories?.name}</TableCell>
                   <TableCell>{row.types?.name}</TableCell>
                   <TableCell>
                     {row.image ? (
                       <img
-                        src={row.image}
+                        src={`${API_URL}/${row.image}`}
                         alt={row.image}
                         style={{ maxWidth: "100px", maxHeight: "100px" }}
                       />

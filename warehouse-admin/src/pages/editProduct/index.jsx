@@ -1,104 +1,107 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
+const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const EditProductPage = () => {
-    const { id } = useParams();
+  const { id } = useParams();
 
-    const [product, setProduct] = useState({
-        name: '',
-        categoryId: 0,
-        typeId: 0,
-        image: '',
-        condition: '',
-        description: '',
-        minimumOrder: 1,
-        unitPrice: 0,
-        status: '',
-        stock: 1,
-        weight: 1,
-        size: 1,
-        shippingInsurance: '',
-        deliveryService: '',
-        brand: '',
-        // Tambahkan atribut lainnya jika perlu
-    });
+  const [product, setProduct] = useState({
+    name: "",
+    categoryId: 0,
+    typeId: 0,
+    image: null, // Initialize image as null,
+    description: "",
+    minimumOrder: 1,
+    unitPrice: 1,
+    weight: 1,
+    height: 1,
+    width: 1,
+    stock: 1,
+    productOwnerId: 0,
+    // Tambahkan atribut lainnya jika perlu
+  });
 
-    const [categoryOptions, setCategoryOptions] = useState([]);
-    const [typeOptions, setTypeOptions] = useState([]);
-    const [productOwnerOptions, setProductOwnerOptions] = useState([]);
-    
-    useEffect(() => {
-        fetchCategories();
-        fetchTypes();
-        fetchProductData();
-        fetchProductOwners();
-    }, []);
+  const handleImageChange = (e) => {
+    const imageFile = e.target.files[0];
+    setProduct({ ...product, image: imageFile });
+  };
 
-    const fetchCategories = async () => {
-        try {
-            const response = await axios.get('http://localhost:3100/product-categories');
-            setCategoryOptions(response.data);
-        } catch (error) {
-            console.error('Terjadi kesalahan saat mengambil data kategori:', error);
-        }
-    };
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [typeOptions, setTypeOptions] = useState([]);
+  const [productOwnerOptions, setProductOwnerOptions] = useState([]);
 
-    const fetchTypes = async () => {
-        try {
-            const response = await axios.get('http://localhost:3100/product-types');
-            setTypeOptions(response.data);
-        } catch (error) {
-            console.error('Terjadi kesalahan saat mengambil data kategori:', error);
-        }
-    };
+  useEffect(() => {
+    fetchCategories();
+    fetchTypes();
+    fetchProductData();
+    fetchProductOwners();
+  }, []);
 
-    const fetchProductOwners = async () => {
-        try {
-            const response = await axios.get('http://localhost:3100/product-owners');
-            setProductOwnerOptions(response.data);
-        } catch (error) {
-            console.error('Terjadi kesalahan saat mengambil data kategori:', error);
-        }
-    };
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get('http://localhost:3100/product-categories');
+      setCategoryOptions(response.data);
+    } catch (error) {
+      console.error('Terjadi kesalahan saat mengambil data kategori:', error);
+    }
+  };
 
-    const fetchProductData = async () => {
-        try {
-            const response = await axios.get(`http://localhost:3100/products/${id}`);
-            setProduct(response.data);
-        } catch (error) {
-            console.error('Terjadi kesalahan saat mengambil data produk:', error);
-        }
-    };
+  const fetchTypes = async () => {
+    try {
+      const response = await axios.get('http://localhost:3100/product-types');
+      setTypeOptions(response.data);
+    } catch (error) {
+      console.error('Terjadi kesalahan saat mengambil data kategori:', error);
+    }
+  };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setProduct({ ...product, [name]: value });
-    };
+  const fetchProductOwners = async () => {
+    try {
+      const response = await axios.get('http://localhost:3100/product-owners');
+      setProductOwnerOptions(response.data);
+    } catch (error) {
+      console.error('Terjadi kesalahan saat mengambil data kategori:', error);
+    }
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.put(`http://localhost:3100/products/${id}`, product, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    access_token: localStorage.getItem('access_token'),
-                    // Tambahkan header lainnya sesuai kebutuhan
-                },
-            });
+  const fetchProductData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3100/products/${id}`);
+      setProduct(response.data);
+    } catch (error) {
+      console.error('Terjadi kesalahan saat mengambil data produk:', error);
+    }
+  };
 
-            if (response.status === 201) {
-                // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil edit produk.
-                // Contoh:
-                window.location.href = '/dashboardProducts';
-                console.log('Produk berhasil diupdate.');
-            } else {
-                console.error('Terjadi kesalahan saat mengupdate produk.');
-            }
-        } catch (error) {
-            console.error('Terjadi kesalahan:', error);
-        }
-    };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProduct({ ...product, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(`http://localhost:3100/products/${id}`, product, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Use multipart/form-data for file uploads
+          access_token: localStorage.getItem('access_token'),
+          // Tambahkan header lainnya sesuai kebutuhan
+        },
+      });
+
+      if (response.status === 200) {
+        // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil edit produk.
+        // Contoh:
+        window.location.href = '/dashboardProducts';
+        console.log('Produk berhasil diupdate.');
+      } else {
+        console.error('Terjadi kesalahan saat mengupdate produk.');
+      }
+    } catch (error) {
+      console.error('Terjadi kesalahan:', error);
+    }
+  };
 
   return (
     <div className="add-product-container">
@@ -156,13 +159,14 @@ const EditProductPage = () => {
           {/* Tambahkan input form lainnya sesuai atribut yang ada pada produk */}
           <label htmlFor="image">Gambar:</label>
           <input
-            type="text"
+            type="file"
             id="image"
             name="image"
-            value={product.image}
-            onChange={handleChange}
-            required
+            // value={product.image}
+            accept="image/*"
+            onChange={handleImageChange}
           />
+          {product.image && <img src={`${API_URL}/${product.image}`} alt="Product" width="200px" />}
           <br />
         </div>{" "}
         <div className="form-group">

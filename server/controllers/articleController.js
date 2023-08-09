@@ -35,7 +35,7 @@ class ArticleController {
             if (article) {
                 res.status(200).json(article)
             } else {
-                throw { name: 'NotFoundErrorArticle' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)
@@ -55,7 +55,7 @@ class ArticleController {
                 )
                 res.status(200).json({ message: 'Article successfully deleted' })
             } else {
-                throw { name: 'NotFoundErrorArticle' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)

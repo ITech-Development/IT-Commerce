@@ -18,7 +18,7 @@ async function errorHandler(error, req, res, next) {
                 break;
             case 'NotFoundError':
                 status = 404
-                message = 'Product not found'
+                message = 'Not found'
                 break;
             case 'NotFoundErrorArticle':
                 status = 404

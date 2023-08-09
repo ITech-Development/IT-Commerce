@@ -1,5 +1,6 @@
 const express = require('express')
 const ProductController = require('../controllers/productController')
+const bodyParser = require('body-parser'); // Tambahkan ini
 const { authorizationWarehouseAdmin, authenticationWarehouseAdmin } = require('../middlewares/auth')
 const router = express.Router()
 const multer = require('multer');
@@ -27,13 +28,17 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
+router.use(bodyParser.json());
+// router.use('/images', express.static(path.join(__dirname, 'images')));
+// router.use('/uploads', express.static('uploads'));
+router.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'),)
 
 router.get('/', ProductController.getAllProducts);
-router.use('/images', express.static(path.join(__dirname, 'images')))
 router.post('/',
     authenticationWarehouseAdmin,
     authorizationWarehouseAdmin, 
-    multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'),
+    // '/images', express.static(path.join(__dirname, '..', 'images')),
+    // multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'),
     ProductController.addProduct)
 router.get('/:id', ProductController.detailsProduct)
 router.delete('/:id',

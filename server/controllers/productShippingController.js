@@ -53,7 +53,7 @@ class ProductShippingController {
             if (productShipping) {
                 res.status(200).json(productShipping)
             } else {
-                throw { name: 'NotFoundErrorProductShipping' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)
@@ -110,7 +110,7 @@ class ProductShippingController {
                 )
                 res.status(200).json({ message: 'Product shipping successfully deleted' })
             } else {
-                throw { name: 'NotFoundErrorService' }
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)
