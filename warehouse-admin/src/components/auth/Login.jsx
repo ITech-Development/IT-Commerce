@@ -52,7 +52,7 @@ const Login = () => {
 
       // Redirect to the Home page
       dispatch({ type: "USER", payload: true });
-      navigate("/product");
+      navigate("/dashboardProducts");
     } catch (error) {
       console.error("Login error:", error);
       alert("Login failed. Please try again.");
