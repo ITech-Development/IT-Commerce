@@ -92,16 +92,46 @@ const Cart = () => {
   }, []);
 
 
-  const handleIncrement = (id) => {
-    updateCartItemQuantity(id, "increment");
+  const handlerInc = (id) => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      let url = "http://localhost:3100/product-carts/increment/" + id;
+      axios({ url, method: "patch", headers: { access_token: accessToken } })
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log("incrementttt");
+        });
+    }
   };
 
-  const handleDecrement = (id) => {
-    updateCartItemQuantity(id, "decrement");
+  const handlerDec = (id) => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      let url = "http://localhost:3100/product-carts/decrement/" + id;
+      axios({ url, method: "patch", headers: { access_token: accessToken } })
+        .then(({ data }) => {
+          console.log(data, "ASdasdas");
+        })
+        .catch((error) => {
+          console.log("asdasd");
+        });
+    }
   };
 
-  const handleRemove = (id) => {
-    updateCartItemQuantity(id, "remove");
+  const handlerRemove = (id) => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      let url = "http://localhost:3100/product-carts/remove/" + id;
+      axios({ url, method: "delete", headers: { access_token: accessToken } })
+        .then(({ data }) => {
+          console.log(data, "remooove");
+        })
+        .catch((error) => {
+          console.log("asdasd remove");
+        });
+    }
   };
 
   const handleClear = () => {
@@ -230,90 +260,90 @@ const Cart = () => {
         <>
           {cartsIndoRiau.length > 0 && (
             <div
-            className="cart-container"
-            style={{ position: "relative", top: "50px" }}
-          >
-            <h2>Indo Riau Store</h2>
-            <div>
-              <div className="titles">
-                <h3 className="product-title">Product</h3>
-                <h3 className="price">Price</h3>
-                <h3 className="quantity">Quantity</h3>
-                <h3 className="total">Total</h3>
-              </div>
-              <div class="cart-items">
-                {cartsIndoRiau?.map(e => (
-                  < div class="cart-item" >
-                    <div class="cart-product">
-                      <Link to={`/products/${e.product.id}`}>
-                        <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
-                      </Link>
-                      <div>
-                        <h3>{e.product.name}</h3>
-                        <p>{e.product.description}</p>
-                        <button onClick={() => handleRemove(e.id)}>
-                          Remove
+              className="cart-container"
+              style={{ position: "relative", top: "50px" }}
+            >
+              <h2>Indo Riau Store</h2>
+              <div>
+                <div className="titles">
+                  <h3 className="product-title">Product</h3>
+                  <h3 className="price">Price</h3>
+                  <h3 className="quantity">Quantity</h3>
+                  <h3 className="total">Total</h3>
+                </div>
+                <div class="cart-items">
+                  {cartsIndoRiau?.map(e => (
+                    < div class="cart-item" >
+                      <div class="cart-product">
+                        <Link to={`/products/${e.product.id}`}>
+                          <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
+                        </Link>
+                        <div>
+                          <h3>{e.product.name}</h3>
+                          <p>{e.product.description}</p>
+                          <button onClick={() => handlerRemove(e.id)}>
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                      <div className="cart-product-price">
+                        Rp.{e.product.unitPrice}
+                      </div>
+                      <div className="cart-product-quantity">
+                        <button onClick={() => handlerDec(e.id)}>
+                          -
+                        </button>
+                        <div className="count">{e.quantity}</div>
+                        <button onClick={() => handlerInc(e.id)}>
+                          +
                         </button>
                       </div>
+                      <div className="cart-product-total-price">
+                        Rp.{e.quantity * e.product.unitPrice}
+                      </div>
                     </div>
-                    <div className="cart-product-price">
-                      Rp.{e.product.unitPrice}
-                    </div>
-                    <div className="cart-product-quantity">
-                      <button onClick={() => handleDecrement(e.id)}>
-                        -
-                      </button>
-                      <div className="count">{e.quantity}</div>
-                      <button onClick={() => handleIncrement(e.id)}>
-                        +
-                      </button>
-                    </div>
-                    <div className="cart-product-total-price">
-                      Rp.{e.quantity * e.product.unitPrice}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="cart-summary">
-                <button className="clear-cart" onClick={handleClear}>
-                  Clear Cart
-                </button>
-                <div className="cart-checkout">
-                  <div className="subtotal">
-                    <span>Subtotal :</span>
-                    <span className="amount">Rp.{calculateSubtotalIndoRiau()}</span>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontStyle: "italic",
-                      padding: "8px 0",
-                    }}
-                  >
-                    <span>PPN 11% :</span>
-                    <span className="amount"> Rp. {calculatePPNIndoRiau()}</span>
-                  </div>
-                  <div className="subtotal" style={{ paddingBottom: "10px" }}>
-                    <span>Total :</span>
-                    <span style={{ fontWeight: "700" }} className="amount">
-                      {calculateTotalIndoRiau()}
-                    </span>
-                  </div>
-                  <button style={checkoutButtonStyle}>
-                    <Link to="/check-TransIR" style={linkStyle}>
-                      Check Out
-                    </Link>
+                  ))}
+                </div>
+                <div className="cart-summary">
+                  <button className="clear-cart" onClick={handleClear}>
+                    Clear Cart
                   </button>
-                  <ContinueShoppingContainer>
-                    <ContinueShoppingIcon>&lt;</ContinueShoppingIcon>
-                    <Link to="/productlist">Continue Shopping</Link>
-                  </ContinueShoppingContainer>
+                  <div className="cart-checkout">
+                    <div className="subtotal">
+                      <span>Subtotal :</span>
+                      <span className="amount">Rp.{calculateSubtotalIndoRiau()}</span>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        fontStyle: "italic",
+                        padding: "8px 0",
+                      }}
+                    >
+                      <span>PPN 11% :</span>
+                      <span className="amount"> Rp. {calculatePPNIndoRiau()}</span>
+                    </div>
+                    <div className="subtotal" style={{ paddingBottom: "10px" }}>
+                      <span>Total :</span>
+                      <span style={{ fontWeight: "700" }} className="amount">
+                        {calculateTotalIndoRiau()}
+                      </span>
+                    </div>
+                    <button style={checkoutButtonStyle}>
+                      <Link to="/check-TransIR" style={linkStyle}>
+                        Check Out
+                      </Link>
+                    </button>
+                    <ContinueShoppingContainer>
+                      <ContinueShoppingIcon>&lt;</ContinueShoppingIcon>
+                      <Link to="/productlist">Continue Shopping</Link>
+                    </ContinueShoppingContainer>
+                  </div>
                 </div>
               </div>
-            </div>
 
-          </div>
+            </div>
           )}
           {cartsJuvindo.length > 0 && (
             <div
@@ -338,7 +368,7 @@ const Cart = () => {
                         <div>
                           <h3>{e.product.name}</h3>
                           <p>{e.product.description}</p>
-                          <button onClick={() => handleRemove(e.id)}>
+                          <button onClick={() => handlerRemove(e.id)}>
                             Remove
                           </button>
                         </div>
@@ -347,11 +377,11 @@ const Cart = () => {
                         Rp.{e.product.unitPrice}
                       </div>
                       <div className="cart-product-quantity">
-                        <button onClick={() => handleDecrement(e.id)}>
+                        <button onClick={() => handlerDec(e.id)}>
                           -
                         </button>
                         <div className="count">{e.quantity}</div>
-                        <button onClick={() => handleIncrement(e.id)}>
+                        <button onClick={() => handlerInc(e.id)}>
                           +
                         </button>
                       </div>
@@ -437,7 +467,7 @@ const Cart = () => {
                         <div>
                           <h3>{e.product.name}</h3>
                           <p>{e.product.description}</p>
-                          <button onClick={() => handleRemove(e.id)}>
+                          <button onClick={() => handlerRemove(e.id)}>
                             Remove
                           </button>
                         </div>
@@ -446,11 +476,11 @@ const Cart = () => {
                         Rp.{e.product.unitPrice}
                       </div>
                       <div className="cart-product-quantity">
-                        <button onClick={() => handleDecrement(e.id)}>
+                        <button onClick={() => handlerDec(e.id)}>
                           -
                         </button>
                         <div className="count">{e.quantity}</div>
-                        <button onClick={() => handleIncrement(e.id)}>
+                        <button onClick={() => handlerInc(e.id)}>
                           +
                         </button>
                       </div>

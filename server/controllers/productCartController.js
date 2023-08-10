@@ -224,6 +224,7 @@ class ProductCartController {
   }
 
   static async addProductCart(req, res, next) {
+    
     const t = await sequelize.transaction();
     const { id } = req.body;
     try {
@@ -260,8 +261,8 @@ class ProductCartController {
         );
       }
 
-      let findedProduct = await Product.findOne({ where: { id } });
-      await findedProduct.decrement("stock", { by: 1, transaction: t });
+      // let findedProduct = await Product.findOne({ where: { id } });
+      // await findedProduct.decrement("stock", { by: 1, transaction: t });
 
       await t.commit();
       res.status(201).json({ msg: "berhasil" });

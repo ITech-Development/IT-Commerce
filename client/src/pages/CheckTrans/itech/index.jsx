@@ -23,13 +23,12 @@ function Index() {
   const [totalShippingCost, setTotalShippingCost] = useState(0);
   const [selectedVoucher, setSelectedVoucher] = useState(null);
   const [vouchers, setVouchers] = useState([]);
-  console.log(vouchers, "tandain");
   const [profile, setProfile] = useState([]);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "http://localhost:3100/profiles";
+      let url = "http://localhost:3100/users/me";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
           setProfile(data);
@@ -362,16 +361,18 @@ function Index() {
         <h2>Alamat Pengiriman</h2>
         <div className="address-info">
           <h4>Full Name:</h4>
-          <p>{profile.user?.fullName}</p>
+          <p>{profile.fullName}</p>
         </div>
         <div className="address-info">
           <h4>Phone Number:</h4>
-          <p>{profile.user?.phoneNumber}</p>
+          <p>{profile.phoneNumber}</p>
         </div>
         <div className="address-info">
           <h4>Address:</h4>
-          <p>{profile.user?.address}</p>
+          <p>{profile.address}</p>
+          <Link to="/profile-update">
           <button className="edit-button">Edit</button>
+          </Link>
         </div>
       </div>
 
@@ -405,7 +406,7 @@ function Index() {
                   <div class="cart-item">
                     <div class="cart-product">
                       <Link to={`/products/${e.product.id}`}>
-                      <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
+                        <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
                       </Link>
                       <div>
                         <h3>{e.product.name}</h3>
@@ -526,7 +527,7 @@ function Index() {
               {/* <option value="ide">Ide Express</option> */}
               {/* <option value="anteraja">Anteraja</option>
               <option value="sicepat">Sicepat</option> */}
-              </select>
+            </select>
             <select
               value={courier}
               onChange={handlerSetCourier}
@@ -612,23 +613,23 @@ function Index() {
             </select>
             {pengiriman
               ? pengiriman.map((el, index) => (
-                  <div key={index}>
-                    <input
-                      type="radio"
-                      id={`shippingChoice${index}`}
-                      name="shipping"
-                      value={el.cost[0].value}
-                      checked={selectedShippingCost === el.cost[0].value}
-                      onChange={handleShippingCostChange}
-                    />
-                    <label htmlFor={`shippingChoice${index}`}>
-                      Shipping Cost: Rp.{el.cost[0].value}
-                    </label>
-                    <p>Service: {el.service}</p>
-                    <p>Description: {el.description}</p>
-                    <p>Est: {el.cost[0].etd} Days</p>
-                  </div>
-                ))
+                <div key={index}>
+                  <input
+                    type="radio"
+                    id={`shippingChoice${index}`}
+                    name="shipping"
+                    value={el.cost[0].value}
+                    checked={selectedShippingCost === el.cost[0].value}
+                    onChange={handleShippingCostChange}
+                  />
+                  <label htmlFor={`shippingChoice${index}`}>
+                    Shipping Cost: Rp.{el.cost[0].value}
+                  </label>
+                  <p>Service: {el.service}</p>
+                  <p>Description: {el.description}</p>
+                  <p>Est: {el.cost[0].etd} Days</p>
+                </div>
+              ))
               : null}
           </div>
         </div>

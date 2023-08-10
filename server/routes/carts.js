@@ -5,6 +5,7 @@ const router = express.Router()
 
 router.use(authenticationUser)
 router.get('/', CartController.getAllCarts)
+router.get('/userId', CartController.getCartByUserId)
 router.get('/:id', CartController.addCart)
 
 module.exports = router
