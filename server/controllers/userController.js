@@ -57,9 +57,6 @@ class UserController {
       next(error);
     }
   }
-  
-  
-
 
   static async detailsUser(req, res, next) {
     try {

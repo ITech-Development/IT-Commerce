@@ -12,7 +12,6 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FaShoppingCart } from "react-icons/fa"; // Menggunakan react-icons/fa5 untuk ikon dari Font Awesome 5
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
-
 const Cart = () => {
   const [carts, setCarts] = useState([]);
   const [cartsJuvindo, setCartsJuvindo] = useState([]);
@@ -108,6 +107,9 @@ const Cart = () => {
   const handleRemove = (id) => {
     updateCartItemQuantity(id, "remove");
   };
+  const handleClear = () => {
+    updateCartItemQuantity(null, "clear");
+  };
 
   const updateCartItemQuantity = async (id, action) => {
     const accessToken = localStorage.getItem("access_token");
@@ -190,19 +192,13 @@ const Cart = () => {
 
   return (
     <>
-      <div
-        className="cart-container"
-        style={{ position: "relative", top: "50px" }}
-      >
-        <StoreHeader>
-          <StoreImage
-            style={{ maxWidth: "16%" }}
-            src={Itech}
-            alt="Store Logo"
-          />
-          {/* <StoreTitle>ITech</StoreTitle> */}
-        </StoreHeader>
-        {cartsItech.length === 0 ? (
+      {cartsJuvindo.length === 0 &&
+      cartsItech.length === 0 &&
+      cartsIndoRiau.length === 0 ? (
+        <div
+          className="cart-container"
+          style={{ position: "relative", top: "50px" }}
+        >
           <div className="cart-empty">
             <p>Your cart is empty</p>
             <div className="start-shopping">
@@ -211,282 +207,312 @@ const Cart = () => {
               </Link>
             </div>
           </div>
-        ) : (
-          <div>
-            <div className="titles">
-              <h3 className="product-title">Product</h3>
-              <h3 className="price">Price</h3>
-              <h3 className="quantity">Quantity</h3>
-              <h3 className="total">Total</h3>
-            </div>
-            <div class="cart-items">
-              {cartsItech?.map((e) => (
-                <div class="cart-item">
-                  <div class="cart-product">
-                    <Link to={`/products/${e.product.id}`}>
-                      <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
-                    </Link>
-                    <div>
-                      <h3>{e.product.name}</h3>
-                      <p>{e.product.description}</p>
-                      <button onClick={() => handleRemove(e.id)}>
-                        <FontAwesomeIcon icon={faTrash} /> Hapus
-                      </button>
+        </div>
+      ) : (
+        // ... Kode yang ada jika ada item dalam keranjang belanja
+        <>
+          {cartsIndoRiau.length > 0 && (
+            <div
+              className="cart-container"
+              style={{ position: "relative", top: "50px" }}
+            >
+              <StoreHeader>
+                <StoreImage
+                  style={{ maxWidth: "16%" }}
+                  src={IndoRiau}
+                  alt="Store Logo"
+                />
+                {/* <StoreTitle>ITech</StoreTitle> */}
+              </StoreHeader>
+              <div>
+                <div className="titles">
+                  <h3 className="product-title">Product</h3>
+                  <h3 className="price">Price</h3>
+                  <h3 className="quantity">Quantity</h3>
+                  <h3 className="total">Total</h3>
+                </div>
+                <div class="cart-items">
+                  {cartsIndoRiau?.map((e) => (
+                    <div class="cart-item">
+                      <div class="cart-product">
+                        <Link to={`/products/${e.product.id}`}>
+                          <img
+                            src={`${API_URL}/${e.product.image}`}
+                            alt={e.product.name}
+                          />
+                        </Link>
+                        <div>
+                          <h3>{e.product.name}</h3>
+                          <p>{e.product.description}</p>
+                          <button onClick={() => handleRemove(e.id)}>
+                            <FontAwesomeIcon icon={faTrash} /> Hapus
+                          </button>
+                        </div>
+                      </div>
+                      <div className="cart-product-price">
+                        Rp.{e.product.unitPrice}
+                      </div>
+                      <div className="cart-product-quantity">
+                        <button onClick={() => handleDecrement(e.id)}>-</button>
+                        <div className="count">{e.quantity}</div>
+                        <button onClick={() => handleIncrement(e.id)}>+</button>
+                      </div>
+                      <div className="cart-product-total-price">
+                        Rp.{e.quantity * e.product.unitPrice}
+                      </div>
                     </div>
-                  </div>
-                  <div className="cart-product-price">
-                    Rp.{e.product.unitPrice}
-                  </div>
-                  <div className="cart-product-quantity">
-                    <button onClick={() => handleDecrement(e.id)}>-</button>
-                    <div className="count">{e.quantity}</div>
-                    <button onClick={() => handleIncrement(e.id)}>+</button>
-                  </div>
-                  <div className="cart-product-total-price">
-                    Rp.{e.quantity * e.product.unitPrice}
+                  ))}
+                </div>
+                <div className="cart-summary">
+                  <button className="clear-cart" onClick={handleClear}>
+                    Clear Cart
+                  </button>
+                  <div className="cart-checkout">
+                    <div className="subtotal">
+                      <span>Subtotal :</span>
+                      <span className="amount">
+                        Rp.{calculateSubtotalIndoRiau()}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        fontStyle: "italic",
+                        padding: "8px 0",
+                      }}
+                    >
+                      <span>PPN 11% :</span>
+                      <span className="amount">
+                        {" "}
+                        Rp. {calculatePPNIndoRiau()}
+                      </span>
+                    </div>
+                    <div className="subtotal" style={{ paddingBottom: "10px" }}>
+                      <span>Total :</span>
+                      <span style={{ fontWeight: "700" }} className="amount">
+                        {calculateTotalIndoRiau()}
+                      </span>
+                    </div>
+                    <button style={checkoutButtonStyle}>
+                      <Link to="/check-TransIR" style={linkStyle}>
+                        Check Out
+                      </Link>
+                    </button>
+                    <ContinueShoppingContainer>
+                      <ContinueShoppingIcon>&lt;</ContinueShoppingIcon>
+                      <Link to="/productlist">Continue Shopping</Link>
+                    </ContinueShoppingContainer>
                   </div>
                 </div>
-              ))}
-            </div>
-            <div className="cart-summary">
-              <p></p>
-              <div className="cart-checkout">
-                <div className="subtotal">
-                  <span>Subtotal :</span>
-                  <span className="amount">Rp.{calculateSubtotalItech()}</span>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontStyle: "italic",
-                    padding: "8px 0",
-                  }}
-                >
-                  <span>PPN 11% :</span>
-                  <span className="amount"> Rp. {calculatePPNItech()}</span>
-                </div>
-                <div className="subtotal" style={{ paddingBottom: "10px" }}>
-                  <span>Total :</span>
-                  <span style={{ fontWeight: "700" }} className="amount">
-                    {calculateTotalItech()}
-                  </span>
-                </div>
-                <button style={checkoutButtonStyle}>
-                  <Link to="/check-TransITech" style={linkStyle}>
-                    Check Out
-                  </Link>
-                </button>
-                <ContinueShoppingContainer>
-                  <ContinueShoppingIcon>&lt;</ContinueShoppingIcon>
-                  <Link to="/productlist">Continue Shopping</Link>
-                </ContinueShoppingContainer>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-      <div
-        className="cart-container"
-        style={{ position: "relative", top: "50px" }}
-      >
-        <StoreHeader>
-          <StoreImage src={IndoRiau} alt="Store Logo" />
-          {/* <StoreTitle>ITech</StoreTitle> */}
-        </StoreHeader>
-        {cartsIndoRiau.length === 0 ? (
-          <div className="cart-empty">
-            <p>Your cart is empty</p>
-            <div className="start-shopping">
-              <Link to="/productlist">
-                <span>&lt;</span>
-                <span>Start Shopping</span>
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <div>
-            <div className="titles">
-              <h3 className="product-title">Product</h3>
-              <h3 className="price">Price</h3>
-              <h3 className="quantity">Quantity</h3>
-              <h3 className="total">Total</h3>
-            </div>
-            <div class="cart-items">
-              {cartsIndoRiau?.map((e) => (
-                <div class="cart-item">
-                  <div class="cart-product">
-                    <Link to={`/products/${e.product.id}`}>
-                      <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
-                    </Link>
-                    <div>
-                      <h3>{e.product.name}</h3>
-                      <p>{e.product.description}</p>
-                      <button onClick={() => handleRemove(e.id)}>
-                        <FontAwesomeIcon icon={faTrash} /> Hapus
-                      </button>
+          )}
+          {cartsJuvindo.length > 0 && (
+            <div
+              className="cart-container"
+              style={{ position: "relative", top: "50px" }}
+            >
+              <StoreHeader>
+                <StoreImage
+                  style={{ maxWidth: "16%" }}
+                  src={Juvindo}
+                  alt="Store Logo"
+                />
+                {/* <StoreTitle>ITech</StoreTitle> */}
+              </StoreHeader>
+              <div>
+                <div className="titles">
+                  <h3 className="product-title">Product</h3>
+                  <h3 className="price">Price</h3>
+                  <h3 className="quantity">Quantity</h3>
+                  <h3 className="total">Total</h3>
+                </div>
+                <div class="cart-items">
+                  {cartsJuvindo?.map((e) => (
+                    <div class="cart-item">
+                      <div class="cart-product">
+                        <Link to={`/products/${e.product.id}`}>
+                          <img
+                            src={`${API_URL}/${e.product.image}`}
+                            alt={e.product.name}
+                          />
+                        </Link>
+                        <div>
+                          <h3>{e.product.name}</h3>
+                          <p>{e.product.description}</p>
+                          <button onClick={() => handleRemove(e.id)}>
+                            <FontAwesomeIcon icon={faTrash} /> Hapus
+                          </button>
+                        </div>
+                      </div>
+                      <div className="cart-product-price">
+                        Rp.{e.product.unitPrice}
+                      </div>
+                      <div className="cart-product-quantity">
+                        <button onClick={() => handleDecrement(e.id)}>-</button>
+                        <div className="count">{e.quantity}</div>
+                        <button onClick={() => handleIncrement(e.id)}>+</button>
+                      </div>
+                      <div className="cart-product-total-price">
+                        Rp.{e.quantity * e.product.unitPrice}
+                      </div>
                     </div>
-                  </div>
-                  <div className="cart-product-price">
-                    Rp.{e.product.unitPrice}
-                  </div>
-                  <div className="cart-product-quantity">
-                    <button onClick={() => handleDecrement(e.id)}>-</button>
-                    <div className="count">{e.quantity}</div>
-                    <button onClick={() => handleIncrement(e.id)}>+</button>
-                  </div>
-                  <div className="cart-product-total-price">
-                    Rp.{e.quantity * e.product.unitPrice}
+                  ))}
+                </div>
+                <div className="cart-summary">
+                  <button className="clear-cart" onClick={handleClear}>
+                    Clear Cart
+                  </button>
+                  <div className="cart-checkout">
+                    <div className="subtotal">
+                      <span>Subtotal :</span>
+                      <span className="amount">
+                        Rp.{calculateSubtotalJuvindo()}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        fontStyle: "italic",
+                        padding: "8px 0",
+                      }}
+                    >
+                      <span>PPN 11% :</span>
+                      <span className="amount">
+                        {" "}
+                        Rp. {calculatePPNJuvindo()}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        fontStyle: "italic",
+                        padding: "8px 0",
+                      }}
+                    >
+                      {/* <span>Weight :</span>
+                            <span className="amount">{calculateTotalWeight()} grams</span> */}
+                    </div>
+                    <div className="subtotal" style={{ paddingBottom: "10px" }}>
+                      <span>Total :</span>
+                      <span style={{ fontWeight: "700" }} className="amount">
+                        {calculateTotalJuvindo()}
+                      </span>
+                    </div>
+                    <button style={checkoutButtonStyle}>
+                      <Link to="/check-TransJuvindo" style={linkStyle}>
+                        Check Out
+                      </Link>
+                    </button>
+                    <ContinueShoppingContainer>
+                      <ContinueShoppingIcon>&lt;</ContinueShoppingIcon>
+                      <Link to="/productlist">Continue Shopping</Link>
+                    </ContinueShoppingContainer>
                   </div>
                 </div>
-              ))}
-            </div>
-            <div className="cart-summary">
-              <p></p>
-              <div className="cart-checkout">
-                <div className="subtotal">
-                  <span>Subtotal :</span>
-                  <span className="amount">
-                    Rp.{calculateSubtotalIndoRiau()}
-                  </span>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontStyle: "italic",
-                    padding: "8px 0",
-                  }}
-                >
-                  <span>PPN 11% :</span>
-                  <span className="amount"> Rp. {calculatePPNIndoRiau()}</span>
-                </div>
-                <div className="subtotal" style={{ paddingBottom: "10px" }}>
-                  <span>Total :</span>
-                  <span style={{ fontWeight: "700" }} className="amount">
-                    {calculateTotalIndoRiau()}
-                  </span>
-                </div>
-                <button style={checkoutButtonStyle}>
-                  <Link to="/check-TransIR" style={linkStyle}>
-                    Check Out
-                  </Link>
-                </button>
-                <ContinueShoppingContainer>
-                  <ContinueShoppingIcon>&lt;</ContinueShoppingIcon>
-                  <Link to="/productlist">Continue Shopping</Link>
-                </ContinueShoppingContainer>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-      <div
-        className="cart-container"
-        style={{ position: "relative", top: "50px" }}
-      >
-        <StoreHeader>
-          <StoreImage src={Juvindo} alt="Store Logo" />
-          {/* <StoreTitle>ITech</StoreTitle> */}
-        </StoreHeader>
-        {cartsJuvindo.length === 0 ? (
-          <div className="cart-empty">
-            <p>Your cart is empty</p>
-            <div className="start-shopping">
-              <Link to="/productlist">
-                <span>&lt;</span>
-                <span>Start Shopping</span>
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <div>
-            <div className="titles">
-              <h3 className="product-title">Product</h3>
-              <h3 className="price">Price</h3>
-              <h3 className="quantity">Quantity</h3>
-              <h3 className="total">Total</h3>
-            </div>
-            <div class="cart-items">
-              {cartsJuvindo?.map((e) => (
-                <div class="cart-item">
-                  <div class="cart-product">
-                    <Link to={`/products/${e.product.id}`}>
-                      <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
-                    </Link>
-                    <div>
-                      <h3>{e.product.name}</h3>
-                      <p>{e.product.description}</p>
-                      <button onClick={() => handleRemove(e.id)}>
-                        <FontAwesomeIcon icon={faTrash} /> Hapus
-                      </button>
+          )}
+          {cartsItech.length > 0 && (
+            <div
+              className="cart-container"
+              style={{ position: "relative", top: "50px" }}
+            >
+              <StoreHeader>
+                <StoreImage
+                  style={{ maxWidth: "16%" }}
+                  src={Itech}
+                  alt="Store Logo"
+                />
+                {/* <StoreTitle>ITech</StoreTitle> */}
+              </StoreHeader>
+
+              <div>
+                <div className="titles">
+                  <h3 className="product-title">Product</h3>
+                  <h3 className="price">Price</h3>
+                  <h3 className="quantity">Quantity</h3>
+                  <h3 className="total">Total</h3>
+                </div>
+                <div class="cart-items">
+                  {cartsItech?.map((e) => (
+                    <div class="cart-item">
+                      <div class="cart-product">
+                        <Link to={`/products/${e.product.id}`}>
+                          <img
+                            src={`${API_URL}/${e.product.image}`}
+                            alt={e.product.name}
+                          />
+                        </Link>
+                        <div>
+                          <h3>{e.product.name}</h3>
+                          <p>{e.product.description}</p>
+                          <button onClick={() => handleRemove(e.id)}>
+                            <FontAwesomeIcon icon={faTrash} /> Hapus
+                          </button>
+                        </div>
+                      </div>
+                      <div className="cart-product-price">
+                        Rp.{e.product.unitPrice}
+                      </div>
+                      <div className="cart-product-quantity">
+                        <button onClick={() => handleDecrement(e.id)}>-</button>
+                        <div className="count">{e.quantity}</div>
+                        <button onClick={() => handleIncrement(e.id)}>+</button>
+                      </div>
+                      <div className="cart-product-total-price">
+                        Rp.{e.quantity * e.product.unitPrice}
+                      </div>
                     </div>
+                  ))}
+                </div>
+                <div className="cart-summary">
+                  <button className="clear-cart" onClick={handleClear}>
+                    Clear Cart
+                  </button>
+                  <div className="cart-checkout">
+                    <div className="subtotal">
+                      <span>Subtotal :</span>
+                      <span className="amount">
+                        Rp.{calculateSubtotalItech()}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        fontStyle: "italic",
+                        padding: "8px 0",
+                      }}
+                    >
+                      <span>PPN 11% :</span>
+                      <span className="amount"> Rp. {calculatePPNItech()}</span>
+                    </div>
+                    <div className="subtotal" style={{ paddingBottom: "10px" }}>
+                      <span>Total :</span>
+                      <span style={{ fontWeight: "700" }} className="amount">
+                        {calculateTotalItech()}
+                      </span>
+                    </div>
+                    <button style={checkoutButtonStyle}>
+                      <Link to="/check-TransITech" style={linkStyle}>
+                        Check Out
+                      </Link>
+                    </button>
+                    <ContinueShoppingButton>
+                      <ContinueShoppingIcon as={FaShoppingCart} />
+                      <Link to="/productlist">Continue Shopping</Link>
+                    </ContinueShoppingButton>
                   </div>
-                  <div className="cart-product-price">
-                    Rp.{e.product.unitPrice}
-                  </div>
-                  <div className="cart-product-quantity">
-                    <button onClick={() => handleDecrement(e.id)}>-</button>
-                    <div className="count">{e.quantity}</div>
-                    <button onClick={() => handleIncrement(e.id)}>+</button>
-                  </div>
-                  <div className="cart-product-total-price">
-                    Rp.{e.quantity * e.product.unitPrice}
-                  </div>
                 </div>
-              ))}
-            </div>
-            <div className="cart-summary">
-              <p></p>
-              <div className="cart-checkout">
-                <div className="subtotal">
-                  <span>Subtotal :</span>
-                  <span className="amount">
-                    Rp.{calculateSubtotalJuvindo()}
-                  </span>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontStyle: "italic",
-                    padding: "8px 0",
-                  }}
-                >
-                  <span>PPN 11% :</span>
-                  <span className="amount"> Rp. {calculatePPNJuvindo()}</span>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontStyle: "italic",
-                    padding: "8px 0",
-                  }}
-                >
-                  {/* <span>Weight :</span>
-                  <span className="amount">{calculateTotalWeight()} grams</span> */}
-                </div>
-                <div className="subtotal" style={{ paddingBottom: "10px" }}>
-                  <span>Total :</span>
-                  <span style={{ fontWeight: "700" }} className="amount">
-                    {calculateTotalJuvindo()}
-                  </span>
-                </div>
-                <button style={checkoutButtonStyle}>
-                  <Link to="/check-TransJuvindo" style={linkStyle}>
-                    Check Out
-                  </Link>
-                </button>
-                <ContinueShoppingButton>
-                  <ContinueShoppingIcon as={FaShoppingCart} />
-                  <Link to="/productlist">Continue Shopping</Link>
-                </ContinueShoppingButton>
               </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </>
+      )}
     </>
   );
 };

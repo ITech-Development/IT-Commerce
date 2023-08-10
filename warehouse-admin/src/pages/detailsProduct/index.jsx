@@ -27,7 +27,7 @@ const ProductDetailPage = () => {
   return (
     <ProductDetailContainer>
       <ProductDetailWrapper>
-        <ProductImage src={product.image} alt={product.name} />
+        <ProductImage src={`${API_URL}/${product.image}`} alt={product.name} />
 
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
@@ -71,7 +71,7 @@ const ProductDetailPage = () => {
             </SpecificationItem>
           </Specifications>
           <div style={{ marginTop: "30px" }}>
-            <Link to="/product">
+            <Link to="/dashboardProducts">
             <button>Back</button>
             </Link>
           </div>

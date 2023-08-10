@@ -1,68 +1,42 @@
-const { User, Profile, Checkout, CheckoutProduct, Product } = require("../models/index");
+const {
+  User,
+  Profile,
+  Checkout,
+  CheckoutProduct,
+  Product,
+} = require("../models/index");
 const midtransClient = require("midtrans-client");
 const midtransKey = process.env.MIDTRANS_SERVER_KEY;
 let { sequelize } = require("../models/");
 
 class MidtransController {
-
-  // static async midtransTokenIndoRiau(req, res, next) {
-  //   try {
-  //     const findUser = await User.findByPk(req.user.id)
-  //     let snap = new midtransClient.Snap({
-  //       // Set to true if you want Production Environment (accept real transaction).
-  //       isProduction: false,
-  //       serverKey: midtransKey
-  //     });
-  //     let parameter = {
-  //       transaction_details: {
-  //         order_id: "TRANS_INDO_RIAU_" + Math.floor(1000000 + Math.random() * 9000000), //harus unique, //harus unique
-  //         gross_amount: 10000 //kalkulasikan total harga
-  //       },
-  //       credit_card: {
-  //         secure: true
-  //       },
-  //       customer_details: {
-  //         // first_name: "budi",
-  //         // last_name: "pratama",
-  //         email: findUser.email,
-  //         // phone: "08111222333"
-  //       }
-  //     };
-  //     const midtransToken = await snap.createTransaction(parameter)
-  //     res.status(201).json(midtransToken)
-  //   } catch (error) {
-  //     next(error)
-  //   }
-  // }
-  static async midtransTokenIndoRiau(req, res, next) {
+  static async midtransTokenIndoRiau(req, res) {
     const t = await sequelize.transaction();
-    // console.log(req.user.id);
+
     try {
-      let temp = []
       const user = await User.findByPk(req.user.id);
-      let snap = new midtransClient.Snap({
-        // Set to true if you want Production Environment (accept real transaction).
-        isProduction: false,
+      const snap = new midtransClient.Snap({
+        isProduction: true,
         serverKey: midtransKey,
       });
 
-      let parameter = {
+      const temp = [];
+      const carts = req.body.carts;
+
+      const parameter = {
         transaction_details: {
           order_id:
-            "INDORIAU-ORDERID-" +
-            Math.floor(1000000 + Math.random() * 9000000), //harus unique
-          gross_amount: +req.query.total, //kalkulasikan total harga di sini
+            "INDORIAU-ORDERID-" + Math.floor(1000000 + Math.random() * 9000000),
+          gross_amount: +req.query.total,
         },
         credit_card: {
           secure: true,
         },
         customer_details: {
-          fullName: user.fullName,
+          full_name: user.fullName, // Ubah properti 'fullName' ke 'full_name'
           email: user.email,
-          password: user.password,
-          phoneNumber: user.phoneNumber,
+          phone: user.phoneNumber, // Gunakan properti 'phone' untuk nomor telepon
           address: user.address,
-          imageProfile: user.imageProfile,
         },
       };
 
@@ -70,107 +44,76 @@ class MidtransController {
       const createCheckout = await Checkout.create({
         userId: req.user.id,
         midtransCode: midtransToken.token,
-        transaction: t
-      })
-      req.body.carts.forEach(async (el) => {
-        temp.push({
-          // id: await helpers.getId(),
-          checkoutId: createCheckout.id,
-          productId: el.id,
-          quantity: el.quantity,
-          createdAt: new Date(),
-          updateAt: new Date(),
-        })
-        let dec = await Product.findOne({ where: { id: el.id } });
-        console.log(dec.stock, 'dec quantityyyyyyy');
-        console.log(el.quantity, 'el quantityyyyyyy');
-        if (dec && dec.stock > el.quantity) {
-          await dec.decrement("stock", { by: el.quantity, transaction: t });
+        transaction: t,
+      });
+
+      for (const el of carts) {
+        const product = await Product.findOne({ where: { id: el.id } });
+        if (product && product.stock >= el.quantity) {
+          await CheckoutProduct.create({
+            checkoutId: createCheckout.id,
+            productId: el.id,
+            quantity: el.quantity,
+            transaction: t,
+          });
+
+          temp.push({
+            checkoutId: createCheckout.id,
+            productId: el.id,
+            quantity: el.quantity,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          });
+
+          await product.decrement("stock", { by: el.quantity, transaction: t });
         } else {
-          console.log('erorrrrrrrrrrrrrr');
-          throw ({ message: 'Data yang anda minta tidak atau terlalu banyak dari stok produk' })
+          await t.rollback();
+          return res
+            .status(400)
+            .json({
+              message:
+                "Data yang anda minta tidak atau terlalu banyak dari stok produk",
+            });
         }
-      })
-      await CheckoutProduct.create({
-        checkoutId: createCheckout.id,
-        productId: 10,
-        quantity: 1,
-        transaction: t
-      })
-      // console.log(temp, 'cartsmidtransssssssssssss');
-      let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t })
-      console.log(bulkCreate, 'bulkkkkkkkkkkkkkkkkkkkkkk');
-      await t.commit()
-      res.status(201).json({ token: midtransToken.token })
+      }
+
+      await CheckoutProduct.bulkCreate(temp, { transaction: t });
+      await t.commit();
+      res.status(201).json({ token: midtransToken.token });
     } catch (error) {
-      console.log(error, 'testerror');
-      await t.rollback()
-      res.status(500).json(error)
+      await t.rollback();
+      console.log(error);
+      res.status(500).json(error);
     }
-    // try {
-    //   const user = await User.findByPk(req.user.id);
-    //   let snap = new midtransClient.Snap({
-    //     // Set to true if you want Production Environment (accept real transaction).
-    //     isProduction: false,
-    //     serverKey: "SB-Mid-server-ZQU4wWb0ZkWhko2QA8_bZZGZ",
-    //   });
-
-    //   let parameter = {
-    //     transaction_details: {
-    //       order_id:
-    //         "INDOTEKNIK-ORDERID-" +
-    //         Math.floor(1000000 + Math.random() * 9000000), //harus unique
-    //       gross_amount: +req.query.total, //kalkulasikan total harga di sini
-    //     },
-    //     credit_card: {
-    //       secure: true,
-    //     },
-    //     customer_details: {
-    //       fullName: user.fullName,
-    //       email: user.email,
-    //       password: user.password,
-    //       phoneNumber: user.phoneNumber,
-    //       address: user.address,
-    //       imageProfile: user.imageProfile,
-    //     },
-    //   };
-
-    //   const midtransToken = await snap.createTransaction(parameter);
-    //   res.status(201).json(midtransToken);
-    // } catch (error) {
-    //   console.log(error);
-    // }
   }
-
-  static async midtransTokenJuvindo(req, res, next) {
+  
+  static async midtransTokenJuvindo(req, res) {
     const t = await sequelize.transaction();
-    // console.log(req.user.id);
+
     try {
-      let temp = []
       const user = await User.findByPk(req.user.id);
-      let snap = new midtransClient.Snap({
-        // Set to true if you want Production Environment (accept real transaction).
-        isProduction: false,
+      const snap = new midtransClient.Snap({
+        isProduction: true,
         serverKey: midtransKey,
       });
 
-      let parameter = {
+      const temp = [];
+      const carts = req.body.carts;
+
+      const parameter = {
         transaction_details: {
           order_id:
-            "JUVINDO-ORDERID-" +
-            Math.floor(1000000 + Math.random() * 9000000), //harus unique
-          gross_amount: +req.query.total, //kalkulasikan total harga di sini
+          "JUVINDO-ORDERID-" + Math.floor(1000000 + Math.random() * 9000000),
+          gross_amount: +req.query.total,
         },
         credit_card: {
           secure: true,
         },
         customer_details: {
-          fullName: user.fullName,
+          full_name: user.fullName, // Ubah properti 'fullName' ke 'full_name'
           email: user.email,
-          password: user.password,
-          phoneNumber: user.phoneNumber,
+          phone: user.phoneNumber, // Gunakan properti 'phone' untuk nomor telepon
           address: user.address,
-          imageProfile: user.imageProfile,
         },
       };
 
@@ -178,76 +121,47 @@ class MidtransController {
       const createCheckout = await Checkout.create({
         userId: req.user.id,
         midtransCode: midtransToken.token,
-        transaction: t
-      })
-      req.body.carts.forEach(async (el) => {
-        temp.push({
-          // id: await helpers.getId(),
-          checkoutId: createCheckout.id,
-          productId: el.id,
-          quantity: el.quantity,
-          createdAt: new Date(),
-          updateAt: new Date(),
-        })
-        let dec = await Product.findOne({ where: { id: el.id } });
-        console.log(dec.stock, 'dec quantityyyyyyy');
-        console.log(el.quantity, 'el quantityyyyyyy');
-        if (dec && dec.stock > el.quantity) {
-          await dec.decrement("stock", { by: el.quantity, transaction: t });
+        transaction: t,
+      });
+
+      for (const el of carts) {
+        const product = await Product.findOne({ where: { id: el.id } });
+        if (product && product.stock >= el.quantity) {
+          await CheckoutProduct.create({
+            checkoutId: createCheckout.id,
+            productId: el.id,
+            quantity: el.quantity,
+            transaction: t,
+          });
+
+          temp.push({
+            checkoutId: createCheckout.id,
+            productId: el.id,
+            quantity: el.quantity,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          });
+
+          await product.decrement("stock", { by: el.quantity, transaction: t });
         } else {
-          console.log('erorrrrrrrrrrrrrr');
-          throw ({ message: 'Data yang anda minta tidak atau terlalu banyak dari stok produk' })
+          await t.rollback();
+          return res
+            .status(400)
+            .json({
+              message:
+                "Data yang anda minta tidak atau terlalu banyak dari stok produk",
+            });
         }
-      })
-      await CheckoutProduct.create({
-        checkoutId: createCheckout.id,
-        productId: 10,
-        quantity: 1,
-        transaction: t
-      })
-      // console.log(temp, 'cartsmidtransssssssssssss');
-      let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t })
-      console.log(bulkCreate, 'bulkkkkkkkkkkkkkkkkkkkkkk');
-      await t.commit()
-      res.status(201).json({ token: midtransToken.token })
+      }
+
+      await CheckoutProduct.bulkCreate(temp, { transaction: t });
+      await t.commit();
+      res.status(201).json({ token: midtransToken.token });
     } catch (error) {
-      console.log(error, 'testerror');
-      await t.rollback()
-      res.status(500).json(error)
+      await t.rollback();
+      console.log(error);
+      res.status(500).json(error);
     }
-    // try {
-    //   const user = await User.findByPk(req.user.id);
-    //   let snap = new midtransClient.Snap({
-    //     // Set to true if you want Production Environment (accept real transaction).
-    //     isProduction: false,
-    //     serverKey: "SB-Mid-server-ZQU4wWb0ZkWhko2QA8_bZZGZ",
-    //   });
-
-    //   let parameter = {
-    //     transaction_details: {
-    //       order_id:
-    //         "INDOTEKNIK-ORDERID-" +
-    //         Math.floor(1000000 + Math.random() * 9000000), //harus unique
-    //       gross_amount: +req.query.total, //kalkulasikan total harga di sini
-    //     },
-    //     credit_card: {
-    //       secure: true,
-    //     },
-    //     customer_details: {
-    //       fullName: user.fullName,
-    //       email: user.email,
-    //       password: user.password,
-    //       phoneNumber: user.phoneNumber,
-    //       address: user.address,
-    //       imageProfile: user.imageProfile,
-    //     },
-    //   };
-
-    //   const midtransToken = await snap.createTransaction(parameter);
-    //   res.status(201).json(midtransToken);
-    // } catch (error) {
-    //   console.log(error);
-    // }
   }
 }
 
