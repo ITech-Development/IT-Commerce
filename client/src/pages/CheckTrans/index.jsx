@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../assets/IT01.png";
 import VCR2 from "../../assets/MS01.png";
 import VCR3 from "../../assets/TK01.png";
+const API_URL = "http://localhost:3100"; // Define your API URL here
 
 function Index() {
   let [carts, setCarts] = useState([]);
@@ -404,7 +405,7 @@ function Index() {
                   <div class="cart-item">
                     <div class="cart-product">
                       <Link to={`/products/${e.product.id}`}>
-                        <img src={e.product.image} alt={e.product.name} />
+                      <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
                       </Link>
                       <div>
                         <h3>{e.product.name}</h3>

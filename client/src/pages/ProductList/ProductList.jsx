@@ -9,6 +9,7 @@ import "../../App.css";
 import Star from "../../assets/star.png";
 import CartIcon from "../../assets/cart2.png";
 import { FadeLoader } from "react-spinners";
+const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const linkStyle = {
   color: "white",
@@ -31,7 +32,7 @@ const ProductCard = ({ product, onAddToCart }) => {
         className="view-product-button"
         style={linkStyle}
       >
-        <img src={product.image} alt={product.name} />
+        <img src={`${API_URL}/${product.image}`} alt={product.name} />
       </Link>
       <div className="details">
         <h3>{product.category}</h3>

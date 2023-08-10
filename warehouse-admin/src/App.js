@@ -33,7 +33,6 @@ const Routing = () => {
           <Route path="/dashboardProducts" element={<GetProduct />} />
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/edit-product/:id" element={<EditProduct />} />
-          
           <Route path="/product/:id" element={<DetailsProduct />} />
         </>
       )}
