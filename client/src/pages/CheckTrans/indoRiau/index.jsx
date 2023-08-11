@@ -198,14 +198,6 @@ function Index() {
     return total;
   };
 
-  // const calculateTotalBayar = () => {
-  //   const total = parseFloat(calculateTotal()); // Convert total to a number
-  //   const result = (total + parseFloat(totalShippingCost)).toLocaleString("en-US", {
-  //     minimumFractionDigits: 2,
-  //     maximumFractionDigits: 2
-  //   });
-  //   return result;
-  // };
   const calculateTotalBayar = () => {
     const total = calculateTotal();
     const result = total + totalShippingCost;
@@ -483,16 +475,7 @@ function Index() {
         >
           <h2>Pilih Metode Pengiriman</h2>
           <div>
-            <select onChange={handlerSetCourier}>
-              <option value={courier} >Select Courier</option>
-              <option value="jne">JNE</option>
-              <option value="tiki">TIKI</option>
-              <option value="pos">Pos Indonesia</option>
-              <option value="jnt">J&T</option>
-              {/* <option value="ide">Ide Express</option> */}
-              {/* <option value="anteraja">Anteraja</option>
-              <option value="sicepat">Sicepat</option> */}
-            </select>
+         
             <select
               value={courier}
               onChange={handlerSetCourier}

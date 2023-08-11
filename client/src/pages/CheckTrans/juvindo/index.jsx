@@ -504,16 +504,6 @@ function Index() {
         >
           <h2>Pilih Metode Pengiriman</h2>
           <div>
-            <select onChange={handlerSetCourier}>
-              <option value={courier} >Select Courier</option>
-              <option value="jne">JNE</option>
-              <option value="tiki">TIKI</option>
-              <option value="pos">Pos Indonesia</option>
-              <option value="jnt">J&T</option>
-              {/* <option value="ide">Ide Express</option> */}
-              {/* <option value="anteraja">Anteraja</option>
-              <option value="sicepat">Sicepat</option> */}
-              </select>
             <select
               value={courier}
               onChange={handlerSetCourier}

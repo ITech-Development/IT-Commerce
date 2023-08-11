@@ -25,17 +25,16 @@ class MidtransController {
 
       const parameter = {
         transaction_details: {
-          order_id:
-            "INDORIAU-ORDERID-" + Math.floor(1000000 + Math.random() * 9000000),
+          order_id: `ORDERID-${Math.floor(1000000 + Math.random() * 9000000)}`,
           gross_amount: +req.query.total,
         },
         credit_card: {
           secure: true,
         },
         customer_details: {
-          full_name: user.fullName, // Ubah properti 'fullName' ke 'full_name'
+          full_name: user.fullName,
           email: user.email,
-          phone: user.phoneNumber, // Gunakan properti 'phone' untuk nomor telepon
+          phone: user.phoneNumber,
           address: user.address,
         },
       };
@@ -67,13 +66,7 @@ class MidtransController {
 
           await product.decrement("stock", { by: el.quantity, transaction: t });
         } else {
-          await t.rollback();
-          return res
-            .status(400)
-            .json({
-              message:
-                "Data yang anda minta tidak atau terlalu banyak dari stok produk",
-            });
+          throw new Error("Insufficient stock for some products");
         }
       }
 
@@ -82,11 +75,11 @@ class MidtransController {
       res.status(201).json({ token: midtransToken.token });
     } catch (error) {
       await t.rollback();
-      console.log(error);
-      res.status(500).json(error);
+      console.error(error);
+      res.status(500).json({ error: "Transaction failed. Please try again." });
     }
   }
-  
+
   static async midtransTokenJuvindo(req, res) {
     const t = await sequelize.transaction();
 
@@ -102,17 +95,16 @@ class MidtransController {
 
       const parameter = {
         transaction_details: {
-          order_id:
-          "JUVINDO-ORDERID-" + Math.floor(1000000 + Math.random() * 9000000),
+          order_id: `ORDERID-${Math.floor(1000000 + Math.random() * 9000000)}`,
           gross_amount: +req.query.total,
         },
         credit_card: {
           secure: true,
         },
         customer_details: {
-          full_name: user.fullName, // Ubah properti 'fullName' ke 'full_name'
+          full_name: user.fullName,
           email: user.email,
-          phone: user.phoneNumber, // Gunakan properti 'phone' untuk nomor telepon
+          phone: user.phoneNumber,
           address: user.address,
         },
       };
@@ -144,13 +136,7 @@ class MidtransController {
 
           await product.decrement("stock", { by: el.quantity, transaction: t });
         } else {
-          await t.rollback();
-          return res
-            .status(400)
-            .json({
-              message:
-                "Data yang anda minta tidak atau terlalu banyak dari stok produk",
-            });
+          throw new Error("Insufficient stock for some products");
         }
       }
 
@@ -159,8 +145,8 @@ class MidtransController {
       res.status(201).json({ token: midtransToken.token });
     } catch (error) {
       await t.rollback();
-      console.log(error);
-      res.status(500).json(error);
+      console.error(error);
+      res.status(500).json({ error: "Transaction failed. Please try again." });
     }
   }
 }
