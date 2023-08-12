@@ -7,6 +7,7 @@ import Riset from "../../components/sections/Riset";
 import AdminProf from "../../components/sections/adminProf";
 import Quote from "../../components/sections/quote";
 import Footer from "../../components/footer";
+import ProductCatgories from "../../components/sections/productCategories";
 import ClaimVoucher from "../../assets/popup.png";
 import { Link } from "react-router-dom";
 
@@ -39,6 +40,7 @@ function Index() {
       <div style={{ position: "relative", top: "60px" }}>
         {/* <Navbar/> */}
         <HeroSection />
+        <ProductCatgories/>
         <CommitQuote />
         <ProductSelected onClick={openModal} /> {/* Added onClick event */}
         <Riset />
