@@ -25,7 +25,7 @@ import Chat from "./pages/Chat";
 import CheckTransItech from "./pages/CheckTrans/itech";
 import CheckTransIndoRiau from "./pages/CheckTrans/indoRiau";
 import CheckTransJuvindo from "./pages/CheckTrans/juvindo";
-import ProductCategories from "./components/sections/productCategories";
+// import ProductCategories from "./components/sections/productCategories";
 
 export const UserContext = createContext();
 
@@ -51,7 +51,7 @@ const Routing = () => {
       <Route path="/check-TransITech" element={<CheckTransItech />} />
       <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
       <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
-      <Route path="/products/category" element={<ProductCategories />} />
+      {/* <Route path="/products/category" element={<ProductCategories />} /> */}
       {/* <Route path="/profile-update/:id" element={<ProfileUpdate />} /> */}
     </Routes>
   );

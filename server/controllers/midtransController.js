@@ -45,12 +45,11 @@ class MidtransController {
         isProduction: false,
         serverKey: midtransKey,
       });
-
+      let order_id = "INDORIAU-ORDERID-" +
+        Math.floor(1000000 + Math.random() * 9000000)
       let parameter = {
         transaction_details: {
-          order_id:
-            "INDORIAU-ORDERID-" +
-            Math.floor(1000000 + Math.random() * 9000000), //harus unique
+          order_id,
           gross_amount: +req.query.total, //kalkulasikan total harga di sini
         },
         credit_card: {
@@ -67,39 +66,43 @@ class MidtransController {
       };
 
       const midtransToken = await snap.createTransaction(parameter);
+      console.log(midtransToken, 'midtranstoken');
       const createCheckout = await Checkout.create({
         userId: req.user.id,
-        midtransCode: midtransToken.token,
+        midtransCode: order_id,
         transaction: t
       })
+      console.log(req.body.carts, 'ini carts');
       req.body.carts.forEach(async (el) => {
         temp.push({
           // id: await helpers.getId(),
           checkoutId: createCheckout.id,
-          productId: el.id,
+          productId: el.productId,
           quantity: el.quantity,
           createdAt: new Date(),
           updateAt: new Date(),
         })
-        let dec = await Product.findOne({ where: { id: el.id } });
-        console.log(dec.stock, 'dec quantityyyyyyy');
-        console.log(el.quantity, 'el quantityyyyyyy');
+        let dec = await Product.findOne({ where: { id: el.productId } });
+        // console.log(dec, 'isi dec');
+        // console.log(el.id, 'test el id');
+        // console.log(dec.stock, 'dec quantityyyyyyy');
+        // console.log(el.quantity, 'el quantityyyyyyy');
         if (dec && dec.stock > el.quantity) {
           await dec.decrement("stock", { by: el.quantity, transaction: t });
         } else {
-          console.log('erorrrrrrrrrrrrrr');
+          // console.log('erorrrrrrrrrrrrrr');
           throw ({ message: 'Data yang anda minta tidak atau terlalu banyak dari stok produk' })
         }
       })
-      await CheckoutProduct.create({
-        checkoutId: createCheckout.id,
-        productId: 10,
-        quantity: 1,
-        transaction: t
-      })
+      // await CheckoutProduct.create({
+      //   checkoutId: createCheckout.id,
+      //   productId: 10,
+      //   quantity: 1,
+      //   transaction: t
+      // })
       // console.log(temp, 'cartsmidtransssssssssssss');
       let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t })
-      console.log(bulkCreate, 'bulkkkkkkkkkkkkkkkkkkkkkk');
+      // console.log(bulkCreate, 'bulkkkkkkkkkkkkkkkkkkkkkk');
       await t.commit()
       res.status(201).json({ token: midtransToken.token })
     } catch (error) {
@@ -153,12 +156,11 @@ class MidtransController {
         isProduction: false,
         serverKey: midtransKey,
       });
-
+      let order_id = "JUVINDO-ORDERID-" +
+        Math.floor(1000000 + Math.random() * 9000000)
       let parameter = {
         transaction_details: {
-          order_id:
-            "JUVINDO-ORDERID-" +
-            Math.floor(1000000 + Math.random() * 9000000), //harus unique
+          order_id,
           gross_amount: +req.query.total, //kalkulasikan total harga di sini
         },
         credit_card: {
@@ -177,7 +179,7 @@ class MidtransController {
       const midtransToken = await snap.createTransaction(parameter);
       const createCheckout = await Checkout.create({
         userId: req.user.id,
-        midtransCode: midtransToken.token,
+        midtransCode: order_id,
         transaction: t
       })
       req.body.carts.forEach(async (el) => {
@@ -190,24 +192,25 @@ class MidtransController {
           updateAt: new Date(),
         })
         let dec = await Product.findOne({ where: { id: el.id } });
-        console.log(dec.stock, 'dec quantityyyyyyy');
-        console.log(el.quantity, 'el quantityyyyyyy');
+        // console.log(el.id, 'el id');
+        // console.log(dec.stock, 'dec quantityyyyyyy');
+        // console.log(el.quantity, 'el quantityyyyyyy');
         if (dec && dec.stock > el.quantity) {
           await dec.decrement("stock", { by: el.quantity, transaction: t });
         } else {
-          console.log('erorrrrrrrrrrrrrr');
+          // console.log('erorrrrrrrrrrrrrr');
           throw ({ message: 'Data yang anda minta tidak atau terlalu banyak dari stok produk' })
         }
       })
-      await CheckoutProduct.create({
-        checkoutId: createCheckout.id,
-        productId: 10,
-        quantity: 1,
-        transaction: t
-      })
+      // await CheckoutProduct.create({
+      //   checkoutId: createCheckout.id,
+      //   productId: 10,
+      //   quantity: 1,
+      //   transaction: t
+      // })
       // console.log(temp, 'cartsmidtransssssssssssss');
       let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t })
-      console.log(bulkCreate, 'bulkkkkkkkkkkkkkkkkkkkkkk');
+      // console.log(bulkCreate, 'bulkkkkkkkkkkkkkkkkkkkkkk');
       await t.commit()
       res.status(201).json({ token: midtransToken.token })
     } catch (error) {
@@ -248,6 +251,25 @@ class MidtransController {
     // } catch (error) {
     //   console.log(error);
     // }
+  }
+
+  static async pay(req, res, next) {
+    try {
+      if (req.body.transaction_status === 'settlement') {
+        await Checkout.update({
+          status: 'pay',
+
+        },{
+          where: {
+            midtransCode: req.body.order_id
+          }
+        })
+      }
+      console.log(req.query, 'dari pay');
+      console.log(req.body, 'dari pay body');
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
