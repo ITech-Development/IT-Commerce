@@ -43,6 +43,9 @@ export default function Navigation() {
           <img style={{ height: "50px" }} src={Logo} alt="" />
         </Link>
         <div className="navigation-menu">
+        <ul className={isDropdownOpen ? "expanded" : ""}>
+            <RenderMenu />
+          </ul>
           <button className="hamburger" onClick={toggleDropdown}>
             <i className="fas fa-bars"></i>
           </button>

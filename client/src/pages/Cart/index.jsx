@@ -96,16 +96,47 @@ const Cart = () => {
     fetchCartsIndoRiau();
   }, []);
 
-  const handleIncrement = (id) => {
-    updateCartItemQuantity(id, "increment");
+
+  const handlerInc = (id) => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      let url = "http://localhost:3100/product-carts/increment/" + id;
+      axios({ url, method: "patch", headers: { access_token: accessToken } })
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log("incrementttt");
+        });
+    }
   };
 
-  const handleDecrement = (id) => {
-    updateCartItemQuantity(id, "decrement");
+  const handlerDec = (id) => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      let url = "http://localhost:3100/product-carts/decrement/" + id;
+      axios({ url, method: "patch", headers: { access_token: accessToken } })
+        .then(({ data }) => {
+          console.log(data, "ASdasdas");
+        })
+        .catch((error) => {
+          console.log("asdasd");
+        });
+    }
   };
 
-  const handleRemove = (id) => {
-    updateCartItemQuantity(id, "remove");
+  const handlerRemove = (id) => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      let url = "http://localhost:3100/product-carts/remove/" + id;
+      axios({ url, method: "delete", headers: { access_token: accessToken } })
+        .then(({ data }) => {
+          console.log(data, "remooove");
+        })
+        .catch((error) => {
+          console.log("asdasd remove");
+        });
+    }
   };
   const handleClear = () => {
     updateCartItemQuantity(null, "clear");
@@ -244,8 +275,9 @@ const Cart = () => {
                         <div>
                           <h3>{e.product.name}</h3>
                           <p>{e.product.description}</p>
-                          <button onClick={() => handleRemove(e.id)}>
+                          <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
+                       
                           </button>
                         </div>
                       </div>
@@ -253,9 +285,14 @@ const Cart = () => {
                         Rp.{e.product.unitPrice}
                       </div>
                       <div className="cart-product-quantity">
-                        <button onClick={() => handleDecrement(e.id)}>-</button>
                         <div className="count">{e.quantity}</div>
-                        <button onClick={() => handleIncrement(e.id)}>+</button>
+                        <button onClick={() => handlerDec(e.id)}>
+                          -
+                        </button>
+                        <div className="count">{e.quantity}</div>
+                        <button onClick={() => handlerInc(e.id)}>
+                          +
+                        </button>
                       </div>
                       <div className="cart-product-total-price">
                         Rp.{e.quantity * e.product.unitPrice}
@@ -341,7 +378,7 @@ const Cart = () => {
                         <div>
                           <h3>{e.product.name}</h3>
                           <p>{e.product.description}</p>
-                          <button onClick={() => handleRemove(e.id)}>
+                          <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
                           </button>
                         </div>
@@ -350,9 +387,9 @@ const Cart = () => {
                         Rp.{e.product.unitPrice}
                       </div>
                       <div className="cart-product-quantity">
-                        <button onClick={() => handleDecrement(e.id)}>-</button>
+                        <button onClick={() => handlerDec(e.id)}>-</button>
                         <div className="count">{e.quantity}</div>
-                        <button onClick={() => handleIncrement(e.id)}>+</button>
+                        <button onClick={() => handlerInc(e.id)}>+</button>
                       </div>
                       <div className="cart-product-total-price">
                         Rp.{e.quantity * e.product.unitPrice}
@@ -450,8 +487,9 @@ const Cart = () => {
                         <div>
                           <h3>{e.product.name}</h3>
                           <p>{e.product.description}</p>
-                          <button onClick={() => handleRemove(e.id)}>
+                          <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
+                 
                           </button>
                         </div>
                       </div>
@@ -459,9 +497,13 @@ const Cart = () => {
                         Rp.{e.product.unitPrice}
                       </div>
                       <div className="cart-product-quantity">
-                        <button onClick={() => handleDecrement(e.id)}>-</button>
+                        <button onClick={() => handlerDec(e.id)}>
+                          -
+                        </button>
                         <div className="count">{e.quantity}</div>
-                        <button onClick={() => handleIncrement(e.id)}>+</button>
+                        <button onClick={() => handlerInc(e.id)}>
+                          +
+                        </button>
                       </div>
                       <div className="cart-product-total-price">
                         Rp.{e.quantity * e.product.unitPrice}

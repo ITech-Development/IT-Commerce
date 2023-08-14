@@ -22,10 +22,10 @@ class UserController {
 
   static async getMeById(req,res, next) {
     try {
-      const profiles = await User.findOne({
+      const profile = await User.findOne({
         where: { id: req.user.id }
       })
-      res.status(200).json(profiles)
+      res.status(200).json(profile)
     } catch (error) {
       next(error)
     }
