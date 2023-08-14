@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 // import './ProductCategories.css';
 import ProductListByCategory from '../productListByCategory'; // Adjust the path accordingly
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function ProductCategories() {
   const [data, setData] = useState([]);
-  console.log(data, 'test datdatatttt');
   const apiUrl = 'http://localhost:3100/product-categories/';
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
@@ -16,30 +16,43 @@ function ProductCategories() {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
-    const handleCategoryClick = (categoryId) => {
+  const handleCategoryClick = (categoryId) => {
     setSelectedCategoryId(categoryId);
   };
 
+  // return (
+  //   <>
+  //     {/* ... (existing JSX code) */}
+  //     <div className="card-container">
+  //       {data.map(item => (
+  //         <div
+  //           key={item.id}
+  //           className="card"
+  //           onClick={() => handleCategoryClick(item.id)} // Add this line
+  //         >
+  //           <h2>{item.name}</h2>
+  //           <img src={item.image} alt="gapapa ga ada" />
+  //         </div>
+  //       ))}
+  //     </div>
+  //     {selectedCategoryId !== null && (
+  //       <ProductListByCategory categoryId={selectedCategoryId} />
+  //     )}
+  //   </>
+  // );
   return (
-    <>
-      {/* ... (existing JSX code) */}
-      <div className="card-container">
-        {data.map(item => (
-          <div
-            key={item.id}
-            className="card"
-            onClick={() => handleCategoryClick(item.id)} // Add this line
-          >
-            <h2>{item.name}</h2>
-            <img src={item.image} alt="gapapa ga ada" />
-          </div>
-        ))}
-      </div>
-      {selectedCategoryId !== null && (
-        <ProductListByCategory categoryId={selectedCategoryId} />
-      )}
-    </>
-  );
+    <div>
+      <Link to="/category-one">
+        <h1>Category One</h1>
+      </Link>
+      <Link to="/category-two">
+        <h1>Category Two</h1>
+      </Link>
+      <Link to="/category-three">
+        <h1>Category Three</h1>
+      </Link>
+    </div>
+  )
 }
 
 export default ProductCategories;

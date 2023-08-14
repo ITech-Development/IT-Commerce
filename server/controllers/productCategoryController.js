@@ -23,6 +23,7 @@ class ProductCategoryController {
         }
     }
 
+
     static async detailsProductCategory(req, res, next) {
         try {
             const productCategory = await ProductCategory.findOne({

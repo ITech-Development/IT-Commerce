@@ -32,6 +32,9 @@ router.use(bodyParser.json());
 router.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
 
 router.get('/', ProductController.getAllProducts);
+router.get('/category-one', ProductController.getCatgoryOne);
+router.get('/category-two', ProductController.getCatgoryTwo);
+router.get('/category-three', ProductController.getCatgoryThree);
 router.post('/',
     authenticationWarehouseAdmin,
     authorizationWarehouseAdmin,
