@@ -13,6 +13,15 @@ const linkStyle = {
   textDecoration: "none",
 };
 
+// Harga asli produk
+const originalPrice = 100000;
+
+// Hitung jumlah potongan (3% dari harga asli)
+const discountAmount = originalPrice * 0.03;
+
+// Hitung harga setelah potongan
+const discountedPrice = originalPrice - discountAmount;
+
 const ProductCard = ({ product, onAddToCart }) => {
   return (
     <div className="product">
@@ -26,7 +35,9 @@ const ProductCard = ({ product, onAddToCart }) => {
       <div className="details">
         <h3>{product.category}</h3>
         <p>{product.name}</p>
-        <span className="price">Rp.{product.unitPrice}</span>
+        <span className="price">{originalPrice}</span>
+        <br />
+        <span className="price"><i>3% <del>{discountedPrice}</del></i></span>
         <p>Stock: {product.stock}</p>
       </div>
       <button
@@ -100,20 +111,20 @@ const ProductList = () => {
 
   const filteredAndSortedData = data
     ? data
-        .filter((product) =>
-          product.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-        .sort((a, b) => {
-          switch (sortOption) {
-            case "price":
-              return a.unitPrice - b.unitPrice;
-            case "stock":
-              return a.stock - b.stock;
-            default:
-              // Sort by name by default
-              return a.name.localeCompare(b.name);
-          }
-        })
+      .filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .sort((a, b) => {
+        switch (sortOption) {
+          case "price":
+            return a.unitPrice - b.unitPrice;
+          case "stock":
+            return a.stock - b.stock;
+          default:
+            // Sort by name by default
+            return a.name.localeCompare(b.name);
+        }
+      })
     : [];
   return (
     <>
