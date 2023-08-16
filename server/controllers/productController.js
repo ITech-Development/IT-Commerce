@@ -35,7 +35,7 @@ class ProductController {
         }
     }
 
-    static async getCatgoryOne(req, res, next) {
+    static async getNozzelCategory(req, res, next) {
         try {
             const one = await Product.findAll({
                 where: { categoryId: 1 },
@@ -46,7 +46,7 @@ class ProductController {
             next(error);
         }
     }
-    static async getCatgoryTwo(req, res, next) {
+    static async getDeliveryValve(req, res, next) {
         try {
             const one = await Product.findAll({
                 where: { categoryId: 2 },
@@ -57,7 +57,8 @@ class ProductController {
             next(error);
         }
     }
-    static async getCatgoryThree(req, res, next) {
+
+    static async getElementCategory(req, res, next) {
         try {
             const one = await Product.findAll({
                 where: { categoryId: 3 },
@@ -69,6 +70,41 @@ class ProductController {
         }
     }
 
+    static async getVEPumpCategory(req, res, next) {
+        try {
+            const one = await Product.findAll({
+                where: { categoryId: 4 },
+                order: [['createdAt', 'DESC']]
+            })
+            res.status(200).json(one);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async getVEPumpPartsCategory(req, res, next) {
+        try {
+            const one = await Product.findAll({
+                where: { categoryId: 5 },
+                order: [['createdAt', 'DESC']]
+            })
+            res.status(200).json(one);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async getHeadRotorCategory(req, res, next) {
+        try {
+            const one = await Product.findAll({
+                where: { categoryId: 6 },
+                order: [['createdAt', 'DESC']]
+            })
+            res.status(200).json(one);
+        } catch (error) {
+            next(error);
+        }
+    }
 
     static async addProduct(req, res, next) {
         try {

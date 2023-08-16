@@ -78,46 +78,33 @@ function Index() {
 
   useEffect(() => {
     if (token) {
-      // snap.pay(token, {
-      //   onSuccess: (result) => {
-      //     console.log('test embed');
-      //   },
-      //   onPending: (result) => {
-      //     localStorage.setItem('Pembayaran', JSON.stringify(result))
-      //     setToken('')
-      //   },
-      //   onError: (error) => {
-      //     console.log(error);
-      //     setToken('')
-      //   },
-      //   onClose: () => {
-      //     console.log('Anda belum menyelesaikan pembayaran');
-      //     setToken('')
-      //   }
-      // })
+      // Gunakan fungsi snap.pay untuk pemrosesan pembayaran
       // eslint-disable-next-line no-undef
       snap.pay(token, {
         onSuccess: function (result) {
-          // return changeStatus();
-          console.log("snap payyyyyyyyyyy");
+          // Penanganan pembayaran berhasil
+          console.log("Pembayaran berhasil:", result);
+          // Anda mungkin ingin melakukan tindakan tambahan di sini, seperti memperbarui status pesanan.
+        },
+        onError: function (error) {
+          // Penanganan kesalahan pembayaran
+          console.error("Kesalahan pembayaran:", error);
+        },
+        onClose: function () {
+          // Penanganan penutupan popup pembayaran
+          console.log("Popup pembayaran ditutup");
         },
       });
-      // snap.pay(token, {
-      //   onSuccess: function (result) {
-      //     // return changeStatus();
-      //     console.log('snap payyyyyyyyyyy');
-      //   },
-      // })
     }
   }, [token]);
 
   useEffect(() => {
-    const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const midtransUrl = "https://app.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
-    const midtransClientKey = "SB-Mid-client-5sjWc9AhHLstKFML";
+    const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
     scriptTag.setAttribute("data-client-key", midtransClientKey);
 
     document.body.appendChild(scriptTag);
@@ -126,6 +113,7 @@ function Index() {
       document.body.removeChild(scriptTag);
     };
   });
+
 
   const handlerInc = (id) => {
     const accessToken = localStorage.getItem("access_token");

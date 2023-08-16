@@ -11,7 +11,6 @@ import VCR3 from "../../../assets/TK01.png";
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
-
 function Index() {
   let [carts, setCarts] = useState([]);
   const cart = useSelector((state) => state.cart);
@@ -65,7 +64,7 @@ function Index() {
   }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
-    const bayar = calculateTotalBayar();
+    const bayar = calculateTotalBayar()
     const config = {
       "Content-Type": "application/json",
       access_token: localStorage.getItem("access_token"),
@@ -270,7 +269,8 @@ function Index() {
   const calculateTotalBayar = () => {
     const total = calculateTotal();
     const result = total + totalShippingCost;
-    return result;
+    console.log(result, 'hasil result');
+    return Math.floor(result);
   };
 
   useEffect(() => {
@@ -677,7 +677,7 @@ function Index() {
           ) : (
             <button onClick={() => handlePaymentProcess()}>Payment</button>
           )}
-          
+
         </div>
       </div>
     </div>

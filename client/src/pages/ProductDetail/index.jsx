@@ -195,7 +195,7 @@ const ProductDetailContainer = styled.div`
   justify-content: center;
   // align-items: center;
   position: relative;
-  top: 80px;
+  top: 88px;
 `;
 
 const ProductDetailWrapper = styled.div`
@@ -249,7 +249,7 @@ const SpecificationItem = styled.div`
 `;
 
 const Description = styled.div`
-  max-width: 1420px;
+  max-width: 1205px;
   width: 100%;
   display: flex;
   margin: 20px auto;

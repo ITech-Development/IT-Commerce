@@ -32,9 +32,12 @@ router.use(bodyParser.json());
 router.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
 
 router.get('/', ProductController.getAllProducts);
-router.get('/category-one', ProductController.getCatgoryOne);
-router.get('/category-two', ProductController.getCatgoryTwo);
-router.get('/category-three', ProductController.getCatgoryThree);
+router.get('/nozzle', ProductController.getNozzelCategory);
+router.get('/delivery-valve', ProductController.getDeliveryValve);
+router.get('/element', ProductController.getElementCategory);
+router.get('/ve-pump', ProductController.getVEPumpCategory);
+router.get('/ve-pump-parts', ProductController.getVEPumpPartsCategory);
+router.get('/head-rotor', ProductController.getHeadRotorCategory);
 router.post('/',
     authenticationWarehouseAdmin,
     authorizationWarehouseAdmin,

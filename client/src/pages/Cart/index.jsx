@@ -3,9 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { getTotals } from "../../features/cartSlice";
+import IndoRiau from "../../assets/Indoriau.png";
+import Juvindo from "../../assets/JUVINDO.png";
 import styled from "styled-components";
+import Itech from "../../assets/Itech.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FaShoppingCart } from "react-icons/fa"; // Menggunakan react-icons/fa5 untuk ikon dari Font Awesome 5
 const API_URL = "http://localhost:3100"; // Define your API URL here
-
 
 const Cart = () => {
   const [carts, setCarts] = useState([]);
@@ -133,7 +138,6 @@ const Cart = () => {
         });
     }
   };
-
   const handleClear = () => {
     updateCartItemQuantity(null, "clear");
   };
@@ -157,29 +161,6 @@ const Cart = () => {
     }
   };
 
-  const calculateSubtotal = () => {
-    return carts.reduce((total, cartItem) => {
-      const productPrice = cartItem.product.unitPrice;
-      const quantity = cartItem.quantity;
-      return total + productPrice * quantity;
-    }, 0);
-  };
-
-
-  const calculateTotal = () => {
-    const subtotal = calculateSubtotal();
-    const ppn = subtotal * 0.11;
-    const total = subtotal + ppn;
-    return total.toFixed(2);
-  };
-
-
-  const calculatePPN = () => {
-    const subtotal = calculateSubtotal();
-    const ppn = subtotal * 0.11;
-    return ppn.toFixed(2);
-  };
-
   //juvindo
   const calculateSubtotalJuvindo = () => {
     return cartsJuvindo.reduce((total, cartItem) => {
@@ -199,7 +180,6 @@ const Cart = () => {
     const ppn = subtotal * 0.11;
     return ppn.toFixed(2);
   };
-
 
   //Itech
   const calculateSubtotalItech = () => {
@@ -243,13 +223,17 @@ const Cart = () => {
 
   return (
     <>
-      {cartsJuvindo.length === 0 && cartsItech.length === 0 && cartsIndoRiau.length === 0 ? (
-        <div className="cart-container" style={{ position: "relative", top: "50px" }}>
+      {cartsJuvindo.length === 0 &&
+      cartsItech.length === 0 &&
+      cartsIndoRiau.length === 0 ? (
+        <div
+          className="cart-container"
+          style={{ position: "relative", top: "50px" }}
+        >
           <div className="cart-empty">
             <p>Your cart is empty</p>
             <div className="start-shopping">
               <Link to="/productlist">
-                <span>&lt;</span>
                 <span>Start Shopping</span>
               </Link>
             </div>
@@ -263,7 +247,14 @@ const Cart = () => {
               className="cart-container"
               style={{ position: "relative", top: "50px" }}
             >
-              <h2>Indo Riau Store</h2>
+              <StoreHeader>
+                <StoreImage
+                  style={{ maxWidth: "16%" }}
+                  src={IndoRiau}
+                  alt="Store Logo"
+                />
+                {/* <StoreTitle>ITech</StoreTitle> */}
+              </StoreHeader>
               <div>
                 <div className="titles">
                   <h3 className="product-title">Product</h3>
@@ -272,17 +263,21 @@ const Cart = () => {
                   <h3 className="total">Total</h3>
                 </div>
                 <div class="cart-items">
-                  {cartsIndoRiau?.map(e => (
-                    < div class="cart-item" >
+                  {cartsIndoRiau?.map((e) => (
+                    <div class="cart-item">
                       <div class="cart-product">
                         <Link to={`/products/${e.product.id}`}>
-                          <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
+                          <img
+                            src={`${API_URL}/${e.product.image}`}
+                            alt={e.product.name}
+                          />
                         </Link>
                         <div>
                           <h3>{e.product.name}</h3>
                           <p>{e.product.description}</p>
                           <button onClick={() => handlerRemove(e.id)}>
-                            Remove
+                            <FontAwesomeIcon icon={faTrash} /> Hapus
+                       
                           </button>
                         </div>
                       </div>
@@ -290,10 +285,11 @@ const Cart = () => {
                         Rp.{e.product.unitPrice}
                       </div>
                       <div className="cart-product-quantity">
+                        {/* <div className="count">{e.quantity}</div> */}
                         <button onClick={() => handlerDec(e.id)}>
                           -
                         </button>
-                        <div className="count">{e.quantity}</div>
+                        {/* <div className="count">{e.quantity}</div> */}
                         <button onClick={() => handlerInc(e.id)}>
                           +
                         </button>
@@ -311,7 +307,9 @@ const Cart = () => {
                   <div className="cart-checkout">
                     <div className="subtotal">
                       <span>Subtotal :</span>
-                      <span className="amount">Rp.{calculateSubtotalIndoRiau()}</span>
+                      <span className="amount">
+                        Rp.{calculateSubtotalIndoRiau()}
+                      </span>
                     </div>
                     <div
                       style={{
@@ -322,7 +320,10 @@ const Cart = () => {
                       }}
                     >
                       <span>PPN 11% :</span>
-                      <span className="amount"> Rp. {calculatePPNIndoRiau()}</span>
+                      <span className="amount">
+                        {" "}
+                        Rp. {calculatePPNIndoRiau()}
+                      </span>
                     </div>
                     <div className="subtotal" style={{ paddingBottom: "10px" }}>
                       <span>Total :</span>
@@ -342,7 +343,6 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-
             </div>
           )}
           {cartsJuvindo.length > 0 && (
@@ -350,7 +350,14 @@ const Cart = () => {
               className="cart-container"
               style={{ position: "relative", top: "50px" }}
             >
-              <h2>Juvindo Internusa Store</h2>
+              <StoreHeader>
+                <StoreImage
+                  style={{ maxWidth: "16%" }}
+                  src={Juvindo}
+                  alt="Store Logo"
+                />
+                {/* <StoreTitle>ITech</StoreTitle> */}
+              </StoreHeader>
               <div>
                 <div className="titles">
                   <h3 className="product-title">Product</h3>
@@ -359,17 +366,20 @@ const Cart = () => {
                   <h3 className="total">Total</h3>
                 </div>
                 <div class="cart-items">
-                  {cartsJuvindo?.map(e => (
-                    < div class="cart-item" >
+                  {cartsJuvindo?.map((e) => (
+                    <div class="cart-item">
                       <div class="cart-product">
                         <Link to={`/products/${e.product.id}`}>
-                          <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
+                          <img
+                            src={`${API_URL}/${e.product.image}`}
+                            alt={e.product.name}
+                          />
                         </Link>
                         <div>
                           <h3>{e.product.name}</h3>
                           <p>{e.product.description}</p>
                           <button onClick={() => handlerRemove(e.id)}>
-                            Remove
+                            <FontAwesomeIcon icon={faTrash} /> Hapus
                           </button>
                         </div>
                       </div>
@@ -377,13 +387,9 @@ const Cart = () => {
                         Rp.{e.product.unitPrice}
                       </div>
                       <div className="cart-product-quantity">
-                        <button onClick={() => handlerDec(e.id)}>
-                          -
-                        </button>
+                        <button onClick={() => handlerDec(e.id)}>-</button>
                         <div className="count">{e.quantity}</div>
-                        <button onClick={() => handlerInc(e.id)}>
-                          +
-                        </button>
+                        <button onClick={() => handlerInc(e.id)}>+</button>
                       </div>
                       <div className="cart-product-total-price">
                         Rp.{e.quantity * e.product.unitPrice}
@@ -398,7 +404,9 @@ const Cart = () => {
                   <div className="cart-checkout">
                     <div className="subtotal">
                       <span>Subtotal :</span>
-                      <span className="amount">Rp.{calculateSubtotalJuvindo()}</span>
+                      <span className="amount">
+                        Rp.{calculateSubtotalJuvindo()}
+                      </span>
                     </div>
                     <div
                       style={{
@@ -409,7 +417,10 @@ const Cart = () => {
                       }}
                     >
                       <span>PPN 11% :</span>
-                      <span className="amount"> Rp. {calculatePPNJuvindo()}</span>
+                      <span className="amount">
+                        {" "}
+                        Rp. {calculatePPNJuvindo()}
+                      </span>
                     </div>
                     <div
                       style={{
@@ -440,7 +451,6 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-
             </div>
           )}
           {cartsItech.length > 0 && (
@@ -448,7 +458,14 @@ const Cart = () => {
               className="cart-container"
               style={{ position: "relative", top: "50px" }}
             >
-              <h2>ITech Store</h2>
+              <StoreHeader>
+                <StoreImage
+                  style={{ maxWidth: "16%" }}
+                  src={Itech}
+                  alt="Store Logo"
+                />
+                {/* <StoreTitle>ITech</StoreTitle> */}
+              </StoreHeader>
 
               <div>
                 <div className="titles">
@@ -458,17 +475,21 @@ const Cart = () => {
                   <h3 className="total">Total</h3>
                 </div>
                 <div class="cart-items">
-                  {cartsItech?.map(e => (
-                    < div class="cart-item" >
+                  {cartsItech?.map((e) => (
+                    <div class="cart-item">
                       <div class="cart-product">
                         <Link to={`/products/${e.product.id}`}>
-                          <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
+                          <img
+                            src={`${API_URL}/${e.product.image}`}
+                            alt={e.product.name}
+                          />
                         </Link>
                         <div>
                           <h3>{e.product.name}</h3>
                           <p>{e.product.description}</p>
                           <button onClick={() => handlerRemove(e.id)}>
-                            Remove
+                            <FontAwesomeIcon icon={faTrash} /> Hapus
+                 
                           </button>
                         </div>
                       </div>
@@ -497,7 +518,9 @@ const Cart = () => {
                   <div className="cart-checkout">
                     <div className="subtotal">
                       <span>Subtotal :</span>
-                      <span className="amount">Rp.{calculateSubtotalItech()}</span>
+                      <span className="amount">
+                        Rp.{calculateSubtotalItech()}
+                      </span>
                     </div>
                     <div
                       style={{
@@ -521,10 +544,10 @@ const Cart = () => {
                         Check Out
                       </Link>
                     </button>
-                    <ContinueShoppingContainer>
-                      <ContinueShoppingIcon>&lt;</ContinueShoppingIcon>
+                    <ContinueShoppingButton>
+                      <ContinueShoppingIcon as={FaShoppingCart} />
                       <Link to="/productlist">Continue Shopping</Link>
-                    </ContinueShoppingContainer>
+                    </ContinueShoppingButton>
                   </div>
                 </div>
               </div>
@@ -534,8 +557,17 @@ const Cart = () => {
       )}
     </>
   );
-
 };
+
+const StoreHeader = styled.div`
+  max-width: 900px;
+  // background: #ddefef;
+  // padding: 10px 76% 10px 5px;
+`;
+
+const StoreImage = styled.img`
+  max-width: 230px;
+`;
 
 const checkoutButtonStyle = {
   backgroundColor: "blue",
@@ -552,14 +584,40 @@ const linkStyle = {
   textDecoration: "none",
 };
 
+const ContinueShoppingButton = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
 const ContinueShoppingContainer = styled.div`
   display: flex;
   align-items: center;
   margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    color: #007bff;
+  }
 `;
 
-const ContinueShoppingIcon = styled.span`
-  margin-right: 5px;
+const ContinueShoppingIcon = styled(FaShoppingCart)`
+  margin-right: 8px;
+  font-size: 18px;
 `;
 
 export default Cart;

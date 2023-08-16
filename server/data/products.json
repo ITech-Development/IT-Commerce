@@ -52,7 +52,7 @@
   },
   {
     "name": "Product 4",
-    "categoryId": 2,
+    "categoryId": 3,
     "typeId": 2,
     "image": "images/0011ff&text=Product+4.png",
     "description": "This is product 4 description.",
@@ -69,7 +69,7 @@
   },
   {
     "name": "Product 5",
-    "categoryId": 2,
+    "categoryId": 6,
     "typeId": 2,
     "image": "images/0011ff&text=Product+5.png",
     "description": "This is product 5 description.",

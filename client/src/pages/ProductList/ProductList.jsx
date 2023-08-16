@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import Corousel from "../../components/corousel/product";
 import "./productliststyle.css";
 import "../../App.css";
+import Star from "../../assets/star.png";
+import CartIcon from "../../assets/cart2.png";
+import { FadeLoader } from "react-spinners";
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const linkStyle = {
@@ -13,16 +16,15 @@ const linkStyle = {
   textDecoration: "none",
 };
 
-// Harga asli produk
-const originalPrice = 100000;
-
-// Hitung jumlah potongan (3% dari harga asli)
-const discountAmount = originalPrice * 0.03;
-
-// Hitung harga setelah potongan
-const discountedPrice = originalPrice - discountAmount;
+const loadingContainerStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  minHeight: "200px", // Atur ketinggian minimum sesuai kebutuhan
+};
 
 const ProductCard = ({ product, onAddToCart }) => {
+  const starRating = 5;
   return (
     <div className="product">
       <Link
@@ -34,19 +36,43 @@ const ProductCard = ({ product, onAddToCart }) => {
       </Link>
       <div className="details">
         <h3>{product.category}</h3>
-        <p>{product.name}</p>
-        <span className="price">{originalPrice}</span>
-        <br />
-        <span className="price"><i>3% <del>{discountedPrice}</del></i></span>
-        <p>Stock: {product.stock}</p>
+        <h3 style={{ padding: "5px 0", margin: "0" }}>{product.name}</h3>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
+            <div style={{ width: "90px" }} className="star-rating">
+              {/* Render star images for the star rating */}
+              {[...Array(starRating)].map((_, index) => (
+                <img
+                  key={index}
+                  style={{ maxWidth: "15px" }}
+                  src={Star} // Replace with your star icon image
+                  alt="rating"
+                />
+              ))}
+            </div>
+            <span className="price">Rp.{product.unitPrice}</span>
+            {/* <p>Stock: {product.stock}</p> */}
+          </div>
+          <button
+            className="cartyes"
+            style={{
+              maxWidth: "40px",
+              border: "none",
+              borderRadius: "50%",
+              background: "#DDEFEF",
+              cursor: "pointer",
+            }}
+            onClick={() => onAddToCart(product)}
+            disabled={product.stock === 0}
+          >
+            {product.stock > 0 ? (
+              <img style={{ maxWidth: "24px" }} src={CartIcon} alt="Cart" />
+            ) : (
+              <p style={{color: 'black', margin: '0', padding: '0', fontSize: '7px', fontWeight: '700'}}>Out of stock</p>
+            )}
+          </button>
+        </div>
       </div>
-      <button
-        className="add-to-cart-button"
-        onClick={() => onAddToCart(product)}
-        disabled={product.stock === 0}
-      >
-        {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
-      </button>
     </div>
   );
 };
@@ -126,53 +152,50 @@ const ProductList = () => {
         }
       })
     : [];
-  return (
+ return (
     <>
       <Corousel />
 
-      <div>
-        {/* <img src={Hero} alt="" /> */}
-        <div className="productlist-container">
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p>An error occurred</p>
-          ) : (
-            <>
-              <h2 style={{ margin: "30px 0 20px 0", textAlign: "start" }}>
-                Produk Rekomendasi
-              </h2>
-              <div style={searchContainerStyle}>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={handleSearchInputChange}
-                  style={searchInputStyle}
-                  placeholder="Cari Produk Berdasarkan Nama..."
-                />
-                <select
-                  value={sortOption}
-                  onChange={handleSortOptionChange}
-                  style={sortSelectStyle}
-                >
-                  <option value="name">Berdasarkan Nama</option>
-                  <option value="price">Harga Terendah - Tertinggi</option>
-                  <option value="stock">Stok Paling Sedikit - Terbanyak</option>
-                </select>
-              </div>
+      <div className="productlist-container">
+        {isLoading ? (
+          <div style={loadingContainerStyle}>
+            <FadeLoader color="#007bff" loading={isLoading} size={50} />
+          </div>
+        ) : error ? (
+          <p>An error occurred</p>
+        ) : (
+          <>
+            <h2 className="productlist-title">Produk Rekomendasi</h2>
+            <div style={searchContainerStyle}>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={handleSearchInputChange}
+                style={searchInputStyle}
+                placeholder="Cari Produk Berdasarkan Nama..."
+              />
+              <select
+                value={sortOption}
+                onChange={handleSortOptionChange}
+                style={sortSelectStyle}
+              >
+                <option value="name">Berdasarkan Nama</option>
+                <option value="price">Harga Terendah - Tertinggi</option>
+                <option value="stock">Stok Paling Sedikit - Terbanyak</option>
+              </select>
+            </div>
 
-              <div className="products">
-                {filteredAndSortedData.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onAddToCart={handleAddToCart}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-        </div>
+            <div className="products">
+              {filteredAndSortedData.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onAddToCart={handleAddToCart}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </>
   );

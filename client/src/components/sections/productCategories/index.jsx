@@ -42,14 +42,23 @@ function ProductCategories() {
   // );
   return (
     <div>
-      <Link to="/category-one">
-        <h1>Category One</h1>
+      <Link to="/nozzle">
+        <h1>Nozzle</h1>
       </Link>
-      <Link to="/category-two">
-        <h1>Category Two</h1>
+      <Link to="/delivery-valve">
+        <h1>Delivery Valve</h1>
       </Link>
-      <Link to="/category-three">
-        <h1>Category Three</h1>
+      <Link to="/element">
+        <h1>Element</h1>
+      </Link>
+      <Link to="/ve-pump">
+        <h1>VE Pump</h1>
+      </Link>
+      <Link to="/ve-pump-parts">
+        <h1>VE Pump Parts</h1>
+      </Link>
+      <Link to="/head-rotor">
+        <h1>Head Rotor</h1>
       </Link>
     </div>
   )
