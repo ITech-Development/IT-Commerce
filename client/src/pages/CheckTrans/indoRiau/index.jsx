@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
+// const midtransClient = require('midtrans-client');
+
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
 
@@ -83,31 +85,53 @@ function Index() {
     if (token) {
       // Gunakan fungsi snap.pay untuk pemrosesan pembayaran
       // eslint-disable-next-line no-undef
-      snap.pay(token, {
+
+      window.snap.embed(token, {
+        embedId: 'snap-container',
+
         onSuccess: function (result) {
-          // Penanganan pembayaran berhasil
-          console.log("Pembayaran berhasil:", result);
-          // Anda mungkin ingin melakukan tindakan tambahan di sini, seperti memperbarui status pesanan.
+          /* You may add your own implementation here */
+          alert("payment success!"); console.log(result);
         },
-        onError: function (error) {
-          // Penanganan kesalahan pembayaran
-          console.error("Kesalahan pembayaran:", error);
+        onPending: function (result) {
+          /* You may add your own implementation here */
+          alert("wating your payment!"); console.log(result);
+        },
+        onError: function (result) {
+          /* You may add your own implementation here */
+          alert("payment failed!"); console.log(result);
         },
         onClose: function () {
-          // Penanganan penutupan popup pembayaran
-          console.log("Popup pembayaran ditutup");
-        },
-      });
+          /* You may add your own implementation here */
+          alert('you closed the popup without finishing the payment');
+        }
+      })
+      // console.log(token);
+      // snap.pay(token, {
+      //   onSuccess: function (result) {
+      //     // return changeStatus();
+      //     console.log("snap payyyyyyyyyyy");
+      //   },
+      // });
+
+      // snap.pay(token, {
+      //   onSuccess: function (result) {
+      //     // return changeStatus();
+      //     console.log('snap payyyyyyyyyyy');
+      //   },
+      // })
     }
   }, [token]);
 
   useEffect(() => {
-    const midtransUrl = "https://app.midtrans.com/snap/snap.js";
+    // const midtransUrl = "https://app.midtrans.com/snap/snap.js";
+    const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
-    const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
+    // const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
+    const midtransClientKey = "SB-Mid-client-5sjWc9AhHLstKFML";
     scriptTag.setAttribute("data-client-key", midtransClientKey);
 
     document.body.appendChild(scriptTag);
@@ -317,6 +341,7 @@ function Index() {
 
   return (
     <div>
+      <div id="snap-container"></div>
       <div className="alamat">
         <h2>Alamat Pengiriman</h2>
         <div className="address-info">
@@ -599,6 +624,7 @@ function Index() {
           ) : (
             <button onClick={() => handlePaymentProcess()}>Payment</button>
           )}
+          
         </div>
       </div>
     </div>

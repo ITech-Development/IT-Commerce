@@ -3,8 +3,10 @@ const { authenticationUser } = require('../middlewares/auth');
 const MidtransController = require('../controllers/midtransController');
 const router = express.Router();
 
-// Middleware untuk autentikasi pengguna
-router.use(authenticationUser);
+router.post('/pay', MidtransController.pay)
+router.use(authenticationUser)
+router.post('/indo-riau', MidtransController.midtransTokenIndoRiau)
+router.post('/juvindo', MidtransController.midtransTokenJuvindo)
 
 // Rute untuk mengakses token Midtrans untuk Indo Riau
 router.post('/indo-riau', MidtransController.midtransTokenIndoRiau);

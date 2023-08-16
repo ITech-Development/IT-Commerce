@@ -123,7 +123,8 @@ const ProductList = () => {
         console.log("asdsad");
       }
     } else {
-      navigate("/login");
+      alert('login dulu dong')
+      // navigate("/login");
     }
   };
   const handleSearchInputChange = (event) => {

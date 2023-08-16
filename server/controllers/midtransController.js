@@ -19,14 +19,12 @@ class MidtransController {
         isProduction: true,
         serverKey: midtransKey,
       });
-
-      const temp = [];
-      const carts = req.body.carts;
-
-      const parameter = {
+      let order_id = "INDORIAU-ORDERID-" +
+        Math.floor(1000000 + Math.random() * 9000000)
+      let parameter = {
         transaction_details: {
-          order_id: `ORDERID-${Math.floor(1000000 + Math.random() * 9000000)}`,
-          gross_amount: +req.query.total,
+          order_id,
+          gross_amount: +req.query.total, //kalkulasikan total harga di sini
         },
         credit_card: {
           secure: true,
@@ -40,39 +38,45 @@ class MidtransController {
       };
 
       const midtransToken = await snap.createTransaction(parameter);
+      console.log(midtransToken, 'midtranstoken');
       const createCheckout = await Checkout.create({
         userId: req.user.id,
-        midtransCode: midtransToken.token,
-        transaction: t,
-      });
-
-      for (const el of carts) {
-        const product = await Product.findOne({ where: { id: el.id } });
-        if (product && product.stock >= el.quantity) {
-          await CheckoutProduct.create({
-            checkoutId: createCheckout.id,
-            productId: el.id,
-            quantity: el.quantity,
-            transaction: t,
-          });
-
-          temp.push({
-            checkoutId: createCheckout.id,
-            productId: el.id,
-            quantity: el.quantity,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          });
-
-          await product.decrement("stock", { by: el.quantity, transaction: t });
+        midtransCode: order_id,
+        transaction: t
+      })
+      console.log(req.body.carts, 'ini carts');
+      req.body.carts.forEach(async (el) => {
+        temp.push({
+          // id: await helpers.getId(),
+          checkoutId: createCheckout.id,
+          productId: el.productId,
+          quantity: el.quantity,
+          createdAt: new Date(),
+          updateAt: new Date(),
+        })
+        let dec = await Product.findOne({ where: { id: el.productId } });
+        // console.log(dec, 'isi dec');
+        // console.log(el.id, 'test el id');
+        // console.log(dec.stock, 'dec quantityyyyyyy');
+        // console.log(el.quantity, 'el quantityyyyyyy');
+        if (dec && dec.stock > el.quantity) {
+          await dec.decrement("stock", { by: el.quantity, transaction: t });
         } else {
-          throw new Error("Insufficient stock for some products");
+          // console.log('erorrrrrrrrrrrrrr');
+          throw ({ message: 'Data yang anda minta tidak atau terlalu banyak dari stok produk' })
         }
-      }
-
-      await CheckoutProduct.bulkCreate(temp, { transaction: t });
-      await t.commit();
-      res.status(201).json({ token: midtransToken.token });
+      })
+      // await CheckoutProduct.create({
+      //   checkoutId: createCheckout.id,
+      //   productId: 10,
+      //   quantity: 1,
+      //   transaction: t
+      // })
+      // console.log(temp, 'cartsmidtransssssssssssss');
+      let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t })
+      // console.log(bulkCreate, 'bulkkkkkkkkkkkkkkkkkkkkkk');
+      await t.commit()
+      res.status(201).json({ token: midtransToken.token })
     } catch (error) {
       await t.rollback();
       console.error(error);
@@ -89,14 +93,12 @@ class MidtransController {
         isProduction: true,
         serverKey: midtransKey,
       });
-
-      const temp = [];
-      const carts = req.body.carts;
-
-      const parameter = {
+      let order_id = "JUVINDO-ORDERID-" +
+        Math.floor(1000000 + Math.random() * 9000000)
+      let parameter = {
         transaction_details: {
-          order_id: `ORDERID-${Math.floor(1000000 + Math.random() * 9000000)}`,
-          gross_amount: +req.query.total,
+          order_id,
+          gross_amount: +req.query.total, //kalkulasikan total harga di sini
         },
         credit_card: {
           secure: true,
@@ -112,41 +114,63 @@ class MidtransController {
       const midtransToken = await snap.createTransaction(parameter);
       const createCheckout = await Checkout.create({
         userId: req.user.id,
-        midtransCode: midtransToken.token,
-        transaction: t,
-      });
-
-      for (const el of carts) {
-        const product = await Product.findOne({ where: { id: el.id } });
-        if (product && product.stock >= el.quantity) {
-          await CheckoutProduct.create({
-            checkoutId: createCheckout.id,
-            productId: el.id,
-            quantity: el.quantity,
-            transaction: t,
-          });
-
-          temp.push({
-            checkoutId: createCheckout.id,
-            productId: el.id,
-            quantity: el.quantity,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          });
-
-          await product.decrement("stock", { by: el.quantity, transaction: t });
+        midtransCode: order_id,
+        transaction: t
+      })
+      req.body.carts.forEach(async (el) => {
+        temp.push({
+          // id: await helpers.getId(),
+          checkoutId: createCheckout.id,
+          productId: el.id,
+          quantity: el.quantity,
+          createdAt: new Date(),
+          updateAt: new Date(),
+        })
+        let dec = await Product.findOne({ where: { id: el.id } });
+        // console.log(el.id, 'el id');
+        // console.log(dec.stock, 'dec quantityyyyyyy');
+        // console.log(el.quantity, 'el quantityyyyyyy');
+        if (dec && dec.stock > el.quantity) {
+          await dec.decrement("stock", { by: el.quantity, transaction: t });
         } else {
-          throw new Error("Insufficient stock for some products");
+          // console.log('erorrrrrrrrrrrrrr');
+          throw ({ message: 'Data yang anda minta tidak atau terlalu banyak dari stok produk' })
         }
-      }
-
-      await CheckoutProduct.bulkCreate(temp, { transaction: t });
-      await t.commit();
-      res.status(201).json({ token: midtransToken.token });
+      })
+      // await CheckoutProduct.create({
+      //   checkoutId: createCheckout.id,
+      //   productId: 10,
+      //   quantity: 1,
+      //   transaction: t
+      // })
+      // console.log(temp, 'cartsmidtransssssssssssss');
+      let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t })
+      // console.log(bulkCreate, 'bulkkkkkkkkkkkkkkkkkkkkkk');
+      await t.commit()
+      res.status(201).json({ token: midtransToken.token })
     } catch (error) {
       await t.rollback();
       console.error(error);
       res.status(500).json({ error: "Transaction failed. Please try again." });
+    }
+  }
+
+  static async pay(req, res, next) {
+    try {
+      if (req.body.transaction_status === 'settlement') {
+        await Checkout.update({
+          status: 'pay',
+
+        },{
+          where: {
+            midtransCode: req.body.order_id
+          }
+        })
+      }
+      console.log(req.query, 'dari pay');
+      console.log(req.body, 'dari pay body');
+    } catch (error) {
+      console.log(error);
     }
   }
 }

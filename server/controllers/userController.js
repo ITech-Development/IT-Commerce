@@ -20,7 +20,7 @@ class UserController {
     }
   }
 
-  static async getMeById(req,res, next) {
+  static async getMeById(req, res, next) {
     try {
       const profile = await User.findOne({
         where: { id: req.user.id }
@@ -33,24 +33,24 @@ class UserController {
 
   static async editUser(req, res, next) {
     const { fullName, email, phoneNumber, address } = req.body;
-  
+
     try {
       // Dapatkan pengguna yang akan diedit berdasarkan ID pengguna yang terautentikasi
       const user = await User.findByPk(req.user.id);
-  
+
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
-  
+
       // Update informasi pengguna dengan nilai-nilai baru
       user.fullName = fullName || user.fullName;
       user.email = email || user.email;
       user.phoneNumber = phoneNumber || user.phoneNumber;
       user.address = address || user.address;
-  
+
       // Simpan perubahan informasi pengguna ke database
       await user.save();
-  
+
       res.status(200).json({ message: 'User information updated successfully' });
     } catch (error) {
       console.log(error, 'roar');
@@ -225,7 +225,7 @@ class UserController {
       next(error);
     }
   }
-  
+
 
   static async googleLogin(req, res, next) {
     try {
