@@ -12,20 +12,6 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      categoryId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'ProductCategories',
-          key: 'id'
-        }
-      },
-      typeId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'ProductTypes',
-          key: 'id'
-        }
-      },
       image: {
         type: Sequelize.STRING
       },

@@ -18,13 +18,17 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Checkout.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    contact: DataTypes.STRING,
+    fullName: DataTypes.STRING,
+    phoneNumber: DataTypes.STRING,
     status: DataTypes.STRING,
     address: DataTypes.STRING,
+    province: DataTypes.STRING,
     city: DataTypes.STRING,
-    postalCode: DataTypes.INTEGER,
+    subdistrict: DataTypes.STRING,
+    courier: DataTypes.STRING,
+    shipment: DataTypes.STRING,
+    cost: DataTypes.INTEGER,
+    voucherCode: DataTypes.STRING,
     userId: DataTypes.INTEGER,
     midtransCode: DataTypes.STRING
   }, {

@@ -12,13 +12,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
+      fullName: {
         type: Sequelize.STRING
       },
-      lastName: {
-        type: Sequelize.STRING
-      },
-      contact: {
+      phoneNumber: {
         type: Sequelize.STRING
       },
       status: {
@@ -27,11 +24,26 @@ module.exports = {
       address: {
         type: Sequelize.STRING
       },
+      province: {
+        type: Sequelize.STRING
+      },
       city: {
         type: Sequelize.STRING
       },
-      postalCode: {
+      subdistrict: {
+        type: Sequelize.STRING
+      },
+      courier: {
+        type: Sequelize.STRING
+      },
+      shipment: {
+        type: Sequelize.STRING
+      },
+      cost: {
         type: Sequelize.INTEGER
+      },
+      voucherCode: {
+        type: Sequelize.STRING
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -40,8 +52,8 @@ module.exports = {
           key: 'id'
         }
       },
-      midtransCode: { 
-        type: Sequelize.STRING 
+      midtransCode: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

@@ -7,33 +7,45 @@ class ProductController {
 
     static async getAllProducts(req, res, next) {
         try {
-            const products = await Product.findAll({
-                include: [
-                    {
-                        model: ProductCategory,
-                        as: 'categories' // Nama asosiasi yang sama dengan yang didefinisikan di model Product
-                    },
-                    {
-                        model: ProductType,
-                        as: 'types'
-                    },
-                    {
-                        model: ProductOwner,
-                        as: 'product_owners'
-                    },
-                    {
-                        model: WarehouseAdmin,
-                        as: 'authors'
-                    },
+            const products = await Product.findAll(
+                {
+                    include: [
+                        {
+                            model: ProductOwner,
+                            as: 'product_owners'
+                        },
+                        {
+                            model: WarehouseAdmin,
+                            as: 'authors'
+                        },
 
-                ],
-                order: [['createdAt', 'DESC']]
-            });
+                    ],
+                    order: [['createdAt', 'DESC']]
+                }
+            );
             res.status(200).json(products);
         } catch (error) {
+            console.log(error, 'form all product');
             next(error);
         }
     }
+
+    // static async getAllProducts(req, res, next) {
+    //     try {
+    //         const products = await Product.findAll({
+    //             include: [
+    //                 {
+    //                     model: ProductOwner,
+    //                     as: 'product_owners'
+    //                 }
+    //             ],
+    //             order: [['createdAt', 'DESC']]
+    //         })
+    //         res.status(200).json(products)
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
     static async getNozzelCategory(req, res, next) {
         try {
@@ -125,8 +137,8 @@ class ProductController {
 
             const newProduct = await Product.create({
                 name: req.body.name,
-                categoryId: req.body.categoryId,
-                typeId: req.body.typeId,
+                // categoryId: req.body.categoryId,
+                // typeId: req.body.typeId,
                 image: req.file.path.replace('\\', '/'), // Ubah path menjadi URL relatif
                 description: req.body.description,
                 minimumOrder: req.body.minimumOrder,
@@ -151,25 +163,24 @@ class ProductController {
                 where: {
                     id: req.params.id
                 },
-                include: [
-                    {
-                        model: ProductCategory,
-                        as: 'categories' // Nama asosiasi yang sama dengan yang didefinisikan di model Product
-                    },
-                    {
-                        model: ProductType,
-                        as: 'types'
-                    },
-                    {
-                        model: ProductOwner,
-                        as: 'product_owners'
-                    },
-                    {
-                        model: WarehouseAdmin,
-                        as: 'authors'
-                    },
-
-                ],
+                // include: [
+                //     {
+                //         model: ProductCategory,
+                //         as: 'categories' // Nama asosiasi yang sama dengan yang didefinisikan di model Product
+                //     },
+                //     {
+                //         model: ProductType,
+                //         as: 'types'
+                //     },
+                //     {
+                //         model: ProductOwner,
+                //         as: 'product_owners'
+                //     },
+                //     {
+                //         model: WarehouseAdmin,
+                //         as: 'authors'
+                //     },
+                // ],
             })
             if (product) {
                 res.status(200).json(product)
