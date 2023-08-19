@@ -43,7 +43,7 @@ const ProductCard = ({ product, onAddToCart }) => {
         {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
       </button>
     </div>
-  );
+  ); 
 };
 
 const ProductList = () => {
