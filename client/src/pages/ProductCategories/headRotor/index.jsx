@@ -55,15 +55,15 @@ const ProductList = () => {
     getCategoryOne();
   }, []);
 
-  const getCategoryOne = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/products/nozzle`);
-      const jsonData = response.data;
-      setCategoryOne(Array.isArray(jsonData) ? jsonData : []);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+    const getCategoryOne = async () => {
+        try {
+            const response = await axios.get(`${API_URL}/products/head-rotor`);
+            const jsonData = response.data;
+            setCategoryOne(Array.isArray(jsonData) ? jsonData : []);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
 
   const handleAddToCart = async (product) => {
     const accessToken = localStorage.getItem("access_token");

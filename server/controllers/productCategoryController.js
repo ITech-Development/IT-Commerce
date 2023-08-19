@@ -1,4 +1,4 @@
-const { ProductCategory } = require('../models')
+const { ProductCategory, ProductType, Product } = require('../models')
 
 class ProductCategoryController {
 
@@ -16,7 +16,20 @@ class ProductCategoryController {
 
     static async getAllProductCategories(req, res, next) {
         try {
-            const productCategories = await ProductCategory.findAll()
+            const productCategories = await ProductCategory.findAll({
+                include: [
+                    {
+                        model: ProductType,
+                        as: 'types',
+                        include: [
+                            {
+                                model: Product,
+                                as: 'products'
+                            }
+                        ]
+                    }
+                ]
+            })
             res.status(200).json(productCategories)
         } catch (error) {
             next(error)
