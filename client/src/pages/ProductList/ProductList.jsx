@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useGetAllProductsQuery } from "../../features/productsApi";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Corousel from "../../components/corousel/product";
 import "./productliststyle.css";
@@ -104,7 +103,6 @@ const sortSelectStyle = {
 
 const ProductList = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
-  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
 
@@ -137,20 +135,20 @@ const ProductList = () => {
 
   const filteredAndSortedData = data
     ? data
-        .filter((product) =>
-          product.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-        .sort((a, b) => {
-          switch (sortOption) {
-            case "price":
-              return a.unitPrice - b.unitPrice;
-            case "stock":
-              return a.stock - b.stock;
-            default:
-              // Sort by name by default
-              return a.name.localeCompare(b.name);
-          }
-        })
+      .filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .sort((a, b) => {
+        switch (sortOption) {
+          case "price":
+            return a.unitPrice - b.unitPrice;
+          case "stock":
+            return a.stock - b.stock;
+          default:
+            // Sort by name by default
+            return a.name.localeCompare(b.name);
+        }
+      })
     : [];
  return (
     <>

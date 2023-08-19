@@ -25,7 +25,12 @@ import Chat from "./pages/Chat";
 import CheckTransItech from "./pages/CheckTrans/itech";
 import CheckTransIndoRiau from "./pages/CheckTrans/indoRiau";
 import CheckTransJuvindo from "./pages/CheckTrans/juvindo";
-// import ProductCategories from "./components/sections/productCategories";
+import ProductCategoryNozzle from "./pages/ProductCategories/nozzle";
+import ProductCategoryDeliveryValve from "./pages/ProductCategories/deliveryValve";
+import ProductCategoryElement from "./pages/ProductCategories/element";
+import ProductCategoryVEPump from "./pages/ProductCategories/vePump";
+import ProductCategoryVEPumpParts from "./pages/ProductCategories/vePumpParts";
+import ProductCategoryHeadRotor from "./pages/ProductCategories/headRotor";
 
 export const UserContext = createContext();
 
@@ -51,8 +56,14 @@ const Routing = () => {
       <Route path="/check-TransITech" element={<CheckTransItech />} />
       <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
       <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
-      {/* <Route path="/products/category" element={<ProductCategories />} /> */}
-      {/* <Route path="/profile-update/:id" element={<ProfileUpdate />} /> */}
+      <Route path="/nozzle" element={<ProductCategoryNozzle />} />
+      <Route path="/delivery-valve" element={<ProductCategoryDeliveryValve />} />
+      <Route path="/element" element={<ProductCategoryElement />} />
+      <Route path="/ve-pump" element={<ProductCategoryVEPump />} />
+      <Route path="/ve-pump-parts" element={<ProductCategoryVEPumpParts />} />
+      <Route path="/head-rotor" element={<ProductCategoryHeadRotor />} />
+      <Route path="/head-rotor" element={<ProductCategoryHeadRotor />} />
+
     </Routes>
   );
 };

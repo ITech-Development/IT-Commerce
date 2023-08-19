@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import HeroSection from "../../components/sections/hero";
-import CommitQuote from "../../components/sections/commited";
-import ProductSelected from "../../components/sections/productSelect";
-import Riset from "../../components/sections/Riset";
-import AdminProf from "../../components/sections/adminProf";
-import Quote from "../../components/sections/quote";
+// import CommitQuote from "../../components/sections/commited";
+// import ProductSelected from "../../components/sections/productSelect";
+// import Riset from "../../components/sections/Riset";
+// import AdminProf from "../../components/sections/adminProf";
+// import Quote from "../../components/sections/quote";
 import Footer from "../../components/footer";
 import ProductCatgories from "../../components/sections/productCategories";
 import ClaimVoucher from "../../assets/popup.png";
 import { Link } from "react-router-dom";
+import ProductEvent from '../../components/sections/BrandSales/Product'
 
 // Import Chatbot components from react-chatbot-kit
 import { Chatbot } from "react-chatbot-kit";
@@ -41,11 +42,12 @@ function Index() {
         {/* <Navbar/> */}
         <HeroSection />
         <ProductCatgories/>
-        <CommitQuote />
+        <ProductEvent/>
+        {/* <CommitQuote />
         <ProductSelected onClick={openModal} /> {/* Added onClick event */}
-        <Riset />
+        {/* <Riset />
         <AdminProf />
-        <Quote />
+        <Quote /> */}
         {/* <ComeRegis/> */}
         {/* <Service/> */}
         <Footer />

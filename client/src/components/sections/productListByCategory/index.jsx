@@ -4,6 +4,8 @@ import axios from 'axios';
 function ProductListByCategory({ categoryId }) {
   const [products, setProducts] = useState([]);
 
+  const API_URL = "http://localhost:3100"; 
+
   useEffect(() => {
     // Fetch products by category using Axios
     axios.get(`http://localhost:3100/products?categoryId=${categoryId}`)
@@ -16,11 +18,15 @@ function ProductListByCategory({ categoryId }) {
   return (
     <div className="ProductList">
       <h2>Products in Category {categoryId}</h2>
-      <ul>
+      <div className="ProductCardContainer">
         {filteredProducts.map(product => (
-          <li key={product.id}>{product.name}</li>
+          <div key={product.id} className="ProductCard">
+            <img src={`${API_URL}/${product.image}`}  alt={product.name} width="200px"/>
+            <h3>{product.name}</h3>
+            <p>{product.description}</p>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

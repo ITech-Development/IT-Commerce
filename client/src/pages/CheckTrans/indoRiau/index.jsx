@@ -11,14 +11,13 @@ import VCR3 from "../../../assets/TK01.png";
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
-
 function Index() {
   let [carts, setCarts] = useState([]);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [token, setToken] = useState("");
   const [province, setProvince] = useState([]);
-  const [city, setCity] = useState([]); 
+  const [city, setCity] = useState([]);
   const [subdistrict, setSubdistrict] = useState([]);
   const [courier, setCourier] = useState("jne");
   const [pengiriman, setPengiriman] = useState([]);
@@ -65,7 +64,7 @@ function Index() {
   }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
-    const bayar = calculateTotalBayar();
+    const bayar = calculateTotalBayar()
     const config = {
       "Content-Type": "application/json",
       access_token: localStorage.getItem("access_token"),
@@ -83,7 +82,23 @@ function Index() {
 
   useEffect(() => {
     if (token) {
-      // Gunakan fungsi snap.pay untuk pemrosesan pembayaran
+      // snap.pay(token, {
+      //   onSuccess: (result) => {
+      //     console.log('test embed');
+      //   },
+      //   onPending: (result) => {
+      //     localStorage.setItem('Pembayaran', JSON.stringify(result))
+      //     setToken('')
+      //   },
+      //   onError: (error) => {
+      //     console.log(error);
+      //     setToken('')
+      //   },
+      //   onClose: () => {
+      //     console.log('Anda belum menyelesaikan pembayaran');
+      //     setToken('')
+      //   }
+      // })
       // eslint-disable-next-line no-undef
 
       window.snap.embed(token, {
@@ -205,6 +220,28 @@ function Index() {
     return discountAmount;
   };
 
+  // const calculatePPN = () => {
+  //   let subtotal = calculateVoucher()
+  //   if (subtotal === 0) {
+  //      subtotal = calculateSubtotal()
+  //     const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
+  //     return ppn
+  //   }
+  //   subtotal = calculateVoucher()
+  //   const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
+  //   return ppn
+  // }
+
+  // const calculatePPN = () => {
+
+  // }
+
+  // const calculateTotal = () => {
+  //   const subtotal = calculateSubtotal()
+  //   const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
+  //   const subtotalPpn = subtotal + ppn // menghitung total(subtotal + ppn)
+  //   return subtotalPpn
+  // }
 
   const calculatePPN = () => {
     const subtotal = calculateSubtotal();
@@ -223,10 +260,19 @@ function Index() {
     return total;
   };
 
+  // const calculateTotalBayar = () => {
+  //   const total = parseFloat(calculateTotal()); // Convert total to a number
+  //   const result = (total + parseFloat(totalShippingCost)).toLocaleString("en-US", {
+  //     minimumFractionDigits: 2,
+  //     maximumFractionDigits: 2
+  //   });
+  //   return result;
+  // };
   const calculateTotalBayar = () => {
     const total = calculateTotal();
     const result = total + totalShippingCost;
-    return result;
+    console.log(result, 'hasil result');
+    return Math.floor(result);
   };
 
   useEffect(() => {
@@ -503,7 +549,16 @@ function Index() {
         >
           <h2>Pilih Metode Pengiriman</h2>
           <div>
-         
+            <select onChange={handlerSetCourier}>
+              <option value={courier} >Select Courier</option>
+              <option value="jne">JNE</option>
+              <option value="tiki">TIKI</option>
+              <option value="pos">Pos Indonesia</option>
+              <option value="jnt">J&T</option>
+              {/* <option value="ide">Ide Express</option> */}
+              {/* <option value="anteraja">Anteraja</option>
+              <option value="sicepat">Sicepat</option> */}
+            </select>
             <select
               value={courier}
               onChange={handlerSetCourier}
@@ -624,7 +679,7 @@ function Index() {
           ) : (
             <button onClick={() => handlePaymentProcess()}>Payment</button>
           )}
-          
+
         </div>
       </div>
     </div>

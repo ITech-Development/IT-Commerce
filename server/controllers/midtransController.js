@@ -1,22 +1,48 @@
-const {
-  User,
-  Profile,
-  Checkout,
-  CheckoutProduct,
-  Product,
-} = require("../models/index");
+const { User, Profile, Checkout, CheckoutProduct, Product } = require("../models/index");
 const midtransClient = require("midtrans-client");
 const midtransKey = process.env.MIDTRANS_SERVER_KEY;
 let { sequelize } = require("../models/");
 
 class MidtransController {
-  static async midtransTokenIndoRiau(req, res) {
-    const t = await sequelize.transaction();
 
+  // static async midtransTokenIndoRiau(req, res, next) {
+  //   try {
+  //     const findUser = await User.findByPk(req.user.id)
+  //     let snap = new midtransClient.Snap({
+  //       // Set to true if you want Production Environment (accept real transaction).
+  //       isProduction: false,
+  //       serverKey: midtransKey
+  //     });
+  //     let parameter = {
+  //       transaction_details: {
+  //         order_id: "TRANS_INDO_RIAU_" + Math.floor(1000000 + Math.random() * 9000000), //harus unique, //harus unique
+  //         gross_amount: 10000 //kalkulasikan total harga
+  //       },
+  //       credit_card: {
+  //         secure: true
+  //       },
+  //       customer_details: {
+  //         // first_name: "budi",
+  //         // last_name: "pratama",
+  //         email: findUser.email,
+  //         // phone: "08111222333"
+  //       }
+  //     };
+  //     const midtransToken = await snap.createTransaction(parameter)
+  //     res.status(201).json(midtransToken)
+  //   } catch (error) {
+  //     next(error)
+  //   }
+  // }
+  static async midtransTokenIndoRiau(req, res, next) {
+    const t = await sequelize.transaction();
+    // console.log(req.user.id);
     try {
+      let temp = []
       const user = await User.findByPk(req.user.id);
-      const snap = new midtransClient.Snap({
-        isProduction: true,
+      let snap = new midtransClient.Snap({
+        // Set to true if you want Production Environment (accept real transaction).
+        isProduction: false,
         serverKey: midtransKey,
       });
       let order_id = "INDORIAU-ORDERID-" +
@@ -30,10 +56,12 @@ class MidtransController {
           secure: true,
         },
         customer_details: {
-          full_name: user.fullName,
+          fullName: user.fullName,
           email: user.email,
-          phone: user.phoneNumber,
+          password: user.password,
+          phoneNumber: user.phoneNumber,
           address: user.address,
+          imageProfile: user.imageProfile,
         },
       };
 
@@ -78,19 +106,54 @@ class MidtransController {
       await t.commit()
       res.status(201).json({ token: midtransToken.token })
     } catch (error) {
-      await t.rollback();
-      console.error(error);
-      res.status(500).json({ error: "Transaction failed. Please try again." });
+      console.log(error, 'testerror');
+      await t.rollback()
+      res.status(500).json(error)
     }
+    // try {
+    //   const user = await User.findByPk(req.user.id);
+    //   let snap = new midtransClient.Snap({
+    //     // Set to true if you want Production Environment (accept real transaction).
+    //     isProduction: false,
+    //     serverKey: "SB-Mid-server-ZQU4wWb0ZkWhko2QA8_bZZGZ",
+    //   });
+
+    //   let parameter = {
+    //     transaction_details: {
+    //       order_id:
+    //         "INDOTEKNIK-ORDERID-" +
+    //         Math.floor(1000000 + Math.random() * 9000000), //harus unique
+    //       gross_amount: +req.query.total, //kalkulasikan total harga di sini
+    //     },
+    //     credit_card: {
+    //       secure: true,
+    //     },
+    //     customer_details: {
+    //       fullName: user.fullName,
+    //       email: user.email,
+    //       password: user.password,
+    //       phoneNumber: user.phoneNumber,
+    //       address: user.address,
+    //       imageProfile: user.imageProfile,
+    //     },
+    //   };
+
+    //   const midtransToken = await snap.createTransaction(parameter);
+    //   res.status(201).json(midtransToken);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 
-  static async midtransTokenJuvindo(req, res) {
+  static async midtransTokenJuvindo(req, res, next) {
     const t = await sequelize.transaction();
-
+    // console.log(req.user.id);
     try {
+      let temp = []
       const user = await User.findByPk(req.user.id);
-      const snap = new midtransClient.Snap({
-        isProduction: true,
+      let snap = new midtransClient.Snap({
+        // Set to true if you want Production Environment (accept real transaction).
+        isProduction: false,
         serverKey: midtransKey,
       });
       let order_id = "JUVINDO-ORDERID-" +
@@ -104,10 +167,12 @@ class MidtransController {
           secure: true,
         },
         customer_details: {
-          full_name: user.fullName,
+          fullName: user.fullName,
           email: user.email,
-          phone: user.phoneNumber,
+          password: user.password,
+          phoneNumber: user.phoneNumber,
           address: user.address,
+          imageProfile: user.imageProfile,
         },
       };
 
@@ -149,10 +214,43 @@ class MidtransController {
       await t.commit()
       res.status(201).json({ token: midtransToken.token })
     } catch (error) {
-      await t.rollback();
-      console.error(error);
-      res.status(500).json({ error: "Transaction failed. Please try again." });
+      console.log(error, 'testerror');
+      await t.rollback()
+      res.status(500).json(error)
     }
+    // try {
+    //   const user = await User.findByPk(req.user.id);
+    //   let snap = new midtransClient.Snap({
+    //     // Set to true if you want Production Environment (accept real transaction).
+    //     isProduction: false,
+    //     serverKey: "SB-Mid-server-ZQU4wWb0ZkWhko2QA8_bZZGZ",
+    //   });
+
+    //   let parameter = {
+    //     transaction_details: {
+    //       order_id:
+    //         "INDOTEKNIK-ORDERID-" +
+    //         Math.floor(1000000 + Math.random() * 9000000), //harus unique
+    //       gross_amount: +req.query.total, //kalkulasikan total harga di sini
+    //     },
+    //     credit_card: {
+    //       secure: true,
+    //     },
+    //     customer_details: {
+    //       fullName: user.fullName,
+    //       email: user.email,
+    //       password: user.password,
+    //       phoneNumber: user.phoneNumber,
+    //       address: user.address,
+    //       imageProfile: user.imageProfile,
+    //     },
+    //   };
+
+    //   const midtransToken = await snap.createTransaction(parameter);
+    //   res.status(201).json(midtransToken);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 
   static async pay(req, res, next) {

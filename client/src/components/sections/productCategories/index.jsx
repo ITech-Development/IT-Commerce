@@ -1,44 +1,46 @@
-import React, { useState, useEffect } from 'react';
-// import './ProductCategories.css';
-import ProductListByCategory from '../productListByCategory'; // Adjust the path accordingly
-import axios from 'axios';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useSpring, animated } from 'react-spring';
+import './ProductCategories.css'; // Import your CSS file
 
-function ProductCategories() {
-  const [data, setData] = useState([]);
-  console.log(data, 'test datdatatttt');
-  const apiUrl = 'http://localhost:3100/product-categories/';
-  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
-
-  useEffect(() => {
-    // Fetch data using Axios
-    axios.get(apiUrl)
-      .then(response => setData(response.data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-
-    const handleCategoryClick = (categoryId) => {
-    setSelectedCategoryId(categoryId);
-  };
+function ProductCategoryCard({ to, title }) {
+  const cardAnimation = useSpring({
+    from: { transform: 'scale(1)' },
+    to: async next => {
+      while (true) {
+        await next({ transform: 'scale(1.05)' });
+        await next({ transform: 'scale(1)' });
+      }
+    },
+  });
 
   return (
-    <>
-      {/* ... (existing JSX code) */}
-      <div className="card-container">
-        {data.map(item => (
-          <div
-            key={item.id}
-            className="card"
-            onClick={() => handleCategoryClick(item.id)} // Add this line
-          >
-            <h2>{item.name}</h2>
-            <img src={item.image} alt="gapapa ga ada" />
-          </div>
-        ))}
+    <animated.div className="category-card" style={cardAnimation}>
+      <Link to={to}>
+        <h1>{title}</h1>
+      </Link>
+    </animated.div>
+  );
+}
+
+function ProductCategories() {
+  return (
+    <div className="category-container">
+      <div className="category-section">
+        <h1>Kategori<br />Pilihan<br />Terlaris</h1>
+        <Link to="/productlist">
+        <button className="view-all-button">Lihat Semua</button>
+        </Link>
       </div>
-      {selectedCategoryId !== null && (
-        <ProductListByCategory categoryId={selectedCategoryId} />
-      )}
-    </>
+      <div className="category-sectionCategories">
+        <ProductCategoryCard to="/nozzle" title="Nozzle" />
+        <ProductCategoryCard to="/delivery-valve" title="Delivery Valve" />
+        <ProductCategoryCard to="/element" title="Element" />
+        <ProductCategoryCard to="/ve-pump" title="VE Pump" />
+        <ProductCategoryCard to="/ve-pump-parts" title="VE Pump Parts" />
+        <ProductCategoryCard to="/head-rotor" title="Head Rotor" />
+      </div>
+    </div>
   );
 }
 

@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
-import HeroImage from "../../../assets/ilus.png";
-import "./heroSec.css";
-import { Link } from "react-router-dom";
+import React from "react";
+import Corousel from '../../corousel/homeHero'
 
 export default function Index() {
-  const [isTextVisible, setIsTextVisible] = useState(false);
+  // const [isTextVisible, setIsTextVisible] = useState(false);
 
-  useEffect(() => {
-    setIsTextVisible(true);
-  }, []);
+  // useEffect(() => {
+  //   setIsTextVisible(true);
+  // }, []);
 
   return (
     <div className="hero-container">
-      <div className="hero-content">
+      <Corousel/>
+      {/* <div className="hero-content">
         <h1 className={`title ${isTextVisible ? "animate-text" : ""}`}>
           <strong>
             Perusahaan Layanan dan Eksekusi Terpadu
@@ -30,7 +29,7 @@ export default function Index() {
       </div>
       <div className="hero-image-container">
         <img src={HeroImage} alt="" className="hero-image" />
-      </div>
+      </div> */}
     </div>
   );
 }
