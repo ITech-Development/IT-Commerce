@@ -11,6 +11,14 @@ class ProductController {
                 {
                     include: [
                         {
+                            model: ProductCategory,
+                            as: 'categories'
+                        },
+                        {
+                            model: ProductType,
+                            as: 'types'
+                        },
+                        {
                             model: ProductOwner,
                             as: 'product_owners'
                         },
@@ -164,14 +172,14 @@ class ProductController {
                     id: req.params.id
                 },
                 include: [
-                    // {
-                    //     model: ProductCategory,
-                    //     as: 'categories' // Nama asosiasi yang sama dengan yang didefinisikan di model Product
-                    // },
-                    // {
-                    //     model: ProductType,
-                    //     as: 'types'
-                    // },
+                    {
+                        model: ProductCategory,
+                        as: 'categories' // Nama asosiasi yang sama dengan yang didefinisikan di model Product
+                    },
+                    {
+                        model: ProductType,
+                        as: 'types'
+                    },
                     {
                         model: ProductOwner,
                         as: 'product_owners'

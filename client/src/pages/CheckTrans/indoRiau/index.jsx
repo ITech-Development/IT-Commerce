@@ -502,39 +502,41 @@ function Index() {
         >
           <h2>Pilih Metode Pengiriman</h2>
           <div>
-            <select onChange={handlerSetCourier}>
+            {/* <select onChange={handlerSetCourier}>
               <option value={courier} >Select Courier</option>
               <option value="jne">JNE</option>
               <option value="tiki">TIKI</option>
               <option value="pos">Pos Indonesia</option>
-              <option value="jnt">J&T</option>
+              <option value="jnt">J&T</option> */}
               {/* <option value="ide">Ide Express</option> */}
               {/* <option value="anteraja">Anteraja</option>
               <option value="sicepat">Sicepat</option> */}
-            </select>
+            {/* </select> */}
             <select
-              value={courier}
               onChange={handlerSetCourier}
               className="methodDeliverySelect"
             >
+              <option className="methodDeliveryOption" value={courier}>
+                Select Courier
+              </option>
               <option className="methodDeliveryOption" value="jne">
-                jne
+                JNE
               </option>
               <option className="methodDeliveryOption" value="tiki">
-                tiki
+                TIKI
               </option>
               <option className="methodDeliveryOption" value="pos">
-                pos
+                POS INDONESIA
               </option>
               <option className="methodDeliveryOption" value="jnt">
-                jnt
+                J&T
               </option>
             </select>
             <input
               type="number"
               value={calculateTotalWeight()}
               readOnly
-              placeholder="Total Weight in Grams"
+              className="methodDeliveryOption"
             />
             <select
               name="province"
