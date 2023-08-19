@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
+// const midtransClient = require('midtrans-client');
+
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
 function Index() {
@@ -19,13 +21,22 @@ function Index() {
   const [subdistrict, setSubdistrict] = useState([]);
   const [courier, setCourier] = useState("jne");
   const [pengiriman, setPengiriman] = useState([]);
+
   const [selectedShippingCost, setSelectedShippingCost] = useState(null);
   const [totalShippingCost, setTotalShippingCost] = useState(0);
   const [selectedVoucher, setSelectedVoucher] = useState(null);
   const [vouchers, setVouchers] = useState([]);
   const [profile, setProfile] = useState([]);
 
+  const [checkoutProvince, setCheckoutProvince] = useState()
+  const [checkoutCity, setCheckoutCity] = useState()
+  const [checkoutSubdistrict, setCheckoutSubdistrict] = useState()
+  const [checkoutCourier, setCheckoutCourier] = useState('jne')
+  const [checkoutPengiriman, setCheckoutPengiriman] = useState();
+  const [checkoutCost, setCheckoutCost] = useState()
+
   useEffect(() => {
+
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       let url = "http://localhost:3100/users/me";
@@ -60,41 +71,55 @@ function Index() {
   }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
-    const bayar = calculateTotalBayar();
+    const bayar = calculateTotalBayar()
     const config = {
       "Content-Type": "application/json",
       access_token: localStorage.getItem("access_token"),
     };
 
+    let params = { total: bayar }
     const response = await axios({
-      url: `http://localhost:3100/midtrans/juvindo?total=${bayar}`,
-      data: { carts },
+      url: `http://localhost:3100/midtrans/juvindo`,
+      params,
+      data: {
+        carts,
+        checkoutProvince,
+        checkoutCity,
+        checkoutSubdistrict,
+        checkoutCourier,
+        selectedShippingCost,
+        selectedVoucher,
+        checkoutPengiriman
+      },
       headers: config,
       method: "post",
     });
-    console.log(response.data, "dari front end");
     setToken(response.data.token);
   };
 
   useEffect(() => {
     if (token) {
-      // Gunakan fungsi snap.pay untuk pemrosesan pembayaran
-      // eslint-disable-next-line no-undef
-      snap.pay(token, {
+      window.snap.embed(token, {
+        embedId: 'snap-container',
+
         onSuccess: function (result) {
-          // Penanganan pembayaran berhasil
-          console.log("Pembayaran berhasil:", result);
-          // Anda mungkin ingin melakukan tindakan tambahan di sini, seperti memperbarui status pesanan.
+          /* You may add your own implementation here */
+          alert("payment success!"); console.log(result);
         },
-        onError: function (error) {
-          // Penanganan kesalahan pembayaran
-          console.error("Kesalahan pembayaran:", error);
+        onPending: function (result) {
+          /* You may add your own implementation here */
+          alert("wating your payment!"); console.log(result);
+        },
+        onError: function (result) {
+          /* You may add your own implementation here */
+          alert("payment failed!"); console.log(result);
         },
         onClose: function () {
-          // Penanganan penutupan popup pembayaran
-          console.log("Popup pembayaran ditutup");
-        },
-      });
+          /* You may add your own implementation here */
+          alert('you closed the popup without finishing the payment');
+        }
+      })
+
     }
   }, [token]);
 
@@ -104,8 +129,8 @@ function Index() {
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
-    const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
-    scriptTag.setAttribute("data-client-key", midtransClientKey);
+    const midtransClientKey = "Mid-client-R2krmA7ZU84Yd2Ug";
+    scriptTag.setAttribute("data-client-key-juvindo", midtransClientKey);
 
     document.body.appendChild(scriptTag);
 
@@ -113,7 +138,6 @@ function Index() {
       document.body.removeChild(scriptTag);
     };
   });
-
 
   const handlerInc = (id) => {
     const accessToken = localStorage.getItem("access_token");
@@ -179,28 +203,6 @@ function Index() {
     return discountAmount;
   };
 
-  // const calculatePPN = () => {
-  //   let subtotal = calculateVoucher()
-  //   if (subtotal === 0) {
-  //      subtotal = calculateSubtotal()
-  //     const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
-  //     return ppn
-  //   }
-  //   subtotal = calculateVoucher()
-  //   const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
-  //   return ppn
-  // }
-
-  // const calculatePPN = () => {
-
-  // }
-
-  // const calculateTotal = () => {
-  //   const subtotal = calculateSubtotal()
-  //   const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
-  //   const subtotalPpn = subtotal + ppn // menghitung total(subtotal + ppn)
-  //   return subtotalPpn
-  // }
 
   const calculatePPN = () => {
     const subtotal = calculateSubtotal();
@@ -219,18 +221,10 @@ function Index() {
     return total;
   };
 
-  // const calculateTotalBayar = () => {
-  //   const total = parseFloat(calculateTotal()); // Convert total to a number
-  //   const result = (total + parseFloat(totalShippingCost)).toLocaleString("en-US", {
-  //     minimumFractionDigits: 2,
-  //     maximumFractionDigits: 2
-  //   });
-  //   return result;
-  // };
   const calculateTotalBayar = () => {
     const total = calculateTotal();
     const result = total + totalShippingCost;
-    return result;
+    return Math.floor(result);
   };
 
   useEffect(() => {
@@ -266,12 +260,12 @@ function Index() {
   }, []);
 
   const handleProvinceChange = async (event) => {
-    const selectedProvinceId = event.target.value;
-    // Fetch cities data based on the selected province
-    // console.log(selectedProvinceId, 'TEST');
+    const checkoutProvinceId = event.target.value;
+    const found = province.find((element) => element.province_id === checkoutProvinceId);
+    setCheckoutProvince(found.province)
     try {
       const response = await axios.get(
-        `http://localhost:3100/users/city/${selectedProvinceId}`,
+        `http://localhost:3100/users/city/${checkoutProvinceId}`,
         {
           headers: { access_token: localStorage.getItem("access_token") },
         }
@@ -284,6 +278,8 @@ function Index() {
 
   const handleCityChange = async (event) => {
     const selectedCityId = event.target.value;
+    const found = city.find((element) => element.city_id === selectedCityId);
+    setCheckoutCity(found.city_name)
     try {
       const response = await axios.get(
         `http://localhost:3100/users/subdistrict/${selectedCityId}`,
@@ -297,20 +293,11 @@ function Index() {
     }
   };
 
-  const calculateTotalWeight = () => {
-    let totalWeight = 0;
-    carts.forEach((cartItem) => {
-      const productWeight = cartItem.product.weight; // Assuming each product has a 'weight' property
-      const quantity = cartItem.quantity;
-      totalWeight += productWeight * quantity;
-    });
-    console.log(totalWeight, 'dari total wieght');
-    return totalWeight;
-  };
-
   const handlerGetCost = async (event) => {
     let access_token = localStorage.getItem("access_token");
     const selectedCityId = event.target.value;
+    const found = subdistrict.find((element) => element.subdistrict_id === selectedCityId);
+    setCheckoutSubdistrict(found.subdistrict_name)
     const totalWeight = calculateTotalWeight(); // Calculate total weight dynamically
     let query = { destination: selectedCityId, courier, weight: totalWeight };
     let url = `http://localhost:3100/users/cost`;
@@ -320,9 +307,9 @@ function Index() {
       headers: { access_token },
     });
     setPengiriman(data);
-
     // Assuming that the first shipping cost is selected by default, you can update this logic as needed.
     if (data && data.length > 0) {
+      setCheckoutPengiriman(data[0])
       setSelectedShippingCost(data[0].cost[0].value);
       setTotalShippingCost(data[0].cost[0].value);
     } else {
@@ -331,20 +318,33 @@ function Index() {
     }
   };
 
+  const calculateTotalWeight = () => {
+    let totalWeight = 0;
+    carts.forEach((cartItem) => {
+      const productWeight = cartItem.product.weight; // Assuming each product has a 'weight' property
+      const quantity = cartItem.quantity;
+      totalWeight += productWeight * quantity;
+    });
+    return totalWeight;
+  };
+
   const handleShippingCostChange = (event) => {
     const value = parseFloat(event.target.value);
+    // const value = event.target.value
     setSelectedShippingCost(value);
     setTotalShippingCost(value);
-    console.log(value, "valuvalue");
+    setCheckoutCost(value)
   };
 
   const handlerSetCourier = async (event) => {
     const courier = event.target.value;
+    setCheckoutCourier(courier)
     setCourier(courier);
   };
 
   return (
     <div>
+      <div id="snap-container"></div>
       <div className="alamat">
         <h2>Alamat Pengiriman</h2>
         <div className="address-info">
@@ -359,7 +359,7 @@ function Index() {
           <h4>Address:</h4>
           <p>{profile.address}</p>
           <Link to="/profile-update">
-          <button className="edit-button">Edit</button>
+            <button className="edit-button">Edit</button>
           </Link>
         </div>
       </div>
@@ -446,12 +446,6 @@ function Index() {
                     </span>
                   </div>
 
-                  {/* <div class="start-shopping">
-                  <a href="/productlist">
-                    <span>&lt;</span>
-                    <span>Continue Shopping</span>
-                  </a>
-                </div> */}
                 </div>
               </div>
             </div>
@@ -506,6 +500,16 @@ function Index() {
         >
           <h2>Pilih Metode Pengiriman</h2>
           <div>
+            <select onChange={handlerSetCourier}>
+              <option value={courier} >Select Courier</option>
+              <option value="jne">JNE</option>
+              <option value="tiki">TIKI</option>
+              <option value="pos">Pos Indonesia</option>
+              <option value="jnt">J&T</option>
+              {/* <option value="ide">Ide Express</option> */}
+              {/* <option value="anteraja">Anteraja</option>
+              <option value="sicepat">Sicepat</option> */}
+            </select>
             <select
               value={courier}
               onChange={handlerSetCourier}
@@ -626,6 +630,7 @@ function Index() {
           ) : (
             <button onClick={() => handlePaymentProcess()}>Payment</button>
           )}
+
         </div>
       </div>
     </div>
