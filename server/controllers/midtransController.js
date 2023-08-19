@@ -2,12 +2,13 @@ const { User, Profile, Checkout, CheckoutProduct, Product } = require("../models
 const midtransClient = require("midtrans-client");
 const midtransKey = process.env.MIDTRANS_SERVER_KEY;
 const midtransKeyJuvindo = process.env.MIDTRANS_SERVER_KEY_JUVINDO;
+const midtransKeyIndoRiau = process.env.MIDTRANS_SERVER_KEY_INDO_RIAU;
 let { sequelize } = require("../models/");
 
 class MidtransController {
 
   static async midtransTokenIndoRiau(req, res, next) {
-    // console.log(req.body, 'indo  riau');
+    console.log(req.body, 'indo  riau');
     const t = await sequelize.transaction();
     // console.log(req.user.id);
     try {
@@ -15,8 +16,8 @@ class MidtransController {
       const user = await User.findByPk(req.user.id);
       let snap = new midtransClient.Snap({
         // Set to true if you want Production Environment (accept real transaction).
-        isProduction: false,
-        serverKey: midtransKey,
+        isProduction: true,
+        serverKey: midtransKeyIndoRiau,
       });
       let order_id = "INDORIAU-ORDERID-" +
         Math.floor(1000000 + Math.random() * 9000000)

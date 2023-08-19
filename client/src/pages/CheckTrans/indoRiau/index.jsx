@@ -125,14 +125,14 @@ function Index() {
 
   useEffect(() => {
     // const midtransUrl = "https://app.midtrans.com/snap/snap.js";
-    const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const midtransUrl = "https://app.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
     // const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
-    const midtransClientKey = "SB-Mid-client-5sjWc9AhHLstKFML";
-    scriptTag.setAttribute("data-client-key", midtransClientKey);
+    const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
+    scriptTag.setAttribute("data-client-key-indo-riau", midtransClientKey);
 
     document.body.appendChild(scriptTag);
 
