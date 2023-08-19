@@ -285,11 +285,10 @@ const Cart = () => {
                         Rp.{e.product.unitPrice}
                       </div>
                       <div className="cart-product-quantity">
-                        {/* <div className="count">{e.quantity}</div> */}
                         <button onClick={() => handlerDec(e.id)}>
                           -
                         </button>
-                        {/* <div className="count">{e.quantity}</div> */}
+                        <div className="count">{e.quantity}</div>
                         <button onClick={() => handlerInc(e.id)}>
                           +
                         </button>

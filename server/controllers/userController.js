@@ -260,13 +260,11 @@ class UserController {
 
   static async getProvince(req, res, next) {
     try {
-      console.log('masuk');
       const province = await axios
         .get("https://pro.rajaongkir.com/api/province", {
           headers: { key: rajaOngkir },
         })
         .then((response) => {
-          console.log('masuk oioioi');
           return response.data.rajaongkir.results;
         })
         .catch((err) => {

@@ -28,15 +28,12 @@ function Index() {
   const [vouchers, setVouchers] = useState([]);
   const [profile, setProfile] = useState([]);
 
-
-  // const [checkoutFullName, setCheckoutFullName] = useState()
   const [checkoutProvince, setCheckoutProvince] = useState()
   const [checkoutCity, setCheckoutCity] = useState()
   const [checkoutSubdistrict, setCheckoutSubdistrict] = useState()
   const [checkoutCourier, setCheckoutCourier] = useState('jne')
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
   const [checkoutCost, setCheckoutCost] = useState()
-  const [checkoutVoucherCode, setCheckoutVoucherCode] = useState()
 
   useEffect(() => {
 

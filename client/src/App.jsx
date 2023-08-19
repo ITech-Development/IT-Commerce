@@ -60,7 +60,7 @@ const Routing = () => {
       <Route path="/delivery-valve" element={<ProductCategoryDeliveryValve />} />
       <Route path="/element" element={<ProductCategoryElement />} />
       <Route path="/ve-pump" element={<ProductCategoryVEPump />} />
-      <Route path="/ve-pump" element={<ProductCategoryVEPumpParts />} />
+      <Route path="/ve-pump-parts" element={<ProductCategoryVEPumpParts />} />
       <Route path="/head-rotor" element={<ProductCategoryHeadRotor />} />
 
     </Routes>

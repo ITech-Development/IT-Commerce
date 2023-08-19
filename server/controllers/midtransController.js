@@ -152,39 +152,6 @@ class MidtransController {
       await t.rollback()
       res.status(500).json(error)
     }
-    // try {
-    //   const user = await User.findByPk(req.user.id);
-    //   let snap = new midtransClient.Snap({
-    //     // Set to true if you want Production Environment (accept real transaction).
-    //     isProduction: false,
-    //     serverKey: "SB-Mid-server-ZQU4wWb0ZkWhko2QA8_bZZGZ",
-    //   });
-
-    //   let parameter = {
-    //     transaction_details: {
-    //       order_id:
-    //         "INDOTEKNIK-ORDERID-" +
-    //         Math.floor(1000000 + Math.random() * 9000000), //harus unique
-    //       gross_amount: +req.query.total, //kalkulasikan total harga di sini
-    //     },
-    //     credit_card: {
-    //       secure: true,
-    //     },
-    //     customer_details: {
-    //       fullName: user.fullName,
-    //       email: user.email,
-    //       password: user.password,
-    //       phoneNumber: user.phoneNumber,
-    //       address: user.address,
-    //       imageProfile: user.imageProfile,
-    //     },
-    //   };
-
-    //   const midtransToken = await snap.createTransaction(parameter);
-    //   res.status(201).json(midtransToken);
-    // } catch (error) {
-    //   console.log(error);
-    // }
   }
 
   static async pay(req, res, next) {

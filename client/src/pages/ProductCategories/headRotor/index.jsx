@@ -55,7 +55,7 @@ const ProductList = () => {
 
     const getCategoryOne = async () => {
         try {
-            const response = await axios.get(`${API_URL}/products/nozzle`);
+            const response = await axios.get(`${API_URL}/products/head-rotor`);
             const jsonData = response.data;
             setCategoryOne(Array.isArray(jsonData) ? jsonData : []);
         } catch (error) {
