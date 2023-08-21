@@ -38,23 +38,6 @@ class ProductController {
         }
     }
 
-    // static async getAllProducts(req, res, next) {
-    //     try {
-    //         const products = await Product.findAll({
-    //             include: [
-    //                 {
-    //                     model: ProductOwner,
-    //                     as: 'product_owners'
-    //                 }
-    //             ],
-    //             order: [['createdAt', 'DESC']]
-    //         })
-    //         res.status(200).json(products)
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
     static async getNozzelCategory(req, res, next) {
         try {
             const one = await Product.findAll({

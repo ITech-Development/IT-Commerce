@@ -33,10 +33,8 @@ function Index() {
   const [checkoutSubdistrict, setCheckoutSubdistrict] = useState()
   const [checkoutCourier, setCheckoutCourier] = useState('jne')
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
-  const [checkoutCost, setCheckoutCost] = useState()
 
   useEffect(() => {
-
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       let url = "http://localhost:3100/users/me";
@@ -72,6 +70,7 @@ function Index() {
 
   const handlePaymentProcess = async (data) => {
     const bayar = calculateTotalBayar()
+   
     const config = {
       "Content-Type": "application/json",
       access_token: localStorage.getItem("access_token"),
@@ -89,7 +88,8 @@ function Index() {
         checkoutCourier,
         selectedShippingCost,
         selectedVoucher,
-        checkoutPengiriman
+        checkoutPengiriman,
+        bayar
       },
       headers: config,
       method: "post",
@@ -294,7 +294,7 @@ function Index() {
       console.log("Error fetching subdistricts:", error);
     }
   };
- 
+
   const handlerGetCost = async (event) => {
     let access_token = localStorage.getItem("access_token");
     const selectedCityId = event.target.value;
@@ -335,7 +335,7 @@ function Index() {
     // const value = event.target.value
     setSelectedShippingCost(value);
     setTotalShippingCost(value);
-    setCheckoutCost(value)
+
   };
 
   const handlerSetCourier = async (event) => {
@@ -508,8 +508,8 @@ function Index() {
               <option value="tiki">TIKI</option>
               <option value="pos">Pos Indonesia</option>
               <option value="jnt">J&T</option> */}
-              {/* <option value="ide">Ide Express</option> */}
-              {/* <option value="anteraja">Anteraja</option>
+            {/* <option value="ide">Ide Express</option> */}
+            {/* <option value="anteraja">Anteraja</option>
               <option value="sicepat">Sicepat</option> */}
             {/* </select> */}
             <select

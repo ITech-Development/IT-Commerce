@@ -39,18 +39,18 @@ class MidtransController {
         },
       };
       const midtransToken = await snap.createTransaction(parameter);
+      const {
+        checkoutProvince,
+        checkoutCity,
+        bayar,
+        checkoutSubdistrict,
+        selectedVoucher,
+      } = req.body
       const createCheckout = await Checkout.create({
         userId: req.user.id,
-        fullName: user.fullName,
-        address: user.address,
-        phoneNumber: user.phoneNumber,
-        province: req.body.checkoutProvince,
-        city: req.body.checkoutCity,
-        subdistrict: req.body.checkoutSubdistrict,
-        cost: req.body.selectedShippingCost,
-        courier: req.body.checkoutCourier,
-        shipment: `Service: ${req.body.checkoutPengiriman.service}, Description: ${req.body.checkoutPengiriman.description}`,
-        voucherCode: req.body.selectedVoucher,
+        shippingAddress: `${checkoutProvince}, ${checkoutCity}, ${checkoutSubdistrict}`,
+        totalPrice: bayar,
+        voucherCode: selectedVoucher,
         midtransCode: order_id,
         transaction: t
       })
@@ -114,15 +114,10 @@ class MidtransController {
       const midtransToken = await snap.createTransaction(parameter);
       const createCheckout = await Checkout.create({
         userId: req.user.id,
-        fullName: user.fullName,
-        address: user.address,
-        phoneNumber: user.phoneNumber,
-        province: req.body.checkoutProvince,
-        city: req.body.checkoutCity,
-        subdistrict: req.body.checkoutSubdistrict,
-        cost: req.body.selectedShippingCost,
-        courier: req.body.checkoutCourier,
-        shipment: `Service: ${req.body.checkoutPengiriman.service}, Description: ${req.body.checkoutPengiriman.description}`,
+        // checkoutDate: ,
+        // totalPrice: ,
+        // paymentStatus: DataTypes.STRING,
+        // shippingAddress: ,
         voucherCode: req.body.selectedVoucher,
         midtransCode: order_id,
         transaction: t
@@ -158,7 +153,7 @@ class MidtransController {
     try {
       if (req.body.transaction_status === 'settlement') {
         await Checkout.update({
-          status: 'pay',
+          paymentStatus: 'Dibayar',
         }, {
           where: {
             midtransCode: req.body.order_id
