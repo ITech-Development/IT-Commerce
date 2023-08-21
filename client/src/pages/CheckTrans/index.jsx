@@ -361,18 +361,18 @@ function Index() {
       <div className="alamat">
         <h2>Alamat Pengiriman</h2>
         <div className="address-info">
-          <h4>Full Name:</h4>
-          <p>{profile.user?.fullName}</p>
+          <h4>Nama Lengkap</h4>
+          <p>: {profile.user?.fullName}</p>
         </div>
         <div className="address-info">
-          <h4>Phone Number:</h4>
-          <p>{profile.user?.phoneNumber}</p>
+          <h4>Nomor Handphone</h4>
+          <p>: {profile.user?.phoneNumber}</p>
         </div>
         <div className="address-info">
-          <h4>Address:</h4>
-          <p>{profile.user?.address}</p>
+          <h4>Detail Alamat</h4>
+          <p>: {profile.user?.address}</p>
+        </div>
           <button className="edit-button">Edit</button>
-        </div>
       </div>
 
       <div
@@ -456,13 +456,6 @@ function Index() {
                       {calculateTotal()}
                     </span>
                   </div>
-
-                  {/* <div class="start-shopping">
-                  <a href="/productlist">
-                    <span>&lt;</span>
-                    <span>Continue Shopping</span>
-                  </a>
-                </div> */}
                 </div>
               </div>
             </div>

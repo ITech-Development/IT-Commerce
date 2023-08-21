@@ -48,10 +48,30 @@ const ProductList = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [sortOption, setSortOption] = useState("name");
     const [vePumpCategory, SetVEPumpCategory] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
 
     useEffect(() => {
         getVEPumpCategory();
     }, []);
+    
+  useEffect(() => {
+    // Filter and sort products based on search query and sort option
+    const filteredAndSortedProducts = vePumpCategory
+      .filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .sort((a, b) => {
+        if (sortOption === "name") {
+          return a.name.localeCompare(b.name);
+        } else if (sortOption === "price") {
+          return a.unitPrice - b.unitPrice;
+        } else if (sortOption === "stock") {
+          return a.stock - b.stock;
+        }
+      });
+
+    setFilteredProducts(filteredAndSortedProducts);
+  }, [searchQuery, sortOption, vePumpCategory]);
 
     const getVEPumpCategory = async () => {
         try {
@@ -127,10 +147,10 @@ const ProductList = () => {
                     </select>
                 </div>
                 <div className="products">
-                    {vePumpCategory.length === 0 ? (
+                    {filteredProducts.length === 0 ? (
                         <p>Dalam kategori yang anda pilih produk belum tersedia</p>
                     ) : (
-                        vePumpCategory.map((product) => (
+                        filteredProducts.map((product) => (
                             <ProductCard
                                 key={product.id}
                                 product={product}
