@@ -1,4 +1,4 @@
-const { CheckoutProduct, Checkout, Product, sequelize } = require('../models')
+const { CheckoutProduct, Checkout, Product, ProductOwner,sequelize } = require('../models')
 
 class CheckoutProductController {
     // static async getAllCheckoutProducts(req, res, next) {
@@ -30,46 +30,55 @@ class CheckoutProductController {
 
     static async getAllCheckoutProducts(req, res, next) {
         try {
-            // Find the checkout associated with the user
-            const findedCheckout = await Checkout.findOne({
+            // Find checkouts associated with the user
+            const checkouts = await Checkout.findAll({
                 where: { userId: req.user.id },
             });
     
-            // Get the user's ID from the found checkout
-            const userId = findedCheckout.userId;
+            const checkoutProductsMap = {};
     
-            // Retrieve checkout products and include associated checkout and product data
-            const checkoutProducts = await CheckoutProduct.findAll({
-                include: [
-                    {
-                        model: Checkout,  // Include Checkout model
-                        as: 'checkouts',  // Define alias for the association
-                        where: {
-                            userId: userId // Filter checkouts by user ID
+            // Iterate through checkouts
+            for (const checkout of checkouts) {
+                const checkoutId = checkout.id;
+    
+                // Retrieve checkout products and include associated product data
+                const checkoutProducts = await CheckoutProduct.findAll({
+                    where: {
+                        checkoutId: checkoutId
+                    },
+                    include: [
+                        {
+                            model: Product,   // Include Product model
+                            as: 'products',    // Define alias for the association,
+                            include: [
+                                {
+                                    model: ProductOwner,
+                                    as: 'product_owners'
+                                }
+                            ]
+                        },
+                        {
+                            model: Checkout,
+                            as: 'checkouts'
                         }
-                    },
-                    {
-                        model: Product,   // Include Product model
-                        as: 'products'    // Define alias for the association
-                    },
-                ]
-            });
+                    ]
+                });
     
-            // Group checkout products by checkout ID
-            const groupedProducts = {}; // Initialize an object to store grouped products
-            checkoutProducts.forEach(product => {
-                const checkoutId = product.checkouts.id; // Get the checkout ID
-                if (!groupedProducts[checkoutId]) {
-                    groupedProducts[checkoutId] = []; // Initialize an array for the checkout ID
-                }
-                groupedProducts[checkoutId].push(product.products); // Push the product to the array
-            });
+                // Store checkout products with quantity in the map
+                checkoutProductsMap[checkoutId] = checkoutProducts.map(cp => ({
+                    product: cp.products,
+                    checkout: cp.checkouts,
+                    quantity: cp.quantity,
+                    createdAt: cp.createdAt
+                }));
+            }
     
-            res.status(200).json(groupedProducts);
+            res.status(200).json(checkoutProductsMap);
         } catch (error) {
             next(error);
         }
     }
+    
     
 
 
