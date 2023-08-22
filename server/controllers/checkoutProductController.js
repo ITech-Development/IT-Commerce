@@ -62,7 +62,7 @@ class CheckoutProductController {
                             as: 'checkouts'
                         }
                     ],
-                    order: [['createdAt', '']]
+                    order: [['createdAt', 'DESC']]
                 });
     
                 // Store checkout products with quantity in the map
@@ -138,12 +138,23 @@ class CheckoutProductController {
 
     static async detailsCheckoutProduct(req, res, next) {
         try {
-            const checkoutProduct = await CheckoutProduct.findOne({
+            const checkoutId = req.params.id; // Assuming checkoutId is passed as a parameter
+    
+            const checkoutProducts = await CheckoutProduct.findAll({
                 where: {
-                    id: req.params.id
+                    checkoutId: checkoutId
                 },
-                
                 include: [
+                    {
+                        model: Product,
+                        as: 'products',
+                        include: [
+                            {
+                                model: ProductOwner,
+                                as: 'product_owners'
+                            }
+                        ]
+                    },
                     {
                         model: Checkout,
                         as: 'checkouts',
@@ -153,22 +164,28 @@ class CheckoutProductController {
                                 as: 'users'
                             }
                         ]
-                    },
-                    {
-                        model: Product,
-                        as: 'products'
                     }
-                ]
-            })
-            if (checkoutProduct) {
-                res.status(200).json(checkoutProduct)
-            } else {
-                throw { name: 'NotFoundError' }
+                ],
+                order: [['createdAt', 'DESC']]
+            });
+    
+            if (checkoutProducts.length === 0) {
+                return res.status(404).json({ message: 'Checkout products not found.' });
             }
+    
+            const formattedCheckoutProducts = checkoutProducts.map(cp => ({
+                product: cp.products,
+                checkout: cp.checkouts,
+                quantity: cp.quantity,
+                createdAt: cp.createdAt
+            }));
+    
+            res.status(200).json(formattedCheckoutProducts);
         } catch (error) {
-            next(error)
+            next(error);
         }
     }
+    
 
 
 

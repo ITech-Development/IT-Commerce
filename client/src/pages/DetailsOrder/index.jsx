@@ -1,47 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
-import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-const OrderDetail = ({ match }) => {
-    const [order, setOrder] = useState({});
-    const { id } = useParams() // Ambil ID order dari parameter URL
-    console.log(order, 'test');
+function CheckoutProductsPage() {
+    const [checkoutProducts, setCheckoutProducts] = useState([]);
+    console.log(checkoutProducts, 'test test');
+    const [loading, setLoading] = useState(true);
 
+    // const { checkoutId } = useParams(); // Extract checkoutId from useParams
+
+    const { id } = useParams();
     useEffect(() => {
-        // Simulasi pengambilan data order dari API atau sumber data lainnya
-        fetch(`http://localhost:3100/checkout-products/${id}`)
-            .then(response => response.json())
-            .then(data => setOrder(data))
-            .catch(error => console.error('Error fetching order:', error));
+        async function fetchCheckoutProducts() {
+            try {
+                const response = await axios.get(`http://localhost:3100/checkout-products/${id}`, {
+                    headers: {
+                        access_token: localStorage.getItem('access_token')
+                    }
+                });
+                setCheckoutProducts(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching checkout products:', error);
+            }
+        }
+
+        fetchCheckoutProducts();
     }, [id]);
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <div>
-                <Link to='/my-order'>
-                <button>Kembali</button>
-                </Link>
-            </div>
-            <h2>Detail Order {id}</h2>
-            <p>No. Pesanan: {order.checkouts?.midtransCode}</p>
-            <p>Order Status: {order.checkouts?.paymentStatus}</p>
-            <p>Customer Name: {order.checkouts?.users?.fullName}</p>
-            <p>Alamat Pengiriman: {order.checkouts?.shippingAddress}</p>
-            <p>Items:</p>
-            <ul>
-                {order.items &&
-                    order.items.map(item => (
-                        <li key={item.id}>
-                            {item.name} - {item.quantity}
-                        </li>
-                    ))}
-            </ul>
+            <h2>Checkout Products</h2>
+            {checkoutProducts.map((checkoutProduct, index) => (
+                <div key={index}>
+                    <h3>Product: {checkoutProduct.product.name}</h3>
+                    <p>Quantity: {checkoutProduct.quantity}</p>
+                    <p>Created At: {checkoutProduct.createdAt}</p>
+                </div>
+            ))}
         </div>
     );
-};
+}
 
-export default OrderDetail;
+export default CheckoutProductsPage;

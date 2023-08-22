@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get('/', authenticationUser, CheckoutProductController.getAllCheckoutProducts)
 router.post('/', authenticationUser, CheckoutProductController.addCheckoutProduct)
-router.get('/:id', CheckoutProductController.detailsCheckoutProduct)
+router.get('/:id', authenticationUser, CheckoutProductController.detailsCheckoutProduct)
 // router.delete('/:id', ProductShippingController.deleteProductShipping)
 
 module.exports = router
