@@ -153,7 +153,6 @@ const ProductList = () => {
  return (
     <>
       <Corousel />
-
       <div className="productlist-container">
         {isLoading ? (
           <div style={loadingContainerStyle}>

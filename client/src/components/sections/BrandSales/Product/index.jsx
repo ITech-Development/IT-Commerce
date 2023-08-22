@@ -54,16 +54,15 @@ const ProductCard = ({ product, onAddToCart }) => {
   const starRating = 5;
   return (
     <div className="product">
-      <Link
-        to={`/products/${product.id}`}
-        className="view-product-button"
-        style={linkStyle}
-      >
-        <img src={`${API_URL}/${product.image}`} alt={product.name} />
+      <Link to={`/products/${product.id}`}>
+        
+      <img src={`${API_URL}/${product.image}`} alt={product.name} />
       </Link>
       <div className="details">
-        <h3 >{product.category}</h3>
-        <h3 style={{ padding: "5px 0", margin: "0" }}>{product.name}</h3>
+        <h3 >{product.categories?.name}</h3>
+        <Link to={`/products/${product.id}`}>
+          <h3 style={{ padding: "5px 0", margin: "0" }}>{product.name}</h3>
+        </Link>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
             <div style={{ width: "90px" }} className="star-rating">
@@ -141,20 +140,20 @@ const ProductList = () => {
 
   const filteredAndSortedData = data
     ? data
-        .filter((product) =>
-          product.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-        .sort((a, b) => {
-          switch (sortOption) {
-            case "price":
-              return a.unitPrice - b.unitPrice;
-            case "stock":
-              return a.stock - b.stock;
-            default:
-              // Sort by name by default
-              return a.name.localeCompare(b.name);
-          }
-        })
+      .filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .sort((a, b) => {
+        switch (sortOption) {
+          case "price":
+            return a.unitPrice - b.unitPrice;
+          case "stock":
+            return a.stock - b.stock;
+          default:
+            // Sort by name by default
+            return a.name.localeCompare(b.name);
+        }
+      })
     : [];
 
   return (

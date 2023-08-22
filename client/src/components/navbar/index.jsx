@@ -3,9 +3,10 @@ import "./style.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Logo from "../../assets/Logo.png";
-import ProfileIcon from "../../assets/icon.svg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+// import ProfileIcon from "../../assets/icon.svg";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import CartIcon from './iconCart.png'
 
 export default function Navigation() {
   const [carts, setCarts] = useState([]);
@@ -33,7 +34,7 @@ export default function Navigation() {
       let url = "http://localhost:3100/users/me";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
-          console.log(data, 'dari profile');
+          console.log(data, "dari profile");
           setProfile(data);
         })
         .catch((error) => {
@@ -63,28 +64,30 @@ export default function Navigation() {
       <>
         <div style={{ display: "flex", alignItems: "center" }}>
           <li>
-            <Link to="/productlist">Products</Link>
+            <Link to="/productlist">Produk</Link>
           </li>
           <li>
-            <Link to="/services">Services</Link>
+            <Link to="/services">Layanan</Link>
           </li>
         </div>
         {showCart && (
           <li>
             <Link to="/cart">
-              <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
+              {/* <FontAwesomeIcon icon='' className="cart-icon" /> */}
+              <img style={{position: 'relative', top: '6px'}} src={CartIcon} alt="" />
               <span
                 style={{
                   position: "relative",
                   backgroundColor: "#2EEDF5",
                   border: "1px solid #2EEDF5",
                   borderRadius: "50px",
-                  padding: "4px 9px",
+                  padding: "4px 7.3px",
+                  fontWeight: '700',
                   textDecoration: "none",
                   color: "black",
-                  top: "-8px",
+                  top: "-25px",
                   right: "8px",
-                  fontSize: "13px",
+                  fontSize: "10px",
                 }}
               >
                 {totalQuantity}
@@ -94,14 +97,29 @@ export default function Navigation() {
         )}
         {token ? (
           <li>
-            <div className="dropdown" ref={dropdownRef}>
+            <div
+              className="dropdown"
+              ref={dropdownRef}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <p>
+                Halo, <strong>{profile.fullName}</strong>{" "}
+              </p>
               <img
                 onClick={toggleDropdown}
-                style={{ height: "50px", color: "blue", cursor: "pointer" }}
-                src={ProfileIcon}
+                style={{
+                  height: "50px",
+                  color: "blue",
+                  cursor: "pointer",
+                  paddingLeft: "10px",
+                }}
+                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
                 alt=""
               />
-              {profile.fullName}
               {isDropdownOpen && (
                 <ul className="dropdown-menu">
                   <li>

@@ -50,10 +50,30 @@ const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
   const [categoryTwo, setCategoryTwo] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     getCategoryTwo();
   }, []);
+
+  useEffect(() => {
+    // Filter and sort products based on search query and sort option
+    const filteredAndSortedProducts = categoryTwo
+      .filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .sort((a, b) => {
+        if (sortOption === "name") {
+          return a.name.localeCompare(b.name);
+        } else if (sortOption === "price") {
+          return a.unitPrice - b.unitPrice;
+        } else if (sortOption === "stock") {
+          return a.stock - b.stock;
+        }
+      });
+
+    setFilteredProducts(filteredAndSortedProducts);
+  }, [searchQuery, sortOption, categoryTwo]);
 
   const getCategoryTwo = async () => {
     try {
@@ -149,10 +169,10 @@ const ProductList = () => {
         </div>
 
         <div className="products">
-          {categoryTwo.length === 0 ? (
+          {filteredProducts.length === 0 ? (
             <p>Dalam kategori yang anda pilih produk belum tersedia</p>
           ) : (
-            categoryTwo.map((product) => (
+            filteredProducts.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}

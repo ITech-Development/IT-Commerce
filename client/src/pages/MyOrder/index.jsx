@@ -29,8 +29,8 @@ function CheckoutProductsPage() {
           <ul>
             {checkoutProducts[checkoutId].map((productInfo, index) => (
               <li key={index}>
-                <Link to={`/products/${productInfo.product.id}`}>
-                <img src={`${API_URL}/${productInfo.product.image}`} alt={productInfo.product.name} width="100px" /> <br />
+                <Link to={`/my-order/${productInfo.checkout.id}`}>
+                  <img src={`${API_URL}/${productInfo.product.image}`} alt={productInfo.product.name} width="100px" /> <br />
                 </Link>
                 Product: {productInfo.product.name} <br />
                 Quantity: {productInfo.quantity} <br />
@@ -38,7 +38,6 @@ function CheckoutProductsPage() {
                 Checkout Date: {productInfo.createdAt}
               </li>
             ))}
-            
           </ul>
           <button>Beli lagi</button>
         </div>

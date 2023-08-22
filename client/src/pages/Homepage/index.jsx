@@ -20,7 +20,6 @@ import ActionProvider from "./chatbot/ActionProvider";
 
 function Index() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
    // Function to open the modal
    const openModal = () => {
     setIsModalOpen(true);

@@ -43,27 +43,47 @@ const ProductCard = ({ product, onAddToCart }) => {
         {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
       </button>
     </div>
-  ); 
+  );
 };
 
 const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
   const [categoryOne, setCategoryOne] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     getCategoryOne();
   }, []);
 
-    const getCategoryOne = async () => {
-        try {
-            const response = await axios.get(`${API_URL}/products/head-rotor`);
-            const jsonData = response.data;
-            setCategoryOne(Array.isArray(jsonData) ? jsonData : []);
-        } catch (error) {
-            console.error("Error fetching data:", error);
+  useEffect(() => {
+    // Filter and sort products based on search query and sort option
+    const filteredAndSortedProducts = categoryOne
+      .filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .sort((a, b) => {
+        if (sortOption === "name") {
+          return a.name.localeCompare(b.name);
+        } else if (sortOption === "price") {
+          return a.unitPrice - b.unitPrice;
+        } else if (sortOption === "stock") {
+          return a.stock - b.stock;
         }
-    };
+      });
+
+    setFilteredProducts(filteredAndSortedProducts);
+  }, [searchQuery, sortOption, categoryOne]);
+
+  const getCategoryOne = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/products/head-rotor`);
+      const jsonData = response.data;
+      setCategoryOne(Array.isArray(jsonData) ? jsonData : []);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const handleAddToCart = async (product) => {
     const accessToken = localStorage.getItem("access_token");
@@ -149,10 +169,10 @@ const ProductList = () => {
         </div>
 
         <div className="products">
-          {categoryOne.length === 0 ? (
+          {filteredProducts.length === 0 ? (
             <p>Dalam kategori yang anda pilih produk belum tersedia</p>
           ) : (
-            categoryOne.map((product) => (
+            filteredProducts.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}

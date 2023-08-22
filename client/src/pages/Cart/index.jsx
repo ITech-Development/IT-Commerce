@@ -257,10 +257,10 @@ const Cart = () => {
               </StoreHeader>
               <div>
                 <div className="titles">
-                  <h3 className="product-title">Product</h3>
-                  <h3 className="price">Price</h3>
-                  <h3 className="quantity">Quantity</h3>
-                  <h3 className="total">Total</h3>
+                  <h3 className="product-title">Produk</h3>
+                  <h3 className="price">Harga</h3>
+                  <h3 className="quantity">Kuantitas</h3>
+                  <h3 className="total">Total Harga</h3>
                 </div>
                 <div class="cart-items">
                   {cartsIndoRiau?.map((e) => (
@@ -300,9 +300,7 @@ const Cart = () => {
                   ))}
                 </div>
                 <div className="cart-summary">
-                  <button className="clear-cart" onClick={handleClear}>
-                    Clear Cart
-                  </button>
+                  <p></p>
                   <div className="cart-checkout">
                     <div className="subtotal">
                       <span>Subtotal :</span>
@@ -337,7 +335,7 @@ const Cart = () => {
                     </button>
                     <ContinueShoppingContainer>
                       <ContinueShoppingIcon>&lt;</ContinueShoppingIcon>
-                      <Link to="/productlist">Continue Shopping</Link>
+                      <Link to="/productlist">Beli Lagi</Link>
                     </ContinueShoppingContainer>
                   </div>
                 </div>
@@ -359,10 +357,10 @@ const Cart = () => {
               </StoreHeader>
               <div>
                 <div className="titles">
-                  <h3 className="product-title">Product</h3>
-                  <h3 className="price">Price</h3>
-                  <h3 className="quantity">Quantity</h3>
-                  <h3 className="total">Total</h3>
+                  <h3 className="product-title">Produk</h3>
+                  <h3 className="price">Harga</h3>
+                  <h3 className="quantity">Kuantitas</h3>
+                  <h3 className="total">Total Harga</h3>
                 </div>
                 <div class="cart-items">
                   {cartsJuvindo?.map((e) => (
@@ -397,9 +395,7 @@ const Cart = () => {
                   ))}
                 </div>
                 <div className="cart-summary">
-                  <button className="clear-cart" onClick={handleClear}>
-                    Clear Cart
-                  </button>
+                  <p></p>
                   <div className="cart-checkout">
                     <div className="subtotal">
                       <span>Subtotal :</span>
@@ -445,7 +441,7 @@ const Cart = () => {
                     </button>
                     <ContinueShoppingContainer>
                       <ContinueShoppingIcon>&lt;</ContinueShoppingIcon>
-                      <Link to="/productlist">Continue Shopping</Link>
+                      <Link to="/productlist">Beli Lagi</Link>
                     </ContinueShoppingContainer>
                   </div>
                 </div>
@@ -468,10 +464,10 @@ const Cart = () => {
 
               <div>
                 <div className="titles">
-                  <h3 className="product-title">Product</h3>
-                  <h3 className="price">Price</h3>
-                  <h3 className="quantity">Quantity</h3>
-                  <h3 className="total">Total</h3>
+                  <h3 className="product-title">Produk</h3>
+                  <h3 className="price">Harga</h3>
+                  <h3 className="quantity">Kuantitas</h3>
+                  <h3 className="total">Total Harga</h3>
                 </div>
                 <div class="cart-items">
                   {cartsItech?.map((e) => (
@@ -511,9 +507,7 @@ const Cart = () => {
                   ))}
                 </div>
                 <div className="cart-summary">
-                  <button className="clear-cart" onClick={handleClear}>
-                    Clear Cart
-                  </button>
+                  <p></p>
                   <div className="cart-checkout">
                     <div className="subtotal">
                       <span>Subtotal :</span>
@@ -545,7 +539,7 @@ const Cart = () => {
                     </button>
                     <ContinueShoppingButton>
                       <ContinueShoppingIcon as={FaShoppingCart} />
-                      <Link to="/productlist">Continue Shopping</Link>
+                      <Link to="/productlist">Beli Lagi</Link>
                     </ContinueShoppingButton>
                   </div>
                 </div>
@@ -593,7 +587,7 @@ const ContinueShoppingButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-  text-transform: uppercase;
+  text-decoration: none; /* Set text-decoration to none to remove the underline */
 
   &:hover {
     background-color: #0056b3;
@@ -606,8 +600,8 @@ const ContinueShoppingContainer = styled.div`
   margin-top: 10px;
   font-size: 14px;
   color: #555;
-  text-transform: uppercase;
   cursor: pointer;
+  text-decoration: none; /* Set text-decoration to none to remove the underline */
 
   &:hover {
     color: #007bff;

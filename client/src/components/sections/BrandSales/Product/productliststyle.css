@@ -1,24 +1,4 @@
-/* Styles for the product card */
-.product {
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 6px;
-    position: relative;
-    transition: box-shadow 0.3s ease;
-    cursor: pointer;
-    overflow: hidden;
-  }
-  
-  .product:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  .product img {
-    max-height: 100px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
+
   
   .details {
     margin: 0;

@@ -28,11 +28,12 @@ function Index() {
   const [vouchers, setVouchers] = useState([]);
   const [profile, setProfile] = useState([]);
 
-  const [checkoutProvince, setCheckoutProvince] = useState()
-  const [checkoutCity, setCheckoutCity] = useState()
-  const [checkoutSubdistrict, setCheckoutSubdistrict] = useState()
-  const [checkoutCourier, setCheckoutCourier] = useState('jne')
+  const [checkoutProvince, setCheckoutProvince] = useState();
+  const [checkoutCity, setCheckoutCity] = useState();
+  const [checkoutSubdistrict, setCheckoutSubdistrict] = useState();
+  const [checkoutCourier, setCheckoutCourier] = useState("jne");
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
+  const [checkoutCost, setCheckoutCost] = useState();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
@@ -69,14 +70,14 @@ function Index() {
   }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
-    const bayar = calculateTotalBayar()
    
+    const bayar = calculateTotalBayar();
     const config = {
       "Content-Type": "application/json",
       access_token: localStorage.getItem("access_token"),
     };
 
-    let params = { total: bayar }
+    let params = { total: bayar };
     const response = await axios({
       url: `http://localhost:3100/midtrans/indo-riau`,
       params,
@@ -100,26 +101,28 @@ function Index() {
   useEffect(() => {
     if (token) {
       window.snap.embed(token, {
-        embedId: 'snap-container',
+        embedId: "snap-container",
 
         onSuccess: function (result) {
           /* You may add your own implementation here */
-          alert("payment success!"); console.log(result);
+          alert("payment success!");
+          console.log(result);
         },
         onPending: function (result) {
           /* You may add your own implementation here */
-          alert("wating your payment!"); console.log(result);
+          alert("wating your payment!");
+          console.log(result);
         },
         onError: function (result) {
           /* You may add your own implementation here */
-          alert("payment failed!"); console.log(result);
+          alert("payment failed!");
+          console.log(result);
         },
         onClose: function () {
           /* You may add your own implementation here */
-          alert('you closed the popup without finishing the payment');
-        }
-      })
-
+          alert("you closed the popup without finishing the payment");
+        },
+      });
     }
   }, [token]);
 
@@ -205,7 +208,6 @@ function Index() {
     return discountAmount;
   };
 
-
   const calculatePPN = () => {
     const subtotal = calculateSubtotal();
     const voucherDiscount = calculateVoucher();
@@ -263,8 +265,10 @@ function Index() {
 
   const handleProvinceChange = async (event) => {
     const checkoutProvinceId = event.target.value;
-    const found = province.find((element) => element.province_id === checkoutProvinceId);
-    setCheckoutProvince(found.province)
+    const found = province.find(
+      (element) => element.province_id === checkoutProvinceId
+    );
+    setCheckoutProvince(found.province);
     try {
       const response = await axios.get(
         `http://localhost:3100/users/city/${checkoutProvinceId}`,
@@ -281,7 +285,7 @@ function Index() {
   const handleCityChange = async (event) => {
     const selectedCityId = event.target.value;
     const found = city.find((element) => element.city_id === selectedCityId);
-    setCheckoutCity(found.city_name)
+    setCheckoutCity(found.city_name);
     try {
       const response = await axios.get(
         `http://localhost:3100/users/subdistrict/${selectedCityId}`,
@@ -298,8 +302,10 @@ function Index() {
   const handlerGetCost = async (event) => {
     let access_token = localStorage.getItem("access_token");
     const selectedCityId = event.target.value;
-    const found = subdistrict.find((element) => element.subdistrict_id === selectedCityId);
-    setCheckoutSubdistrict(found.subdistrict_name)
+    const found = subdistrict.find(
+      (element) => element.subdistrict_id === selectedCityId
+    );
+    setCheckoutSubdistrict(found.subdistrict_name);
     const totalWeight = calculateTotalWeight(); // Calculate total weight dynamically
     let query = { destination: selectedCityId, courier, weight: totalWeight };
     let url = `http://localhost:3100/users/cost`;
@@ -311,7 +317,7 @@ function Index() {
     setPengiriman(data);
     // Assuming that the first shipping cost is selected by default, you can update this logic as needed.
     if (data && data.length > 0) {
-      setCheckoutPengiriman(data[0])
+      setCheckoutPengiriman(data[0]);
       setSelectedShippingCost(data[0].cost[0].value);
       setTotalShippingCost(data[0].cost[0].value);
     } else {
@@ -336,33 +342,45 @@ function Index() {
     setSelectedShippingCost(value);
     setTotalShippingCost(value);
 
+    setCheckoutCost(value);
   };
 
   const handlerSetCourier = async (event) => {
     const courier = event.target.value;
-    setCheckoutCourier(courier)
+    setCheckoutCourier(courier);
     setCourier(courier);
+  };
+
+  const paymentButtonStyle = {
+    backgroundColor: 'blue',
+    color: 'white',
+    padding: '10px 20px',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
   };
 
   return (
     <div>
       <div id="snap-container"></div>
       <div className="alamat">
-        <h2>Alamat Pengiriman</h2>
-        <div className="address-info">
-          <h4>Full Name:</h4>
-          <p>{profile.fullName}</p>
-        </div>
-        <div className="address-info">
-          <h4>Phone Number:</h4>
-          <p>{profile.phoneNumber}</p>
-        </div>
-        <div className="address-info">
-          <h4>Address:</h4>
-          <p>{profile.address}</p>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <h2>Alamat Pengiriman</h2>
           <Link to="/profile-update">
             <button className="edit-button">Edit</button>
           </Link>
+        </div>
+        <div className="address-info">
+          <h4>Nama Lengkap</h4>
+          <p style={{ paddingLeft: "40px" }}>: {profile.fullName}</p>
+        </div>
+        <div className="address-info">
+          <h4>Nomor Handphone</h4>
+          <p style={{ paddingLeft: "5px" }}>: {profile.phoneNumber}</p>
+        </div>
+        <div className="address-info">
+          <h4>Detail Alamat</h4>
+          <p style={{ paddingLeft: "55px" }}>: {profile.address}</p>
         </div>
       </div>
 
@@ -396,7 +414,10 @@ function Index() {
                   <div class="cart-item">
                     <div class="cart-product">
                       <Link to={`/products/${e.product.id}`}>
-                        <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
+                        <img
+                          src={`${API_URL}/${e.product.image}`}
+                          alt={e.product.name}
+                        />
                       </Link>
                       <div>
                         <h3>{e.product.name}</h3>
@@ -447,7 +468,6 @@ function Index() {
                       {calculateTotal()}
                     </span>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -495,146 +515,147 @@ function Index() {
             </label>
           </div>
         </div>
-
-        <div
-          className="calcongkir"
-          style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
-        >
-          <h2>Pilih Metode Pengiriman</h2>
-          <div>
-            {/* <select onChange={handlerSetCourier}>
-              <option value={courier} >Select Courier</option>
-              <option value="jne">JNE</option>
-              <option value="tiki">TIKI</option>
-              <option value="pos">Pos Indonesia</option>
-              <option value="jnt">J&T</option> */}
-            {/* <option value="ide">Ide Express</option> */}
-            {/* <option value="anteraja">Anteraja</option>
-              <option value="sicepat">Sicepat</option> */}
-            {/* </select> */}
-            <select
-              onChange={handlerSetCourier}
-              className="methodDeliverySelect"
-            >
-              <option className="methodDeliveryOption" value={courier}>
-                Select Courier
-              </option>
-              <option className="methodDeliveryOption" value="jne">
-                JNE
-              </option>
-              <option className="methodDeliveryOption" value="tiki">
-                TIKI
-              </option>
-              <option className="methodDeliveryOption" value="pos">
-                POS INDONESIA
-              </option>
-              <option className="methodDeliveryOption" value="jnt">
-                J&T
-              </option>
-            </select>
-            <input
-              type="number"
-              value={calculateTotalWeight()}
-              readOnly
-              className="methodDeliveryOption"
-            />
-            <select
-              name="province"
-              id="province"
-              onChange={handleProvinceChange}
-              className="methodDeliverySelect"
-            >
-              <option className="methodDeliveryOption" value="">
-                Select Province
-              </option>
-              {province.map((item) => (
-                <option
-                  className="methodDeliveryOption"
-                  key={item.province_id}
-                  value={item.province_id}
-                >
-                  {item.province}
+        
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div
+            className="calcongkir"
+            style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
+          >
+            <h2>Pilih Metode Pengiriman</h2>
+            <div>
+           
+              <select
+                value={courier}
+                onChange={handlerSetCourier}
+                className="methodDeliverySelect"
+              >
+                <option className="methodDeliveryOption" value="jne">
+                  jne
                 </option>
-              ))}
-            </select>
-            <select
-              name="city"
-              id="city"
-              onChange={handleCityChange}
-              className="methodDeliverySelect"
-            >
-              <option className="methodDeliveryOption" value="">
-                Select City
-              </option>
-              {Array.isArray(city) &&
-                city.map((item) => (
+                <option className="methodDeliveryOption" value="tiki">
+                  tiki
+                </option>
+                <option className="methodDeliveryOption" value="pos">
+                  pos
+                </option>
+                <option className="methodDeliveryOption" value="jnt">
+                  jnt
+                </option>
+              </select>
+              {/* <input
+                type="number"
+                value={calculateTotalWeight()}
+                readOnly
+                placeholder="Total Weight in Grams"
+              /> */}
+              <select
+                name="province"
+                id="province"
+                onChange={handleProvinceChange}
+                className="methodDeliverySelect"
+              >
+                <option className="methodDeliveryOption" value="">
+                  Select Province
+                </option>
+                {province.map((item) => (
                   <option
                     className="methodDeliveryOption"
-                    key={item.city_id}
-                    value={item.city_id}
+                    key={item.province_id}
+                    value={item.province_id}
                   >
-                    {item.city_name}
+                    {item.province}
                   </option>
                 ))}
-            </select>
-            <select
-              name="subdistrict"
-              id="subdistrict"
-              onChange={handlerGetCost}
-              className="methodDeliverySelect"
-            >
-              <option className="methodDeliveryOption" value="">
-                Select Subdistrict
-              </option>
-              {Array.isArray(subdistrict) &&
-                subdistrict.map((item) => (
-                  <option
-                    className="methodDeliveryOption"
-                    key={item.subdistrict_id}
-                    value={item.subdistrict_id}
-                  >
-                    {item.subdistrict_name}
-                  </option>
-                ))}
-            </select>
-            {pengiriman
-              ? pengiriman.map((el, index) => (
-                <div key={index}>
-                  <input
-                    type="radio"
-                    id={`shippingChoice${index}`}
-                    name="shipping"
-                    value={el.cost[0].value}
-                    checked={selectedShippingCost === el.cost[0].value}
-                    onChange={handleShippingCostChange}
-                  />
-                  <label htmlFor={`shippingChoice${index}`}>
-                    Shipping Cost: Rp.{el.cost[0].value}
-                  </label>
-                  <p>Service: {el.service}</p>
-                  <p>Description: {el.description}</p>
-                  <p>Est: {el.cost[0].etd} Days</p>
-                </div>
-              ))
-              : null}
+              </select>
+              <select
+                name="city"
+                id="city"
+                onChange={handleCityChange}
+                className="methodDeliverySelect"
+              >
+                <option className="methodDeliveryOption" value="">
+                  Select City
+                </option>
+                {Array.isArray(city) &&
+                  city.map((item) => (
+                    <option
+                      className="methodDeliveryOption"
+                      key={item.city_id}
+                      value={item.city_id}
+                    >
+                      {item.city_name}
+                    </option>
+                  ))}
+              </select>
+              <select
+                name="subdistrict"
+                id="subdistrict"
+                onChange={handlerGetCost}
+                className="methodDeliverySelect"
+              >
+                <option className="methodDeliveryOption" value="">
+                  Select Subdistrict
+                </option>
+                {Array.isArray(subdistrict) &&
+                  subdistrict.map((item) => (
+                    <option
+                      className="methodDeliveryOption"
+                      key={item.subdistrict_id}
+                      value={item.subdistrict_id}
+                    >
+                      {item.subdistrict_name}
+                    </option>
+                  ))}
+              </select>
+              {pengiriman
+                ? pengiriman.map((el, index) => (
+                    <div key={index}>
+                      <input
+                        type="radio"
+                        id={`shippingChoice${index}`}
+                        name="shipping"
+                        value={el.cost[0].value}
+                        checked={selectedShippingCost === el.cost[0].value}
+                        onChange={handleShippingCostChange}
+                      />
+                      <label htmlFor={`shippingChoice${index}`}>
+                        Shipping Cost: Rp.{el.cost[0].value}
+                      </label>
+                      <p>Service: {el.service}</p>
+                      <p>Description: {el.description}</p>
+                      <p>Est: {el.cost[0].etd} Days</p>
+                    </div>
+                  ))
+                : null}
+            </div>
           </div>
-        </div>
 
-        <div
-          style={{ textAlign: "end", padding: "20px 65px", fontSize: "20px" }}
+          <div
+          style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end'}}
         >
-          <span>Total Bayar : </span>
-          <span style={{ fontWeight: "700" }} className="amount">
+          <div style={{paddingTop: '5px'}}>
+
+          <span >Total Bayar : </span>
+          <span style={{ fontWeight: "700", paddingRight: '20px'}} className="amount">
             Rp. {calculateTotalBayar()}
           </span>
+          </div>
+          <div>
+
           {totalShippingCost === 0 ? (
-            <p>
+            <p >
               <i>Silahkan pilih metode pengiriman</i>
             </p>
           ) : (
-            <button onClick={() => handlePaymentProcess()}>Payment</button>
+            <button
+              onClick={() => handlePaymentProcess()}
+              style={paymentButtonStyle}
+            >
+              Bayar Sekarang
+            </button>
           )}
-
+          </div>
+        </div>
         </div>
       </div>
     </div>

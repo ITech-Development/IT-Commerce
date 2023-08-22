@@ -3,14 +3,14 @@
 /* Styles for the address section */
 .alamat {
   position: relative;
-  top: 100px;
+  top: 90px;
   max-width: auto;
   margin: 0 20px;
-  padding: 30px;
+  padding: 15px 30px 25px 30px;
   border: 1px solid rgb(232, 215, 215);
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #f9f9f9;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  /* background-color: #f9f9f9; */
 }
 
 /* Styles for the address container */
@@ -30,7 +30,7 @@
   margin: 0;
   font-size: 18px;
   font-weight: bold;
-  color: #333;
+  line-height: 25px;
 }
 
 .address-info p {
@@ -55,7 +55,6 @@
   margin: auto;
   padding: 20px;
   border: 1px solid rgb(244, 238, 238);
-  background-color: #f0f0f5;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
