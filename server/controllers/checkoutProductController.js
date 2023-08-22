@@ -142,6 +142,7 @@ class CheckoutProductController {
                 where: {
                     id: req.params.id
                 },
+                
                 include: [
                     {
                         model: Checkout,
