@@ -71,7 +71,7 @@ function Index() {
 
   const handlePaymentProcess = async (data) => {
     const bayar = calculateTotalBayar();
-   
+
     const config = {
       "Content-Type": "application/json",
       access_token: localStorage.getItem("access_token"),
@@ -90,7 +90,7 @@ function Index() {
         selectedShippingCost,
         selectedVoucher,
         checkoutPengiriman,
-        bayar
+        bayar,
       },
       headers: config,
       method: "post",
@@ -342,7 +342,6 @@ function Index() {
     setSelectedShippingCost(value);
     setTotalShippingCost(value);
     setCheckoutCost(value);
-
   };
 
   const handlerSetCourier = async (event) => {
@@ -352,12 +351,12 @@ function Index() {
   };
 
   const paymentButtonStyle = {
-    backgroundColor: 'blue',
-    color: 'white',
-    padding: '10px 20px',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
+    backgroundColor: "blue",
+    color: "white",
+    padding: "10px 20px",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
   };
 
   return (
@@ -522,7 +521,6 @@ function Index() {
           >
             <h2>Pilih Metode Pengiriman</h2>
             <div>
-           
               <select
                 value={courier}
                 onChange={handlerSetCourier}
@@ -630,31 +628,37 @@ function Index() {
           </div>
 
           <div
-          style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end'}}
-        >
-          <div style={{paddingTop: '5px'}}>
-
-          <span >Total Bayar : </span>
-          <span style={{ fontWeight: "700", paddingRight: '20px'}} className="amount">
-            Rp. {calculateTotalBayar()}
-          </span>
+            style={{
+              padding: "20px 65px",
+              fontSize: "20px",
+              display: "flex",
+              justifyContent: "end",
+            }}
+          >
+            <div style={{ paddingTop: "5px" }}>
+              <span>Total Bayar : </span>
+              <span
+                style={{ fontWeight: "700", paddingRight: "20px" }}
+                className="amount"
+              >
+                Rp. {calculateTotalBayar()}
+              </span>
+            </div>
+            <div>
+              {totalShippingCost === 0 ? (
+                <p>
+                  <i>Silahkan pilih metode pengiriman</i>
+                </p>
+              ) : (
+                <button
+                  onClick={() => handlePaymentProcess()}
+                  style={paymentButtonStyle}
+                >
+                  Bayar Sekarang
+                </button>
+              )}
+            </div>
           </div>
-          <div>
-
-          {totalShippingCost === 0 ? (
-            <p >
-              <i>Silahkan pilih metode pengiriman</i>
-            </p>
-          ) : (
-            <button
-              onClick={() => handlePaymentProcess()}
-              style={paymentButtonStyle}
-            >
-              Bayar Sekarang
-            </button>
-          )}
-          </div>
-        </div>
         </div>
       </div>
     </div>
