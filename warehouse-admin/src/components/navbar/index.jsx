@@ -39,7 +39,7 @@ export default function Navigation() {
   return (
     <>
       <nav className="navigation">
-        <Link to="/">
+        <Link to="/dashboardProducts">
           <img style={{ height: "50px" }} src={Logo} alt="" />
         </Link>
         <div className="navigation-menu">

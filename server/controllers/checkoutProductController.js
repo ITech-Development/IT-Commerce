@@ -1,4 +1,4 @@
-const { CheckoutProduct, Checkout, Product, ProductOwner,sequelize } = require('../models')
+const { CheckoutProduct, Checkout, Product, ProductOwner,sequelize, User } = require('../models')
 
 class CheckoutProductController {
     // static async getAllCheckoutProducts(req, res, next) {
@@ -61,7 +61,8 @@ class CheckoutProductController {
                             model: Checkout,
                             as: 'checkouts'
                         }
-                    ]
+                    ],
+                    order: [['createdAt', '']]
                 });
     
                 // Store checkout products with quantity in the map
@@ -140,7 +141,24 @@ class CheckoutProductController {
             const checkoutProduct = await CheckoutProduct.findOne({
                 where: {
                     id: req.params.id
-                }
+                },
+                
+                include: [
+                    {
+                        model: Checkout,
+                        as: 'checkouts',
+                        include: [
+                            {
+                                model: User,
+                                as: 'users'
+                            }
+                        ]
+                    },
+                    {
+                        model: Product,
+                        as: 'products'
+                    }
+                ]
             })
             if (checkoutProduct) {
                 res.status(200).json(checkoutProduct)

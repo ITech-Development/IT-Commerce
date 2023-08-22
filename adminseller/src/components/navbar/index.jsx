@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import "./style.css";
 import Logo from "../../assets/Logo.png";
 import { Link } from "react-router-dom";
@@ -19,7 +19,7 @@ export default function Navigation() {
     // Example:
     // localStorage.clear(); // Clear all data from local storage
     window.location.href = "/"; // Redirect to the logout page
-  };
+  };  
 
   const RenderMenu = () => {
     const accessToken = localStorage.getItem('access_token')

@@ -32,6 +32,7 @@ import ProductCategoryVEPump from "./pages/ProductCategories/vePump";
 import ProductCategoryVEPumpParts from "./pages/ProductCategories/vePumpParts";
 import ProductCategoryHeadRotor from "./pages/ProductCategories/headRotor";
 import MyOrder from "./pages/MyOrder";
+import DetailsOrder from "./pages/DetailsOrder";
 
 export const UserContext = createContext();
 
@@ -64,7 +65,7 @@ const Routing = () => {
       <Route path="/ve-pump-parts" element={<ProductCategoryVEPumpParts />} />
       <Route path="/head-rotor" element={<ProductCategoryHeadRotor />} />
       <Route path="/my-order" element={<MyOrder />} />
-
+      <Route path="/my-order/:id" element={<DetailsOrder />} />
     </Routes>
   );
 };

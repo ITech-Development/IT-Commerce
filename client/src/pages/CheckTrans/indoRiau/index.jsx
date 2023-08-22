@@ -71,7 +71,6 @@ function Index() {
 
   const handlePaymentProcess = async (data) => {
     const bayar = calculateTotalBayar();
-
     const config = {
       "Content-Type": "application/json",
       access_token: localStorage.getItem("access_token"),
@@ -341,6 +340,7 @@ function Index() {
     // const value = event.target.value
     setSelectedShippingCost(value);
     setTotalShippingCost(value);
+
     setCheckoutCost(value);
   };
 
@@ -514,6 +514,7 @@ function Index() {
             </label>
           </div>
         </div>
+        
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div
             className="calcongkir"
