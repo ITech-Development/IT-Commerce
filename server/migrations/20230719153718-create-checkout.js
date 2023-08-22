@@ -12,39 +12,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      fullName: {
-        type: Sequelize.STRING
-      },
-      phoneNumber: {
-        type: Sequelize.STRING
-      },
-      status: {
-        type: Sequelize.STRING
-      },
-      address: {
-        type: Sequelize.STRING
-      },
-      province: {
-        type: Sequelize.STRING
-      },
-      city: {
-        type: Sequelize.STRING
-      },
-      subdistrict: {
-        type: Sequelize.STRING
-      },
-      courier: {
-        type: Sequelize.STRING
-      },
-      shipment: {
-        type: Sequelize.STRING
-      },
-      cost: {
-        type: Sequelize.INTEGER
-      },
-      voucherCode: {
-        type: Sequelize.STRING
-      },
       userId: {
         type: Sequelize.INTEGER,
         references: {
@@ -52,16 +19,30 @@ module.exports = {
           key: 'id'
         }
       },
+      totalPrice: {
+        type: Sequelize.DECIMAL(10, 2)
+      },
+      paymentStatus: {
+        type: Sequelize.STRING
+      },
+      shippingAddress: {
+        type: Sequelize.TEXT
+      },
+      voucherCode: {
+        type: Sequelize.STRING
+      },
       midtransCode: {
         type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
   },

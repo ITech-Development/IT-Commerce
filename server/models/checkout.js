@@ -13,23 +13,20 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Checkout.belongsTo(models.User, {
         foreignKey: 'userId',
-        as: 'user'
+        as: 'users'
       })
+      Checkout.hasMany(models.CheckoutProduct, {
+        foreignKey: 'checkoutId',
+        as: 'checkouts'
+      });
     }
   }
   Checkout.init({
-    fullName: DataTypes.STRING,
-    phoneNumber: DataTypes.STRING,
-    status: DataTypes.STRING,
-    address: DataTypes.STRING,
-    province: DataTypes.STRING,
-    city: DataTypes.STRING,
-    subdistrict: DataTypes.STRING,
-    courier: DataTypes.STRING,
-    shipment: DataTypes.STRING,
-    cost: DataTypes.INTEGER,
-    voucherCode: DataTypes.STRING,
     userId: DataTypes.INTEGER,
+    totalPrice: DataTypes.DECIMAL,
+    paymentStatus: DataTypes.STRING,
+    shippingAddress: DataTypes.STRING,
+    voucherCode: DataTypes.STRING,
     midtransCode: DataTypes.STRING
   }, {
     sequelize,

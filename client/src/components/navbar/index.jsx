@@ -127,6 +127,9 @@ export default function Navigation() {
                     {/* <Link to={profileLink}>Profile</Link> */}
                   </li>
                   <li>
+                    <Link to="/my-order">My Order</Link>
+                  </li>
+                  <li>
                     <Link onClick={handleLogout}>Logout</Link>
                   </li>
                 </ul>

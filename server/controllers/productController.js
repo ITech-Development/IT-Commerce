@@ -11,6 +11,14 @@ class ProductController {
                 {
                     include: [
                         {
+                            model: ProductCategory,
+                            as: 'categories'
+                        },
+                        {
+                            model: ProductType,
+                            as: 'types'
+                        },
+                        {
                             model: ProductOwner,
                             as: 'product_owners'
                         },
@@ -29,23 +37,6 @@ class ProductController {
             next(error);
         }
     }
-
-    // static async getAllProducts(req, res, next) {
-    //     try {
-    //         const products = await Product.findAll({
-    //             include: [
-    //                 {
-    //                     model: ProductOwner,
-    //                     as: 'product_owners'
-    //                 }
-    //             ],
-    //             order: [['createdAt', 'DESC']]
-    //         })
-    //         res.status(200).json(products)
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
 
     static async getNozzelCategory(req, res, next) {
         try {
@@ -164,14 +155,14 @@ class ProductController {
                     id: req.params.id
                 },
                 include: [
-                    // {
-                    //     model: ProductCategory,
-                    //     as: 'categories' // Nama asosiasi yang sama dengan yang didefinisikan di model Product
-                    // },
-                    // {
-                    //     model: ProductType,
-                    //     as: 'types'
-                    // },
+                    {
+                        model: ProductCategory,
+                        as: 'categories' // Nama asosiasi yang sama dengan yang didefinisikan di model Product
+                    },
+                    {
+                        model: ProductType,
+                        as: 'types'
+                    },
                     {
                         model: ProductOwner,
                         as: 'product_owners'

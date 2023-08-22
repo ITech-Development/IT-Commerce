@@ -122,8 +122,8 @@ const ProductList = () => {
           margin: "60px 0 0 0",
           width: "100%",
         }}
-        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1692322035/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Head_Rotor_p91mp7.jpg"
-        alt=""
+        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1692343050/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Artboard_1_copy_20Kategori_kh8hsf.jpg"
+        alt="test tis"
       />
       <div className="productlist-container">
         <h2 style={{ margin: "40px 0 20px 0", textAlign: "start" }}>

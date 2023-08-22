@@ -8,8 +8,6 @@ import { Link } from "react-router-dom";
 const API_URL = "http://localhost:3100"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
 
-
-
 const ProductDetailPage = () => {
   const [product, setProduct] = useState(null);
   const { id } = useParams();

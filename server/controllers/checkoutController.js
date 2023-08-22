@@ -1,10 +1,17 @@
-const { Checkout } = require('../models')
+const { Checkout, User } = require('../models')
 
 class CheckoutController {
 
     static async getAllCeckouts(req, res, next) {
         try {
-            const checkouts = await Checkout.findAll()
+            const checkouts = await Checkout.findAll({
+                include: [
+                    {
+                        model: User,
+                        as: 'users'
+                    }
+                ]
+            })
             res.status(200).json(checkouts)
         } catch (error) {
             next(error)

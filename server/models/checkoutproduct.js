@@ -13,11 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       CheckoutProduct.belongsTo(models.Checkout, {
         foreignKey: 'checkoutId',
-        as: 'order'
+        as: 'checkouts'
       });
       CheckoutProduct.belongsTo(models.Product, {
         foreignKey: 'productId',
-        as: 'product'
+        as: 'products'
       });
     }
   }
