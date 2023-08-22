@@ -153,13 +153,13 @@ class MidtransController {
     try {
       if (req.body.transaction_status === 'settlement') {
         await Checkout.update({
-          paymentStatus: 'Dibayar',
+          paymentStatus: 'pay',
         }, {
           where: {
             midtransCode: req.body.order_id
           }
         })
-      }
+      } 
     } catch (error) {
       console.log(error);
     }
