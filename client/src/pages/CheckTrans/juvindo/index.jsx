@@ -478,6 +478,16 @@ function Index() {
               marginBottom: "30px",
             }}
           >
+            <label key={vouchers[3]?.id}>
+              <input
+                type="radio"
+                value={vouchers[3]?.voucherCode}
+                checked={selectedVoucher === vouchers[3]?.voucherCode}
+                onChange={handleVoucherChange}
+              />
+              {vouchers[3]?.voucherCode}
+              <img src={VCR1} alt="IT 01" width="150" />
+            </label>
             <label key={vouchers[0]?.id}>
               <input
                 type="radio"
@@ -485,8 +495,8 @@ function Index() {
                 checked={selectedVoucher === vouchers[0]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {/* {vouchers[0]?.voucherCode} */}
-              <img src={VCR1} alt="IT 01" width="150" />
+              {vouchers[0]?.voucherCode}
+              <img src={VCR2} alt="MS 01" width="150" />
             </label>
             <label key={vouchers[1]?.id}>
               <input
@@ -495,17 +505,7 @@ function Index() {
                 checked={selectedVoucher === vouchers[1]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {/* {vouchers[1]?.voucherCode} */}
-              <img src={VCR2} alt="MS 01" width="150" />
-            </label>
-            <label key={vouchers[2]?.id}>
-              <input
-                type="radio"
-                value={vouchers[2]?.voucherCode}
-                checked={selectedVoucher === vouchers[2]?.voucherCode}
-                onChange={handleVoucherChange}
-              />
-              {/* {vouchers[2]?.voucherCode} */}
+              {vouchers[1]?.voucherCode}
               <img src={VCR3} alt="MS 01" width="150" />
             </label>
           </div>

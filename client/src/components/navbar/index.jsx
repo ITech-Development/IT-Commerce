@@ -3,10 +3,8 @@ import "./style.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Logo from "../../assets/Logo.png";
-// import ProfileIcon from "../../assets/icon.svg";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import CartIcon from './iconCart.png'
+
 
 export default function Navigation() {
   const [carts, setCarts] = useState([]);

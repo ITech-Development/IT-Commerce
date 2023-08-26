@@ -6,10 +6,8 @@ function CheckoutProductsPage() {
     const [checkoutProducts, setCheckoutProducts] = useState([]);
     console.log(checkoutProducts, 'test test');
     const [loading, setLoading] = useState(true);
-
-    // const { checkoutId } = useParams(); // Extract checkoutId from useParams
-
     const { id } = useParams();
+
     useEffect(() => {
         async function fetchCheckoutProducts() {
             try {
@@ -34,11 +32,19 @@ function CheckoutProductsPage() {
 
     return (
         <div>
-            <h2>Checkout Products</h2>
+            <br />
+            <br />
+            <br />
+            <br />
+            <h2>Detail Order</h2>
+            <p>Order Id: {checkoutProducts[0].checkout.midtransCode}</p>
+            <p>Alamat Pengiriman: {checkoutProducts[0].checkout.shippingAddress}</p>
             {checkoutProducts.map((checkoutProduct, index) => (
                 <div key={index}>
-                    <h3>Product: {checkoutProduct.product.name}</h3>
-                    <p>Quantity: {checkoutProduct.quantity}</p>
+                    <hr/>
+                    <h3>{checkoutProduct.product.name}</h3>
+                    <img src={`http://localhost:3100/${checkoutProduct.product.image}`} alt={checkoutProduct.product.name} width="100px"/>
+                    <p>x: {checkoutProduct.quantity}</p>
                     <p>Created At: {checkoutProduct.createdAt}</p>
                 </div>
             ))}

@@ -209,7 +209,7 @@ const AddProductPage = () => {
           <br />
         </div>
         <div className="form-group">
-          <label htmlFor="unitPrice">Harga Satuan:</label>
+          <label htmlFor="unitPrice">Harga Satuan (rupiah):</label>
           <input
             type="number"
             id="unitPrice"
@@ -235,7 +235,7 @@ const AddProductPage = () => {
           <br />
         </div>
         <div className="form-group">
-          <label htmlFor="weight">Berat:</label>
+          <label htmlFor="weight">Berat (gram):</label>
           <input
             type="number"
             id="weight"
@@ -247,8 +247,9 @@ const AddProductPage = () => {
           />
           <br />
         </div>
+
         <div className="form-group">
-          <label htmlFor="height">Tinggi:</label>
+          <label htmlFor="height">Tinggi (cm):</label>
           <input
             type="number"
             id="height"
@@ -261,7 +262,7 @@ const AddProductPage = () => {
           <br />
         </div>
         <div className="form-group">
-          <label htmlFor="width">Lebar:</label>
+          <label htmlFor="width">Lebar (cm):</label>
           <input
             type="number"
             id="width"

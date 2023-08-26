@@ -4,6 +4,7 @@ import Navbar from "./components/navbar";
 import Login from "./components/auth/Login";
 import Dashboard from "./pages/dashboard";
 import GetProduct from "./pages/getProducts";
+import GetUsers from "./pages/getUsers";
 import DetailsProduct from "./pages/detailsProduct";
 import NotFound from "./pages/notFound";
 import React, { createContext, useEffect, useReducer } from "react";
@@ -26,9 +27,10 @@ const Routing = () => {
       ) : (
         <>
           <Route path="*" element={<NotFound />} />
-          <Route path="/product" element={<GetProduct />} />
+          <Route path="/products" element={<GetProduct />} />
+          <Route path="/users" element={<GetUsers />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/product/:id" element={<DetailsProduct />} />
+          <Route path="/products/:id" element={<DetailsProduct />} />
           <Route path="/chat" element={<Chat />} />
         </>
       )}

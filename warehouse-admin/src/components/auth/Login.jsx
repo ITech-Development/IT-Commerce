@@ -50,9 +50,8 @@ const Login = () => {
       setEmail("");
       setPassword("");
 
-      // Redirect to the Home page
-      dispatch({ type: "USER", payload: true });
       navigate("/dashboardProducts");
+      dispatch({ type: "USER", payload: true });
     } catch (error) {
       console.error("Login error:", error);
       alert("Login failed. Please try again.");

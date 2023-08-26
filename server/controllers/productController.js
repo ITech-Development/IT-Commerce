@@ -12,7 +12,7 @@ class ProductController {
                     include: [
                         {
                             model: ProductCategory,
-                            as: 'categories'
+                            as: 'categories',
                         },
                         {
                             model: ProductType,
@@ -128,8 +128,8 @@ class ProductController {
 
             const newProduct = await Product.create({
                 name: req.body.name,
-                // categoryId: req.body.categoryId,
-                // typeId: req.body.typeId,
+                categoryId: req.body.categoryId,
+                typeId: req.body.typeId,
                 image: req.file.path.replace('\\', '/'), // Ubah path menjadi URL relatif
                 description: req.body.description,
                 minimumOrder: req.body.minimumOrder,

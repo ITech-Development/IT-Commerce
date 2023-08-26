@@ -20,6 +20,35 @@ class UserController {
     }
   }
 
+  static async getAllUsersByVoucher(req, res, next) {
+    if (req.adminSeller.id === 4) {
+      try {
+        const checkouts = await Checkout.findAll();
+        const targetVoucherCode = "IT01";
+  
+        // Buat objek untuk mengelompokkan pesanan berdasarkan ID pengguna
+        const userOrdersMap = {};
+  
+        // Iterasi melalui entri checkout dan kelompokkan berdasarkan ID pengguna
+        checkouts.forEach(entry => {
+          if (entry.voucherCode === targetVoucherCode) {
+            if (!userOrdersMap[entry.userId]) {
+              userOrdersMap[entry.userId] = [];
+            }
+            userOrdersMap[entry.userId].push(entry);
+          }
+        });
+  
+        // Kirim objek yang berisi pesanan berdasarkan ID pengguna sebagai respons JSON
+        res.status(200).json(userOrdersMap);
+      } catch (error) {
+        console.log(error, 'dari get all user by voucher');
+        next(error);
+      }
+    }
+  }
+  
+
   static async getMeById(req, res, next) {
     try {
       const profile = await User.findOne({
