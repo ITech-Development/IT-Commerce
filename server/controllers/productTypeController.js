@@ -1,10 +1,34 @@
-const { ProductType } = require('../models')
+const { ProductType, ProductCategory } = require('../models')
 
 class ProductTypeController {
 
+    // static async getAllProductType(req, res, next) {
+    //     try {
+    //         const productTypes = await ProductType.findAll({
+    //             include: [
+    //                 {
+    //                     model: ProductCategory,
+    //                     as: 'product_categories'
+    //                 }
+    //             ]
+    //         })
+    //         res.status(200).json(productTypes)
+    //     } catch (error) {
+    //         next(error)
+    //     }
+    // }
+
     static async getAllProductType(req, res, next) {
+        console.log(req.params, 'dari type');
         try {
-            const productTypes = await ProductType.findAll()
+            const productTypes = await ProductType.findAll({
+                // include: [
+                //     {
+                //         model: ProductCategory,
+                //         as: 'product_categories'
+                //     }
+                // ]
+            })
             res.status(200).json(productTypes)
         } catch (error) {
             next(error)
@@ -48,9 +72,9 @@ class ProductTypeController {
                 await ProductType.destroy({
                     where: { id: req.params.id }
                 })
-                res.status(200).json({message: 'Type successfully deleted'})
+                res.status(200).json({ message: 'Type successfully deleted' })
             } else {
-                throw { name: 'NotFoundError'}
+                throw { name: 'NotFoundError' }
             }
         } catch (error) {
             next(error)

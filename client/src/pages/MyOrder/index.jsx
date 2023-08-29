@@ -5,7 +5,6 @@ const API_URL = "http://localhost:3100";
 
 function CheckoutProductsPage() {
   const [checkoutProducts, setCheckoutProducts] = useState({});
-  console.log(checkoutProducts, 'hei test products');
 
   useEffect(() => {
     // Replace with actual API endpoint
@@ -31,9 +30,9 @@ function CheckoutProductsPage() {
               <li key={index}>
                 <Link to={`/my-order/${productInfo.checkout.id}`}>
                   <img src={`${API_URL}/${productInfo.product.image}`} alt={productInfo.product.name} width="100px" /> <br />
+                  Product: {productInfo.product.name} <br />
                 </Link>
-                Product: {productInfo.product.name} <br />
-                Quantity: {productInfo.quantity} <br />
+                x: {productInfo.quantity} <br />
                 Payment Status: {productInfo.checkout.paymentStatus} <br />
                 Checkout Date: {productInfo.createdAt}
               </li>

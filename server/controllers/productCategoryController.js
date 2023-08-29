@@ -17,21 +17,16 @@ class ProductCategoryController {
     static async getAllProductCategories(req, res, next) {
         try {
             const productCategories = await ProductCategory.findAll({
-                include: [
-                    {
-                        model: ProductType,
-                        as: 'types',
-                        include: [
-                            {
-                                model: Product,
-                                as: 'products'
-                            }
-                        ]
-                    }
-                ]
+                // include: [
+                //     {
+                //         model: ProductType,
+                //         as: 'product_types'
+                //     }
+                // ]
             })
             res.status(200).json(productCategories)
         } catch (error) {
+            console.log(error,'test eror');
             next(error)
         }
     }

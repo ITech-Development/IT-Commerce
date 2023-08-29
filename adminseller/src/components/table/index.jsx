@@ -18,10 +18,11 @@ const API_URL = "http://localhost:3100"; // Define your API URL here
 const TableComponent = () => {
   const [product, setProduct] = useState(null);
   const [filteredProduct, setFilteredProduct] = useState(null);
+  console.log(filteredProduct, 'test filter product apa aja isinya');
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/products/`)
+      .get(`${API_URL}/admin-sellers/voucher`)
       .then(({ data }) => {
         setProduct(data);
         setFilteredProduct(data); // Initially, filteredProduct will have the same data as product
@@ -91,31 +92,31 @@ const TableComponent = () => {
         </TableHead>
         <TableBody>
           {filteredProduct?.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.id}</TableCell>
+            <TableRow key={row?.product?.id}>
+              <TableCell>{row?.product?.id}</TableCell>
               <TableCell>
-                <Link to={`/product/${row.id}`}>
-                  {row.name}
+                <Link to={`/products/${row?.product?.id}`}>
+                {row?.product?.name}
                 </Link>
               </TableCell>
-              <TableCell>{row.categories?.name}</TableCell>
-              <TableCell>{row.types?.name}</TableCell>
+              <TableCell>{row?.product?.categories?.name}</TableCell>
+              <TableCell>{row?.product?.types?.name}</TableCell>
               <TableCell>
                 <img
-                  src={row.image}
+                  src={`${API_URL}/${row?.product?.image}`}
                   alt={row.image}
                   style={{ maxWidth: "100px", maxHeight: "100px" }}
                 />
               </TableCell>
-              <TableCell>{row.description}</TableCell>
-              <TableCell>{row.minimumOrder}</TableCell>
-              <TableCell>{row.unitPrice}</TableCell>
-              <TableCell>{row.stock}</TableCell>
-              <TableCell>{row.weight}</TableCell>
-              <TableCell>{row.height}</TableCell>
-              <TableCell>{row.width}</TableCell>
-              <TableCell>{row.product_owners?.name}</TableCell>
-              <TableCell>{row.authors?.fullName}</TableCell>
+              <TableCell>{row?.product?.description}</TableCell>
+              <TableCell>{row?.product?.minimumOrder}</TableCell>
+              <TableCell>{row?.product?.unitPrice}</TableCell>
+              <TableCell>{row?.product?.stock}</TableCell>
+              <TableCell>{row?.product?.weight}</TableCell>
+              <TableCell>{row?.product?.height}</TableCell>
+              <TableCell>{row?.product?.width}</TableCell>
+              <TableCell>{row?.product?.product_owners?.name}</TableCell>
+              <TableCell>{row?.product?.authors?.fullName}</TableCell>
             </TableRow>
           ))}
         </TableBody>

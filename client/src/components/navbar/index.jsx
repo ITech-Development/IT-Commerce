@@ -8,6 +8,7 @@ import Logo from "../../assets/Logo.png";
 // import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import CartIcon from "./iconCart.png";
 
+
 export default function Navigation() {
   const [carts, setCarts] = useState([]);
   const [profile, setProfile] = useState([]);

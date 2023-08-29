@@ -38,6 +38,9 @@ module.exports = {
       unitPrice: {
         type: Sequelize.INTEGER
       },
+      costPrice: {
+        type: Sequelize.INTEGER
+      },
       stock: {
         type: Sequelize.INTEGER
       },

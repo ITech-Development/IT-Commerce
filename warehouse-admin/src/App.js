@@ -2,6 +2,8 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Login from "./components/auth/Login";
 import AddProduct from "./pages/addProduct";
+import AddCategory from "./pages/addCategory";
+import AddType from "./pages/addType";
 import GetProduct from "./pages/getProducts";
 import EditProduct from "./pages/editProduct";
 import DetailsProduct from "./pages/detailsProduct";
@@ -32,6 +34,8 @@ const Routing = () => {
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           <Route path="/dashboardProducts" element={<GetProduct />} />
           <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/add-category" element={<AddCategory />} />
+          <Route path="/add-type" element={<AddType />} />
           <Route path="/edit-product/:id" element={<EditProduct />} />
           <Route path="/product/:id" element={<DetailsProduct />} />
         </>

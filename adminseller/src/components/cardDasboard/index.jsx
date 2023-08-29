@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSpring, animated } from "react-spring";
-  
+import { Link } from "react-router-dom";
+
 const Card = ({ imageUrl, title, count }) => {
   const [visible, setVisible] = useState(false);
 
@@ -49,7 +50,7 @@ const CardSection = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3100/products");
+        const response = await axios.get("http://localhost:3100/admin-sellers/voucher");
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching product data:", error);
@@ -58,7 +59,7 @@ const CardSection = () => {
 
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3100/users", {
+        const response = await axios.get("http://localhost:3100/users/voucher", {
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
@@ -83,16 +84,20 @@ const CardSection = () => {
         maxWidth: "1320px",
       }}
     >
-      <Card
-        imageUrl="https://e7.pngegg.com/pngimages/389/412/png-clipart-font-awesome-computer-icons-user-profile-users-group-blind-miscellaneous-blue.png"
-        title="Users"
-        count={users.length}
-      />
-      <Card
-        imageUrl="https://image.pngaaa.com/123/2193123-middle.png"
-        title="Products"
-        count={products.length}
-      />
+      <Link to="/users">
+        <Card
+          imageUrl="https://e7.pngegg.com/pngimages/389/412/png-clipart-font-awesome-computer-icons-user-profile-users-group-blind-miscellaneous-blue.png"
+          title="Users"
+          count={Object.keys(users).length}
+        />
+      </Link>
+      <Link to="/products">
+        <Card
+          imageUrl="https://image.pngaaa.com/123/2193123-middle.png"
+          title="Products"
+          count={products.length}
+        />
+      </Link>
       <Card
         imageUrl="https://png.pngtree.com/png-clipart/20210312/original/pngtree-simple-medal-of-honor-linear-icon-png-image_6074699.png"
         title="Points"

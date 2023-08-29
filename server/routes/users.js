@@ -4,8 +4,9 @@ const { authentication, authenticationUser, authenticationAdminSeller, authoriza
 const router = express.Router()
 
 router.get('/', authenticationUser, UserController.getAllUsers)
+router.get('/voucher', authenticationAdminSeller, UserController.getAllUsersByVoucher)
 router.get('/me', authenticationUser, UserController.getMeById)
-router.put('/me', authenticationUser, UserController.editUser);
+router.put('/me', authenticationUser, UserController.editUser)
 router.post('/register', UserController.registerUser)
 router.post('/login', UserController.loginUser)
 router.post('/google', UserController.googleLogin)
@@ -18,6 +19,5 @@ router.get('/subdistrict/:id', authenticationUser, UserController.getSubdistrict
 router.delete('/:id', authentication, authorization, UserController.deleteUser)
 router.get('/:id', authenticationUser, UserController.detailsUser)
 router.put('/:id', authenticationUser, UserController.updateUser)
-
 
 module.exports = router

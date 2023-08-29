@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom'
 const MainContent = () => {
 
   return (
-    <main style={{display: 'flex', margin: '10px 40px', flexDirection: 'column'}}>
+    <main style={{ display: 'flex', margin: '10px 40px', flexDirection: 'column' }}>
       <h2>Dashboard Produk INDOTEKNIK</h2>
       <p><strong>Catatan!</strong> Masukkan semua produk dengan BENAR</p>
       <Link to="/add-product">
-      <button
+        <button
           style={{
             display: "flex",
             padding: "10px 20px",
@@ -25,7 +25,14 @@ const MainContent = () => {
           }}
         >
           Add Product
-        </button>      </Link>
+        </button>
+      </Link>
+      <Link to="/add-category">
+        <button>Add Category</button>
+      </Link>
+      <Link to="/add-type">
+        <button>Add Type</button>
+      </Link>
       <TableComponent />
     </main>
   );
