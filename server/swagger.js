@@ -15,7 +15,7 @@ const swaggerOptions = {
     },
     servers: [
         {
-            url: "http://localhost:3100"
+            url: "https://indoteknikserver-732012365989.herokuapp.com"
         }
     ]
   },

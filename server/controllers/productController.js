@@ -1,4 +1,3 @@
-
 const { Product, ProductCategory, ProductType, User, SuperAdmin, ProductOwner, WarehouseAdmin } = require('../models')
 const { validationResult } = require('express-validator')
 const baseUrl = 'http://localhost:3100'; // Ubah dengan URL server Anda
@@ -49,6 +48,7 @@ class ProductController {
             next(error);
         }
     }
+    
     static async getDeliveryValve(req, res, next) {
         try {
             const one = await Product.findAll({
@@ -236,7 +236,6 @@ class ProductController {
     static async editProduct(req, res, next) {
         try {
             const productId = req.params.id; // Get the product ID from the URL parameter
-
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 const err = new Error('Input values ​​dont match');

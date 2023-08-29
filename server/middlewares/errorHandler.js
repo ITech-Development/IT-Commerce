@@ -1,4 +1,6 @@
 async function errorHandler(error, req, res, next) {
+    console.log(error, '<<<<<<<<<<<<< INI ERROR');
+
     try {
         let status = 500
         let message = 'Error on the internal server'

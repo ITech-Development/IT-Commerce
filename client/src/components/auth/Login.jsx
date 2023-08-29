@@ -28,7 +28,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3100/users/login",
+        "https://indoteknikserver-732012365989.herokuapp.com/users/login",
         userData
       );
       console.log("Login response:", response.data);

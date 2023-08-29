@@ -25,7 +25,7 @@ class UserController {
       try {
         const checkouts = await Checkout.findAll();
         const targetVoucherCode = "IT01";
-  
+        
         // Buat objek untuk mengelompokkan pesanan berdasarkan ID pengguna
         const userOrdersMap = {};
   
