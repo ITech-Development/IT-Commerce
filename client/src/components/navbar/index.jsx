@@ -6,7 +6,7 @@ import Logo from "../../assets/Logo.png";
 // import ProfileIcon from "../../assets/icon.svg";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import CartIcon from './iconCart.png'
+import CartIcon from "./iconCart.png";
 
 export default function Navigation() {
   const [carts, setCarts] = useState([]);
@@ -74,7 +74,11 @@ export default function Navigation() {
           <li>
             <Link to="/cart">
               {/* <FontAwesomeIcon icon='' className="cart-icon" /> */}
-              <img style={{position: 'relative', top: '6px'}} src={CartIcon} alt="" />
+              <img
+                style={{ position: "relative", top: "6px" }}
+                src={CartIcon}
+                alt=""
+              />
               <span
                 style={{
                   position: "relative",
@@ -82,7 +86,7 @@ export default function Navigation() {
                   border: "1px solid #2EEDF5",
                   borderRadius: "50px",
                   padding: "4px 7.3px",
-                  fontWeight: '700',
+                  fontWeight: "700",
                   textDecoration: "none",
                   color: "black",
                   top: "-25px",
@@ -96,46 +100,50 @@ export default function Navigation() {
           </li>
         )}
         {token ? (
-          <li>
-            <div
-              className="dropdown"
-              ref={dropdownRef}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <p>
-                Halo, <strong>{profile.fullName}</strong>{" "}
-              </p>
-              <img
-                onClick={toggleDropdown}
-                style={{
-                  height: "50px",
-                  color: "blue",
-                  cursor: "pointer",
-                  paddingLeft: "10px",
-                }}
-                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                alt=""
-              />
+          <div
+            className="dropdown"
+            ref={dropdownRef}
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <p>
+              Halo, <strong>{profile.fullName}</strong>{" "}
+            </p>
+            <div>
+              <div>
+                <img
+                  onClick={toggleDropdown}
+                  style={{
+                    height: "50px",
+                    color: "blue",
+                    cursor: "pointer",
+                    paddingLeft: "10px",
+                  }}
+                  src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                  alt=""
+                />
+              </div>
               {isDropdownOpen && (
-                <ul className="dropdown-menu">
-                  <li>
-                    <Link to="/profile-update">Profile</Link>
-                    {/* <Link to={profileLink}>Profile</Link> */}
-                  </li>
-                  <li>
-                    <Link to="/my-order">My Order</Link>
-                  </li>
-                  <li>
-                    <Link onClick={handleLogout}>Logout</Link>
-                  </li>
-                </ul>
+                <div style={{position: 'relative', right: '95px', top: '80px'}}>
+
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link to="/profile-update">Profile</Link>
+                      {/* <Link to={profileLink}>Profile</Link> */}
+                    </li>
+                    <li>
+                      <Link to="/my-order">My Order</Link>
+                    </li>
+                    <li>
+                      <Link onClick={handleLogout}>Logout</Link>
+                    </li>
+                  </ul>
+                </div>
               )}
             </div>
-          </li>
+          </div>
         ) : (
           <li>
             <Link to="/login">

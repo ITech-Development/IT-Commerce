@@ -41,7 +41,7 @@ function App() {
 
   useEffect(() => {
     dispatchRedux(loadUser(null));
-  }, []);
+  }, [dispatchRedux]);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
