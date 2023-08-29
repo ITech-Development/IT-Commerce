@@ -134,6 +134,7 @@ class ProductController {
                 description: req.body.description,
                 minimumOrder: req.body.minimumOrder,
                 unitPrice: req.body.unitPrice,
+                costPrice: req.body.costPrice,
                 weight: req.body.weight,
                 height: req.body.height,
                 width: req.body.width,
@@ -251,6 +252,7 @@ class ProductController {
                 throw err;
             }
 
+
             // Update the product's properties based on request body
             existingProduct.name = req.body.name;
             existingProduct.categoryId = req.body.categoryId;
@@ -258,6 +260,7 @@ class ProductController {
             existingProduct.description = req.body.description;
             existingProduct.minimumOrder = req.body.minimumOrder;
             existingProduct.unitPrice = req.body.unitPrice;
+            existingProduct.costPrice = req.body.costPricegit;
             existingProduct.weight = req.body.weight;
             existingProduct.height = req.body.height;
             existingProduct.width = req.body.width;

@@ -38,7 +38,7 @@ module.exports = {
       unitPrice: {
         type: Sequelize.INTEGER
       },
-      sellingPrice: {
+      costPrice: {
         type: Sequelize.INTEGER
       },
       stock: {
