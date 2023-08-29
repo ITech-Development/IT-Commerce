@@ -9,13 +9,6 @@ import { UserContext } from "../../App";
 const Login = () => {
   const { dispatch } = useContext(UserContext);
   const accessToken = localStorage.getItem('access_token')
-  // useEffect(() => {
-  //   // Jika sudah memiliki access_token, maka redirect ke halaman selanjutnya
-  //   if (accessToken) {
-  //     // Ganti "/halaman-selanjutnya" dengan path halaman yang ingin dituju
-  //     return <Link to="/products" />;
-  //   }
-  // }, [accessToken]);
 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -38,7 +31,7 @@ const Login = () => {
     try {
       // Call the API to perform login
       const response = await axios.post(
-        "http://localhost:3100/warehouse-admins/login",
+        "https://indoteknikserver-732012365989.herokuapp.com/warehouse-admins/login",
         userData
       );
       console.log("Login response:", response.data);

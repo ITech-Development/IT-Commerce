@@ -17,7 +17,7 @@ const AddCategoryPage = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3100/product-categories",
+        "https://indoteknikserver-732012365989.herokuapp.com/product-categories",
         newCategory,
         // {
         //   headers: {

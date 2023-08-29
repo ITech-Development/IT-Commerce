@@ -40,7 +40,7 @@ const AddProductPage = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3100/product-categories"
+        "https://indoteknikserver-732012365989.herokuapp.com/product-categories"
       );
       setCategoryOptions(response.data);
     } catch (error) {
@@ -49,7 +49,7 @@ const AddProductPage = () => {
   };
   const fetchTypes = async () => {
     try {
-      const response = await axios.get("http://localhost:3100/product-types");
+      const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/product-types");
       setTypeOptions(response.data);
     } catch (error) {
       console.error("Terjadi kesalahan saat mengambil data type:", error);
@@ -58,7 +58,7 @@ const AddProductPage = () => {
 
   const fetchProductOwners = async () => {
     try {
-      const response = await axios.get("http://localhost:3100/product-owners");
+      const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/product-owners");
       setProductOwnerOptions(response.data);
     } catch (error) {
       console.error(
@@ -96,7 +96,7 @@ const AddProductPage = () => {
       // Append the image file to the formData
       formData.append("image", newProduct.image);
       const response = await axios.post(
-        "http://localhost:3100/products",
+        "https://indoteknikserver-732012365989.herokuapp.com/products",
         newProduct,
         {
           headers: {
