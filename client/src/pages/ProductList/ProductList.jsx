@@ -8,7 +8,7 @@ import "../../App.css";
 import Star from "../../assets/star.png";
 import CartIcon from "../../assets/cart2.png";
 import { FadeLoader } from "react-spinners";
-const API_URL = "http://localhost:3100"; // Define your API URL here
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
 const linkStyle = {
   color: "white",
@@ -109,7 +109,7 @@ const ProductList = () => {
   const handleAddToCart = async (product) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      const url = "http://localhost:3100/product-carts";
+      const url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts";
       try {
         const response = await axios.post(url, product, {
           headers: { access_token: accessToken },

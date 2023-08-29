@@ -5,7 +5,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const API_URL = "http://localhost:3100"; // Define your API URL here
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
 
 const ProductDetailPage = () => {

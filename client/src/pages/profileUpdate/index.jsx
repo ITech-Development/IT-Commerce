@@ -22,7 +22,7 @@ const ProfileForm = () => {
 
   const fetchProfileData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3100/users/me`, {
+      const response = await axios.get(`https://indoteknikserver-732012365989.herokuapp.com/users/me`, {
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -41,7 +41,7 @@ const ProfileForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:3100/users/me`, user, {
+      const response = await axios.put(`https://indoteknikserver-732012365989.herokuapp.com/users/me`, user, {
         headers: {
           // 'Content-Type': 'application/json',
           access_token: localStorage.getItem('access_token'),

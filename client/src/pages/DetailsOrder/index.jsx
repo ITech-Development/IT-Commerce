@@ -11,7 +11,7 @@ function CheckoutProductsPage() {
     useEffect(() => {
         async function fetchCheckoutProducts() {
             try {
-                const response = await axios.get(`http://localhost:3100/checkout-products/${id}`, {
+                const response = await axios.get(`https://indoteknikserver-732012365989.herokuapp.com/checkout-products/${id}`, {
                     headers: {
                         access_token: localStorage.getItem('access_token')
                     }
@@ -43,7 +43,7 @@ function CheckoutProductsPage() {
                 <div key={index}>
                     <hr/>
                     <h3>{checkoutProduct.product.name}</h3>
-                    <img src={`http://localhost:3100/${checkoutProduct.product.image}`} alt={checkoutProduct.product.name} width="100px"/>
+                    <img src={`https://indoteknikserver-732012365989.herokuapp.com/${checkoutProduct.product.image}`} alt={checkoutProduct.product.name} width="100px"/>
                     <p>x: {checkoutProduct.quantity}</p>
                     <p>Created At: {checkoutProduct.createdAt}</p>
                 </div>

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
-const API_URL = "http://localhost:3100";
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
 
 function CheckoutProductsPage() {
   const [checkoutProducts, setCheckoutProducts] = useState({});
 
   useEffect(() => {
     // Replace with actual API endpoint
-    fetch('http://localhost:3100/checkout-products',
+    fetch('https://indoteknikserver-732012365989.herokuapp.com/checkout-products',
       {
         headers: {
           access_token: localStorage.getItem('access_token')
