@@ -29,7 +29,7 @@ function ProductCategories() {
       <div className="category-section">
         <h1>Kategori<br />Pilihan<br />Terlaris</h1>
         <Link to="/productlist">
-        <button className="view-all-button">Lihat Semua</button>
+        <button className="view-all-button">Lihat Semua Produk</button>
         </Link>
       </div>
       <div className="category-sectionCategories">

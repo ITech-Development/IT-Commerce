@@ -10,7 +10,7 @@ import Footer from "../../components/footer";
 import ProductCatgories from "../../components/sections/productCategories";
 import ClaimVoucher from "../../assets/popup.png";
 import { Link } from "react-router-dom";
-import ProductEvent from '../../components/sections/BrandSales/Product'
+// import ProductEvent from '../../components/sections/BrandSales/Product'
 
 // Import Chatbot components from react-chatbot-kit
 import { Chatbot } from "react-chatbot-kit";
@@ -41,7 +41,7 @@ function Index() {
         {/* <Navbar/> */}
         <HeroSection />
         <ProductCatgories/>
-        <ProductEvent/>
+        {/* <ProductEvent/> */}
         {/* <CommitQuote />
         <ProductSelected onClick={openModal} /> {/* Added onClick event */}
         {/* <Riset />
