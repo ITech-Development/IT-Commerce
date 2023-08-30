@@ -8,7 +8,7 @@ import "../../App.css";
 import Star from "../../assets/star.png";
 import CartIcon from "../../assets/cart2.png";
 import { FadeLoader } from "react-spinners";
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com/"; // Define your API URL here
 
 const linkStyle = {
   color: "white",
