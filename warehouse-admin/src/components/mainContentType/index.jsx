@@ -25,7 +25,7 @@ const MainContent = () => {
           Tambah Tipe
         </button>
       </Link>
-      <Link to="/dashboardProducts">
+      <Link to="/">
         <button>Dashboard Produk</button>
       </Link>
       <TableComponent />

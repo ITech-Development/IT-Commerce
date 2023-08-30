@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./addStyleProducts.css";
 
 const AddProductPage = () => {
@@ -20,6 +20,8 @@ const AddProductPage = () => {
     productOwnerId: 0,
     // Tambahkan atribut lainnya jika perlu
   });
+
+    const navigate = useNavigate()
 
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
@@ -110,7 +112,7 @@ const AddProductPage = () => {
       if (response.status === 201) {
         // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil tambah produk.
         // Contoh:
-        window.location.href = "/dashboardProducts";
+        navigate('/')
         console.log("Produk berhasil ditambahkan.");
       } else {
         // Jika terjadi kesalahan saat menyimpan produk di server, Anda dapat menampilkan pesan error atau melakukan tindakan lainnya.
@@ -294,7 +296,7 @@ const AddProductPage = () => {
         </div>
         <div className="button-group">
           <button type="submit">Tambahkan Produk</button>
-          <Link to="/dashboardProducts">
+          <Link to="/">
             <button>Kembali</button>
           </Link>
         </div>

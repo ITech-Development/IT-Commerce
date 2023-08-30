@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
 const EditProductPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate()
 
   const [product, setProduct] = useState({
     name: "",
@@ -93,7 +94,7 @@ const EditProductPage = () => {
       if (response.status === 200) {
         // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil edit produk.
         // Contoh:
-        window.location.href = '/dashboardProducts';
+        navigate('/')
         console.log('Produk berhasil diupdate.');
       } else {
         console.error('Terjadi kesalahan saat mengupdate produk.');
@@ -278,7 +279,7 @@ const EditProductPage = () => {
         </div>
         <div className="button-group">
           <button type="submit">Simpan Perubahan</button>
-          <Link to="/dashboardProducts">
+          <Link to="/">
             <button>Kembali</button>
           </Link>
         </div>

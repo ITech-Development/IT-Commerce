@@ -71,7 +71,7 @@ const ProductDetailPage = () => {
             </SpecificationItem>
           </Specifications>
           <div style={{ marginTop: "30px" }}>
-            <Link to="/dashboardProducts">
+            <Link to="/">
             <button>Back</button>
             </Link>
           </div>
