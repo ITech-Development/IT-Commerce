@@ -39,10 +39,13 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     categoryId: DataTypes.INTEGER,
     typeId: DataTypes.INTEGER,
-    image: { 
+    image: {
       type: DataTypes.STRING,
       allowNull: false
-     },
+    },
+    image2: DataTypes.STRING,
+    image3: DataTypes.STRING,
+    image4: DataTypes.STRING,
     description: DataTypes.TEXT,
     minimumOrder: DataTypes.INTEGER,
     unitPrice: DataTypes.INTEGER,

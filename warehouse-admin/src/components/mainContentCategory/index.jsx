@@ -1,15 +1,15 @@
 // MainContent.js
 import React from 'react';
-import TableComponent from '../tableProduct';
+import TableComponent from '../tableCategory';
 import { Link } from 'react-router-dom'
 
 const MainContent = () => {
 
   return (
     <main style={{ display: 'flex', margin: '10px 40px', flexDirection: 'column' }}>
-      <h2>Dashboard Produk INDOTEKNIK</h2>
-      <p><strong>Catatan!</strong> Masukkan semua produk dengan BENAR</p>
-      <Link to="/add-product">
+      <h2>Dashboard Produk Kategori INDOTEKNIK</h2>
+      <p><strong>Catatan!</strong> Masukkan semua produk ketegori dengan BENAR</p>
+      <Link to="/add-category">
         <button
           style={{
             display: "flex",
@@ -24,14 +24,11 @@ const MainContent = () => {
             cursor: 'pointer'
           }}
         >
-          Add Product
+          Add Category
         </button>
       </Link>
-      <Link to="/dashboard-categories">
-        <button>Dashboard Kategori</button>
-      </Link>
-      <Link to="/dashboard-types">
-        <button>Dashboard Tipe</button>
+      <Link to="/dashboardProducts">
+        <button>Dashboard Produk</button>
       </Link>
       <TableComponent />
     </main>
