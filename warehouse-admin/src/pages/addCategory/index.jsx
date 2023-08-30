@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./addStyleCategories.css";
 import { Link } from "react-router-dom";
-import "./AddCategoryPage.css";
 
 const AddCategoryPage = () => {
   const [newCategory, setNewCategory] = useState({
     name: "",
+    // Add more attributes if needed
   });
 
   const handleChange = (e) => {
@@ -19,31 +20,27 @@ const AddCategoryPage = () => {
       const response = await axios.post(
         "https://indoteknikserver-732012365989.herokuapp.com/product-categories",
         newCategory,
-        // {
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //     access_token: localStorage.getItem("access_token"),
-        //   },
-        // }
       );
 
       if (response.status === 201) {
-        // Redirect or show success message
-        console.log("Kategori berhasil ditambahkan.");
+        // Successful response handling
+        window.location.href = "/dashboard-categories";
+        console.log("Category added successfully.");
       } else {
-        console.error("Terjadi kesalahan saat menambahkan kategori.");
+        // Handle error response
+        console.error("Error adding category.");
       }
     } catch (error) {
-      console.error("Terjadi kesalahan:", error);
+      console.error("An error occurred:", error);
     }
   };
 
   return (
     <div className="add-category-container">
-      <h1>Tambah Kategori Produk</h1>
+      <h1>Add New Category</h1>
       <form className="add-category-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Nama Kategori:</label>
+          <label htmlFor="name">Category Name:</label>
           <input
             type="text"
             id="name"
@@ -52,11 +49,13 @@ const AddCategoryPage = () => {
             onChange={handleChange}
             required
           />
+          <br />
         </div>
-
+        {/* Add more form inputs for other attributes if needed */}
         <div className="button-group">
           <button type="submit">Tambah Kategori</button>
-          <Link to="/dashboardProducts">
+          {/* Add navigation or other buttons as needed */}
+          <Link to="/dashboard-categories">
             <button>Kembali</button>
           </Link>
         </div>

@@ -1,10 +1,8 @@
-// MainContent.js
 import React from 'react';
 import TableComponent from '../tableProduct';
 import { Link } from 'react-router-dom'
 
 const MainContent = () => {
-
   return (
     <main style={{ display: 'flex', margin: '10px 40px', flexDirection: 'column' }}>
       <h2>Dashboard Produk INDOTEKNIK</h2>
