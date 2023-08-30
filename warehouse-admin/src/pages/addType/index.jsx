@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./addStyleTypes.css";
 import { Link } from "react-router-dom";
-import "./AddTypePage.css";
 
 const AddTypePage = () => {
   const [newType, setNewType] = useState({
     name: "",
+    // Add more attributes if needed
   });
 
   const handleChange = (e) => {
@@ -18,32 +19,28 @@ const AddTypePage = () => {
     try {
       const response = await axios.post(
         "https://indoteknikserver-732012365989.herokuapp.com/product-types",
-        newType,
-        // {
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //     access_token: localStorage.getItem("access_token"),
-        //   },
-        // }
+        newType
       );
 
       if (response.status === 201) {
-        // Redirect or show success message
-        console.log("Tipe berhasil ditambahkan.");
+        // Successful response handling
+        window.location.href = "/dashboard-types"; // Update the route as needed
+        console.log("Type added successfully.");
       } else {
-        console.error("Terjadi kesalahan saat menambahkan tipe.");
+        // Handle error response
+        console.error("Error adding type.");
       }
     } catch (error) {
-      console.error("Terjadi kesalahan:", error);
+      console.error("An error occurred:", error);
     }
   };
 
   return (
-    <div className="add-type-container">
-      <h1>Tambah Kategori Produk</h1>
-      <form className="add-type-form" onSubmit={handleSubmit}>
+    <div className="add-category-container">
+      <h1>Add New Type</h1>
+      <form className="add-category-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Nama Tipe:</label>
+          <label htmlFor="name">Type Name:</label>
           <input
             type="text"
             id="name"
@@ -52,12 +49,14 @@ const AddTypePage = () => {
             onChange={handleChange}
             required
           />
+          <br />
         </div>
-
+        {/* Add more form inputs for other attributes if needed */}
         <div className="button-group">
           <button type="submit">Tambah Tipe</button>
-          <Link to="/dashboardProducts">
-            <button>Kembali</button>
+          {/* Add navigation or other buttons as needed */}
+          <Link to="/dashboard-types">
+            <button>Back</button>
           </Link>
         </div>
       </form>

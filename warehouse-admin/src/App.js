@@ -5,8 +5,10 @@ import AddProduct from "./pages/addProduct";
 import AddCategory from "./pages/addCategory";
 import AddType from "./pages/addType";
 import GetProducts from "./pages/getProducts";
+import GetTypes from "./pages/getTypes";
 import EditProduct from "./pages/editProduct";
 import EditCategory from "./pages/editCategory";
+import EditType from "./pages/editType";
 import DetailsProduct from "./pages/detailsProduct";
 // import Dashboard from "./pages/dashboard"
 import NotFound from "./pages/notFound"
@@ -40,8 +42,10 @@ const Routing = () => {
           <Route path="/add-type" element={<AddType />} />
           <Route path="/edit-product/:id" element={<EditProduct />} />
           <Route path="/edit-category/:id" element={<EditCategory />} />
+          <Route path="/edit-type/:id" element={<EditType />} />
           <Route path="/product/:id" element={<DetailsProduct />} />
           <Route path="/dashboard-categories" element={<GetCategories />} />
+          <Route path="/dashboard-types" element={<GetTypes />} />
         </>
       )}
     </Routes>

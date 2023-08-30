@@ -110,7 +110,7 @@ router.get('/:id', ProductTypeController.detailsProductType)
  *       404:
  *         description: Products type not found
  */
-router.delete('/:id', authentication, authorization, ProductTypeController.deleteProductType)
+router.delete('/:id', ProductTypeController.deleteProductType)
 
 /**
  * @swagger
@@ -143,6 +143,6 @@ router.delete('/:id', authentication, authorization, ProductTypeController.delet
  *      500:
  *        description: Error on the internal server
  */
-router.put('/:id', authentication, authorization, ProductTypeController.editProductType)
+router.put('/:id', ProductTypeController.editProductType)
 
 module.exports = router
