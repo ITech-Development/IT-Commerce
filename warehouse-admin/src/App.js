@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter, useNavigate } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Login from "./components/auth/Login";
 import AddProduct from "./pages/addProduct";
@@ -10,33 +10,34 @@ import EditProduct from "./pages/editProduct";
 import EditCategory from "./pages/editCategory";
 import EditType from "./pages/editType";
 import DetailsProduct from "./pages/detailsProduct";
-// import Dashboard from "./pages/dashboard"
 import NotFound from "./pages/notFound"
 import GetCategories from "./pages/getCategories"
 
 import { initialState, reducer } from "./reducer/UseReducer";
 
 import "./App.css";
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 
 export const UserContext = createContext();
 
 const Routing = () => {
 
   const accessToken = localStorage.getItem('access_token')
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!accessToken) {
+      navigate('/login'); // Arahkan pengguna ke halaman login jika tidak ada access token
+    }
+  }, [accessToken, navigate]);
 
   return (
     <Routes>
-      {!accessToken ? (
+      <Route path="*" element={<NotFound />} />
+      {accessToken ? (
         <>
           <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<Login />} />
-        </>
-      ) : (
-        <>
-          <Route path="*" element={<NotFound />} />
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-          <Route path="/dashboardProducts" element={<GetProducts />} />
+          <Route path="/" element={<GetProducts />} />
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/add-category" element={<AddCategory />} />
           <Route path="/add-type" element={<AddType />} />
@@ -46,6 +47,10 @@ const Routing = () => {
           <Route path="/product/:id" element={<DetailsProduct />} />
           <Route path="/dashboard-categories" element={<GetCategories />} />
           <Route path="/dashboard-types" element={<GetTypes />} />
+        </>
+      ) : (
+        <>
+        <Route path="/login" element={<Login />} />
         </>
       )}
     </Routes>

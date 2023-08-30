@@ -43,7 +43,7 @@ const Login = () => {
       setEmail("");
       setPassword("");
 
-      navigate("/dashboardProducts");
+      navigate("/");
       dispatch({ type: "USER", payload: true });
     } catch (error) {
       console.error("Login error:", error);
