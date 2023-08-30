@@ -4,11 +4,12 @@ import Login from "./components/auth/Login";
 import AddProduct from "./pages/addProduct";
 import AddCategory from "./pages/addCategory";
 import AddType from "./pages/addType";
-import GetProduct from "./pages/getProducts";
+import GetProducts from "./pages/getProducts";
 import EditProduct from "./pages/editProduct";
 import DetailsProduct from "./pages/detailsProduct";
 // import Dashboard from "./pages/dashboard"
 import NotFound from "./pages/notFound"
+import GetCategories from "./pages/getCategories"
 
 import { initialState, reducer } from "./reducer/UseReducer";
 
@@ -32,12 +33,13 @@ const Routing = () => {
         <>
           <Route path="*" element={<NotFound />} />
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-          <Route path="/dashboardProducts" element={<GetProduct />} />
+          <Route path="/dashboardProducts" element={<GetProducts />} />
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/add-category" element={<AddCategory />} />
           <Route path="/add-type" element={<AddType />} />
           <Route path="/edit-product/:id" element={<EditProduct />} />
           <Route path="/product/:id" element={<DetailsProduct />} />
+          <Route path="/dashboard-categories" element={<GetCategories />} />
         </>
       )}
     </Routes>

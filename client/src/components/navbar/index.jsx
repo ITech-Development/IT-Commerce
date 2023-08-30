@@ -18,7 +18,7 @@ export default function Navigation() {
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "http://localhost:3100/product-carts";
+      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
           setCarts(data);
@@ -32,7 +32,7 @@ export default function Navigation() {
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "http://localhost:3100/users/me";
+      let url = "https://indoteknikserver-732012365989.herokuapp.com/users/me";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
           console.log(data, "dari profile");

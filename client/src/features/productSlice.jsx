@@ -10,7 +10,7 @@ export const productsFetch = createAsyncThunk(
   "products/productsFetch",
   async () => {
     try {
-      const response = await axios.get("http://localhost:3100/products");
+      const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/products");
       return response.data;
     } catch (error) {
       console.log(error);
@@ -22,10 +22,10 @@ export const addToCartPost = createAsyncThunk(
   "orders/addToCartPost",
   async (data) => {
     console.log(data, "dataaaaaaaaaaaaa");
-    console.log(`http://localhost:3100/orders/${data.id}`);
+    console.log(`https://indoteknikserver-732012365989.herokuapp.com/orders/${data.id}`);
     try {
       const response = await axios.post(
-        `http://localhost:3100/orders/${data.id}`,
+        `https://indoteknikserver-732012365989.herokuapp.com/orders/${data.id}`,
         data,
         {
           headers: {

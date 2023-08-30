@@ -81,7 +81,6 @@ class TransactionController {
     }
 
     static async updateTransaction(req, res, next) {
-
         try {
             Transaction.update(
                 {

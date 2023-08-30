@@ -14,7 +14,7 @@ const initialState = {
 const addToCartPost = async (data) => {
   try {
     const response = await axios.post(
-      `http://localhost:3100/product-carts/${data.id}`,
+      `https://indoteknikserver-732012365989.herokuapp.com/product-carts/${data.id}`,
       data,
       {
         headers: {
