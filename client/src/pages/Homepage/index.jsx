@@ -11,7 +11,8 @@ import ProductCatgories from "../../components/sections/productCategories";
 import ClaimVoucher from "../../assets/popup.png";
 import { Link } from "react-router-dom";
 // import ProductEvent from '../../components/sections/BrandSales/Product'
-
+import CorouselBrands from '../../components/sections/corouselBrands'
+import Navbar from '../../components/navbar/index'
 // Import Chatbot components from react-chatbot-kit
 import { Chatbot } from "react-chatbot-kit";
 import config from "./chatbot/config";
@@ -38,8 +39,9 @@ function Index() {
   return (
     <>
       <div style={{ position: "relative", top: "60px" }}>
-        {/* <Navbar/> */}
+        <Navbar/>
         <HeroSection />
+        <CorouselBrands/>
         <ProductCatgories/>
         {/* <ProductEvent/> */}
         {/* <CommitQuote />

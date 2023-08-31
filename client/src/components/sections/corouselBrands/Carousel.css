@@ -1,0 +1,9 @@
+.carouselbrand {
+    display: flex;
+    gap: 90px;
+    justify-content: center;
+    padding: 30px 0;
+    margin: auto;
+    width: 100px;
+    height: 50px;
+}

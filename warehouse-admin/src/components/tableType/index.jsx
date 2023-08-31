@@ -78,7 +78,7 @@ const TypeTable = () => {
           size="small"
         />
       </div>
-      <TableContainer component={Paper} style={{ width: "100%" }}>
+      <TableContainer component={Paper} style={{ width: "1420px" }}>
         <Table className="bordered-table">
           <TableHead>
             <TableRow>
@@ -105,9 +105,8 @@ const TypeTable = () => {
               <TableRow key={type.id}>
                 <TableCell>{type.id}</TableCell>
                 <TableCell>
-                  <Link to={`/type/${type.id}`}>
+                  {/* <Link to={`/type/${type.id}`}> */}
                     {type.name}
-                  </Link>
                 </TableCell>
                 <TableCell className="action-column">
                   <div style={{ display: "flex", justifyContent: "space-between" }}>

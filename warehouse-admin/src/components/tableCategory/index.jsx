@@ -67,7 +67,7 @@ const CategoryTable = () => {
   };
 
   return (
-    <div>
+    <div style={{display: 'flex', margin: 'auto', maxWidth: '1420px', flexDirection: 'column'}}>
       <div style={{ marginBottom: "20px", display: "flex", gap: "10px" }}>
         <TextField
           label="Name"
@@ -78,7 +78,7 @@ const CategoryTable = () => {
           size="small"
         />
       </div>
-      <TableContainer component={Paper} style={{ width: "100%" }}>
+      <TableContainer component={Paper} style={{ width: "1420px" }}>
         <Table className="bordered-table">
           <TableHead>
             <TableRow>
@@ -105,9 +105,8 @@ const CategoryTable = () => {
               <TableRow key={category.id}>
                 <TableCell>{category.id}</TableCell>
                 <TableCell>
-                  <Link to={`/category/${category.id}`}>
+                  {/* <Link to={`/category/${category.id}`}> */}
                     {category.name}
-                  </Link>
                 </TableCell>
                 <TableCell className="action-column">
                   <div style={{ display: "flex", justifyContent: "space-between" }}>

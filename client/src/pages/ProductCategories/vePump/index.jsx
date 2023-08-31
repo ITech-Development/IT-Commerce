@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../App.css";
+import './vePump.css'
+import IconButton from "@mui/material/IconButton";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
 
@@ -15,33 +18,44 @@ const ProductCard = ({ product, onAddToCart }) => {
     const discountedPrice = originalPrice - discountAmount;
 
     return (
-        <div className="product">
-            <a
-                href={`/products/${product.id}`}
-                className="view-product-button"
-                style={linkStyle}
-            >
-                <img src={`${API_URL}/${product.image}`} alt={product.name} />
-            </a>
-            <div className="details">
-                <h3>{product.category}</h3>
-                <p>{product.name}</p>
-                <span className="price">{originalPrice}</span>
-                <br />
-                <span className="price">
-                    <i>3% <del>{discountedPrice}</del></i>
-                </span>
-                <p>Stock: {product.stock}</p>
+        <div className="product-card">
+          <a
+            href={`/products/${product.id}`}
+            className="view-product-button"
+            style={linkStyle}
+          >
+            <img src={`${API_URL}/${product.image}`} alt={product.name} />
+          </a>
+          <div className="product-details">
+            <h3>{product.category}</h3>
+            <p>{product.name}</p>
+            <span className="price">Rp. {originalPrice}</span>
+            <br />
+            <div className="discount-container">
+              <div className="discount">
+                <span className="percentage">3%</span>
+              </div>
+              <del className="original-price">{discountedPrice}</del>
             </div>
-            <button
-                className="add-to-cart-button"
-                onClick={() => onAddToCart(product)}
-                disabled={product.stock === 0}
-            >
-                {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
-            </button>
+            <p>Stock: {product.stock}</p>
+          </div>
+          <button
+            className={`add-to-cart-button ${
+              product.stock === 0 ? "out-of-stock" : ""
+            }`}
+            onClick={() => onAddToCart(product)}
+            disabled={product.stock === 0}
+          >
+            {product.stock > 0 ? (
+              <IconButton aria-label="add to cart">
+                <ShoppingCartIcon style={{ color: "white" }} />
+              </IconButton>
+            ) : (
+              "Out of Stock"
+            )}
+          </button>
         </div>
-    );
+      );
 };
 
 const ProductList = () => {

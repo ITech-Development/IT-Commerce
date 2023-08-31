@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
-import Logo from "../../assets/Logo.png";
+import Logo from "../../assets/Logoss.png";
 import ShopIcon from "../../assets/shopIcon.png";
 import ProfileImage from "../../assets/user.png"; // Import foto profil
 

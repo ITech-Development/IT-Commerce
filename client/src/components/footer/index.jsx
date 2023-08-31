@@ -10,8 +10,8 @@ import {
 
 // Styled components for the Footer
 const FooterContainer = styled.footer`
-  background-color: #222;
-  color: #fff;
+  background-color: #A1F9FF;
+  color: #000000;
   padding: 20px;
   text-align: center;
   margin-top: 30px;
@@ -29,7 +29,7 @@ const SocialIcon = styled.a`
   display: inline-block;
   margin: 0 5px;
   font-size: 24px;
-  color: #fff;
+  color: #000000;
   transition: color 0.2s;
 
   &:hover {

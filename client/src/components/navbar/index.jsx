@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Logo from "../../assets/Logo.png";
+import Logo from "../../assets/Logoss.png";
 // import ProfileIcon from "../../assets/icon.svg";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";

@@ -7,18 +7,16 @@ const MainContent = () => {
     <main style={{ display: 'flex', margin: '10px 40px', flexDirection: 'column' }}>
       <h2>Dashboard Tipe Produk INDOTEKNIK</h2>
       <p><strong>Catatan!</strong> Masukkan semua tipe produk dengan BENAR</p>
+      <div style={{ marginBottom: '30px' }}>
+
       <Link to="/add-type">
         <button
-          style={{
-            display: "flex",
-            padding: "10px 20px",
-            background: "blue",
-            color: "white",
-            justifyContent: "end",
-            marginBottom: "30px",
+           style={{
+            padding: '10px 20px',
+            background: 'blue',
+            color: 'white',
             border: 'none',
             borderRadius: '5px',
-            width: 'auto',
             cursor: 'pointer'
           }}
         >
@@ -26,8 +24,9 @@ const MainContent = () => {
         </button>
       </Link>
       <Link to="/">
-        <button>Dashboard Produk</button>
+      <button style={{ marginBottom: '10px' }}>Dashboard Product</button>
       </Link>
+      </div>
       <TableComponent />
     </main>
   );

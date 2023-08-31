@@ -8,6 +8,8 @@ import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
 // const midtransClient = require('midtrans-client');
+import styled from 'styled-components';
+
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
@@ -52,7 +54,9 @@ function Index() {
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
-        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers");
+        const response = await axios.get(
+          "https://indoteknikserver-732012365989.herokuapp.com/admin-sellers"
+        );
         setVouchers(response.data);
       } catch (error) {
         console.log("Error fetching vouchers:", error);
@@ -143,7 +147,9 @@ function Index() {
   const handlerInc = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/increment/" + id;
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/increment/" +
+        id;
       axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data);
@@ -157,7 +163,9 @@ function Index() {
   const handlerDec = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/decrement/" + id;
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/decrement/" +
+        id;
       axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, "ASdasdas");
@@ -171,7 +179,9 @@ function Index() {
   const handlerRemove = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/remove/" + id;
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/remove/" +
+        id;
       axios({ url, method: "delete", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, "remooove");
@@ -230,7 +240,8 @@ function Index() {
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/juvindo";
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/juvindo";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
           setCarts(data);
@@ -510,133 +521,120 @@ function Index() {
             </label>
           </div>
         </div>
-
-        <div
-          className="calcongkir"
-          style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
-        >
-          <h2>Pilih Metode Pengiriman</h2>
-          <div>
-            <select
-              value={courier}
-              onChange={handlerSetCourier}
-              className="methodDeliverySelect"
-            >
-              <option className="methodDeliveryOption" value="jne">
-                jne
-              </option>
-              <option className="methodDeliveryOption" value="tiki">
-                tiki
-              </option>
-              <option className="methodDeliveryOption" value="pos">
-                pos
-              </option>
-              <option className="methodDeliveryOption" value="jnt">
-                jnt
-              </option>
-            </select>
-            {/* <input
+        <ShippingContainer>
+          <div
+            className="calcongkir"
+            style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
+          >
+            <h2>Pilih Metode Pengiriman</h2>
+            <div>
+              <Select onChange={handlerSetCourier}>
+                <option value={courier}>Select Courier</option>
+                <option value="jne">JNE</option>
+                <option value="tiki">TIKI</option>
+                <option value="pos">Pos Indonesia</option>
+                <option value="jnt">J&T</option>
+              </Select>
+              {/* <input
               type="number"
               value={calculateTotalWeight()}
               readOnly
               placeholder="Total Weight in Grams"
             /> */}
-            <select
-              name="province"
-              id="province"
-              onChange={handleProvinceChange}
-              className="methodDeliverySelect"
-            >
-              <option className="methodDeliveryOption" value="">
-                Select Province
-              </option>
-              {province.map((item) => (
-                <option
-                  className="methodDeliveryOption"
-                  key={item.province_id}
-                  value={item.province_id}
-                >
-                  {item.province}
+              <select
+                name="province"
+                id="province"
+                onChange={handleProvinceChange}
+                className="methodDeliverySelect"
+              >
+                <option className="methodDeliveryOption" value="">
+                  Select Province
                 </option>
-              ))}
-            </select>
-            <select
-              name="city"
-              id="city"
-              onChange={handleCityChange}
-              className="methodDeliverySelect"
-            >
-              <option className="methodDeliveryOption" value="">
-                Select City
-              </option>
-              {Array.isArray(city) &&
-                city.map((item) => (
+                {province.map((item) => (
                   <option
                     className="methodDeliveryOption"
-                    key={item.city_id}
-                    value={item.city_id}
+                    key={item.province_id}
+                    value={item.province_id}
                   >
-                    {item.city_name}
+                    {item.province}
                   </option>
                 ))}
-            </select>
-            <select
-              name="subdistrict"
-              id="subdistrict"
-              onChange={handlerGetCost}
-              className="methodDeliverySelect"
-            >
-              <option className="methodDeliveryOption" value="">
-                Select Subdistrict
-              </option>
-              {Array.isArray(subdistrict) &&
-                subdistrict.map((item) => (
-                  <option
-                    className="methodDeliveryOption"
-                    key={item.subdistrict_id}
-                    value={item.subdistrict_id}
-                  >
-                    {item.subdistrict_name}
-                  </option>
-                ))}
-            </select>
-            {pengiriman
-              ? pengiriman.map((el, index) => (
-                  <div key={index}>
-                    <input
-                      type="radio"
-                      id={`shippingChoice${index}`}
-                      name="shipping"
-                      value={el.cost[0].value}
-                      checked={selectedShippingCost === el.cost[0].value}
-                      onChange={handleShippingCostChange}
-                    />
-                    <label htmlFor={`shippingChoice${index}`}>
-                      Shipping Cost: Rp.{el.cost[0].value}
-                    </label>
-                    <p>Service: {el.service}</p>
-                    <p>Description: {el.description}</p>
-                    <p>Est: {el.cost[0].etd} Days</p>
-                  </div>
-                ))
-              : null}
+              </select>
+              <select
+                name="city"
+                id="city"
+                onChange={handleCityChange}
+                className="methodDeliverySelect"
+              >
+                <option className="methodDeliveryOption" value="">
+                  Select City
+                </option>
+                {Array.isArray(city) &&
+                  city.map((item) => (
+                    <option
+                      className="methodDeliveryOption"
+                      key={item.city_id}
+                      value={item.city_id}
+                    >
+                      {item.city_name}
+                    </option>
+                  ))}
+              </select>
+              <select
+                name="subdistrict"
+                id="subdistrict"
+                onChange={handlerGetCost}
+                className="methodDeliverySelect"
+              >
+                <option className="methodDeliveryOption" value="">
+                  Select Subdistrict
+                </option>
+                {Array.isArray(subdistrict) &&
+                  subdistrict.map((item) => (
+                    <option
+                      className="methodDeliveryOption"
+                      key={item.subdistrict_id}
+                      value={item.subdistrict_id}
+                    >
+                      {item.subdistrict_name}
+                    </option>
+                  ))}
+              </select>
+              {pengiriman
+                ? pengiriman.map((el, index) => (
+                    <div key={index}>
+                      <input
+                        type="radio"
+                        id={`shippingChoice${index}`}
+                        name="shipping"
+                        value={el.cost[0].value}
+                        checked={selectedShippingCost === el.cost[0].value}
+                        onChange={handleShippingCostChange}
+                      />
+                      <label htmlFor={`shippingChoice${index}`}>
+                        Shipping Cost: Rp.{el.cost[0].value}
+                      </label>
+                      <p>Service: {el.service}</p>
+                      <p>Description: {el.description}</p>
+                      <p>Est: {el.cost[0].etd} Days</p>
+                    </div>
+                  ))
+                : null}
+            </div>
           </div>
-        </div>
+        </ShippingContainer>
+        <StyledPaymentSummary>
 
-        <div
-          style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end'}}
+        <span>Total Bayar : </span>
+        <span
+          style={{ fontWeight: "700", paddingRight: "20px" }}
+          className="amount"
         >
-          <div style={{paddingTop: '5px'}}>
-
-          <span >Total Bayar : </span>
-          <span style={{ fontWeight: "700", paddingRight: '20px'}} className="amount">
-            Rp. {calculateTotalBayar()}
-          </span>
-          </div>
-          <div>
-
+          Rp. {calculateTotalBayar()}
+        </span>
+        <div>
           {totalShippingCost === 0 ? (
-            <p >
+            <p>
               <i>Silahkan pilih metode pengiriman</i>
             </p>
           ) : (
@@ -647,10 +645,127 @@ function Index() {
               Bayar Sekarang
             </button>
           )}
-          </div>
         </div>
+
+        </StyledPaymentSummary>
       </div>
     </div>
   );
 }
 export default Index;
+
+// const StyledContainer = styled.div`
+//   max-width: 1350px;
+//   margin: auto;
+// `;
+
+const ShippingContainer = styled.div`
+  padding: 20px;
+  border: 1px solid rgb(244, 238, 238);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const Select = styled.select`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+  width: 100%;
+`;
+
+// const RadioLabel = styled.label`
+//   padding: 10px 15px;
+//   background-color: ${({ checked }) => (checked ? '#fff' : '#f0f0f5')};
+//   border-radius: 8px;
+//   cursor: pointer;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   transition: all 0.3s ease;
+//   border: 2px solid ${({ checked }) => (checked ? '#007bff' : 'transparent')};
+
+//   p {
+//     margin: 5px 0;
+//     font-size: 16px;
+//     font-weight: bold;
+//   }
+// `;
+
+const StyledPaymentSummary = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+
+  .amount {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #f0f0f5;
+    }
+  }
+`;
+
+// const StyledAddress = styled.div`
+//   position: relative;
+//   top: 90px;
+//   max-width: auto;
+//   margin: 0 20px;
+//   padding: 15px 30px 25px 30px;
+//   border: 1px solid rgb(232, 215, 215);
+//   border-radius: 10px;
+// `;
+
+// const AddressContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   gap: 10px;
+// `;
+
+// const AddressInfo = styled.div`
+//   display: flex;
+//   align-items: center;
+
+//   h4 {
+//     margin: 0;
+//     font-size: 18px;
+//     font-weight: bold;
+//     line-height: 25px;
+//   }
+
+//   p {
+//     margin: 0;
+//     font-size: 16px;
+//     color: #666;
+//   }
+// `;
+
+// const EditButton = styled.button`
+//   border: none;
+//   background: none;
+//   cursor: pointer;
+//   font-weight: bold;
+//   color: blue;
+//   font-size: 18px;
+//   text-decoration: underline;
+// `;

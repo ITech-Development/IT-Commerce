@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useGetAllProductsQuery } from "../../features/productsApi";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Corousel from "../../components/corousel/product";
 import "./productliststyle.css";
 import "../../App.css";
 import Star from "../../assets/star.png";
-import CartIcon from "../../assets/cart2.png";
+// import CartIcon from "../../assets/cart2.png";
 import { FadeLoader } from "react-spinners";
+import IconButton from "@mui/material/IconButton";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+
+
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com/"; // Define your API URL here
 
 const linkStyle = {
@@ -25,17 +29,17 @@ const loadingContainerStyle = {
 const ProductCard = ({ product, onAddToCart }) => {
   const starRating = 5;
   return (
-    <div className="product">
-      <Link
-        to={`/products/${product.id}`}
+    <div  className="product-card">
+      <a
+        href={`/products/${product.id}`}
         className="view-product-button"
         style={linkStyle}
       >
         <img src={`${API_URL}/${product.image}`} alt={product.name} />
-      </Link>
-      <div className="details">
+      </a>
+      <div className="product-details">
         <h3>{product.category}</h3>
-        <h3 style={{ padding: "5px 0", margin: "0" }}>{product.name}</h3>
+        <h3 style={{ padding: "5px 0", margin: "0" }}>{product.name.split(' ').slice(0, 8).join(' ')}...</h3>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
             <div style={{ width: "90px" }} className="star-rating">
@@ -53,23 +57,20 @@ const ProductCard = ({ product, onAddToCart }) => {
             {/* <p>Stock: {product.stock}</p> */}
           </div>
           <button
-            className="cartyes"
-            style={{
-              maxWidth: "40px",
-              border: "none",
-              borderRadius: "50%",
-              background: "#DDEFEF",
-              cursor: "pointer",
-            }}
-            onClick={() => onAddToCart(product)}
-            disabled={product.stock === 0}
-          >
-            {product.stock > 0 ? (
-              <img style={{ maxWidth: "24px" }} src={CartIcon} alt="Cart" />
-            ) : (
-              <p style={{color: 'black', margin: '0', padding: '0', fontSize: '7px', fontWeight: '700'}}>Out of stock</p>
-            )}
-          </button>
+        className={`add-to-cart-button ${
+          product.stock === 0 ? "out-of-stock" : ""
+        }`}
+        onClick={() => onAddToCart(product)}
+        disabled={product.stock === 0}
+      >
+        {product.stock > 0 ? (
+          <IconButton aria-label="add to cart">
+            <ShoppingCartIcon style={{ color: "white" }} />
+          </IconButton>
+        ) : (
+          "Out of Stock"
+        )}
+      </button>
         </div>
       </div>
     </div>

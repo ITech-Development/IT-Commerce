@@ -1,12 +1,16 @@
 .category-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
   justify-content: space-between;
   gap: 20px;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  border: #cfc9c9 1px solid;
+  /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); */
   flex: 1;
+  margin: auto;
+  width: 80%;
 }
 
 .category-section {
@@ -14,6 +18,28 @@
   flex-direction: column;
   gap: 20px;
   padding: 20px;
+  border-radius: 10px;
+
+  /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); */
+  flex: 1;
+}
+
+.secRight {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 10px;
+  border: #cfc9c9 1px solid;
+  max-width: 400px;
+  max-height: 230px;
+  flex: 1;
+  margin-left: 20px;
+}
+
+.category-section h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #333333;
 }
 
 .category-sectionCategories {
@@ -25,22 +51,37 @@
   background-color: white;
 }
 
-.category-section h1 {
-  margin: 0;
-  font-size: 28px;
-  color: #333333;
-  /* text-align: center; */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.vchp {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.imgvc {
+  max-width: 100px;
 }
 
 .category-card {
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  border: #cfc9c9 1px solid;
+  /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); */
   padding: 20px;
-  width: 100%;
+  width: 80%;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
+}
+
+.category-card:hover {
+  background-color: #f0f0f0; /* Change to the desired hover background color */
+  transform: scale(1.05); /* Increase card size on hover */
 }
 
 .category-card h1 {
@@ -51,6 +92,7 @@
   width: 130px;
   text-decoration: none;
 }
+
 .category-card a {
   text-decoration: none;
 }
@@ -68,4 +110,49 @@
 
 .view-all-button:hover {
   background-color: #0056b3;
+}
+
+.view-all-button-Voucher {
+  margin-top: 20px;
+  width: auto;
+  padding: 13px 23px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.view-all-button-Voucher:hover {
+  background-color: #0056b3;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .category-container {
+    flex-direction: column;
+    width: 90%;
+  }
+
+  .secRight {
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Media query for even smaller screens */
+@media (max-width: 480px) {
+  .category-container {
+    width: 95%;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }

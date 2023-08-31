@@ -354,8 +354,8 @@ const TableComponent = () => {
                 <TableRow key={row.id}>
                   <TableCell>{row.id}</TableCell>
                   <TableCell>
-                    <Link to={`/product/${row.id}`}>
-                      {row.name}</Link></TableCell>
+                    <Link to={`/product/${row.id}`}>{row.name.split(' ').slice(0, 8).join(' ')}...</Link>
+                  </TableCell>
                   <TableCell>{row.categories?.name}</TableCell>
                   <TableCell>{row.types?.name}</TableCell>
                   <TableCell>
@@ -369,7 +369,16 @@ const TableComponent = () => {
                       <span>No Image</span>
                     )}
                   </TableCell>
-                  <TableCell>{row.description}</TableCell>
+                  <TableCell
+                    style={{
+                      maxHeight: "60px", // Set your desired maximum height
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "normal",
+                    }}
+                  >
+                    {row.description.split(' ').slice(0, 8).join(' ')}...
+                  </TableCell>
                   <TableCell>{row.minimumOrder}</TableCell>
                   <TableCell>{row.unitPrice}</TableCell>
                   <TableCell>{row.stock} Unit</TableCell>

@@ -96,7 +96,7 @@ const ProductDetailContainer = styled.div`
 `;
 
 const ProductDetailWrapper = styled.div`
-  max-width: 1420px;
+  max-width: 1350px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -146,8 +146,8 @@ const SpecificationItem = styled.div`
 `;
 
 const Description = styled.div`
-  max-width: 1420px;
-  width: 100%;
+max-width: 1350px;
+width: 100%;
   display: flex;
   margin: 20px auto;
   flex-direction: column;

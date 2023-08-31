@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -13,7 +12,7 @@ const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [relatedProducts, setRelatedProducts] = useState([]);
-  console.log(relatedProducts, 'heiheihei');
+  console.log(relatedProducts, "heiheihei");
 
   useEffect(() => {
     axios
@@ -28,7 +27,10 @@ const ProductDetailPage = () => {
               setRelatedProducts(relatedData);
             })
             .catch((error) => {
-              console.error(error, "There was an error fetching related products.");
+              console.error(
+                error,
+                "There was an error fetching related products."
+              );
             });
         }
       })
@@ -68,30 +70,34 @@ const ProductDetailPage = () => {
 
   const handleBuyNow = () => {
     if (accessToken) {
-      if (product.product_owners?.name === 'Indo Riau') {
-        handleAddToCart()
-        navigate('/check-TransIR')
-      } else if (product.product_owners?.name === 'Juvindo') {
-        handleAddToCart()
-        navigate('/check-TransJuvindo')
-      } else if (product.product_owners?.name === 'Itech') {
-        handleAddToCart()
-        navigate('/check-TransITech')
+      if (product.product_owners?.name === "Indo Riau") {
+        handleAddToCart();
+        navigate("/check-TransIR");
+      } else if (product.product_owners?.name === "Juvindo") {
+        handleAddToCart();
+        navigate("/check-TransJuvindo");
+      } else if (product.product_owners?.name === "Itech") {
+        handleAddToCart();
+        navigate("/check-TransITech");
       }
     } else {
       alert("Login terlebih dahulu agar dapat belanja");
       // navigate("/login");
     }
-  }
+  };
 
   if (!product) {
     return <p>Loading product details...</p>;
   }
 
+  const filteredRelatedProducts = relatedProducts.filter(
+    (relatedProduct) => relatedProduct.types?.name === product.types?.name
+  );
+
   return (
     <ProductDetailContainer>
       <ProductDetailWrapper>
-        <ProductImage src={`${API_URL}/${product.image}`} alt={product.name} />
+      <ProductImage src={`${API_URL}/${product.image}`} alt={product.name} />
 
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
@@ -146,46 +152,72 @@ const ProductDetailPage = () => {
       </Description>
 
       <RelatedProducts>
-        <h3>Produk Terkait</h3>
-        {relatedProducts.length > 0 ? (
-          <div>
-            {relatedProducts
-              .filter((relatedProduct) => relatedProduct.types?.name === product.types?.name)
-              .map((relatedProduct) => (
-                <RelatedProductCard key={relatedProduct.id}>
-                  <Link to={`/products/${relatedProduct.id}`}>
-                    <RelatedProductImage src={`${API_URL}/${relatedProduct.image}`} alt={relatedProduct.name} />
-                  </Link>
-                  <RelatedProductName>{relatedProduct.name}</RelatedProductName>
-                  {/* Add more details or buttons if needed */}
-                </RelatedProductCard>
-              ))}
-          </div>
-        ) : (
-          <p>Tidak ada produk terkait dengan tipe yang sama.</p>
-        )}
-      </RelatedProducts>
+    <h3>Produk Terkait</h3>
+    {relatedProducts.length > 0 ? (
+      <RelatedProductGrid>
+      {filteredRelatedProducts.map((relatedProduct) => (
+        <RelatedProductCard key={relatedProduct.id}>
+          <Link to={`/products/${relatedProduct.id}`}>
+            <RelatedProductImage
+              src={`${API_URL}/${relatedProduct.image}`}
+              alt={relatedProduct.name}
+            />
+          </Link>
+          <RelatedProductName>{relatedProduct.name}</RelatedProductName>
+          {/* Add more details or buttons if needed */}
+        </RelatedProductCard>
+      ))}
+    </RelatedProductGrid>
+    ) : (
+      <p>Tidak ada produk terkait dengan tipe yang sama.</p>
+    )}
+  </RelatedProducts>
     </ProductDetailContainer>
   );
 };
 
-
 const RelatedProductCard = styled.div`
   border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-`;
-
-const RelatedProductName = styled.h4`
-  margin: 0;
+  padding: 20px;
+  text-align: center;
 `;
 
 const RelatedProductImage = styled.img`
-  max-width: 100px;
-  border-radius: 5px;
+  max-width: 100%;
+  height: auto;
 `;
+
+const RelatedProductName = styled.h3`
+  margin-top: 10px;
+`;
+
+const RelatedProductGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+`;
+
+
+// const RelatedProductCard = styled.div`
+//   flex: 0 0 calc(25% - 20px); /* Adjust card width and spacing for 4 cards per row */
+//   border: 1px solid #ccc;
+//   padding: 10px;
+//   margin-bottom: 20px; /* Add space below cards */
+//   border-radius: 5px;
+//   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// `;
+// const RelatedProductName = styled.h4`
+//   margin: 10px 0;
+//   text-align: center;
+// `;
+
+// const RelatedProductImage = styled.img`
+//   max-width: 100px;
+//   border-radius: 5px;
+// `;
 
 const ProductDetailContainer = styled.div`
   display: flex;
@@ -197,7 +229,6 @@ const ProductDetailContainer = styled.div`
 `;
 
 const ProductDetailWrapper = styled.div`
-  max-width: 1420px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -223,6 +254,7 @@ const ProductInfo = styled.div`
 const ProductName = styled.h2`
   margin-top: 10px
   margin-bottom: 10px;
+  max-width: 700px;
 `;
 
 const Price = styled.p`
@@ -247,7 +279,7 @@ const SpecificationItem = styled.div`
 `;
 
 const Description = styled.div`
-  max-width: 1205px;
+  max-width: 1225px;
   width: 100%;
   display: flex;
   margin: 20px auto;
@@ -259,15 +291,11 @@ const Description = styled.div`
 `;
 
 const RelatedProducts = styled.div`
-  max-width: 1420px;
+  max-width: 1262px;
   width: 100%;
-  display: flex;
   margin: 20px auto;
+  display: flex; /* Change to flex display */
   flex-direction: column;
-  padding: 0 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 `;
 
 const BuyNowButton = styled.button`

@@ -39,7 +39,7 @@
 
 .productlist-container {
   display: flex;
-  max-width: 1420px;
+  max-width: 1350px;
   margin: auto;
   flex-direction: column;
 }

@@ -272,9 +272,9 @@ const Cart = () => {
                             alt={e.product.name}
                           />
                         </Link>
-                        <div>
-                          <h3>{e.product.name}</h3>
-                          <p>{e.product.description}</p>
+                        <div style={{paddingLeft: '20px'}}>
+                          <h3 style={{maxWidth: '450px'}}>{e.product.name}</h3>
+                          <p>{e.product.description.split(' ').slice(0, 10).join(' ')}...</p>
                           <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
                        
@@ -372,9 +372,9 @@ const Cart = () => {
                             alt={e.product.name}
                           />
                         </Link>
-                        <div>
-                          <h3>{e.product.name}</h3>
-                          <p>{e.product.description}</p>
+                        <div style={{paddingLeft: '20px'}}>
+                          <h3 style={{maxWidth: '450px'}}>{e.product.name}</h3>
+                          <p>{e.product.description.split(' ').slice(0, 10).join(' ')}...</p>
                           <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
                           </button>
@@ -479,9 +479,9 @@ const Cart = () => {
                             alt={e.product.name}
                           />
                         </Link>
-                        <div>
-                          <h3>{e.product.name}</h3>
-                          <p>{e.product.description}</p>
+                        <div style={{paddingLeft: '20px'}}>
+                          <h3 style={{maxWidth: '450px'}}>{e.product.name}</h3>
+                          <p>{e.product.description.split(' ').slice(0, 10).join(' ')}...</p>
                           <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
                  
@@ -537,10 +537,10 @@ const Cart = () => {
                         Check Out
                       </Link>
                     </button>
-                    <ContinueShoppingButton>
-                      <ContinueShoppingIcon as={FaShoppingCart} />
+                    <ContinueShoppingContainer>
+                      <ContinueShoppingIcon>&lt;</ContinueShoppingIcon>
                       <Link to="/productlist">Beli Lagi</Link>
-                    </ContinueShoppingButton>
+                    </ContinueShoppingContainer>
                   </div>
                 </div>
               </div>
@@ -554,6 +554,7 @@ const Cart = () => {
 
 const StoreHeader = styled.div`
   max-width: 900px;
+  margin-top: 30px;
   // background: #ddefef;
   // padding: 10px 76% 10px 5px;
 `;

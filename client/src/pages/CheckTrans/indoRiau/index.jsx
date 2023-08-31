@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
+import styled from 'styled-components';
+
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
@@ -515,31 +517,21 @@ function Index() {
           </div>
         </div>
         
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <ShippingContainer>
+
           <div
             className="calcongkir"
             style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
           >
             <h2>Pilih Metode Pengiriman</h2>
             <div>
-              <select
-                value={courier}
-                onChange={handlerSetCourier}
-                className="methodDeliverySelect"
-              >
-                <option className="methodDeliveryOption" value="jne">
-                  jne
-                </option>
-                <option className="methodDeliveryOption" value="tiki">
-                  tiki
-                </option>
-                <option className="methodDeliveryOption" value="pos">
-                  pos
-                </option>
-                <option className="methodDeliveryOption" value="jnt">
-                  jnt
-                </option>
-              </select>
+            <Select onChange={handlerSetCourier}>
+              <option value={courier}>Select Courier</option>
+              <option value="jne">JNE</option>
+              <option value="tiki">TIKI</option>
+              <option value="pos">Pos Indonesia</option>
+              <option value="jnt">J&T</option>
+            </Select>
               {/* <input
                 type="number"
                 value={calculateTotalWeight()}
@@ -627,15 +619,10 @@ function Index() {
                 : null}
             </div>
           </div>
+        
 
-          <div
-            style={{
-              padding: "20px 65px",
-              fontSize: "20px",
-              display: "flex",
-              justifyContent: "end",
-            }}
-          >
+          <StyledPaymentSummary>
+
             <div style={{ paddingTop: "5px" }}>
               <span>Total Bayar : </span>
               <span
@@ -659,10 +646,60 @@ function Index() {
                 </button>
               )}
             </div>
-          </div>
+            </StyledPaymentSummary>
+            </ShippingContainer>
         </div>
       </div>
-    </div>
   );
 }
 export default Index;
+
+const ShippingContainer = styled.div`
+max-width: 1350px;
+margin: auto;
+  padding: 20px;
+  border: 1px solid rgb(244, 238, 238);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const Select = styled.select`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+  width: 100%;
+`;
+
+const StyledPaymentSummary = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+
+  .amount {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #f0f0f5;
+    }
+  }
+`;
