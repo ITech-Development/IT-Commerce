@@ -224,8 +224,8 @@ const Cart = () => {
   return (
     <>
       {cartsJuvindo.length === 0 &&
-      cartsItech.length === 0 &&
-      cartsIndoRiau.length === 0 ? (
+        cartsItech.length === 0 &&
+        cartsIndoRiau.length === 0 ? (
         <div
           className="cart-container"
           style={{ position: "relative", top: "50px" }}
@@ -277,7 +277,7 @@ const Cart = () => {
                           <p>{e.product.description}</p>
                           <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
-                       
+
                           </button>
                         </div>
                       </div>
@@ -484,7 +484,7 @@ const Cart = () => {
                           <p>{e.product.description}</p>
                           <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
-                 
+
                           </button>
                         </div>
                       </div>

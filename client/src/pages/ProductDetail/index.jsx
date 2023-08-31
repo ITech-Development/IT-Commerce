@@ -1,9 +1,9 @@
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import CartIcon from "../../assets/cart2.png";
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
@@ -13,7 +13,6 @@ const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [relatedProducts, setRelatedProducts] = useState([]);
-  console.log(relatedProducts, 'heiheihei');
 
   useEffect(() => {
     axios
@@ -84,6 +83,24 @@ const ProductDetailPage = () => {
     }
   }
 
+  const handleAddRelatedToCart = (relatedProduct) => {
+    if (accessToken) {
+      axios
+        .post(`${API_URL}/product-carts`, relatedProduct, {
+          headers: { access_token: accessToken },
+        })
+        .then(({ data }) => {
+          console.log(data, "Related product berhasil ditambahkan ke keranjang");
+        })
+        .catch((err) => {
+          console.log(err, "Terjadi masalah saat menambahkan related product ke keranjang");
+        });
+    } else {
+      alert("Login terlebih dahulu agar dapat belanja");
+    }
+  };
+
+
   if (!product) {
     return <p>Loading product details...</p>;
   }
@@ -92,7 +109,6 @@ const ProductDetailPage = () => {
     <ProductDetailContainer>
       <ProductDetailWrapper>
         <ProductImage src={`${API_URL}/${product.image}`} alt={product.name} />
-
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>
@@ -157,7 +173,26 @@ const ProductDetailPage = () => {
                     <RelatedProductImage src={`${API_URL}/${relatedProduct.image}`} alt={relatedProduct.name} />
                   </Link>
                   <RelatedProductName>{relatedProduct.name}</RelatedProductName>
-                  {/* Add more details or buttons if needed */}
+                  <RelatedProductPrice>Rp.{relatedProduct.unitPrice}</RelatedProductPrice>
+                  <button
+                    className="cartyes"
+                    style={{
+                      maxWidth: "40px",
+                      border: "none",
+                      borderRadius: "50%",
+                      background: "#DDEFEF",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleAddRelatedToCart(relatedProduct)}
+                    disabled={relatedProduct.stock === 0}
+                  >
+                    {relatedProduct.stock > 0 ? (
+                      
+                      <img style={{ maxWidth: "24px" }} src={CartIcon} alt="Cart" />
+                    ) : (
+                      <p style={{ color: 'black', margin: '0', padding: '0', fontSize: '7px', fontWeight: '700' }}>Out of stock</p>
+                    )}
+                  </button>
                 </RelatedProductCard>
               ))}
           </div>
@@ -179,6 +214,10 @@ const RelatedProductCard = styled.div`
 `;
 
 const RelatedProductName = styled.h4`
+  margin: 0;
+`;
+
+const RelatedProductPrice = styled.h6`
   margin: 0;
 `;
 
