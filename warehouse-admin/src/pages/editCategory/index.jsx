@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./editStyleCategories.css"; // Make sure to have the appropriate CSS file
 import { Link, useParams } from "react-router-dom";
+import "./editStyleCategories.css";
 
 const EditCategoryPage = () => {
   const { id } = useParams(); // Assuming you're using React Router to capture the id
@@ -53,11 +53,12 @@ const EditCategoryPage = () => {
 
   return (
     <div className="edit-category-container">
-      <h1>Edit Category</h1>
+      <h1>Edit Kategori</h1>
       <form className="edit-category-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Category Name:</label>
+          <label style={{paddingTop: '10px', paddingRight: '10px'}}>Nama Kategori</label>
           <input
+            style={{width: '80%'}}
             type="text"
             id="name"
             name="name"

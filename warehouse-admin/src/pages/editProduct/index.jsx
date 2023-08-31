@@ -106,7 +106,7 @@ const EditProductPage = () => {
 
   return (
     <div className="add-product-container">
-      <h1>Edit Produk</h1>
+      <h2>Edit Produk</h2>
       <form className="add-product-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Nama Produk:</label>

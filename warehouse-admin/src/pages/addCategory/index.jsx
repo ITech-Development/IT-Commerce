@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./addStyleCategories.css";
 import { Link } from "react-router-dom";
@@ -37,11 +37,12 @@ const AddCategoryPage = () => {
 
   return (
     <div className="add-category-container">
-      <h1>Add New Category</h1>
+      <h1>Kategori Baru</h1>
       <form className="add-category-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Category Name:</label>
+          <label style={{paddingTop: '10px', paddingRight: '10px'}}>Nama Kategori : </label>
           <input
+          style={{width: '80%'}}
             type="text"
             id="name"
             name="name"

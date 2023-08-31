@@ -103,7 +103,6 @@ function Index() {
     if (token) {
       window.snap.embed(token, {
         embedId: "snap-container",
-
         onSuccess: function (result) {
           /* You may add your own implementation here */
           alert("payment success!");
@@ -130,16 +129,12 @@ function Index() {
   useEffect(() => {
     // const midtransUrl = "https://app.midtrans.com/snap/snap.js";
     const midtransUrl = "https://app.midtrans.com/snap/snap.js";
-
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
-
     // const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
     const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
     scriptTag.setAttribute("data-client-key-indo-riau", midtransClientKey);
-
     document.body.appendChild(scriptTag);
-
     return () => {
       document.body.removeChild(scriptTag);
     };

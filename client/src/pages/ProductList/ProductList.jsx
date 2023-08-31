@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useGetAllProductsQuery } from "../../features/productsApi";
-// import { Link } from "react-router-dom";
 import Corousel from "../../components/corousel/product";
 import "./productliststyle.css";
 import "../../App.css";
 import Star from "../../assets/star.png";
-// import CartIcon from "../../assets/cart2.png";
 import { FadeLoader } from "react-spinners";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com/"; // Define your API URL here
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com/";
 
 const linkStyle = {
   color: "white",

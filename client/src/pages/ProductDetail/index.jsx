@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import CartIcon from "../../assets/cart2.png";
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
@@ -86,19 +87,37 @@ const ProductDetailPage = () => {
     }
   };
 
+  const handleAddRelatedToCart = (relatedProduct) => {
+    if (accessToken) {
+      axios
+        .post(`${API_URL}/product-carts`, relatedProduct, {
+          headers: { access_token: accessToken },
+        })
+        .then(({ data }) => {
+          console.log(
+            data,
+            "Related product berhasil ditambahkan ke keranjang"
+          );
+        })
+        .catch((err) => {
+          console.log(
+            err,
+            "Terjadi masalah saat menambahkan related product ke keranjang"
+          );
+        });
+    } else {
+      alert("Login terlebih dahulu agar dapat belanja");
+    }
+  };
+
   if (!product) {
     return <p>Loading product details...</p>;
   }
 
-  const filteredRelatedProducts = relatedProducts.filter(
-    (relatedProduct) => relatedProduct.types?.name === product.types?.name
-  );
-
   return (
     <ProductDetailContainer>
       <ProductDetailWrapper>
-      <ProductImage src={`${API_URL}/${product.image}`} alt={product.name} />
-
+        <ProductImage src={`${API_URL}/${product.image}`} alt={product.name} />
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>
@@ -152,26 +171,65 @@ const ProductDetailPage = () => {
       </Description>
 
       <RelatedProducts>
-    <h3>Produk Terkait</h3>
-    {relatedProducts.length > 0 ? (
-      <RelatedProductGrid>
-      {filteredRelatedProducts.map((relatedProduct) => (
-        <RelatedProductCard key={relatedProduct.id}>
-          <Link to={`/products/${relatedProduct.id}`}>
-            <RelatedProductImage
-              src={`${API_URL}/${relatedProduct.image}`}
-              alt={relatedProduct.name}
-            />
-          </Link>
-          <RelatedProductName>{relatedProduct.name}</RelatedProductName>
-          {/* Add more details or buttons if needed */}
-        </RelatedProductCard>
-      ))}
-    </RelatedProductGrid>
-    ) : (
-      <p>Tidak ada produk terkait dengan tipe yang sama.</p>
-    )}
-  </RelatedProducts>
+        <h3>Produk Terkait</h3>
+        {relatedProducts.length > 0 ? (
+          <RelatedProductGrid>
+            {relatedProducts
+              .filter(
+                (relatedProduct) =>
+                  relatedProduct.types?.name === product.types?.name
+              )
+              .map((relatedProduct) => (
+                <RelatedProductCard key={relatedProduct.id}>
+                  <Link to={`/products/${relatedProduct.id}`}>
+                    <RelatedProductImage
+                      src={`${API_URL}/${relatedProduct.image}`}
+                      alt={relatedProduct.name}
+                    />
+                  </Link>
+                  <RelatedProductName>{relatedProduct.name.split(' ').slice(0, 8).join(' ')}...</RelatedProductName>
+                  <RelatedProductPrice>
+                    Rp.{relatedProduct.unitPrice}
+                  </RelatedProductPrice>
+                  <button
+                    className="cartyes"
+                    style={{
+                      maxWidth: "40px",
+                      border: "none",
+                      borderRadius: "50%",
+                      background: "#DDEFEF",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleAddRelatedToCart(relatedProduct)}
+                    disabled={relatedProduct.stock === 0}
+                  >
+                    {relatedProduct.stock > 0 ? (
+                      <img
+                        style={{ maxWidth: "24px" }}
+                        src={CartIcon}
+                        alt="Cart"
+                      />
+                    ) : (
+                      <p
+                        style={{
+                          color: "black",
+                          margin: "0",
+                          padding: "0",
+                          fontSize: "7px",
+                          fontWeight: "700",
+                        }}
+                      >
+                        Out of stock
+                      </p>
+                    )}
+                  </button>
+                </RelatedProductCard>
+              ))}
+          </RelatedProductGrid>
+        ) : (
+          <p>Tidak ada produk terkait dengan tipe yang sama.</p>
+        )}
+      </RelatedProducts>
     </ProductDetailContainer>
   );
 };
@@ -179,7 +237,12 @@ const ProductDetailPage = () => {
 const RelatedProductCard = styled.div`
   border: 1px solid #ccc;
   padding: 20px;
-  text-align: center;
+`;
+
+const RelatedProductPrice = styled.h6`
+  margin: 0;
+  font-size: 14px;
+
 `;
 
 const RelatedProductImage = styled.img`
@@ -189,6 +252,7 @@ const RelatedProductImage = styled.img`
 
 const RelatedProductName = styled.h3`
   margin-top: 10px;
+  font-size: 16px;
 `;
 
 const RelatedProductGrid = styled.div`
@@ -196,28 +260,6 @@ const RelatedProductGrid = styled.div`
   grid-template-columns: repeat(6, 1fr);
   gap: 10px;
 `;
-
-
-// const RelatedProductCard = styled.div`
-//   flex: 0 0 calc(25% - 20px); /* Adjust card width and spacing for 4 cards per row */
-//   border: 1px solid #ccc;
-//   padding: 10px;
-//   margin-bottom: 20px; /* Add space below cards */
-//   border-radius: 5px;
-//   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// `;
-// const RelatedProductName = styled.h4`
-//   margin: 10px 0;
-//   text-align: center;
-// `;
-
-// const RelatedProductImage = styled.img`
-//   max-width: 100px;
-//   border-radius: 5px;
-// `;
 
 const ProductDetailContainer = styled.div`
   display: flex;
