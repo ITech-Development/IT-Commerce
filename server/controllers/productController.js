@@ -138,6 +138,7 @@ class ProductController {
                 weight: req.body.weight,
                 height: req.body.height,
                 width: req.body.width,
+                length: req.body.length,
                 stock: req.body.stock,
                 productOwnerId: req.body.productOwnerId,
                 authorId: req.warehouseAdmin.id,
@@ -263,6 +264,7 @@ class ProductController {
             existingProduct.weight = req.body.weight;
             existingProduct.height = req.body.height;
             existingProduct.width = req.body.width;
+            existingProduct.length = req.body.length;
             existingProduct.stock = req.body.stock;
 
             if (req.file) {
