@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const MainContent = () => {
   return (
-    <main style={{ display: 'flex', margin: '10px 40px', flexDirection: 'column' }}>
+    <main style={{ display: 'flex', margin: '80px 40px 30px 40px', flexDirection: 'column' }}>
       <h2>Dashboard Produk INDOTEKNIK</h2>
       <p><strong>Catatan!</strong> Masukkan semua produk dengan BENAR</p>
       <div style={{ marginBottom: '30px' }}>

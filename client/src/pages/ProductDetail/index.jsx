@@ -138,7 +138,7 @@ const ProductDetailPage = () => {
               Minimum Order: <strong>{product.minimumOrder}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Berat: <strong>{product.weight} cm</strong>
+              Berat: <strong>{product.weight} gram</strong>
             </SpecificationItem>
             <SpecificationItem>
               Tinggi: <strong>{product.height} cm</strong>
@@ -146,28 +146,28 @@ const ProductDetailPage = () => {
             <SpecificationItem>
               Lebar: <strong>{product.width} cm</strong>
             </SpecificationItem>
-            <SpecificationItem>
+            {/* <SpecificationItem>
               Product Owner: <strong>{product.product_owners?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
               Author: <strong>{product.authors?.fullName}</strong>
-            </SpecificationItem>
+            </SpecificationItem> */}
           </Specifications>
           <div style={{ marginTop: "30px" }}>
-            <BuyNowButton onClick={handleBuyNow}>Buy Now</BuyNowButton>
+            <BuyNowButton onClick={handleBuyNow}>Beli Sekarang</BuyNowButton>
             <AddToCartButton
               onClick={handleAddToCart}
               disabled={product.stock === 0}
             >
-              {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
+              {product.stock > 0 ? "Keranjang" : "Stok Habis"}
             </AddToCartButton>
           </div>
         </ProductInfo>
       </ProductDetailWrapper>
 
       <Description>
-        <h3>Deskripsi</h3>
-        <p>{product.description}</p>
+        <h3>Deskripsi Produk</h3>
+        <p style={{ fontSize: "0.9rem" }}>{product.description}</p>
       </Description>
 
       <RelatedProducts>
@@ -187,7 +187,9 @@ const ProductDetailPage = () => {
                       alt={relatedProduct.name}
                     />
                   </Link>
-                  <RelatedProductName>{relatedProduct.name.split(' ').slice(0, 8).join(' ')}...</RelatedProductName>
+                  <RelatedProductName>
+                    {relatedProduct.name.split(" ").slice(0, 8).join(" ")}...
+                  </RelatedProductName>
                   <RelatedProductPrice>
                     Rp.{relatedProduct.unitPrice}
                   </RelatedProductPrice>
@@ -242,7 +244,6 @@ const RelatedProductCard = styled.div`
 const RelatedProductPrice = styled.h6`
   margin: 0;
   font-size: 14px;
-
 `;
 
 const RelatedProductImage = styled.img`
@@ -313,6 +314,7 @@ const Specifications = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  max-width: 1350px;
 `;
 
 const SpecificationItem = styled.div`
@@ -348,6 +350,11 @@ const BuyNowButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  &:hover {
+    background-color: #0ef0f0;
+    color: #2b3b3b;
+    font-weigth: 800;
+  }
 `;
 
 const AddToCartButton = styled.button`
@@ -358,6 +365,12 @@ const AddToCartButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+
+  &:hover {
+    background-color: #0ef0f0;
+    color: #2b3b3b;
+    font-weigth: 800;
+  }
 `;
 
 export default ProductDetailPage;
