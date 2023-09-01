@@ -54,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
     weight: DataTypes.INTEGER,
     height: DataTypes.INTEGER,
     width: DataTypes.INTEGER,
+    length: DataTypes.INTEGER,
     productOwnerId: DataTypes.INTEGER,
     authorId: DataTypes.INTEGER
   }, {

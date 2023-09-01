@@ -496,27 +496,27 @@ function Index() {
                 checked={selectedVoucher === vouchers[3]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {vouchers[3]?.voucherCode}
+              {/* {vouchers[3]?.voucherCode} */}
               <img src={VCR1} alt="IT 01" width="150" />
             </label>
-            <label key={vouchers[0]?.id}>
+            <label key={vouchers[4]?.id}>
               <input
                 type="radio"
-                value={vouchers[0]?.voucherCode}
-                checked={selectedVoucher === vouchers[0]?.voucherCode}
+                value={vouchers[4]?.voucherCode}
+                checked={selectedVoucher === vouchers[4]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {vouchers[0]?.voucherCode}
+              {/* {vouchers[4]?.voucherCode} */}
               <img src={VCR2} alt="MS 01" width="150" />
             </label>
-            <label key={vouchers[1]?.id}>
+            <label key={vouchers[5]?.id}>
               <input
                 type="radio"
-                value={vouchers[1]?.voucherCode}
-                checked={selectedVoucher === vouchers[1]?.voucherCode}
+                value={vouchers[5]?.voucherCode}
+                checked={selectedVoucher === vouchers[5]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {vouchers[1]?.voucherCode}
+              {/* {vouchers[5]?.voucherCode} */}
               <img src={VCR3} alt="MS 01" width="150" />
             </label>
           </div>
