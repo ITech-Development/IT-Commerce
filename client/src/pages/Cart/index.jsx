@@ -96,11 +96,12 @@ const Cart = () => {
     fetchCartsIndoRiau();
   }, []);
 
-
   const handlerInc = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/increment/" + id;
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/increment/" +
+        id;
       axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data);
@@ -114,7 +115,9 @@ const Cart = () => {
   const handlerDec = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/decrement/" + id;
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/decrement/" +
+        id;
       axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, "ASdasdas");
@@ -128,7 +131,9 @@ const Cart = () => {
   const handlerRemove = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/remove/" + id;
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/remove/" +
+        id;
       axios({ url, method: "delete", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, "remooove");
@@ -138,94 +143,108 @@ const Cart = () => {
         });
     }
   };
-  const handleClear = () => {
-    updateCartItemQuantity(null, "clear");
-  };
+  // const handleClear = () => {
+  //   updateCartItemQuantity(null, "clear");
+  // };
 
-  const updateCartItemQuantity = async (id, action) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = `https://indoteknikserver-732012365989.herokuapp.com/product-carts/${action}`;
-      if (id) {
-        url += `/${id}`;
-      }
+  // const updateCartItemQuantity = async (id, action) => {
+  //   const accessToken = localStorage.getItem("access_token");
+  //   if (accessToken) {
+  //     let url = `https://indoteknikserver-732012365989.herokuapp.com/product-carts/${action}`;
+  //     if (id) {
+  //       url += `/${id}`;
+  //     }
 
-      try {
-        const response = await axios.patch(url, null, {
-          headers: { access_token: accessToken },
-        });
-        setCarts(response.data);
-      } catch (error) {
-        console.log(`${action} error`, error);
-      }
-    }
-  };
+  //     try {
+  //       const response = await axios.patch(url, null, {
+  //         headers: { access_token: accessToken },
+  //       });
+  //       setCarts(response.data);
+  //     } catch (error) {
+  //       console.log(`${action} error`, error);
+  //     }
+  //   }
+  // };
 
   //juvindo
-  const calculateSubtotalJuvindo = () => {
-    return cartsJuvindo.reduce((total, cartItem) => {
+  // const calculateSubtotalJuvindo = () => {
+  //   return cartsJuvindo.reduce((total, cartItem) => {
+  //     const productPrice = cartItem.product.unitPrice;
+  //     const quantity = cartItem.quantity;
+  //     return total + productPrice * quantity;
+  //   }, 0);
+  // };
+  const calculateTotalJuvindo = () => {
+    const total = cartsJuvindo.reduce((total, cartItem) => {
       const productPrice = cartItem.product.unitPrice;
       const quantity = cartItem.quantity;
       return total + productPrice * quantity;
     }, 0);
+    return total.toLocaleString("id-ID");
   };
-  const calculateTotalJuvindo = () => {
-    const subtotal = calculateSubtotalJuvindo();
-    const ppn = subtotal * 0.11;
-    const total = subtotal + ppn;
-    return total.toFixed(2);
-  };
-  const calculatePPNJuvindo = () => {
-    const subtotal = calculateSubtotalJuvindo();
-    const ppn = subtotal * 0.11;
-    return ppn.toFixed(2);
-  };
+
+  // const calculateTotalJuvindo = () => {
+  //   const subtotal = calculateSubtotalJuvindo();
+  //   const ppn = subtotal * 0.11;
+  //   const total = subtotal + ppn;
+  //   return total.toFixed(2);
+  // };
+  // const calculatePPNJuvindo = () => {
+  //   const subtotal = calculateSubtotalJuvindo();
+  //   const ppn = subtotal * 0.11;
+  //   return ppn.toFixed(2);
+  // };
 
   //Itech
-  const calculateSubtotalItech = () => {
-    return cartsItech.reduce((total, cartItem) => {
+  // const calculateSubtotalItech = () => {
+  //   return cartsItech.reduce((total, cartItem) => {
+  //     const productPrice = cartItem.product.unitPrice;
+  //     const quantity = cartItem.quantity;
+  //     return total + productPrice * quantity;
+  //   }, 0);
+  // };
+  const calculateTotalItech = () => {
+    const total = cartsItech.reduce((total, cartItem) => {
       const productPrice = cartItem.product.unitPrice;
       const quantity = cartItem.quantity;
       return total + productPrice * quantity;
     }, 0);
-  };
-  const calculateTotalItech = () => {
-    const subtotal = calculateSubtotalItech();
-    const ppn = subtotal * 0.11;
-    const total = subtotal + ppn;
-    return total.toFixed(2);
-  };
-  const calculatePPNItech = () => {
-    const subtotal = calculateSubtotalItech();
-    const ppn = subtotal * 0.11;
-    return ppn.toFixed(2);
+    return total.toLocaleString("id-ID");
   };
 
+  // const calculatePPNItech = () => {
+  //   const subtotal = calculateSubtotalItech();
+  //   const ppn = subtotal * 0.11;
+  //   return ppn.toFixed(2);
+  // };
+
   //IndoRiau
-  const calculateSubtotalIndoRiau = () => {
-    return cartsIndoRiau.reduce((total, cartItem) => {
+  // const calculateSubtotalIndoRiau = () => {
+  //   return cartsIndoRiau.reduce((total, cartItem) => {
+  //     const productPrice = cartItem.product.unitPrice;
+  //     const quantity = cartItem.quantity;
+  //     return total + productPrice * quantity;
+  //   }, 0);
+  // };
+  const calculateTotalIndoRiau = () => {
+    const total = cartsIndoRiau.reduce((total, cartItem) => {
       const productPrice = cartItem.product.unitPrice;
       const quantity = cartItem.quantity;
       return total + productPrice * quantity;
     }, 0);
+    return total.toLocaleString("id-ID");
   };
-  const calculateTotalIndoRiau = () => {
-    const subtotal = calculateSubtotalIndoRiau();
-    const ppn = subtotal * 0.11;
-    const total = subtotal + ppn;
-    return total.toFixed(2);
-  };
-  const calculatePPNIndoRiau = () => {
-    const subtotal = calculateSubtotalIndoRiau();
-    const ppn = subtotal * 0.11;
-    return ppn.toFixed(2);
-  };
+  // const calculatePPNIndoRiau = () => {
+  //   const subtotal = calculateSubtotalIndoRiau();
+  //   const ppn = subtotal * 0.11;
+  //   return ppn.toFixed(2);
+  // };
 
   return (
     <>
       {cartsJuvindo.length === 0 &&
-        cartsItech.length === 0 &&
-        cartsIndoRiau.length === 0 ? (
+      cartsItech.length === 0 &&
+      cartsIndoRiau.length === 0 ? (
         <div
           className="cart-container"
           style={{ position: "relative", top: "50px" }}
@@ -272,29 +291,36 @@ const Cart = () => {
                             alt={e.product.name}
                           />
                         </Link>
-                        <div style={{paddingLeft: '20px'}}>
-                          <h3 style={{maxWidth: '450px'}}>{e.product.name}</h3>
-                          <p>{e.product.description.split(' ').slice(0, 10).join(' ')}...</p>
+                        <div style={{ paddingLeft: "20px" }}>
+                          <h3 style={{ maxWidth: "450px" }}>
+                            {e.product.name}
+                          </h3>
+                          <p>
+                            {e.product.description
+                              .split(" ")
+                              .slice(0, 10)
+                              .join(" ")}
+                            ...
+                          </p>
                           <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
-
                           </button>
                         </div>
                       </div>
                       <div className="cart-product-price">
-                        Rp.{e.product.unitPrice}
+                        Rp. {e.product.unitPrice.toLocaleString("id-ID")}
                       </div>
                       <div className="cart-product-quantity">
-                        <button onClick={() => handlerDec(e.id)}>
-                          -
-                        </button>
+                        <button onClick={() => handlerDec(e.id)}>-</button>
                         <div className="count">{e.quantity}</div>
-                        <button onClick={() => handlerInc(e.id)}>
-                          +
-                        </button>
+                        <button onClick={() => handlerInc(e.id)}>+</button>
                       </div>
                       <div className="cart-product-total-price">
-                        Rp.{e.quantity * e.product.unitPrice}
+                        Rp.{" "}
+                        {(e.quantity * e.product.unitPrice).toLocaleString(
+                          "id-ID",
+                          {}
+                        )}
                       </div>
                     </div>
                   ))}
@@ -302,13 +328,13 @@ const Cart = () => {
                 <div className="cart-summary">
                   <p></p>
                   <div className="cart-checkout">
-                    <div className="subtotal">
-                      <span>Subtotal :</span>
+                    {/* <div className="subtotal">
+                      <span>Total :</span>
                       <span className="amount">
                         Rp.{calculateSubtotalIndoRiau()}
                       </span>
-                    </div>
-                    <div
+                    </div> */}
+                    {/* <div
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
@@ -321,10 +347,13 @@ const Cart = () => {
                         {" "}
                         Rp. {calculatePPNIndoRiau()}
                       </span>
-                    </div>
+                    </div> */}
                     <div className="subtotal" style={{ paddingBottom: "10px" }}>
-                      <span>Total :</span>
-                      <span style={{ fontWeight: "700" }} className="amount">
+                      <span style={{ float: "right" }}>Total :</span>
+                      <span
+                        style={{ fontWeight: "700", float: "right" }}
+                        className="amount"
+                      >
                         {calculateTotalIndoRiau()}
                       </span>
                     </div>
@@ -372,16 +401,24 @@ const Cart = () => {
                             alt={e.product.name}
                           />
                         </Link>
-                        <div style={{paddingLeft: '20px'}}>
-                          <h3 style={{maxWidth: '450px'}}>{e.product.name}</h3>
-                          <p>{e.product.description.split(' ').slice(0, 10).join(' ')}...</p>
+                        <div style={{ paddingLeft: "20px" }}>
+                          <h3 style={{ maxWidth: "450px" }}>
+                            {e.product.name}
+                          </h3>
+                          <p>
+                            {e.product.description
+                              .split(" ")
+                              .slice(0, 10)
+                              .join(" ")}
+                            ...
+                          </p>
                           <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
                           </button>
                         </div>
                       </div>
                       <div className="cart-product-price">
-                        Rp.{e.product.unitPrice}
+                        Rp.{e.product.unitPrice.toLocaleString("id-ID")}
                       </div>
                       <div className="cart-product-quantity">
                         <button onClick={() => handlerDec(e.id)}>-</button>
@@ -389,7 +426,11 @@ const Cart = () => {
                         <button onClick={() => handlerInc(e.id)}>+</button>
                       </div>
                       <div className="cart-product-total-price">
-                        Rp.{e.quantity * e.product.unitPrice}
+                        Rp.{" "}
+                        {(e.quantity * e.product.unitPrice).toLocaleString(
+                          "id-ID",
+                          {}
+                        )}
                       </div>
                     </div>
                   ))}
@@ -397,13 +438,13 @@ const Cart = () => {
                 <div className="cart-summary">
                   <p></p>
                   <div className="cart-checkout">
-                    <div className="subtotal">
-                      <span>Subtotal :</span>
+                    {/* <div className="subtotal">
+                      <span>Total :</span>
                       <span className="amount">
                         Rp.{calculateSubtotalJuvindo()}
                       </span>
-                    </div>
-                    <div
+                    </div> */}
+                    {/* <div
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
@@ -416,7 +457,7 @@ const Cart = () => {
                         {" "}
                         Rp. {calculatePPNJuvindo()}
                       </span>
-                    </div>
+                    </div> */}
                     <div
                       style={{
                         display: "flex",
@@ -479,29 +520,36 @@ const Cart = () => {
                             alt={e.product.name}
                           />
                         </Link>
-                        <div style={{paddingLeft: '20px'}}>
-                          <h3 style={{maxWidth: '450px'}}>{e.product.name}</h3>
-                          <p>{e.product.description.split(' ').slice(0, 10).join(' ')}...</p>
+                        <div style={{ paddingLeft: "20px" }}>
+                          <h3 style={{ maxWidth: "450px" }}>
+                            {e.product.name}
+                          </h3>
+                          <p>
+                            {e.product.description
+                              .split(" ")
+                              .slice(0, 10)
+                              .join(" ")}
+                            ...
+                          </p>
                           <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
-
                           </button>
                         </div>
                       </div>
                       <div className="cart-product-price">
-                        Rp.{e.product.unitPrice}
+                        Rp.{e.product.unitPrice.toLocaleString("id-ID")}
                       </div>
                       <div className="cart-product-quantity">
-                        <button onClick={() => handlerDec(e.id)}>
-                          -
-                        </button>
+                        <button onClick={() => handlerDec(e.id)}>-</button>
                         <div className="count">{e.quantity}</div>
-                        <button onClick={() => handlerInc(e.id)}>
-                          +
-                        </button>
+                        <button onClick={() => handlerInc(e.id)}>+</button>
                       </div>
                       <div className="cart-product-total-price">
-                        Rp.{e.quantity * e.product.unitPrice}
+                        Rp.{" "}
+                        {(e.quantity * e.product.unitPrice).toLocaleString(
+                          "id-ID",
+                          {}
+                        )}
                       </div>
                     </div>
                   ))}
@@ -509,13 +557,13 @@ const Cart = () => {
                 <div className="cart-summary">
                   <p></p>
                   <div className="cart-checkout">
-                    <div className="subtotal">
-                      <span>Subtotal :</span>
+                    {/* <div className="subtotal">
+                      <span>Total :</span>
                       <span className="amount">
                         Rp.{calculateSubtotalItech()}
                       </span>
-                    </div>
-                    <div
+                    </div> */}
+                    {/* <div
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
@@ -525,7 +573,7 @@ const Cart = () => {
                     >
                       <span>PPN 11% :</span>
                       <span className="amount"> Rp. {calculatePPNItech()}</span>
-                    </div>
+                    </div> */}
                     <div className="subtotal" style={{ paddingBottom: "10px" }}>
                       <span>Total :</span>
                       <span style={{ fontWeight: "700" }} className="amount">
@@ -578,22 +626,22 @@ const linkStyle = {
   textDecoration: "none",
 };
 
-const ContinueShoppingButton = styled.button`
-  display: flex;
-  align-items: center;
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: none; /* Set text-decoration to none to remove the underline */
+// const ContinueShoppingButton = styled.button`
+//   display: flex;
+//   align-items: center;
+//   padding: 8px 16px;
+//   background-color: #007bff;
+//   color: white;
+//   border: none;
+//   border-radius: 4px;
+//   cursor: pointer;
+//   font-size: 14px;
+//   text-decoration: none; /* Set text-decoration to none to remove the underline */
 
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
+//   &:hover {
+//     background-color: #0056b3;
+//   }
+// `;
 
 const ContinueShoppingContainer = styled.div`
   display: flex;

@@ -21,7 +21,18 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import { saveAs } from "file-saver";
 import "./tablePro.css";
+import styled from "styled-components";
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
+
+const NoUnderlineLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  font-weigth: bold;
+`;
+
+const BoldText = styled.span`
+  font-weight: bold;
+`;
 
 const TableComponent = () => {
   const [product, setProduct] = useState(null);
@@ -265,71 +276,71 @@ const TableComponent = () => {
           <PrintIcon style={{ marginRight: "5px" }} /> Print
         </button>
       </div>
-      <div id="product-table">
+      <div className="product-table">
         <TableContainer component={Paper} style={{ width: "100%" }}>
           <Table className="bordered-table">
             <TableHead>
               <TableRow>
-                <TableCell
+                {/* <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
                   ID
-                </TableCell>
-                <TableCell
-                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
-                >
-                  Name
-                </TableCell>
-                <TableCell
-                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
-                >
-                  Categories
-                </TableCell>
-                <TableCell
-                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
-                >
-                  Types
-                </TableCell>
+                </TableCell> */}
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                   className="image-column"
                 >
-                  Image
+                  Gambar
                 </TableCell>
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Description
+                  Nama Produk
                 </TableCell>
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Minimum Order
+                  Kategori
                 </TableCell>
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Unit Price
+                  Merek
                 </TableCell>
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Stock
+                  Deskripsi
                 </TableCell>
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Weight
+                  Minimum Beli
                 </TableCell>
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Height
+                  Harga
                 </TableCell>
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Width
+                  Stok
+                </TableCell>
+                <TableCell
+                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
+                >
+                  Berat
+                </TableCell>
+                <TableCell
+                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
+                >
+                  Tinggi
+                </TableCell>
+                <TableCell
+                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
+                >
+                  Lebar
                 </TableCell>
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
@@ -339,25 +350,20 @@ const TableComponent = () => {
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Author
+                  Penulis
                 </TableCell>
                 <TableCell
                   className="action-column"
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Action
+                  Aksi
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredProduct?.map((row) => (
                 <TableRow key={row.id}>
-                  <TableCell>{row.id}</TableCell>
-                  <TableCell>
-                    <Link to={`/product/${row.id}`}>{row.name.split(' ').slice(0, 8).join(' ')}...</Link>
-                  </TableCell>
-                  <TableCell>{row.categories?.name}</TableCell>
-                  <TableCell>{row.types?.name}</TableCell>
+                  {/* <TableCell>{row.id}</TableCell> */}
                   <TableCell>
                     {row.image ? (
                       <img
@@ -369,6 +375,15 @@ const TableComponent = () => {
                       <span>No Image</span>
                     )}
                   </TableCell>
+                  <TableCell>
+                    <NoUnderlineLink to={`/product/${row.id}`}>
+                      <BoldText>
+                        {row.name.split(" ").slice(0, 6).join(" ")} 
+                      </BoldText>{" "}...
+                    </NoUnderlineLink>{" "}
+                  </TableCell>
+                  <TableCell>{row.categories?.name}</TableCell>
+                  <TableCell>{row.types?.name}</TableCell>
                   <TableCell
                     style={{
                       maxHeight: "60px", // Set your desired maximum height
@@ -377,14 +392,14 @@ const TableComponent = () => {
                       whiteSpace: "normal",
                     }}
                   >
-                    {row.description.split(' ').slice(0, 8).join(' ')}...
+                    {row.description.split(" ").slice(0, 6).join(" ")}...
                   </TableCell>
-                  <TableCell>{row.minimumOrder}</TableCell>
-                  <TableCell>{row.unitPrice}</TableCell>
-                  <TableCell>{row.stock} Unit</TableCell>
-                  <TableCell>{row.weight} g</TableCell>
-                  <TableCell>{row.height} cm</TableCell>
-                  <TableCell>{row.width} cm</TableCell>
+                  <TableCell>{row.minimumOrder.toLocaleString('id-ID')}</TableCell>
+                  <TableCell> Rp.{row.unitPrice.toLocaleString('id-ID')}</TableCell>
+                  <TableCell>{row.stock.toLocaleString('id-ID')} unit</TableCell>
+                  <TableCell>{row.weight.toLocaleString('id-ID')} gram</TableCell>
+                  <TableCell>{row.height.toLocaleString('id-ID')} cm</TableCell>
+                  <TableCell>{row.width.toLocaleString('id-ID')} cm</TableCell>
                   <TableCell>{row.product_owners?.name}</TableCell>
                   <TableCell>{row.authors?.fullName}</TableCell>
                   <TableCell className="action-column">

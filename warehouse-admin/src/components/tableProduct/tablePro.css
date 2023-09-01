@@ -10,6 +10,12 @@
     .bordered-table td {
       border: 1px solid black;
       padding: 8px;
+      text-align: center;
     }
   }
   
+  .product-table {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }

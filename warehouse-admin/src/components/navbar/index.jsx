@@ -27,7 +27,7 @@ export default function Navigation() {
       <>
         {accessToken && (
           < li >
-            <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleLogout}>Keluar</button>
           </li >
         )}
       </>

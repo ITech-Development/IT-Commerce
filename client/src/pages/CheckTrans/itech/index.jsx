@@ -180,20 +180,20 @@ function Index() {
     return discountAmount;
   };
 
-  const calculatePPN = () => {
-    const subtotal = calculateSubtotal();
-    const voucherDiscount = calculateVoucher();
-    const afterVoucherSubtotal = subtotal - voucherDiscount;
-    const ppnPercentage = 11;
-    const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
-    return ppnAmount;
-  };
+  // const calculatePPN = () => {
+  //   const subtotal = calculateSubtotal();
+  //   const voucherDiscount = calculateVoucher();
+  //   const afterVoucherSubtotal = subtotal - voucherDiscount;
+  //   const ppnPercentage = 11;
+  //   const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
+  //   return ppnAmount;
+  // };
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     const voucherDiscount = calculateVoucher();
-    const ppnAmount = calculatePPN();
-    const total = subtotal - voucherDiscount + ppnAmount;
+    // const ppnAmount = calculatePPN();
+    const total = subtotal - voucherDiscount ;
     return total;
   };
 
@@ -356,10 +356,10 @@ function Index() {
             <div class="cart-empty">
               <p>Your cart is empty</p>
               <div class="start-shopping">
-                <a href="/productlist">
+                <Link to="/productlist">
                   <span>&lt;</span>
                   <span>Start Shopping</span>
-                </a>
+                </Link>
               </div>
             </div>
           ) : (
@@ -413,7 +413,7 @@ function Index() {
                     <span>Voucher 3% :</span>
                     <span class="amount">Rp. {calculateVoucher()}</span>
                   </div>
-                  <div
+                  {/* <div
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
@@ -422,7 +422,7 @@ function Index() {
                   >
                     <span>PPN 11% :</span>
                     <span className="amount"> Rp. {calculatePPN()}</span>
-                  </div>
+                  </div> */}
                   <div class="subtotal">
                     <span>Total :</span>
                     <span style={{ fontWeight: "700" }} class="amount">

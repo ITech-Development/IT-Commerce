@@ -121,30 +121,30 @@ const ProductDetailPage = () => {
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>
-            Harga: <strong>Rp. {product.unitPrice}</strong>
+            Harga<strong  style={{paddingLeft: '43px'}}> : Rp. {product.unitPrice.toLocaleString("id-ID")}</strong>
           </Price>
           <Stock>
-            Stok Tersisa: <strong>{product.stock}</strong>
+            Stok Tersisa<strong> : {product.stock.toLocaleString("id-ID")}</strong>
           </Stock>
           <hr />
           <Specifications>
             <SpecificationItem>
-              Kategori: <strong>{product.categories?.name}</strong>
+              Kategori<strong  style={{paddingLeft: '50px'}}> : {product.categories?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Tipe: <strong>{product.types?.name}</strong>
+              Brand <strong>  : {product.types?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Minimum Order: <strong>{product.minimumOrder}</strong>
+              Minimum Order <strong> : {product.minimumOrder.toLocaleString("id-ID")}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Berat: <strong>{product.weight} gram</strong>
+              Berat<strong  style={{paddingLeft: '6px'}}> : {product.weight.toLocaleString("id-ID")} </strong> gram
             </SpecificationItem>
             <SpecificationItem>
-              Tinggi: <strong>{product.height} cm</strong>
+              Tinggi <strong style={{paddingLeft: '69px'}}> : {product.height.toLocaleString("id-ID")} </strong> cm
             </SpecificationItem>
             <SpecificationItem>
-              Lebar: <strong>{product.width} cm</strong>
+              Lebar <strong  style={{paddingLeft: '4px'}}> : {product.width.toLocaleString("id-ID")} </strong> cm
             </SpecificationItem>
             {/* <SpecificationItem>
               Product Owner: <strong>{product.product_owners?.name}</strong>
@@ -166,10 +166,18 @@ const ProductDetailPage = () => {
       </ProductDetailWrapper>
 
       <Description>
-        <h3>Deskripsi Produk</h3>
-        <p style={{ fontSize: "0.9rem" }}>{product.description}</p>
+        <h3>Deskripsi</h3>
+        <p
+          style={{
+            fontSize: "0.9rem",
+            lineHeight: "20px",
+            whiteSpace: "pre-line",
+          }}
+          dangerouslySetInnerHTML={{
+            __html: product.description.replace(/\n/g, "<br>"),
+          }}
+        />
       </Description>
-
       <RelatedProducts>
         <h3>Produk Terkait</h3>
         {relatedProducts.length > 0 ? (
@@ -272,6 +280,8 @@ const ProductDetailContainer = styled.div`
 `;
 
 const ProductDetailWrapper = styled.div`
+  max-width: 1225px;
+  min-width: 1225px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -295,9 +305,10 @@ const ProductInfo = styled.div`
 `;
 
 const ProductName = styled.h2`
-  margin-top: 10px
+  margin-top: 30px
   margin-bottom: 10px;
   max-width: 700px;
+  font-size: 21px;
 `;
 
 const Price = styled.p`

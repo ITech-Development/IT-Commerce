@@ -2,6 +2,20 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./addStyleProducts.css";
+import styled from "styled-components";
+
+const TextAreaContainer = styled.div`
+  margin: 30px 22px 0 0px;
+  width: 49%;
+  font-family: "Arial", sans-serif;
+`;
+
+const DescriptionTextArea = styled.textarea`
+  width: 100%;
+  min-height: 125px;
+  resize: vertical;
+  height: auto; /* Mengatur tinggi otomatis */
+`;
 
 const AddProductPage = () => {
   // State untuk menyimpan data produk yang akan ditambahkan
@@ -336,15 +350,15 @@ const AddProductPage = () => {
                 dalam deskripsi produk untuk melindungi data pribadimu.
               </p>
             </div>
-            <div style={{ margin: "30px 22px 0 0px", width: "49%" }}>
-              <textarea
+            <TextAreaContainer>
+              <DescriptionTextArea
                 id="description"
                 name="description"
                 value={newProduct.description}
                 onChange={handleChange}
                 required
               />
-            </div>
+            </TextAreaContainer>
             <br />
           </div>
         </div>
@@ -457,15 +471,27 @@ const AddProductPage = () => {
               </p>
             </div>
             <div style={{ margin: "30px 23px 0 0px", width: "49%" }}>
-              <input
-                type="text"
-                id="weight"
-                name="weight"
-                value={newProduct.weight}
-                onChange={handleChange}
-                required
-                placeholder="Berat Produk"
-              />
+              <div style={{ display: "flex", justifyContent: "space-around" }}>
+                <input
+                  type="text"
+                  id="weight"
+                  name="weight"
+                  value={newProduct.weight}
+                  onChange={handleChange}
+                  required
+                  placeholder="Berat Produk"
+                />
+              </div>
+              <p
+                style={{
+                  position: "relative",
+                  top: "-41px",
+                  left: "528px",
+                  fontSize: '14px'
+                }}
+              >
+                gram
+              </p>
             </div>
             <br />
           </div>
@@ -485,12 +511,12 @@ const AddProductPage = () => {
             </div>
             <div
               style={{
-                margin: "30px 8px 0 0px",
+                margin: "30px 8px 0 21px",
                 display: "flex",
                 justifyContent: "space-between",
                 gap: "20px",
                 height: "40px",
-                width: "50.5%",
+                width: "52%",
               }}
             >
               <input
@@ -502,6 +528,16 @@ const AddProductPage = () => {
                 required
                 placeholder="Tinggi"
               />
+              <p
+                style={{
+                  position: 'relative',
+                  top: "-2px",
+                  left: "-55px",
+                  fontSize: '14px'
+                }}
+              >
+                cm
+              </p>
               <input
                 type="text"
                 id="width"
@@ -511,6 +547,16 @@ const AddProductPage = () => {
                 required
                 placeholder="Lebar"
               />
+              <p
+                style={{
+                  position: 'relative',
+                  top: "-2px",
+                  left: "-55px",
+                  fontSize: '14px'
+                }}
+              >
+                cm
+              </p>
             </div>
             <br />
           </div>

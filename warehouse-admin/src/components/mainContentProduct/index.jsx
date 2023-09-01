@@ -1,6 +1,6 @@
 import React from 'react';
 import TableComponent from '../tableProduct';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const MainContent = () => {
   return (
@@ -9,7 +9,7 @@ const MainContent = () => {
       <p><strong>Catatan!</strong> Masukkan semua produk dengan BENAR</p>
       <div style={{ marginBottom: '30px' }}>
 
-      <Link to="/add-product">
+      <Link to="/add-product" >
         <button
             style={{
               padding: '10px 20px',
@@ -20,7 +20,7 @@ const MainContent = () => {
               cursor: 'pointer'
             }}
           >
-          Add Product
+          Tambah Produk
         </button>
       </Link>
       <Link to="/dashboard-categories">

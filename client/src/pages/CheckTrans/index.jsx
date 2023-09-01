@@ -386,10 +386,10 @@ function Index() {
             <div class="cart-empty">
               <p>Your cart is empty</p>
               <div class="start-shopping">
-                <a href="/productlist">
+                <Link to="/productlist">
                   <span>&lt;</span>
                   <span>Start Shopping</span>
-                </a>
+                </Link>
               </div>
             </div>
           ) : (

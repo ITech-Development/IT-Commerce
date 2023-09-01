@@ -443,15 +443,27 @@ const EditProductPage = () => {
               </p>
             </div>
             <div style={{ margin: "30px 23px 0 0px", width: "49%" }}>
-              <input
-                type="text"
-                id="weight"
-                name="weight"
-                value={product.weight}
-                onChange={handleChange}
-                required
-                placeholder="Berat Produk"
-              />
+            <div style={{ display: "flex", justifyContent: "space-around" }}>
+                <input
+                  type="text"
+                  id="weight"
+                  name="weight"
+                  value={product.weight}
+                  onChange={handleChange}
+                  required
+                  placeholder="Berat Produk"
+                />
+              </div>
+              <p
+                style={{
+                  position: "relative",
+                  top: "-41px",
+                  left: "528px",
+                  fontSize: '14px'
+                }}
+              >
+                gram
+              </p>
             </div>
             <br />
           </div>
@@ -471,15 +483,15 @@ const EditProductPage = () => {
             </div>
             <div
               style={{
-                margin: "30px 8px 0 0px",
+                margin: "30px 8px 0 21px",
                 display: "flex",
                 justifyContent: "space-between",
                 gap: "20px",
                 height: "40px",
-                width: "50.5%",
+                width: "52%",
               }}
             >
-              <input
+               <input
                 type="text"
                 id="height"
                 name="height"
@@ -488,6 +500,16 @@ const EditProductPage = () => {
                 required
                 placeholder="Tinggi"
               />
+              <p
+                style={{
+                  position: 'relative',
+                  top: "-2px",
+                  left: "-55px",
+                  fontSize: '14px'
+                }}
+              >
+                cm
+              </p>
               <input
                 type="text"
                 id="width"
@@ -497,6 +519,16 @@ const EditProductPage = () => {
                 required
                 placeholder="Lebar"
               />
+              <p
+                style={{
+                  position: 'relative',
+                  top: "-2px",
+                  left: "-55px",
+                  fontSize: '14px'
+                }}
+              >
+                cm
+              </p>
             </div>
             <br />
           </div>
