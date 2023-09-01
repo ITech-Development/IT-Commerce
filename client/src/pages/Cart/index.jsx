@@ -523,6 +523,7 @@ const Cart = () => {
                         padding: "8px 0",
                       }}
                     >
+                      
                       <span>PPN 11% :</span>
                       <span className="amount"> Rp. {calculatePPNItech()}</span>
                     </div>
