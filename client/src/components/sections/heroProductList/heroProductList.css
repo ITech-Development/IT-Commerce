@@ -1,0 +1,15 @@
+.heroProductList {
+  display: flex;
+  border-radius: 0 0 15px 15px;
+  max-width: 1350px;
+  margin: auto;
+  padding: 30px;
+  flex-direction: column;
+  box-shadow: 0 4px 8px #b6cdd6;
+  background-color: #f5f5f5;
+  transition: 0.3s;
+}
+h4 {
+  max-width: 300px;
+  font-weight: 448;
+}

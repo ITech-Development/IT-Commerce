@@ -1,0 +1,125 @@
+/* Place your CSS code here */
+
+/* Styling for the container */
+.div {
+  max-width: 600px;
+  margin: 10% auto;
+  padding: 40px 25px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Styling for the login form */
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Styling for the form fields */
+.label {
+  margin-bottom: 5px;
+}
+
+.inputTop {
+  padding: 10px;
+  margin-bottom: 15px;
+  margin-left: 29px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 84.7%;
+}
+
+.input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 84.5%;
+}
+
+.inputFull {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 96.4%;
+}
+
+.inputEmail {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 96.4%;
+}
+
+.inputPass {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 96.4%;
+}
+
+.inputPhone {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 96.4%;
+}
+
+.inputAddress {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 96.4%;
+}
+
+/* Styling for the error message */
+.p {
+  color: red;
+  /* margin-bottom: 10px; */
+  margin: auto 0;
+  padding: 0;
+  margin-top: 15px;
+  text-align: end;
+}
+
+.h2 {
+  padding-bottom: 20px;
+}
+
+/* Styling for the login button */
+.button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Styling for the registration link */
+.p > a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.p > a:hover {
+  text-decoration: underline;
+}

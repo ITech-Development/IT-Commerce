@@ -1,0 +1,12 @@
+.carouselbrand {
+  display: flex;
+  gap: 60px;
+  padding: 30px 0;
+  margin: auto;
+  width: 1350px;
+  justify-content: space-between;
+}
+.imgcorouselBrand {
+  width: 100px;
+  height: 40px;
+}

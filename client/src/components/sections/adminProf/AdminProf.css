@@ -1,0 +1,83 @@
+/* indexStyles.module.css */
+.container {
+  display: flex;
+  flex-direction: row; /* Stack items vertically by default */
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1350px;
+  margin: auto;
+}
+
+.content {
+  display: flex; /* Display children side-by-side on desktop */
+  justify-content: space-between; /* Put children at each end */
+  align-items: center;
+  width: 100%; /* Make sure it takes full width on smaller screens */
+  padding: 20px; /* Add some padding between image and text */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.image {
+  max-width: 50%; /* Limit image width */
+}
+
+.text {
+  max-width: 50%; /* Limit text width */
+}
+
+.h1 {
+  color: #010f52;
+}
+
+.span {
+  color: #243a73;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.p {
+  padding-right: 50px;
+}
+
+.btnPrimary {
+  padding: 20px 50px;
+  cursor: pointer;
+  background-color: #243a73;
+  color: white;
+  border: 1px solid #243a73;
+  border-radius: 10px;
+}
+
+.btnSecondary {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  color: #0e538c;
+  font-weight: 750;
+  font-size: 16px;
+  padding-left: 30px;
+}
+
+/* Hover effect for .btn class - desktop view */
+.btn:hover {
+  background-color: aqua;
+  color: black;
+}
+
+/* Responsive styles */
+@media (min-width: 768px) {
+  /* Switch to horizontal layout on screens larger than 768px */
+  .container {
+    flex-direction: row;
+  }
+  .content {
+    flex-direction: row;
+    padding: 0; /* Reset padding on desktop layout */
+  }
+  .image {
+    max-width: 40%; /* Reduce image width on desktop */
+  }
+  .text {
+    max-width: 60%; /* Increase text width on desktop */
+  }
+}

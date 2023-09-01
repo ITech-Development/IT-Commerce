@@ -1,0 +1,52 @@
+/* Responsive styles for the .riset section */
+.creative.riset {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #010f52;
+  padding: 20px; /* Add padding for better spacing */
+}
+
+/* Responsive styles for the cards container */
+.commite {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allow cards to wrap to the next line on smaller screens */
+  margin: auto;
+  padding: 20px; /* Adjust padding for better spacing */
+  max-width: 1320px;
+}
+
+/* Card styles */
+.card-riset {
+  display: flex;
+  border: 1px solid gray;
+  border-radius: 15px;
+  max-width: 200px;
+  height: 160px;
+  margin: 20px; /* Increase margin for better spacing between cards */
+  padding: 30px;
+  flex-direction: column;
+  box-shadow: 0 4px 8px #b6cdd6;
+  transition: transform 0.3s, box-shadow 0.3s; /* Add transitions for animation */
+  cursor: pointer; /* Add pointer cursor to indicate interactivity */
+}
+
+/* Animation on hover */
+.card-riset:hover {
+  transform: translateY(-5px); /* Move the card up by 5 pixels on hover */
+  box-shadow: 0 8px 16px #b6cdd6; /* Increase the box shadow on hover */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .commite {
+    justify-content: center; /* Center the cards on smaller screens */
+    padding: 10px; /* Adjust padding for better spacing on smaller screens */
+  }
+
+  .card-riset {
+    max-width: 100%; /* Make the cards occupy the full width on smaller screens */
+  }
+}

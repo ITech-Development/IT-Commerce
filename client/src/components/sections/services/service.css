@@ -1,0 +1,28 @@
+.checked {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #010f52;
+}
+
+.service {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  padding: 40px;
+  margin: auto;
+  max-width: 1320px;
+}
+
+.card-items {
+  display: flex;
+  border: 1px solid gray;
+  border-radius: 15px;
+  max-width: 250px;
+  margin: 0 40px;
+  padding: 20px;
+  flex-direction: column;
+  box-shadow: 0 4px 8px #b6cdd6;
+  transition: 0.3s;
+}

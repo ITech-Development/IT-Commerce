@@ -1,0 +1,114 @@
+
+  
+  .details {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    text-align: left;
+    flex-direction: column;
+  }
+  
+  .price {
+    font-weight: bold;
+  }
+  
+  .star-rating {
+    display: flex;
+    padding-bottom: 8px;
+  }
+  
+  /* Styles for the Add to Cart button */
+  .product:hover .add-to-cart-button {
+    transform: translateY(0);
+  }
+  
+  /* Responsive styles for mobile devices */
+  @media (max-width: 768px) {
+    .product {
+      padding: 12px;
+    }
+  
+    .product img {
+      max-height: 120px;
+    }
+  
+    .price {
+      font-size: 10px;
+    }
+  
+    .add-to-cart-button {
+      font-size: 14px;
+      width: 22px;
+      height: 32px;
+      bottom: 8px;
+      right: 8px;
+    }
+  }
+  
+
+  /* productliststyle.css */
+/* ... existing styles ... */
+
+/* Styles for the custom product carousel */
+.carousel-root {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Hide the horizontal scrollbar */
+    -ms-overflow-style: none; /* Hide the horizontal scrollbar (IE/Edge) */
+  }
+  
+  .carousel-root::-webkit-scrollbar {
+    display: none; /* Hide the horizontal scrollbar (Chrome, Safari, Opera) */
+  }
+  
+  .carousel-slide {
+    flex: 0 0 auto;
+    width: 100%; /* Set the width of each slide */
+    scroll-snap-align: start;
+  }
+  
+  /* Styles for the product card within the carousel */
+  .product {
+    width: 220px;
+    /* ... existing product card styles ... */
+    margin: 0 10px; /* Add horizontal margin between product cards */
+  }
+
+  
+  /* Responsive styles for mobile devices */
+  @media (max-width: 768px) {
+    .carousel-root {
+      overflow-x: auto; /* Allow horizontal scrolling on small screens */
+      scroll-snap-type: none; /* Disable scroll snapping on small screens */
+    }
+    
+    .carousel-slide {
+      width: auto; /* Reset width to auto for small screens */
+    }
+  
+    /* ... other responsive styles ... */
+  }
+  /* productliststyle.css */
+/* ... existing styles ... */
+
+/* Styles for the custom product carousel */
+.carousel-root {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  
+  .carousel-slide {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+  
+  .product-carousel-row {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  /* ... responsive styles ... */
+  

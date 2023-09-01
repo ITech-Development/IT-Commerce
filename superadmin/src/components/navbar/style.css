@@ -1,0 +1,156 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Navigation styles */
+.navigation {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100; /* Ensure it's on top of other elements */
+  height: 65px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background-color: #deeef7;
+  color: black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navigation img {
+  height: 40px;
+  cursor: pointer;
+}
+
+.navigation-menu {
+  display: flex;
+  align-items: center;
+}
+
+.navigation-menu ul {
+  display: flex;
+  list-style: none;
+}
+
+.navigation-menu li {
+  margin: 0 1.5rem;
+}
+
+.navigation-menu li a {
+  color: black;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s ease-in-out;
+}
+
+.navigation-menu li a:hover {
+  color: #2642af;
+}
+
+.hamburger {
+  display: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.hamburger i {
+  font-size: 1.8rem;
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  border-radius: 4px;
+  display: none;
+}
+
+/* Style for the login button */
+.login-button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  background-color: #2642af;
+  color: white;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.login-button:hover {
+  background-color: #1c3179;
+}
+
+.dropdown-menu li {
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+
+.dropdown-menu li a {
+  color: black;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f5f5f5;
+}
+
+/* Media query for mobile view */
+@media screen and (max-width: 768px) {
+  .navigation {
+    padding: 0 1rem;
+  }
+
+  .navigation-menu ul {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .navigation-menu.expanded ul {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 180px;
+    border-radius: 4px;
+  }
+
+  .navigation-menu.expanded li {
+    text-align: left;
+    margin: 0;
+  }
+
+  .navigation-menu.expanded li a {
+    padding: 1rem;
+  }
+}
+.cart-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  cursor: pointer;
+  /* display: flex; */
+  position: relative;
+  top: 12px;
+}

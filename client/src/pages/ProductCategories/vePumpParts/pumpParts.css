@@ -1,0 +1,87 @@
+.product-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    max-width: 250px; /* Set a maximum width for the card */
+    max-height: 450px; /* Set a maximum width for the card */
+    margin: 10px; /* Center the card horizontally */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+    transition: transform 0.2s, box-shadow 0.2s; /* Add smooth transition effects */
+  }
+  .product-card img {
+    max-width: 100%; /* Set maximum width to ensure the image fits within the card */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 10px; /* Add some space below the image */
+  }
+  .product-card:hover {
+    transform: translateY(-5px); /* Apply a lift effect on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-card a {
+    text-decoration: none;
+  }
+  
+  .product-card a:hover {
+    text-decoration: underline;
+  }
+  
+  .product-details {
+    text-align: left; /* Align product details to the left */
+    padding: 0 10px; /* Add some horizontal padding */
+  }
+  
+  .price {
+    font-weight: bold;
+  }
+  
+  .add-to-cart-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s, cursor 0.2s;
+  }
+  
+  .add-to-cart-button.out-of-stock {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  
+.add-to-cart-button i {
+    margin-right: 8px; /* Add some spacing between the icon and the text */
+  }
+  
+  /* Other existing styles... */
+
+.discount-container {
+    text-align: start;
+    margin-top: 10px; /* Add space from other content */
+  }
+  
+  .discount {
+    display: inline-block;
+    padding: 5px;
+    background-color: #e9ecf0; 
+    border-radius: 5px;
+  }
+  
+  .percentage {
+    font-weight: bold;
+  }
+  
+  .original-price {
+    margin-left: 8px;
+    text-decoration: line-through;
+  }
+  
+  /* Rest of the styles */
+  

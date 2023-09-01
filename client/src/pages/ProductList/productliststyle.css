@@ -1,0 +1,92 @@
+.product-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  max-width: 280px; /* Set a maximum width for the card */
+  max-height: 450px; /* Set a maximum width for the card */
+  margin: 10px; /* Center the card horizontally */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  transition: transform 0.2s, box-shadow 0.2s; /* Add smooth transition effects */
+}
+.product-card img {
+  max-width: 100%; /* Set maximum width to ensure the image fits within the card */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 10px; /* Add some space below the image */
+}
+.product-card:hover {
+  transform: translateY(-5px); /* Apply a lift effect on hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-card a {
+  text-decoration: none;
+}
+
+.product-card a:hover {
+  text-decoration: underline;
+}
+.product-details {
+  text-align: left; /* Align product details to the left */
+  padding: 0 10px; /* Add some horizontal padding */
+}
+
+  
+.price {
+  font-weight: bold;
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  padding-bottom: 8px;
+}
+
+/* Styles for the Add to Cart button */
+.product:hover .add-to-cart-button {
+  transform: translateY(0);
+}
+
+.add-to-cart-button {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: box-shadow 0.2s ease;
+}
+
+.add-to-cart-button:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: blue;
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
+  .product {
+    padding: 12px;
+  }
+
+  .product img {
+    max-height: 120px;
+  }
+
+  .price {
+    font-size: 10px;
+  }
+
+  .add-to-cart-button {
+    font-size: 14px;
+    width: 32px;
+    height: 32px;
+    bottom: 8px;
+    right: 8px;
+  }
+}
