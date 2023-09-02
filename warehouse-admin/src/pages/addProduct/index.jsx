@@ -16,6 +16,7 @@ const AddProductPage = () => {
     weight: 1,
     height: 1,
     width: 1,
+    length: 1,
     stock: 1,
     productOwnerId: 0,
     // Tambahkan atribut lainnya jika perlu
@@ -92,7 +93,8 @@ const AddProductPage = () => {
       formData.append("weight", newProduct.weight);
       formData.append("height", newProduct.height);
       formData.append("width", newProduct.width);
-      formData.append("width", newProduct.productOwnerId);
+      formData.append("length", newProduct.length);
+      formData.append("productOwnerId", newProduct.productOwnerId);
       // ...add other properties to the formData...
 
       // Append the image file to the formData
@@ -270,6 +272,19 @@ const AddProductPage = () => {
             id="width"
             name="width"
             value={newProduct.width}
+            onChange={handleChange}
+            min="1"
+            required
+          />
+          <br />
+        </div>
+        <div className="form-group">
+          <label htmlFor="length">Panjang (cm):</label>
+          <input
+            type="number"
+            id="length"
+            name="length"
+            value={newProduct.length}
             onChange={handleChange}
             min="1"
             required

@@ -18,6 +18,7 @@ const EditProductPage = () => {
     weight: 1,
     height: 1,
     width: 1,
+    length: 1,
     stock: 1,
     productOwnerId: 0,
     // Tambahkan atribut lainnya jika perlu
@@ -258,7 +259,20 @@ const EditProductPage = () => {
             required
           />
           <br />
-        </div>
+        </div>{" "}
+        <div className="form-group">
+          <label htmlFor="length">Panjang:</label>
+          <input
+            type="number"
+            id="length"
+            name="length"
+            value={product.length}
+            onChange={handleChange}
+            min="1"
+            required
+          />
+          <br />
+        </div>{" "}
         <div className="form-group">
           <label htmlFor="productOwner">Product Owner:</label>
           <select

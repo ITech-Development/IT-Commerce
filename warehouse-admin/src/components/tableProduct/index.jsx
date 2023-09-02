@@ -92,6 +92,7 @@ const TableComponent = () => {
         row.weight,
         row.height,
         row.width,
+        row.length,
         row.product_owners?.name,
         row.authors?.fullName,
       ];
@@ -334,6 +335,11 @@ const TableComponent = () => {
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
+                  Length
+                </TableCell>
+                <TableCell
+                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
+                >
                   Product Owner
                 </TableCell>
                 <TableCell
@@ -376,6 +382,7 @@ const TableComponent = () => {
                   <TableCell>{row.weight} g</TableCell>
                   <TableCell>{row.height} cm</TableCell>
                   <TableCell>{row.width} cm</TableCell>
+                  <TableCell>{row.length} cm</TableCell>
                   <TableCell>{row.product_owners?.name}</TableCell>
                   <TableCell>{row.authors?.fullName}</TableCell>
                   <TableCell className="action-column">

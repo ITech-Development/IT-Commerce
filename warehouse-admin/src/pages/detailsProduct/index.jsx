@@ -46,9 +46,6 @@ const ProductDetailPage = () => {
               Tipe: <strong>{product.types?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Kondisi: <strong>{product.condition}</strong>
-            </SpecificationItem>
-            <SpecificationItem>
               Minimum Order: <strong>{product.minimumOrder}</strong>
             </SpecificationItem>
             <SpecificationItem>
@@ -64,15 +61,18 @@ const ProductDetailPage = () => {
               Lebar: <strong>{product.width} cm</strong>
             </SpecificationItem>
             <SpecificationItem>
+              Panjang: <strong>{product.length} cm</strong>
+            </SpecificationItem>
+            <SpecificationItem>
               Product Owner: <strong>{product.product_owners?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Author: <strong>{product.authors?.name}</strong>
+              Author: <strong>{product.authors?.fullName}</strong>
             </SpecificationItem>
           </Specifications>
           <div style={{ marginTop: "30px" }}>
             <Link to="/">
-            <button>Back</button>
+              <button>Back</button>
             </Link>
           </div>
         </ProductInfo>
