@@ -174,6 +174,27 @@ class AdminSellerController {
             next(error)
         }
     }
+
+    static async deleteAdminSeller(req, res, next) {
+        try {
+            const adminSeller = await AdminSeller.findOne({
+                where: {
+                    id: req.params.id
+                }
+            })
+
+            if (adminSeller) {
+                await AdminSeller.destroy(
+                    { where: { id: req.params.id } }
+                )
+                res.status(200).json(adminSeller)
+            } else {
+                throw { name: 'NotFoundError' }
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 module.exports = AdminSellerController

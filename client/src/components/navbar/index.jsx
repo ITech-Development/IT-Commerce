@@ -42,6 +42,8 @@ export default function Navigation() {
   }, []);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownHovered, setIsDropdownHovered] = useState(false);
+
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
@@ -72,7 +74,7 @@ export default function Navigation() {
           <li>
             <Link to="/cart">
               {/* <FontAwesomeIcon icon='' className="cart-icon" /> */}
-              <img style={{position: 'relative', top: '6px'}} src={CartIcon} alt="" />
+              <img style={{ position: 'relative', top: '6px' }} src={CartIcon} alt="" />
               <span
                 style={{
                   position: "relative",
@@ -94,7 +96,10 @@ export default function Navigation() {
           </li>
         )}
         {token ? (
-          <li>
+          <li
+          onMouseEnter={() => setIsDropdownHovered(true)}
+          onMouseLeave={() => setIsDropdownHovered(false)}
+          >
             <div
               className="dropdown"
               ref={dropdownRef}
@@ -108,7 +113,6 @@ export default function Navigation() {
                 Halo, <strong>{profile.fullName}</strong>{" "}
               </p>
               <img
-                onClick={toggleDropdown}
                 style={{
                   height: "50px",
                   color: "blue",
@@ -118,11 +122,10 @@ export default function Navigation() {
                 src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
                 alt=""
               />
-              {isDropdownOpen && (
-                <ul className="dropdown-menu">
+              {isDropdownHovered && (
+                <ul className="dropdown-menu" style={{ flexDirection: "column" }}>
                   <li>
                     <Link to="/profile-update">Profile</Link>
-                    {/* <Link to={profileLink}>Profile</Link> */}
                   </li>
                   <li>
                     <Link to="/my-order">My Order</Link>

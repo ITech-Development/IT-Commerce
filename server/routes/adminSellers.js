@@ -8,5 +8,6 @@ router.get('/voucher', AdminSellerController.getAllProductsByVoucherCode)
 router.post('/register', AdminSellerController.registerAdminSeller)
 router.post('/login', AdminSellerController.loginAdminSeller)
 router.put('/:id', AdminSellerController.updateAdminSeller)
+router.delete('/:id', AdminSellerController.deleteAdminSeller)
 
 module.exports = router

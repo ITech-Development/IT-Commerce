@@ -20,8 +20,3 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-// // Middleware untuk mengalihkan semua permintaan ke index.html
-// app.use((req, res, next) => {
-//   res.sendFile(path.join(__dirname, 'path-to-your-index.html'));
-// });
-

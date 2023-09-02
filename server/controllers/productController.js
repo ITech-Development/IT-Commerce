@@ -252,7 +252,6 @@ class ProductController {
                 throw err;
             }
 
-
             // Update the product's properties based on request body
             existingProduct.name = req.body.name;
             existingProduct.categoryId = req.body.categoryId;
@@ -266,6 +265,7 @@ class ProductController {
             existingProduct.width = req.body.width;
             existingProduct.length = req.body.length;
             existingProduct.stock = req.body.stock;
+            existingProduct.authorId = req.warehouseAdmin.id;
 
             if (req.file) {
                 // Update the image path if a new image is uploaded
