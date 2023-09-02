@@ -9,7 +9,7 @@ const divStyle = {
   backgroundSize: "contain",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "center",
-  height: "380px",
+  height: "370px",
   width: "auto",
   margin: "auto",
 };
@@ -18,11 +18,12 @@ const mediaQueryStyles = {
   "@media (max-width: 768px)": {
     divStyle: {
       height: "350px",
-      width: "100%", // Adjust the width as needed
+      width: "100%",
       maxWidth: "auto",
     },
   },
 };
+
 const slideImages = [
   {
     url: "https://res.cloudinary.com/dcbryptkx/image/upload/v1692322295/IndoTeknikMarketplace/product/banner/Banner%20Dan%20Card%20Spesial%20Kemerdekaan/Banner_Kemerdekaan_1_kr0lwq.png",
@@ -50,6 +51,14 @@ const Slideshow = () => {
           </div>
         ))}
       </Slide>
+      <style>
+        {`
+          .react-slideshow-container .prev-button,
+          .react-slideshow-container .next-button {
+            display: none !important; /* Menyembunyikan tombol navigasi */
+          }
+        `}
+      </style>
     </div>
   );
 };

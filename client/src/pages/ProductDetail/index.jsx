@@ -4,11 +4,13 @@ import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import CartIcon from "../../assets/cart2.png";
+import Star from '../../assets/star.png'
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
 
 const ProductDetailPage = () => {
+  const starRating = 5;
   const [product, setProduct] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -196,10 +198,21 @@ const ProductDetailPage = () => {
                     />
                   </Link>
                   <RelatedProductName>
-                    {relatedProduct.name.split(" ").slice(0, 8).join(" ")}...
+                    {relatedProduct.name.split(" ").slice(0, 4).join(" ")}...
                   </RelatedProductName>
+                  <div style={{ width: "90px" }} className="star-rating">
+              {/* Render star images for the star rating */}
+              {[...Array(starRating)].map((_, index) => (
+                <img
+                  key={index}
+                  style={{ maxWidth: "15px" }}
+                  src={Star} // Replace with your star icon image
+                  alt="rating"
+                />
+              ))}
+            </div>
                   <RelatedProductPrice>
-                    Rp.{relatedProduct.unitPrice}
+                    Rp. {relatedProduct.unitPrice.toLocaleString("id-ID")}
                   </RelatedProductPrice>
                   <button
                     className="cartyes"
@@ -246,12 +259,14 @@ const ProductDetailPage = () => {
 
 const RelatedProductCard = styled.div`
   border: 1px solid #ccc;
-  padding: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 5px;
 `;
 
 const RelatedProductPrice = styled.h6`
-  margin: 0;
-  font-size: 14px;
+  margin: 0px 0 10px 0;
+  font-size: 16px;
 `;
 
 const RelatedProductImage = styled.img`

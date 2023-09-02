@@ -6,10 +6,10 @@ import "./productliststyle.css";
 import "../../App.css";
 import Star from "../../assets/star.png";
 import { FadeLoader } from "react-spinners";
-import IconButton from "@mui/material/IconButton";
+// import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com/";
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
 
 const linkStyle = {
   color: "white",
@@ -24,9 +24,18 @@ const loadingContainerStyle = {
 };
 
 const ProductCard = ({ product, onAddToCart }) => {
+  const [hovered, setHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
+  };
   const starRating = 5;
   return (
-    <div  className="product-card">
+    <div className="product-card">
       <a
         href={`/products/${product.id}`}
         className="view-product-button"
@@ -36,7 +45,9 @@ const ProductCard = ({ product, onAddToCart }) => {
       </a>
       <div className="product-details">
         <h3>{product.category}</h3>
-        <h3 style={{ padding: "5px 0", margin: "0" }}>{product.name.split(' ').slice(0, 8).join(' ')}...</h3>
+        <h3 style={{ padding: "5px 0", margin: "0" }}>
+          {product.name.split(" ").slice(0, 5).join(" ")}...
+        </h3>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
             <div style={{ width: "90px" }} className="star-rating">
@@ -50,24 +61,29 @@ const ProductCard = ({ product, onAddToCart }) => {
                 />
               ))}
             </div>
-            <span className="price">Rp.{product.unitPrice}</span>
+            <span className="price">
+              Rp.{product.unitPrice.toLocaleString("id-ID")}
+            </span>
             {/* <p>Stock: {product.stock}</p> */}
           </div>
           <button
-        className={`add-to-cart-button ${
-          product.stock === 0 ? "out-of-stock" : ""
-        }`}
-        onClick={() => onAddToCart(product)}
-        disabled={product.stock === 0}
-      >
-        {product.stock > 0 ? (
-          <IconButton aria-label="add to cart">
-            <ShoppingCartIcon style={{ color: "white" }} />
-          </IconButton>
-        ) : (
-          "Out of Stock"
-        )}
-      </button>
+      className={`add-to-cart-button ${product.stock === 0 ? "out-of-stock" : ""}`}
+      onClick={() => onAddToCart(product)}
+      disabled={product.stock === 0}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {product.stock > 0 ? (
+        <>
+          <ShoppingCartIcon style={{ color: "white" }} />
+          <span style={{ marginLeft: "5px", display: hovered ? "inline" : "none" }}>
+            Add to Cart
+          </span>
+        </>
+      ) : (
+        "Out of Stock"
+      )}
+    </button>
         </div>
       </div>
     </div>
@@ -107,7 +123,8 @@ const ProductList = () => {
   const handleAddToCart = async (product) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      const url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts";
+      const url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts";
       try {
         const response = await axios.post(url, product, {
           headers: { access_token: accessToken },
@@ -119,7 +136,7 @@ const ProductList = () => {
         console.log("asdsad");
       }
     } else {
-      alert('login dulu dong')
+      alert("login dulu dong");
       // navigate("/login");
     }
   };
@@ -133,22 +150,22 @@ const ProductList = () => {
 
   const filteredAndSortedData = data
     ? data
-      .filter((product) =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      .sort((a, b) => {
-        switch (sortOption) {
-          case "price":
-            return a.unitPrice - b.unitPrice;
-          case "stock":
-            return a.stock - b.stock;
-          default:
-            // Sort by name by default
-            return a.name.localeCompare(b.name);
-        }
-      })
+        .filter((product) =>
+          product.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .sort((a, b) => {
+          switch (sortOption) {
+            case "price":
+              return a.unitPrice - b.unitPrice;
+            case "stock":
+              return a.stock - b.stock;
+            default:
+              // Sort by name by default
+              return a.name.localeCompare(b.name);
+          }
+        })
     : [];
- return (
+  return (
     <>
       <Corousel />
       <div className="productlist-container">

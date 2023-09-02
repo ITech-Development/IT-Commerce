@@ -10,3 +10,23 @@
   width: 100px;
   height: 40px;
 }
+
+@media screen and (max-width: 767px) {
+  .carouselbrand {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Membuat 4 kolom dengan lebar yang sama */
+    gap: 10px; /* Mengatur jarak antar elemen dalam grid */
+    position: relative;
+    padding: 0 auto;
+    margin: 0 auto 0 20px; /* Mengatur margin otomatis di sisi kanan dan kiri untuk menengahkan elemen */
+    top: -290px;
+    width: 100%; /* Mengisi seluruh lebar parent container */
+    max-width: 400px;
+  }
+  .imgcorouselBrand {
+    width: auto;
+    height: 20px;
+    max-width: 700px;
+  }
+  
+}
