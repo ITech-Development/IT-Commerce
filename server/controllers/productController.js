@@ -1,6 +1,7 @@
 
 const { Product, ProductCategory, ProductType, User, SuperAdmin, ProductOwner, WarehouseAdmin } = require('../models')
 const { validationResult } = require('express-validator')
+const cloudinary = require('../helpers/cloudinary')
 const baseUrl = 'http://localhost:3100'; // Ubah dengan URL server Anda
 
 class ProductController {
@@ -126,11 +127,17 @@ class ProductController {
                 throw err
             }
 
+            const folderName = 'product_images';
+
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: folderName
+            })
+
             const newProduct = await Product.create({
                 name: req.body.name,
                 categoryId: req.body.categoryId,
                 typeId: req.body.typeId,
-                image: req.file.path.replace('\\', '/'), // Ubah path menjadi URL relatif
+                image: result.secure_url, // Use the secure URL provided by Cloudinary
                 description: req.body.description,
                 minimumOrder: req.body.minimumOrder,
                 unitPrice: req.body.unitPrice,
@@ -143,9 +150,11 @@ class ProductController {
                 productOwnerId: req.body.productOwnerId,
                 authorId: req.warehouseAdmin.id,
             })
-            res.status(201).json(newProduct)
+            res.status(201).json({
+                message: 'Product added successfully!',
+                product: newProduct
+            })
         } catch (error) {
-            console.log(error);
             next(error)
         }
     }
