@@ -24,6 +24,10 @@ const loadingContainerStyle = {
 
 const ProductCard = ({ product, onAddToCart }) => {
   const starRating = 5;
+
+  const originalPrice = product.unitPrice;
+  const discountAmount = originalPrice * 0.03;
+  const discountedPrice = originalPrice - discountAmount;
   return (
     <div className="product">
       <Link
@@ -31,7 +35,7 @@ const ProductCard = ({ product, onAddToCart }) => {
         className="view-product-button"
         style={linkStyle}
       >
-        <img src={`${API_URL}/${product.image}`} alt={product.name} />
+        <img src={product.image} alt={product.name} />
       </Link>
       <div className="details">
         <h3>{product.category}</h3>
@@ -50,7 +54,12 @@ const ProductCard = ({ product, onAddToCart }) => {
               ))}
             </div>
             <span className="price">Rp.{product.unitPrice}</span>
-            {/* <p>Stock: {product.stock}</p> */}
+            <br />
+            <span className="price">
+              <i>
+                3% <del>{discountedPrice}</del>
+              </i>
+            </span>
           </div>
           <button
             className="cartyes"
@@ -67,7 +76,7 @@ const ProductCard = ({ product, onAddToCart }) => {
             {product.stock > 0 ? (
               <img style={{ maxWidth: "24px" }} src={CartIcon} alt="Cart" />
             ) : (
-              <p style={{color: 'black', margin: '0', padding: '0', fontSize: '7px', fontWeight: '700'}}>Out of stock</p>
+              <p style={{ color: 'black', margin: '0', padding: '0', fontSize: '7px', fontWeight: '700' }}>Out of stock</p>
             )}
           </button>
         </div>
@@ -150,7 +159,7 @@ const ProductList = () => {
         }
       })
     : [];
- return (
+  return (
     <>
       <Corousel />
       <div className="productlist-container">

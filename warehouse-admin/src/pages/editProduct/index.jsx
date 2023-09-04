@@ -168,7 +168,7 @@ const EditProductPage = () => {
             accept="image/*"
             onChange={handleImageChange}
           />
-          {product.image && <img src={`${API_URL}/${product.image}`} alt="Product" width="200px" />}
+          {product.image && <img src={product.image} alt="Product" width="200px" />}
           <br />
         </div>{" "}
         <div className="form-group">

@@ -43,7 +43,7 @@ function CheckoutProductsPage() {
                 <div key={index}>
                     <hr/>
                     <h3>{checkoutProduct.product.name}</h3>
-                    <img src={`https://indoteknikserver-732012365989.herokuapp.com/${checkoutProduct.product.image}`} alt={checkoutProduct.product.name} width="100px"/>
+                    <img src={checkoutProduct.product.image} alt={checkoutProduct.product.name} width="100px"/>
                     <p>x: {checkoutProduct.quantity}</p>
                     <p>Created At: {checkoutProduct.createdAt}</p>
                 </div>

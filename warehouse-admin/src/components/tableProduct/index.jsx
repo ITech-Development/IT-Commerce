@@ -367,8 +367,8 @@ const TableComponent = () => {
                   <TableCell>
                     {row.image ? (
                       <img
-                        src={`${API_URL}/${row.image}`}
-                        alt={row.image}
+                        src={row.image}
+                        alt={row.name}
                         style={{ maxWidth: "100px", maxHeight: "100px" }}
                       />
                     ) : (

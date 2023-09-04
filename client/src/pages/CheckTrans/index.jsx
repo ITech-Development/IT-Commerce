@@ -372,7 +372,7 @@ function Index() {
           <h4>Detail Alamat</h4>
           <p>: {profile.user?.address}</p>
         </div>
-          <button className="edit-button">Edit</button>
+        <button className="edit-button">Edit</button>
       </div>
 
       <div
@@ -405,7 +405,7 @@ function Index() {
                   <div class="cart-item">
                     <div class="cart-product">
                       <Link to={`/products/${e.product.id}`}>
-                      <img src={`${API_URL}/${e.product.image}`} alt={e.product.name} />
+                        <img src={e.product.image} alt={e.product.name} />
                       </Link>
                       <div>
                         <h3>{e.product.name}</h3>
@@ -519,7 +519,7 @@ function Index() {
               {/* <option value="ide">Ide Express</option> */}
               {/* <option value="anteraja">Anteraja</option>
               <option value="sicepat">Sicepat</option> */}
-              </select>
+            </select>
             <select
               value={courier}
               onChange={handlerSetCourier}
@@ -605,23 +605,23 @@ function Index() {
             </select>
             {pengiriman
               ? pengiriman.map((el, index) => (
-                  <div key={index}>
-                    <input
-                      type="radio"
-                      id={`shippingChoice${index}`}
-                      name="shipping"
-                      value={el.cost[0].value}
-                      checked={selectedShippingCost === el.cost[0].value}
-                      onChange={handleShippingCostChange}
-                    />
-                    <label htmlFor={`shippingChoice${index}`}>
-                      Shipping Cost: Rp.{el.cost[0].value}
-                    </label>
-                    <p>Service: {el.service}</p>
-                    <p>Description: {el.description}</p>
-                    <p>Est: {el.cost[0].etd} Days</p>
-                  </div>
-                ))
+                <div key={index}>
+                  <input
+                    type="radio"
+                    id={`shippingChoice${index}`}
+                    name="shipping"
+                    value={el.cost[0].value}
+                    checked={selectedShippingCost === el.cost[0].value}
+                    onChange={handleShippingCostChange}
+                  />
+                  <label htmlFor={`shippingChoice${index}`}>
+                    Shipping Cost: Rp.{el.cost[0].value}
+                  </label>
+                  <p>Service: {el.service}</p>
+                  <p>Description: {el.description}</p>
+                  <p>Est: {el.cost[0].etd} Days</p>
+                </div>
+              ))
               : null}
           </div>
         </div>

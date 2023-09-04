@@ -21,7 +21,7 @@ const ProductCard = ({ product, onAddToCart }) => {
         className="view-product-button"
         style={linkStyle}
       >
-        <img src={`${API_URL}/${product.image}`} alt={product.name} />
+        <img src={product.image} alt={product.name} />
       </a>
       <div className="details">
         <h3>{product.category}</h3>
@@ -94,8 +94,6 @@ const ProductList = () => {
           headers: { access_token: accessToken },
         });
         console.log(response.data, " ???Asdas");
-        // dispatch(addToCart(product));
-        // navigate('/cart');
       } catch (err) {
         console.log("asdsad");
       }
