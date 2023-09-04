@@ -170,7 +170,7 @@ const ProductDetailPage = () => {
               .map((relatedProduct) => (
                 <RelatedProductCard key={relatedProduct.id}>
                   <Link to={`/products/${relatedProduct.id}`}>
-                    <RelatedProductImage src={`${API_URL}/${relatedProduct.image}`} alt={relatedProduct.name} />
+                    <RelatedProductImage src={relatedProduct.image} alt={relatedProduct.name} />
                   </Link>
                   <RelatedProductName>{relatedProduct.name}</RelatedProductName>
                   <RelatedProductPrice>Rp.{relatedProduct.unitPrice}</RelatedProductPrice>
@@ -187,7 +187,7 @@ const ProductDetailPage = () => {
                     disabled={relatedProduct.stock === 0}
                   >
                     {relatedProduct.stock > 0 ? (
-                      
+
                       <img style={{ maxWidth: "24px" }} src={CartIcon} alt="Cart" />
                     ) : (
                       <p style={{ color: 'black', margin: '0', padding: '0', fontSize: '7px', fontWeight: '700' }}>Out of stock</p>
