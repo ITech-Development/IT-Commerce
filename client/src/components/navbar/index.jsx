@@ -139,7 +139,7 @@ export default function Navigation() {
                 </ul>
               )}
             </div>
-            {showCart && (
+            {/* {showCart && (
               <Link to="/cart" className="cart-icon">
                 <img
                   style={{ position: "relative", top: "6px" }}
@@ -164,7 +164,7 @@ export default function Navigation() {
                   {totalQuantity}
                 </span>
               </Link>
-            )}
+            )} */}
           </li>
         ) : null}
       </>
