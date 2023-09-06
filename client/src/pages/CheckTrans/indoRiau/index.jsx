@@ -34,8 +34,10 @@ function Index() {
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
   const [checkoutCost, setCheckoutCost] = useState();
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
   useEffect(() => {
-    
+
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       let url = "https://indoteknikserver-732012365989.herokuapp.com/users/me";
@@ -70,7 +72,7 @@ function Index() {
   }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
-   
+
     const bayar = calculateTotalBayar();
     const config = {
       "Content-Type": "application/json",
@@ -95,6 +97,7 @@ function Index() {
       headers: config,
       method: "post",
     });
+    setModalVisible(true);
     setToken(response.data.token);
   };
 
@@ -362,7 +365,7 @@ function Index() {
 
   return (
     <div>
-      <div id="snap-container"></div>
+
       <div className="alamat">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Alamat Pengiriman</h2>
@@ -515,7 +518,7 @@ function Index() {
             </label>
           </div>
         </div>
-        
+
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div
             className="calcongkir"
@@ -523,7 +526,7 @@ function Index() {
           >
             <h2>Pilih Metode Pengiriman</h2>
             <div>
-           
+
               <select
                 value={courier}
                 onChange={handlerSetCourier}
@@ -609,55 +612,72 @@ function Index() {
               </select>
               {pengiriman
                 ? pengiriman.map((el, index) => (
-                    <div key={index}>
-                      <input
-                        type="radio"
-                        id={`shippingChoice${index}`}
-                        name="shipping"
-                        value={el.cost[0].value}
-                        checked={selectedShippingCost === el.cost[0].value}
-                        onChange={handleShippingCostChange}
-                      />
-                      <label htmlFor={`shippingChoice${index}`}>
-                        Shipping Cost: Rp.{el.cost[0].value}
-                      </label>
-                      <p>Service: {el.service}</p>
-                      <p>Description: {el.description}</p>
-                      <p>Est: {el.cost[0].etd} Days</p>
-                    </div>
-                  ))
+                  <div key={index}>
+                    <input
+                      type="radio"
+                      id={`shippingChoice${index}`}
+                      name="shipping"
+                      value={el.cost[0].value}
+                      checked={selectedShippingCost === el.cost[0].value}
+                      onChange={handleShippingCostChange}
+                    />
+                    <label htmlFor={`shippingChoice${index}`}>
+                      Shipping Cost: Rp.{el.cost[0].value}
+                    </label>
+                    <p>Service: {el.service}</p>
+                    <p>Description: {el.description}</p>
+                    <p>Est: {el.cost[0].etd} Days</p>
+                  </div>
+                ))
                 : null}
             </div>
           </div>
 
           <div
-          style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end'}}
-        >
-          <div style={{paddingTop: '5px'}}>
+            style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end' }}
+          >
+            <div style={{ paddingTop: '5px' }}>
 
-          <span >Total Bayar : </span>
-          <span style={{ fontWeight: "700", paddingRight: '20px'}} className="amount">
-            Rp. {calculateTotalBayar()}
-          </span>
-          </div>
-          <div>
+              <span >Total Bayar : </span>
+              <span style={{ fontWeight: "700", paddingRight: '20px' }} className="amount">
+                Rp. {calculateTotalBayar()}
+              </span>
+            </div>
+            <div>
 
-          {totalShippingCost === 0 ? (
-            <p >
-              <i>Silahkan pilih metode pengiriman</i>
-            </p>
-          ) : (
-            <button
-              onClick={() => handlePaymentProcess()}
-              style={paymentButtonStyle}
-            >
-              Bayar Sekarang
-            </button>
-          )}
+              {totalShippingCost === 0 ? (
+                <p >
+                  <i>Silahkan pilih metode pengiriman</i>
+                </p>
+              ) : (
+                <button
+                  onClick={() => handlePaymentProcess()}
+                  style={paymentButtonStyle}
+                >
+                  Bayar Sekarang
+                </button>
+              )}
+            </div>
+            {isModalVisible && (
+              <div className="modal-overlay">
+                <div className="modal">
+                  <div className="modal-content">
+                    <span className="close" onClick={() => setModalVisible(false)}>
+                      &times;
+                    </span>
+                    <h2>Modal Title</h2>
+                    <div id="snap-container"></div>
+                    <p>Isi modal Anda di sini.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+
           </div>
-        </div>
         </div>
       </div>
+
     </div>
   );
 }
