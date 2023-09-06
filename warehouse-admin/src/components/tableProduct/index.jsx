@@ -103,6 +103,7 @@ const TableComponent = () => {
         row.weight,
         row.height,
         row.width,
+        row.length,
         row.product_owners?.name,
         row.authors?.fullName,
       ];
@@ -345,6 +346,11 @@ const TableComponent = () => {
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
+                  Length
+                </TableCell>
+                <TableCell
+                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
+                >
                   Product Owner
                 </TableCell>
                 <TableCell
@@ -367,8 +373,8 @@ const TableComponent = () => {
                   <TableCell>
                     {row.image ? (
                       <img
-                        src={`${API_URL}/${row.image}`}
-                        alt={row.image}
+                        src={row.image}
+                        alt={row.name}
                         style={{ maxWidth: "100px", maxHeight: "100px" }}
                       />
                     ) : (
@@ -400,6 +406,7 @@ const TableComponent = () => {
                   <TableCell>{row.weight.toLocaleString('id-ID')} gram</TableCell>
                   <TableCell>{row.height.toLocaleString('id-ID')} cm</TableCell>
                   <TableCell>{row.width.toLocaleString('id-ID')} cm</TableCell>
+                  <TableCell>{row.length} cm</TableCell>
                   <TableCell>{row.product_owners?.name}</TableCell>
                   <TableCell>{row.authors?.fullName}</TableCell>
                   <TableCell className="action-column">

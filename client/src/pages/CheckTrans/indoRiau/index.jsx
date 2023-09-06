@@ -416,7 +416,7 @@ function Index() {
                     <div class="cart-product">
                       <Link to={`/products/${e.product.id}`}>
                         <img
-                          src={`${API_URL}/${e.product.image}`}
+                          src={e.product.image}
                           alt={e.product.name}
                         />
                       </Link>

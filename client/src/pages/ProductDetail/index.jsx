@@ -4,7 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import CartIcon from "../../assets/cart2.png";
-import Star from '../../assets/star.png'
+import Star from "../../assets/star.png";
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
@@ -119,34 +119,59 @@ const ProductDetailPage = () => {
   return (
     <ProductDetailContainer>
       <ProductDetailWrapper>
-        <ProductImage src={`${API_URL}/${product.image}`} alt={product.name} />
+        <ProductImage src={product.image} alt={product.name} />
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>
-            Harga<strong  style={{paddingLeft: '43px'}}> : Rp. {product.unitPrice.toLocaleString("id-ID")}</strong>
+            Harga
+            <strong style={{ paddingLeft: "43px" }}>
+              {" "}
+              : Rp. {product.unitPrice.toLocaleString("id-ID")}
+            </strong>
           </Price>
           <Stock>
-            Stok Tersisa<strong> : {product.stock.toLocaleString("id-ID")}</strong>
+            Stok Tersisa
+            <strong> : {product.stock.toLocaleString("id-ID")}</strong>
           </Stock>
           <hr />
           <Specifications>
             <SpecificationItem>
-              Kategori<strong  style={{paddingLeft: '50px'}}> : {product.categories?.name}</strong>
+              Kategori
+              <strong style={{ paddingLeft: "50px" }}>
+                {" "}
+                : {product.categories?.name}
+              </strong>
             </SpecificationItem>
             <SpecificationItem>
-              Brand <strong>  : {product.types?.name}</strong>
+              Brand <strong> : {product.types?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Minimum Order <strong> : {product.minimumOrder.toLocaleString("id-ID")}</strong>
+              Minimum Order{" "}
+              <strong> : {product.minimumOrder.toLocaleString("id-ID")}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Berat<strong  style={{paddingLeft: '6px'}}> : {product.weight.toLocaleString("id-ID")} </strong> gram
+              Berat
+              <strong style={{ paddingLeft: "6px" }}>
+                {" "}
+                : {product.weight.toLocaleString("id-ID")}{" "}
+              </strong>{" "}
+              gram
             </SpecificationItem>
             <SpecificationItem>
-              Tinggi <strong style={{paddingLeft: '69px'}}> : {product.height.toLocaleString("id-ID")} </strong> cm
+              Tinggi{" "}
+              <strong style={{ paddingLeft: "69px" }}>
+                {" "}
+                : {product.height.toLocaleString("id-ID")}{" "}
+              </strong>{" "}
+              cm
             </SpecificationItem>
             <SpecificationItem>
-              Lebar <strong  style={{paddingLeft: '4px'}}> : {product.width.toLocaleString("id-ID")} </strong> cm
+              Lebar{" "}
+              <strong style={{ paddingLeft: "4px" }}>
+                {" "}
+                : {product.width.toLocaleString("id-ID")}{" "}
+              </strong>{" "}
+              cm
             </SpecificationItem>
             {/* <SpecificationItem>
               Product Owner: <strong>{product.product_owners?.name}</strong>
@@ -196,21 +221,25 @@ const ProductDetailPage = () => {
                       src={`${API_URL}/${relatedProduct.image}`}
                       alt={relatedProduct.name}
                     />
+                    <RelatedProductImage
+                      src={relatedProduct.image}
+                      alt={relatedProduct.name}
+                    />
                   </Link>
                   <RelatedProductName>
                     {relatedProduct.name.split(" ").slice(0, 4).join(" ")}...
                   </RelatedProductName>
                   <div style={{ width: "90px" }} className="star-rating">
-              {/* Render star images for the star rating */}
-              {[...Array(starRating)].map((_, index) => (
-                <img
-                  key={index}
-                  style={{ maxWidth: "15px" }}
-                  src={Star} // Replace with your star icon image
-                  alt="rating"
-                />
-              ))}
-            </div>
+                    {/* Render star images for the star rating */}
+                    {[...Array(starRating)].map((_, index) => (
+                      <img
+                        key={index}
+                        style={{ maxWidth: "15px" }}
+                        src={Star} // Replace with your star icon image
+                        alt="rating"
+                      />
+                    ))}
+                  </div>
                   <RelatedProductPrice>
                     Rp. {relatedProduct.unitPrice.toLocaleString("id-ID")}
                   </RelatedProductPrice>

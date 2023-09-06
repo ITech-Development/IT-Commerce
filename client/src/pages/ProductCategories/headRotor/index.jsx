@@ -24,7 +24,7 @@ const ProductCard = ({ product, onAddToCart }) => {
         className="view-product-button"
         style={linkStyle}
       >
-        <img src={`${API_URL}/${product.image}`} alt={product.name} />
+        <img src={product.image} alt={product.name} />
       </a>
       <div className="product-details">
         <h3>{product.category}</h3>

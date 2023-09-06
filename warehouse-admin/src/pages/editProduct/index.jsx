@@ -18,6 +18,7 @@ const EditProductPage = () => {
     weight: 1,
     height: 1,
     width: 1,
+    length: 1,
     stock: 1,
     productOwnerId: 0,
     // Tambahkan atribut lainnya jika perlu

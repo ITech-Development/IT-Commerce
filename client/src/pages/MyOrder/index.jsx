@@ -29,7 +29,7 @@ function CheckoutProductsPage() {
             {checkoutProducts[checkoutId].map((productInfo, index) => (
               <li key={index}>
                 <Link to={`/my-order/${productInfo.checkout.id}`}>
-                  <img src={`${API_URL}/${productInfo.product.image}`} alt={productInfo.product.name} width="100px" /> <br />
+                  <img src={productInfo.product.image} alt={productInfo.product.name} width="100px" /> <br />
                   Product: {productInfo.product.name} <br />
                 </Link>
                 x: {productInfo.quantity} <br />

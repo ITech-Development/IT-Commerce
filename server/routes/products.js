@@ -1,7 +1,7 @@
 const express = require('express')
 const ProductController = require('../controllers/productController')
-const bodyParser = require('body-parser'); // Tambahkan ini
 const { authorizationWarehouseAdmin, authenticationWarehouseAdmin } = require('../middlewares/auth')
+const bodyParser = require('body-parser'); // Tambahkan ini
 const router = express.Router()
 const multer = require('multer');
 const path = require('path')
@@ -28,8 +28,27 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
+const maxSize = 5 * 1024 * 1024 // 5 MB, sesuaikan dengan batas yang Anda inginkan
+
 router.use(bodyParser.json());
-router.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
+router.use(multer({
+    storage: fileStorage,
+    fileFilter: fileFilter,
+    limits: {
+        fileSize: maxSize // Batas ukuran berkas
+    }
+}).single('image'))
+
+router.use((error, req, res, next) => {
+    if (error instanceof multer.MulterError) {
+      // Kesalahan dari multer (misalnya, ukuran berkas terlalu besar)
+      res.status(400).json({ error: 'File size is too large' });
+    } else {
+      // Kesalahan lain
+      res.status(500).json({ error: 'An error occurred while uploading the file' });
+    }
+  });
+
 router.get('/', ProductController.getAllProducts);
 router.get('/nozzle', ProductController.getNozzelCategory);
 router.get('/delivery-valve', ProductController.getDeliveryValve);

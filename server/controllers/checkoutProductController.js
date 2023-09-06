@@ -80,9 +80,6 @@ class CheckoutProductController {
         }
     }
     
-    
-
-
     static async addCheckoutProduct(req, res, next) {
         const t = await sequelize.transaction();
         const { id } = req.body;

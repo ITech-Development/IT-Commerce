@@ -1,6 +1,7 @@
 
 const { Product, ProductCategory, ProductType, User, SuperAdmin, ProductOwner, WarehouseAdmin } = require('../models')
 const { validationResult } = require('express-validator')
+const cloudinary = require('../helpers/cloudinary')
 const baseUrl = 'http://localhost:3100'; // Ubah dengan URL server Anda
 
 class ProductController {
@@ -126,11 +127,17 @@ class ProductController {
                 throw err
             }
 
+            const folderName = 'product_images';
+
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: folderName
+            })
+
             const newProduct = await Product.create({
                 name: req.body.name,
                 categoryId: req.body.categoryId,
                 typeId: req.body.typeId,
-                image: req.file.path.replace('\\', '/'), // Ubah path menjadi URL relatif
+                image: result.secure_url, // Use the secure URL provided by Cloudinary
                 description: req.body.description,
                 minimumOrder: req.body.minimumOrder,
                 unitPrice: req.body.unitPrice,
@@ -143,9 +150,11 @@ class ProductController {
                 productOwnerId: req.body.productOwnerId,
                 authorId: req.warehouseAdmin.id,
             })
-            res.status(201).json(newProduct)
+            res.status(201).json({
+                message: 'Product added successfully!',
+                product: newProduct
+            })
         } catch (error) {
-            console.log(error);
             next(error)
         }
     }
@@ -203,37 +212,6 @@ class ProductController {
         }
     }
 
-    // static async editProduct(req, res, next) {
-    //     try {
-    //         const productId = req.params.id
-
-
-    //         await Product.update({
-    //             name: req.body.name,
-    //             categoryId: req.body.categoryId,
-    //             typeId: req.body.typeId,
-    //             image: req.body.image,
-    //             description: req.body.description,
-    //             minimumOrder: req.body.minimumOrder,
-    //             unitPrice: req.body.unitPrice,
-    //             weight: req.body.weight,
-    //             height: req.body.height,
-    //             width: req.body.width,
-    //             stock: req.body.stock,
-    //             productOwnerId: req.body.productOwnerId,
-    //             authorId: req.warehouseAdmin.id,
-    //         },
-    //             {
-    //                 where: {
-    //                     id: productId
-    //                 }
-    //             })
-    //         res.status(201).json({ message: 'Edit successful' })
-    //     } catch (error) {
-    //         next(error)
-    //     }
-    // }
-
     static async editProduct(req, res, next) {
         try {
             const productId = req.params.id; // Get the product ID from the URL parameter
@@ -251,7 +229,11 @@ class ProductController {
                 err.errorStatus = 404;
                 throw err;
             }
+            const folderName = 'product_images';
 
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: folderName
+            })
 
             // Update the product's properties based on request body
             existingProduct.name = req.body.name;
@@ -266,10 +248,11 @@ class ProductController {
             existingProduct.width = req.body.width;
             existingProduct.length = req.body.length;
             existingProduct.stock = req.body.stock;
+            existingProduct.authorId = req.warehouseAdmin.id;
 
             if (req.file) {
                 // Update the image path if a new image is uploaded
-                existingProduct.image = req.file.path.replace('\\', '/');
+                existingProduct.image = result.secure_url
             }
 
             // Save the updated product
