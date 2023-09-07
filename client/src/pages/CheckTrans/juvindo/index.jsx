@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
-// const midtransClient = require('midtrans-client');
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
@@ -35,7 +34,10 @@ function Index() {
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
   const [checkoutCost, setCheckoutCost] = useState();
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
   useEffect(() => {
+
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       let url = "https://indoteknikserver-732012365989.herokuapp.com/users/me";
@@ -70,6 +72,7 @@ function Index() {
   }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
+
     const bayar = calculateTotalBayar();
     const config = {
       "Content-Type": "application/json",
@@ -89,10 +92,12 @@ function Index() {
         selectedShippingCost,
         selectedVoucher,
         checkoutPengiriman,
+        bayar
       },
       headers: config,
       method: "post",
     });
+    setModalVisible(true);
     setToken(response.data.token);
   };
 
@@ -125,11 +130,13 @@ function Index() {
   }, [token]);
 
   useEffect(() => {
+    // const midtransUrl = "https://app.midtrans.com/snap/snap.js";
     const midtransUrl = "https://app.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
+    // const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
     const midtransClientKey = "Mid-client-R2krmA7ZU84Yd2Ug";
     scriptTag.setAttribute("data-client-key-juvindo", midtransClientKey);
 
@@ -337,6 +344,7 @@ function Index() {
     // const value = event.target.value
     setSelectedShippingCost(value);
     setTotalShippingCost(value);
+
     setCheckoutCost(value);
   };
 
@@ -347,17 +355,17 @@ function Index() {
   };
 
   const paymentButtonStyle = {
-    backgroundColor: "blue",
-    color: "white",
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
+    backgroundColor: 'blue',
+    color: 'white',
+    padding: '10px 20px',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
   };
 
   return (
     <div>
-      <div id="snap-container"></div>
+
       <div className="alamat">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Alamat Pengiriman</h2>
@@ -511,97 +519,99 @@ function Index() {
           </div>
         </div>
 
-        <div
-          className="calcongkir"
-          style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
-        >
-          <h2>Pilih Metode Pengiriman</h2>
-          <div>
-            <select
-              value={courier}
-              onChange={handlerSetCourier}
-              className="methodDeliverySelect"
-            >
-              <option className="methodDeliveryOption" value="jne">
-                jne
-              </option>
-              <option className="methodDeliveryOption" value="tiki">
-                tiki
-              </option>
-              <option className="methodDeliveryOption" value="pos">
-                pos
-              </option>
-              <option className="methodDeliveryOption" value="jnt">
-                jnt
-              </option>
-            </select>
-            {/* <input
-              type="number"
-              value={calculateTotalWeight()}
-              readOnly
-              placeholder="Total Weight in Grams"
-            /> */}
-            <select
-              name="province"
-              id="province"
-              onChange={handleProvinceChange}
-              className="methodDeliverySelect"
-            >
-              <option className="methodDeliveryOption" value="">
-                Select Province
-              </option>
-              {province.map((item) => (
-                <option
-                  className="methodDeliveryOption"
-                  key={item.province_id}
-                  value={item.province_id}
-                >
-                  {item.province}
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div
+            className="calcongkir"
+            style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
+          >
+            <h2>Pilih Metode Pengiriman</h2>
+            <div>
+
+              <select
+                value={courier}
+                onChange={handlerSetCourier}
+                className="methodDeliverySelect"
+              >
+                <option className="methodDeliveryOption" value="jne">
+                  jne
                 </option>
-              ))}
-            </select>
-            <select
-              name="city"
-              id="city"
-              onChange={handleCityChange}
-              className="methodDeliverySelect"
-            >
-              <option className="methodDeliveryOption" value="">
-                Select City
-              </option>
-              {Array.isArray(city) &&
-                city.map((item) => (
+                <option className="methodDeliveryOption" value="tiki">
+                  tiki
+                </option>
+                <option className="methodDeliveryOption" value="pos">
+                  pos
+                </option>
+                <option className="methodDeliveryOption" value="jnt">
+                  jnt
+                </option>
+              </select>
+              {/* <input
+                type="number"
+                value={calculateTotalWeight()}
+                readOnly
+                placeholder="Total Weight in Grams"
+              /> */}
+              <select
+                name="province"
+                id="province"
+                onChange={handleProvinceChange}
+                className="methodDeliverySelect"
+              >
+                <option className="methodDeliveryOption" value="">
+                  Select Province
+                </option>
+                {province.map((item) => (
                   <option
                     className="methodDeliveryOption"
-                    key={item.city_id}
-                    value={item.city_id}
+                    key={item.province_id}
+                    value={item.province_id}
                   >
-                    {item.city_name}
+                    {item.province}
                   </option>
                 ))}
-            </select>
-            <select
-              name="subdistrict"
-              id="subdistrict"
-              onChange={handlerGetCost}
-              className="methodDeliverySelect"
-            >
-              <option className="methodDeliveryOption" value="">
-                Select Subdistrict
-              </option>
-              {Array.isArray(subdistrict) &&
-                subdistrict.map((item) => (
-                  <option
-                    className="methodDeliveryOption"
-                    key={item.subdistrict_id}
-                    value={item.subdistrict_id}
-                  >
-                    {item.subdistrict_name}
-                  </option>
-                ))}
-            </select>
-            {pengiriman
-              ? pengiriman.map((el, index) => (
+              </select>
+              <select
+                name="city"
+                id="city"
+                onChange={handleCityChange}
+                className="methodDeliverySelect"
+              >
+                <option className="methodDeliveryOption" value="">
+                  Select City
+                </option>
+                {Array.isArray(city) &&
+                  city.map((item) => (
+                    <option
+                      className="methodDeliveryOption"
+                      key={item.city_id}
+                      value={item.city_id}
+                    >
+                      {item.city_name}
+                    </option>
+                  ))}
+              </select>
+              <select
+                name="subdistrict"
+                id="subdistrict"
+                onChange={handlerGetCost}
+                className="methodDeliverySelect"
+              >
+                <option className="methodDeliveryOption" value="">
+                  Select Subdistrict
+                </option>
+                {Array.isArray(subdistrict) &&
+                  subdistrict.map((item) => (
+                    <option
+                      className="methodDeliveryOption"
+                      key={item.subdistrict_id}
+                      value={item.subdistrict_id}
+                    >
+                      {item.subdistrict_name}
+                    </option>
+                  ))}
+              </select>
+              {pengiriman
+                ? pengiriman.map((el, index) => (
                   <div key={index}>
                     <input
                       type="radio"
@@ -619,37 +629,55 @@ function Index() {
                     <p>Est: {el.cost[0].etd} Days</p>
                   </div>
                 ))
-              : null}
+                : null}
+            </div>
           </div>
-        </div>
 
-        <div
-          style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end'}}
-        >
-          <div style={{paddingTop: '5px'}}>
+          <div
+            style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end' }}
+          >
+            <div style={{ paddingTop: '5px' }}>
 
-          <span >Total Bayar : </span>
-          <span style={{ fontWeight: "700", paddingRight: '20px'}} className="amount">
-            Rp. {calculateTotalBayar()}
-          </span>
-          </div>
-          <div>
+              <span >Total Bayar : </span>
+              <span style={{ fontWeight: "700", paddingRight: '20px' }} className="amount">
+                Rp. {calculateTotalBayar()}
+              </span>
+            </div>
+            <div>
 
-          {totalShippingCost === 0 ? (
-            <p >
-              <i>Silahkan pilih metode pengiriman</i>
-            </p>
-          ) : (
-            <button
-              onClick={() => handlePaymentProcess()}
-              style={paymentButtonStyle}
-            >
-              Bayar Sekarang
-            </button>
-          )}
+              {totalShippingCost === 0 ? (
+                <p >
+                  <i>Silahkan pilih metode pengiriman</i>
+                </p>
+              ) : (
+                <button
+                  onClick={() => handlePaymentProcess()}
+                  style={paymentButtonStyle}
+                >
+                  Bayar Sekarang
+                </button>
+              )}
+            </div>
+            {isModalVisible && (
+              <div className="modal-overlay">
+                <div className="modal">
+                  <div className="modal-content">
+                    <span className="close" onClick={() => setModalVisible(false)}>
+                      &times;
+                    </span>
+                    <h2>Modal Title</h2>
+                    <div id="snap-container"></div>
+                    <p>Isi modal Anda di sini.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+
           </div>
         </div>
       </div>
+
     </div>
   );
 }
