@@ -9,8 +9,6 @@ import { FadeLoader } from "react-spinners";
 // import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-// const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
-
 const linkStyle = {
   color: "white",
   textDecoration: "none",
@@ -34,10 +32,6 @@ const ProductCard = ({ product, onAddToCart }) => {
     setHovered(false);
   };
   const starRating = 5;
-
-  const originalPrice = product.unitPrice;
-  const discountAmount = originalPrice * 0.03;
-  const discountedPrice = originalPrice - discountAmount;
   return (
     <div className="product-card">
       <a
@@ -45,10 +39,9 @@ const ProductCard = ({ product, onAddToCart }) => {
         className="view-product-button"
         style={linkStyle}
       >
+        <img src={product.image} alt={product.name} />
       </a>
       <div className="product-details">
-        <img src={product.image} alt={product.name} />
-      <div className="details">
         <h3>{product.category}</h3>
         <h3 style={{ padding: "5px 0", margin: "0" }}>
           {product.name.split(" ").slice(0, 5).join(" ")}...
@@ -72,47 +65,28 @@ const ProductCard = ({ product, onAddToCart }) => {
             {/* <p>Stock: {product.stock}</p> */}
           </div>
           <button
-      className={`add-to-cart-button ${product.stock === 0 ? "out-of-stock" : ""}`}
-      onClick={() => onAddToCart(product)}
-      disabled={product.stock === 0}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {product.stock > 0 ? (
-        <>
-          <ShoppingCartIcon style={{ color: "white" }} />
-          <span style={{ marginLeft: "5px", display: hovered ? "inline" : "none" }}>
-            Add to Cart
-          </span>
-        </>
-      ) : (
-        "Out of Stock"
-      )}
-    </button>
-            <span className="price">Rp.{product.unitPrice}</span>
-            <br />
-            <span className="price">
-              <i>
-                3% <del>{discountedPrice}</del>
-              </i>
-            </span>
-          </div>
-          <button
-            className="cartyes"
-            style={{
-              maxWidth: "40px",
-              border: "none",
-              borderRadius: "50%",
-              background: "#DDEFEF",
-              cursor: "pointer",
-            }}
+            className={`add-to-cart-button ${
+              product.stock === 0 ? "out-of-stock" : ""
+            }`}
             onClick={() => onAddToCart(product)}
             disabled={product.stock === 0}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
             {product.stock > 0 ? (
-              <img style={{ maxWidth: "24px" }} src={ShoppingCartIcon} alt="Cart" />
+              <>
+                <ShoppingCartIcon style={{ color: "white" }} />
+                <span
+                  style={{
+                    marginLeft: "5px",
+                    display: hovered ? "inline" : "none",
+                  }}
+                >
+                  Add to Cart
+                </span>
+              </>
             ) : (
-              <p style={{ color: 'black', margin: '0', padding: '0', fontSize: '7px', fontWeight: '700' }}>Out of stock</p>
+              "Out of Stock"
             )}
           </button>
         </div>

@@ -12,7 +12,7 @@ body {
   top: 0;
   left: 0;
   z-index: 100; /* Ensure it's on top of other elements */
-  height: 75px;
+  height: 65px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -67,13 +67,13 @@ body {
 
 /* Dropdown styles */
 .dropdown {
-  display: inline-block; /* Ensures the dropdown expands correctly */
+  position: relative;
 }
 
-
 .dropdown-menu {
-display: flex;
-flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: 0;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 0.5rem;
