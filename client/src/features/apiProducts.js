@@ -10,7 +10,7 @@ export const productsApi = createApi({
                 access_token: localStorage.getItem("access_token"),
                 "Content-type": "application/json; charset=UTF-8",
             },
-            
+
         }),
 
     }),

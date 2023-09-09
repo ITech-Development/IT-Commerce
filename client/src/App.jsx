@@ -33,6 +33,7 @@ import ProductCategoryVEPumpParts from "./pages/ProductCategories/vePumpParts";
 import ProductCategoryHeadRotor from "./pages/ProductCategories/headRotor";
 import MyOrder from "./pages/MyOrder";
 import DetailsOrder from "./pages/DetailsOrder";
+import store from './app/store'
 
 export const UserContext = createContext();
 
@@ -81,9 +82,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ state, dispatch }}>
+      <UserContext.Provider value={{ state, dispatch }} store={store}>
         <ToastContainer />
-        <Navbar />
+        {/* <Navbar /> */}
         <Routing />
       </UserContext.Provider>
     </BrowserRouter>

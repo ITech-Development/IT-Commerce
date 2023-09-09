@@ -8,6 +8,8 @@ class ProductController {
 
     static async getAllProducts(req, res, next) {
         try {
+            const hiddenProductIds = [1, 2, 3];
+
             const products = await Product.findAll(
                 {
                     include: [
@@ -32,7 +34,8 @@ class ProductController {
                     order: [['createdAt', 'DESC']]
                 }
             );
-            res.status(200).json(products);
+            const filteredProducts = products.filter(product => !hiddenProductIds.includes(product.id));
+            res.status(200).json(filteredProducts);
         } catch (error) {
             console.log(error, 'form all product');
             next(error);

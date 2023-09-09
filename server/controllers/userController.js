@@ -159,33 +159,34 @@ class UserController {
   }
 
   static async loginUser(req, res, next) {
-    try {
-      const { email, password } = req.body;
-      let user = await User.findOne({
-        where: { email },
-      });
-      if (!user) {
-        throw { name: "InvalidCredentials" };
-      } else {
-        let compareResult = compare(password, user.password);
-        if (!compareResult) {
-          throw { name: "InvalidCredentials" };
-        } else {
-          const { id, email, role } = user;
-          let access_token = createToken({
-            id,
-            email,
-            role,
-          });
-          res.status(200).json({
-            access_token,
-            fullName: user.fullName,
-          });
-        }
-      }
-    } catch (error) {
-      next(error);
-    }
+    console.log(req.body);
+    // try {
+    //   const { email, password } = req.body;
+    //   let user = await User.findOne({
+    //     where: { email },
+    //   });
+    //   if (!user) {
+    //     throw { name: "InvalidCredentials" };
+    //   } else {
+    //     let compareResult = compare(password, user.password);
+    //     if (!compareResult) {
+    //       throw { name: "InvalidCredentials" };
+    //     } else {
+    //       const { id, email, role } = user;
+    //       let access_token = createToken({
+    //         id,
+    //         email,
+    //         role,
+    //       });
+    //       res.status(200).json({
+    //         access_token,
+    //         fullName: user.fullName,
+    //       });
+    //     }
+    //   }
+    // } catch (error) {
+    //   next(error);
+    // }
   }
 
   static async deleteUser(req, res, next) {

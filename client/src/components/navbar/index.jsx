@@ -4,11 +4,17 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Logo from "../../assets/Logo.png";
 import CartIcon from './iconCart.png'
-
+import { useGetCartsQuery } from '../../features/product/productSlice'
 
 export default function Navigation() {
   const [carts, setCarts] = useState([]);
   const [profile, setProfile] = useState([]);
+
+  const { data, error, isLoading } = useGetCartsQuery()
+
+  useEffect(()=>{
+    console.log(data, 'test data');
+  }, [data])
 
   const totalQuantity = carts.reduce((total, item) => total + item.quantity, 0);
 
