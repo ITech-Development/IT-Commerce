@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import styled from "styled-components";
+import styled, { keyframes } from 'styled-components';
 import { Link } from "react-router-dom";
-import CartIcon from "../../assets/cart2.png";
 import Star from "../../assets/star.png";
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
 
 const ProductDetailPage = () => {
-  const starRating = 5;
+  const starRating = 1;
   const [product, setProduct] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -89,28 +88,28 @@ const ProductDetailPage = () => {
     }
   };
 
-  const handleAddRelatedToCart = (relatedProduct) => {
-    if (accessToken) {
-      axios
-        .post(`${API_URL}/product-carts`, relatedProduct, {
-          headers: { access_token: accessToken },
-        })
-        .then(({ data }) => {
-          console.log(
-            data,
-            "Related product berhasil ditambahkan ke keranjang"
-          );
-        })
-        .catch((err) => {
-          console.log(
-            err,
-            "Terjadi masalah saat menambahkan related product ke keranjang"
-          );
-        });
-    } else {
-      alert("Login terlebih dahulu agar dapat belanja");
-    }
-  };
+  // const handleAddRelatedToCart = (relatedProduct) => {
+  //   if (accessToken) {
+  //     axios
+  //       .post(`${API_URL}/product-carts`, relatedProduct, {
+  //         headers: { access_token: accessToken },
+  //       })
+  //       .then(({ data }) => {
+  //         console.log(
+  //           data,
+  //           "Related product berhasil ditambahkan ke keranjang"
+  //         );
+  //       })
+  //       .catch((err) => {
+  //         console.log(
+  //           err,
+  //           "Terjadi masalah saat menambahkan related product ke keranjang"
+  //         );
+  //       });
+  //   } else {
+  //     alert("Login terlebih dahulu agar dapat belanja");
+  //   }
+  // };
 
   if (!product) {
     return <p>Loading product details...</p>;
@@ -119,7 +118,15 @@ const ProductDetailPage = () => {
   return (
     <ProductDetailContainer>
       <ProductDetailWrapper>
-        <ProductImage src={product.image} alt={product.name} />
+        <div>
+          <ProductImage src={product.image} alt={product.name} />
+          <div style={{ display: "flex", maxWidth: "60px", gap: "13px" }}>
+            <ProductImageSub src={product.image} alt={product.name} />
+            <ProductImageSub src={product.image} alt={product.name} />
+            <ProductImageSub src={product.image} alt={product.name} />
+            <ProductImageSub src={product.image} alt={product.name} />
+          </div>
+        </div>
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>
@@ -218,18 +225,25 @@ const ProductDetailPage = () => {
                 <RelatedProductCard key={relatedProduct.id}>
                   <Link to={`/products/${relatedProduct.id}`}>
                     <RelatedProductImage
-                      src={`${API_URL}/${relatedProduct.image}`}
-                      alt={relatedProduct.name}
-                    />
-                    <RelatedProductImage
                       src={relatedProduct.image}
                       alt={relatedProduct.name}
                     />
                   </Link>
                   <RelatedProductName>
-                    {relatedProduct.name.split(" ").slice(0, 4).join(" ")}...
+                    {relatedProduct.name.split(" ").slice(0, 5).join(" ")}...
                   </RelatedProductName>
-                  <div style={{ width: "90px" }} className="star-rating">
+                  <RelatedProductPrice>
+                    Rp. {relatedProduct.unitPrice.toLocaleString("id-ID")}
+                  </RelatedProductPrice>
+                  <div
+                    style={{
+                      width: "90px",
+                      margin: "0",
+                      padding: "0",
+                      position: "",
+                    }}
+                    className="star-rating"
+                  >
                     {/* Render star images for the star rating */}
                     {[...Array(starRating)].map((_, index) => (
                       <img
@@ -239,11 +253,13 @@ const ProductDetailPage = () => {
                         alt="rating"
                       />
                     ))}
+                    <p
+                      style={{ position: "relative", top: "1px", left: "5px", fontSize: '12px' }}
+                    >
+                      5.0
+                    </p>
                   </div>
-                  <RelatedProductPrice>
-                    Rp. {relatedProduct.unitPrice.toLocaleString("id-ID")}
-                  </RelatedProductPrice>
-                  <button
+                  {/* <button
                     className="cartyes"
                     style={{
                       maxWidth: "40px",
@@ -274,7 +290,7 @@ const ProductDetailPage = () => {
                         Out of stock
                       </p>
                     )}
-                  </button>
+                  </button> */}
                 </RelatedProductCard>
               ))}
           </RelatedProductGrid>
@@ -286,26 +302,56 @@ const ProductDetailPage = () => {
   );
 };
 
+const shadowAnimation = keyframes`
+  0% {
+    box-shadow: none;
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+  100% {
+    box-shadow: none;
+  }
+`;
+
 const RelatedProductCard = styled.div`
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
   margin: 0 5px;
+  max-height: 282px;
+
+  /* Mengatur bayangan awal */
+  box-shadow: none;
+
+  /* Efek animasi bayangan saat hover */
+  &:hover {
+    animation: ${shadowAnimation} 1s ease-in-out infinite;
+  }
 `;
 
 const RelatedProductPrice = styled.h6`
-  margin: 0px 0 10px 0;
+  margin: 0;
   font-size: 16px;
 `;
 
 const RelatedProductImage = styled.img`
-  max-width: 100%;
+  max-width: 111.8%;
   height: auto;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: -10px;
+  left: -10px;
+  border: none;
+  border-radius: 5px 5px 0 0;
 `;
 
 const RelatedProductName = styled.h3`
-  margin-top: 10px;
-  font-size: 16px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  padding-bottom: 7px;
 `;
 
 const RelatedProductGrid = styled.div`
@@ -337,9 +383,16 @@ const ProductDetailWrapper = styled.div`
 `;
 
 const ProductImage = styled.img`
-  max-width: 200px;
+  max-width: 280px;
   margin-right: 20px;
   border-radius: 5px;
+  border: none;
+`;
+
+const ProductImageSub = styled.img`
+  max-width: 60px;
+  border-radius: 5px;
+  border: none;
 `;
 
 const ProductInfo = styled.div`

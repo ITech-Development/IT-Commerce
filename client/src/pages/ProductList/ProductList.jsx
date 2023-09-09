@@ -6,92 +6,117 @@ import "./productliststyle.css";
 import "../../App.css";
 import Star from "../../assets/star.png";
 import { FadeLoader } from "react-spinners";
-// import IconButton from "@mui/material/IconButton";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import styled, {keyframes} from "styled-components";
 
-const linkStyle = {
-  color: "white",
-  textDecoration: "none",
-};
+// const linkStyle = {
+//   color: "white",
+//   textDecoration: "none",
+// };
 
 const loadingContainerStyle = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  minHeight: "200px", // Atur ketinggian minimum sesuai kebutuhan
+  minHeight: "200px",
 };
 
+const CardGridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  padding: 20px;
+`;
+
+const shadowAnimation = keyframes`
+  0% {
+    box-shadow: none;
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+  100% {
+    box-shadow: none;
+  }
+`;
+
+const Card = styled.div`
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  max-height: 323px;
+
+  &:hover {
+    animation: ${shadowAnimation} 1s ease-in-out infinite;
+  }
+`;
+
+const CardImage = styled.img`
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+`;
+
+const CardContent = styled.div`
+  padding: 16px;
+`;
+
+const Title = styled.h3`
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  padding-bottom: 7px;
+`;
+
+const Price = styled.p`
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  padding-top: 2px;
+`;
+
 const ProductCard = ({ product, onAddToCart }) => {
-  const [hovered, setHovered] = useState(false);
-
-  const handleMouseEnter = () => {
-    setHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHovered(false);
-  };
-  const starRating = 5;
+  const starRating = 1;
   return (
-    <div className="product-card">
-      <a
-        href={`/products/${product.id}`}
-        className="view-product-button"
-        style={linkStyle}
-      >
-        <img src={product.image} alt={product.name} />
+    <Card>
+      <a href={`/products/${product.id}`}>
+        <CardImage src={product.image} alt={product.name} />
       </a>
-      <div className="product-details">
-        <h3>{product.category}</h3>
-        <h3 style={{ padding: "5px 0", margin: "0" }}>
-          {product.name.split(" ").slice(0, 5).join(" ")}...
-        </h3>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>
-            <div style={{ width: "90px" }} className="star-rating">
-              {/* Render star images for the star rating */}
-              {[...Array(starRating)].map((_, index) => (
-                <img
-                  key={index}
-                  style={{ maxWidth: "15px" }}
-                  src={Star} // Replace with your star icon image
-                  alt="rating"
-                />
-              ))}
-            </div>
-            <span className="price">
-              Rp.{product.unitPrice.toLocaleString("id-ID")}
-            </span>
-            {/* <p>Stock: {product.stock}</p> */}
-          </div>
-          <button
-            className={`add-to-cart-button ${
-              product.stock === 0 ? "out-of-stock" : ""
-            }`}
-            onClick={() => onAddToCart(product)}
-            disabled={product.stock === 0}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+      <CardContent>
+        <Title>{product.name.split(" ").slice(0, 5).join(" ")}...</Title>
+        <Price>Rp.{product.unitPrice.toLocaleString("id-ID")}</Price>
+        <div
+          style={{
+            width: "90px",
+            margin: "0",
+            padding: "0",
+            position: "",
+          }}
+          className="star-rating"
+        >
+          {/* Render star images for the star rating */}
+          {[...Array(starRating)].map((_, index) => (
+            <img
+              key={index}
+              style={{ maxWidth: "15px" }}
+              src={Star} // Replace with your star icon image
+              alt="rating"
+            />
+          ))}
+          <p
+            style={{
+              position: "relative",
+              top: "1px",
+              left: "5px",
+              fontSize: "12px",
+            }}
           >
-            {product.stock > 0 ? (
-              <>
-                <ShoppingCartIcon style={{ color: "white" }} />
-                <span
-                  style={{
-                    marginLeft: "5px",
-                    display: hovered ? "inline" : "none",
-                  }}
-                >
-                  Add to Cart
-                </span>
-              </>
-            ) : (
-              "Out of Stock"
-            )}
-          </button>
+            5.0
+          </p>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -99,7 +124,7 @@ const searchContainerStyle = {
   display: "flex",
   alignItems: "center",
   marginBottom: "20px",
-  width: "100%",
+  width: "97.2%",
 };
 
 const searchInputStyle = {
@@ -202,7 +227,7 @@ const ProductList = () => {
               </select>
             </div>
 
-            <div className="products">
+            <CardGridContainer>
               {filteredAndSortedData.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -210,7 +235,7 @@ const ProductList = () => {
                   onAddToCart={handleAddToCart}
                 />
               ))}
-            </div>
+            </CardGridContainer>
           </>
         )}
       </div>

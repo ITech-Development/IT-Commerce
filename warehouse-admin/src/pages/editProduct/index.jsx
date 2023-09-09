@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
 const EditProductPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const [product, setProduct] = useState({
     name: "",
@@ -42,45 +42,37 @@ const EditProductPage = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(
-        "https://indoteknikserver-732012365989.herokuapp.com/product-categories"
-      );
+      const response = await axios.get('https://indoteknikserver-732012365989.herokuapp.com/product-categories');
       setCategoryOptions(response.data);
     } catch (error) {
-      console.error("Terjadi kesalahan saat mengambil data kategori:", error);
+      console.error('Terjadi kesalahan saat mengambil data kategori:', error);
     }
   };
 
   const fetchTypes = async () => {
     try {
-      const response = await axios.get(
-        "https://indoteknikserver-732012365989.herokuapp.com/product-types"
-      );
+      const response = await axios.get('https://indoteknikserver-732012365989.herokuapp.com/product-types');
       setTypeOptions(response.data);
     } catch (error) {
-      console.error("Terjadi kesalahan saat mengambil data kategori:", error);
+      console.error('Terjadi kesalahan saat mengambil data kategori:', error);
     }
   };
 
   const fetchProductOwners = async () => {
     try {
-      const response = await axios.get(
-        "https://indoteknikserver-732012365989.herokuapp.com/product-owners"
-      );
+      const response = await axios.get('https://indoteknikserver-732012365989.herokuapp.com/product-owners');
       setProductOwnerOptions(response.data);
     } catch (error) {
-      console.error("Terjadi kesalahan saat mengambil data kategori:", error);
+      console.error('Terjadi kesalahan saat mengambil data kategori:', error);
     }
   };
 
   const fetchProductData = async () => {
     try {
-      const response = await axios.get(
-        `https://indoteknikserver-732012365989.herokuapp.com/products/${id}`
-      );
+      const response = await axios.get(`https://indoteknikserver-732012365989.herokuapp.com/products/${id}`);
       setProduct(response.data);
     } catch (error) {
-      console.error("Terjadi kesalahan saat mengambil data produk:", error);
+      console.error('Terjadi kesalahan saat mengambil data produk:', error);
     }
   };
 
@@ -88,32 +80,28 @@ const EditProductPage = () => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
-        `https://indoteknikserver-732012365989.herokuapp.com/products/${id}`,
-        product,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data", // Use multipart/form-data for file uploads
-            access_token: localStorage.getItem("access_token"),
-            // Tambahkan header lainnya sesuai kebutuhan
-          },
-        }
-      );
+      const response = await axios.put(`https://indoteknikserver-732012365989.herokuapp.com/products/${id}`, product, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Use multipart/form-data for file uploads
+          access_token: localStorage.getItem('access_token'),
+          // Tambahkan header lainnya sesuai kebutuhan
+        },
+      });
 
       if (response.status === 200) {
         // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil edit produk.
         // Contoh:
-        navigate("/");
-        console.log("Produk berhasil diupdate.");
+        navigate('/')
+        console.log('Produk berhasil diupdate.');
       } else {
-        console.error("Terjadi kesalahan saat mengupdate produk.");
+        console.error('Terjadi kesalahan saat mengupdate produk.');
       }
     } catch (error) {
-      console.error("Terjadi kesalahan:", error);
+      console.error('Terjadi kesalahan:', error);
     }
   };
 

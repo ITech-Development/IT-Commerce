@@ -10,7 +10,6 @@ import Itech from "../../assets/Itech.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FaShoppingCart } from "react-icons/fa"; // Menggunakan react-icons/fa5 untuk ikon dari Font Awesome 5
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
 const Cart = () => {
   const [carts, setCarts] = useState([]);
@@ -287,21 +286,24 @@ const Cart = () => {
                       <div class="cart-product">
                         <Link to={`/products/${e.product.id}`}>
                           <img
-                            src={`${API_URL}/${e.product.image}`}
+                            src={e.product.image}
                             alt={e.product.name}
                           />
                         </Link>
                         <div style={{ paddingLeft: "20px" }}>
-                          <h3 style={{ maxWidth: "450px" }}>
-                            {e.product.name}
+                          <h3 style={{ maxWidth: "430px", fontSize: '16px' }}>
+                            {e.product.name.split(" ")
+                              .slice(0, 15)
+                              .join(" ")}
+                            ...
                           </h3>
-                          <p>
+                          {/* <p>
                             {e.product.description
                               .split(" ")
                               .slice(0, 10)
                               .join(" ")}
                             ...
-                          </p>
+                          </p> */}
                           <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
                           </button>
@@ -397,21 +399,24 @@ const Cart = () => {
                       <div class="cart-product">
                         <Link to={`/products/${e.product.id}`}>
                           <img
-                            src={`${API_URL}/${e.product.image}`}
+                            src={e.product.image}
                             alt={e.product.name}
                           />
                         </Link>
                         <div style={{ paddingLeft: "20px" }}>
-                          <h3 style={{ maxWidth: "450px" }}>
-                            {e.product.name}
+                          <h3 style={{ maxWidth: "430px", fontSize: '16px' }}>
+                            {e.product.name.split(" ")
+                              .slice(0, 15)
+                              .join(" ")}
+                            ...
                           </h3>
-                          <p>
+                          {/* <p>
                             {e.product.description
                               .split(" ")
                               .slice(0, 10)
                               .join(" ")}
                             ...
-                          </p>
+                          </p> */}
                           <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
                           </button>
@@ -516,21 +521,24 @@ const Cart = () => {
                       <div class="cart-product">
                         <Link to={`/products/${e.product.id}`}>
                           <img
-                            src={`${API_URL}/${e.product.image}`}
+                            src={e.product.image}
                             alt={e.product.name}
                           />
                         </Link>
                         <div style={{ paddingLeft: "20px" }}>
-                          <h3 style={{ maxWidth: "450px" }}>
-                            {e.product.name}
+                          <h3 style={{ maxWidth: "430px", fontSize: '16px' }}>
+                            {e.product.name.split(" ")
+                              .slice(0, 15)
+                              .join(" ")}
+                            ...
                           </h3>
-                          <p>
+                          {/* <p>
                             {e.product.description
                               .split(" ")
                               .slice(0, 10)
                               .join(" ")}
                             ...
-                          </p>
+                          </p> */}
                           <button onClick={() => handlerRemove(e.id)}>
                             <FontAwesomeIcon icon={faTrash} /> Hapus
                           </button>

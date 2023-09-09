@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
+// const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; 
 
 function Index() {
   let [carts, setCarts] = useState([]);
@@ -382,14 +382,17 @@ function Index() {
                       </Link>
                       <div>
                         <h3>{e.product.name}</h3>
-                        <p>{e.product.description}</p>
+                        {/* <p>{e.product.description}</p> */}
                         <button onClick={() => handlerRemove(e.id)}>
                           Remove
                         </button>
                       </div>
                     </div>
                     <div class="cart-product-price">
-                      Rp.{e.product.unitPrice}
+                      Rp.{(e.product.unitPrice).toLocaleString(
+                          "id-ID",
+                          {}
+                          )}
                     </div>
                     <div class="cart-product-quantity">
                       <button onClick={() => handlerDec(e.id)}>-</button>
@@ -397,7 +400,10 @@ function Index() {
                       <button onClick={() => handlerInc(e.id)}>+</button>
                     </div>
                     <div class="cart-product-total-price">
-                      Rp.{e.quantity * e.product.unitPrice}
+                      Rp.{(e.quantity * e.product.unitPrice).toLocaleString(
+                          "id-ID",
+                          {}
+                        )}
                     </div>
                   </div>
                 ))}
@@ -407,11 +413,17 @@ function Index() {
                 <div class="cart-checkout" style={{ lineHeight: "30px" }}>
                   <div class="subtotal">
                     <span>Subtotal :</span>
-                    <span class="amount">Rp.{calculateSubtotal()}</span>
+                    <span class="amount">Rp.{calculateSubtotal().toLocaleString(
+                          "id-ID",
+                          {}
+                        )}</span>
                   </div>
                   <div class="subtotal">
                     <span>Voucher 3% :</span>
-                    <span class="amount">Rp. {calculateVoucher()}</span>
+                    <span class="amount">Rp. {calculateVoucher().toLocaleString(
+                          "id-ID",
+                          {}
+                        )}</span>
                   </div>
                   {/* <div
                     style={{
@@ -426,7 +438,10 @@ function Index() {
                   <div class="subtotal">
                     <span>Total :</span>
                     <span style={{ fontWeight: "700" }} class="amount">
-                      {calculateTotal()}
+                      {calculateTotal().toLocaleString(
+                          "id-ID",
+                          {}
+                        )}
                     </span>
                   </div>
 
@@ -509,12 +524,7 @@ function Index() {
                   jnt
                 </option>
               </select>
-              {/* <input
-                type="number"
-                value={calculateTotalWeight()}
-                readOnly
-                placeholder="Total Weight in Grams"
-              /> */}
+         
               <select
                 name="province"
                 id="province"
@@ -586,7 +596,10 @@ function Index() {
                         onChange={handleShippingCostChange}
                       />
                       <label htmlFor={`shippingChoice${index}`}>
-                        Shipping Cost: Rp.{el.cost[0].value}
+                        Shipping Cost: Rp.{el.cost[0].value.toLocaleString(
+                          "id-ID",
+                          {}
+                        )}
                       </label>
                       <p>Service: {el.service}</p>
                       <p>Description: {el.description}</p>
@@ -604,7 +617,10 @@ function Index() {
 
           <span >Total Bayar : </span>
           <span style={{ fontWeight: "700", paddingRight: '20px'}} className="amount">
-            Rp. {calculateTotalBayar()}
+            Rp. {calculateTotalBayar().toLocaleString(
+                          "id-ID",
+                          {}
+                        )}
           </span>
           </div>
           <div>

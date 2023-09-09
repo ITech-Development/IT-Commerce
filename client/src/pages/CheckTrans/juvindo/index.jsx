@@ -7,11 +7,9 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
-// const midtransClient = require('midtrans-client');
-import styled from 'styled-components';
+import styled from "styled-components";
 
-
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
+// const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
 
 function Index() {
   let [carts, setCarts] = useState([]);
@@ -37,7 +35,10 @@ function Index() {
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
   const [checkoutCost, setCheckoutCost] = useState();
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
   useEffect(() => {
+
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       let url = "https://indoteknikserver-732012365989.herokuapp.com/users/me";
@@ -74,6 +75,7 @@ function Index() {
   }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
+
     const bayar = calculateTotalBayar();
     const config = {
       "Content-Type": "application/json",
@@ -93,10 +95,12 @@ function Index() {
         selectedShippingCost,
         selectedVoucher,
         checkoutPengiriman,
+        bayar
       },
       headers: config,
       method: "post",
     });
+    setModalVisible(true);
     setToken(response.data.token);
   };
 
@@ -129,11 +133,13 @@ function Index() {
   }, [token]);
 
   useEffect(() => {
+    // const midtransUrl = "https://app.midtrans.com/snap/snap.js";
     const midtransUrl = "https://app.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
+    // const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
     const midtransClientKey = "Mid-client-R2krmA7ZU84Yd2Ug";
     scriptTag.setAttribute("data-client-key-juvindo", midtransClientKey);
 
@@ -348,6 +354,7 @@ function Index() {
     // const value = event.target.value
     setSelectedShippingCost(value);
     setTotalShippingCost(value);
+
     setCheckoutCost(value);
   };
 
@@ -358,17 +365,17 @@ function Index() {
   };
 
   const paymentButtonStyle = {
-    backgroundColor: "blue",
-    color: "white",
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
+    backgroundColor: 'blue',
+    color: 'white',
+    padding: '10px 20px',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
   };
 
   return (
     <div>
-      <div id="snap-container"></div>
+
       <div className="alamat">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Alamat Pengiriman</h2>
@@ -521,26 +528,39 @@ function Index() {
             </label>
           </div>
         </div>
-        <ShippingContainer>
+
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div
             className="calcongkir"
             style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
           >
             <h2>Pilih Metode Pengiriman</h2>
             <div>
-              <Select onChange={handlerSetCourier}>
-                <option value={courier}>Select Courier</option>
-                <option value="jne">JNE</option>
-                <option value="tiki">TIKI</option>
-                <option value="pos">Pos Indonesia</option>
-                <option value="jnt">J&T</option>
-              </Select>
+
+              <select
+                value={courier}
+                onChange={handlerSetCourier}
+                className="methodDeliverySelect"
+              >
+                <option className="methodDeliveryOption" value="jne">
+                  jne
+                </option>
+                <option className="methodDeliveryOption" value="tiki">
+                  tiki
+                </option>
+                <option className="methodDeliveryOption" value="pos">
+                  pos
+                </option>
+                <option className="methodDeliveryOption" value="jnt">
+                  jnt
+                </option>
+              </select>
               {/* <input
-              type="number"
-              value={calculateTotalWeight()}
-              readOnly
-              placeholder="Total Weight in Grams"
-            /> */}
+                type="number"
+                value={calculateTotalWeight()}
+                readOnly
+                placeholder="Total Weight in Grams"
+              /> */}
               <select
                 name="province"
                 id="province"
@@ -602,53 +622,73 @@ function Index() {
               </select>
               {pengiriman
                 ? pengiriman.map((el, index) => (
-                    <div key={index}>
-                      <input
-                        type="radio"
-                        id={`shippingChoice${index}`}
-                        name="shipping"
-                        value={el.cost[0].value}
-                        checked={selectedShippingCost === el.cost[0].value}
-                        onChange={handleShippingCostChange}
-                      />
-                      <label htmlFor={`shippingChoice${index}`}>
-                        Shipping Cost: Rp.{el.cost[0].value}
-                      </label>
-                      <p>Service: {el.service}</p>
-                      <p>Description: {el.description}</p>
-                      <p>Est: {el.cost[0].etd} Days</p>
-                    </div>
-                  ))
+                  <div key={index}>
+                    <input
+                      type="radio"
+                      id={`shippingChoice${index}`}
+                      name="shipping"
+                      value={el.cost[0].value}
+                      checked={selectedShippingCost === el.cost[0].value}
+                      onChange={handleShippingCostChange}
+                    />
+                    <label htmlFor={`shippingChoice${index}`}>
+                      Shipping Cost: Rp.{el.cost[0].value}
+                    </label>
+                    <p>Service: {el.service}</p>
+                    <p>Description: {el.description}</p>
+                    <p>Est: {el.cost[0].etd} Days</p>
+                  </div>
+                ))
                 : null}
             </div>
           </div>
-        </ShippingContainer>
-        <StyledPaymentSummary>
 
-        <span>Total Bayar : </span>
-        <span
-          style={{ fontWeight: "700", paddingRight: "20px" }}
-          className="amount"
-        >
-          Rp. {calculateTotalBayar()}
-        </span>
-        <div>
-          {totalShippingCost === 0 ? (
-            <p>
-              <i>Silahkan pilih metode pengiriman</i>
-            </p>
-          ) : (
-            <button
-              onClick={() => handlePaymentProcess()}
-              style={paymentButtonStyle}
-            >
-              Bayar Sekarang
-            </button>
-          )}
+          <div
+            style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end' }}
+          >
+            <div style={{ paddingTop: '5px' }}>
+
+              <span >Total Bayar : </span>
+              <span style={{ fontWeight: "700", paddingRight: '20px' }} className="amount">
+                Rp. {calculateTotalBayar()}
+              </span>
+            </div>
+            <div>
+
+              {totalShippingCost === 0 ? (
+                <p >
+                  <i>Silahkan pilih metode pengiriman</i>
+                </p>
+              ) : (
+                <button
+                  onClick={() => handlePaymentProcess()}
+                  style={paymentButtonStyle}
+                >
+                  Bayar Sekarang
+                </button>
+              )}
+            </div>
+            {isModalVisible && (
+              <div className="modal-overlay">
+                <div className="modal">
+                  <div className="modal-content">
+                    <span className="close" onClick={() => setModalVisible(false)}>
+                      &times;
+                    </span>
+                    <h2>Modal Title</h2>
+                    <div id="snap-container"></div>
+                    <p>Isi modal Anda di sini.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+
+          </div>
         </div>
 
-        </StyledPaymentSummary>
       </div>
+
     </div>
   );
 }

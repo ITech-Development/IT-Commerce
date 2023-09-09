@@ -1,19 +1,26 @@
 .product-card {
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
+  justify-content: space-between;
   padding: 15px;
   display: flex;
   flex-direction: column;
-  align-items: left;
-  max-width: 280px; /* Set a maximum width for the card */
-  max-height: 450px; /* Set a maximum width for the card */
-  margin: 10px; /* Center the card horizontally */
+  align-items: center; /* Center content horizontally */
+  text-align: center; /* Center text horizontally */
+  max-width: 160px; /* Set a maximum width for the card */
+  max-height: 450px; /* Set a maximum height for the card */
+  margin: 8px; /* Add spacing around the card */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
   transition: transform 0.2s, box-shadow 0.2s; /* Add smooth transition effects */
 }
 .product-card img {
-  max-width: 100%; /* Set maximum width to ensure the image fits within the card */
+  max-width: 119%; /* Set maximum width to ensure the image fits within the card */
   height: auto; /* Maintain aspect ratio */
   margin-bottom: 10px; /* Add some space below the image */
+  position: relative;
+  top: -15px;
+  left: -15px;
+  border: none;
+  border-radius: 5px 5px 0;
 }
 .product-card:hover {
   transform: translateY(-5px); /* Apply a lift effect on hover */

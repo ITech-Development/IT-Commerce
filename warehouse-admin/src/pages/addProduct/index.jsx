@@ -420,36 +420,15 @@ const AddProductPage = () => {
           </div>
         </div>
         <div className="outSection">
-         
-        <div className="form-group">
-          <label htmlFor="width">Lebar (cm):</label>
-          <input
-            type="number"
-            id="width"
-            name="width"
-            value={newProduct.width}
-            onChange={handleChange}
-            min="1"
-            required
-          />
-          <br />
-        </div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="length">Panjang (cm):</label>
-          <input
-            type="number"
-            id="length"
-            name="length"
-            value={newProduct.length}
-            onChange={handleChange}
-            min="1"
-            required
-          />
-          <br />
-        </div>
-        <div className="form-group">
-  
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              margin: "10px 0 0 0",
+            }}
+          >
+            <label style={{ fontSize: "18px" }}>Pengelolaan Produk</label>
+          </div>
           <div style={{ color: "#5C8374" }} className="form-group">
             <div style={{ marginTop: "30px" }}>
               <label style={{ fontSize: "18px", display: "flex" }}>
@@ -510,7 +489,7 @@ const AddProductPage = () => {
                   position: "relative",
                   top: "-41px",
                   left: "528px",
-                  fontSize: '14px'
+                  fontSize: "14px",
                 }}
               >
                 gram
@@ -544,19 +523,19 @@ const AddProductPage = () => {
             >
               <input
                 type="text"
-                id="height"
-                name="height"
-                value={newProduct.height}
+                id="length"
+                name="length"
+                value={newProduct.length}
                 onChange={handleChange}
                 required
-                placeholder="Tinggi"
+                placeholder="Panjang"
               />
               <p
                 style={{
-                  position: 'relative',
+                  position: "relative",
                   top: "-2px",
                   left: "-55px",
-                  fontSize: '14px'
+                  fontSize: "14px",
                 }}
               >
                 cm
@@ -572,10 +551,29 @@ const AddProductPage = () => {
               />
               <p
                 style={{
-                  position: 'relative',
+                  position: "relative",
                   top: "-2px",
                   left: "-55px",
-                  fontSize: '14px'
+                  fontSize: "14px",
+                }}
+              >
+                cm
+              </p>
+              <input
+                type="text"
+                id="height"
+                name="height"
+                value={newProduct.height}
+                onChange={handleChange}
+                required
+                placeholder="Tinggi"
+              />
+              <p
+                style={{
+                  position: "relative",
+                  top: "-2px",
+                  left: "-55px",
+                  fontSize: "14px",
                 }}
               >
                 cm

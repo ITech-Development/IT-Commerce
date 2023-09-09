@@ -7,10 +7,9 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
-import styled from 'styled-components';
+import styled from "styled-components";
 
-
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
+// const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
 
 function Index() {
   let [carts, setCarts] = useState([]);
@@ -36,8 +35,9 @@ function Index() {
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
   const [checkoutCost, setCheckoutCost] = useState();
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
   useEffect(() => {
-    
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       let url = "https://indoteknikserver-732012365989.herokuapp.com/users/me";
@@ -54,7 +54,9 @@ function Index() {
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
-        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers");
+        const response = await axios.get(
+          "https://indoteknikserver-732012365989.herokuapp.com/admin-sellers"
+        );
         setVouchers(response.data);
       } catch (error) {
         console.log("Error fetching vouchers:", error);
@@ -96,6 +98,7 @@ function Index() {
       headers: config,
       method: "post",
     });
+    setModalVisible(true);
     setToken(response.data.token);
   };
 
@@ -128,7 +131,6 @@ function Index() {
   }, [token]);
 
   useEffect(() => {
-    // const midtransUrl = "https://app.midtrans.com/snap/snap.js";
     const midtransUrl = "https://app.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
@@ -148,7 +150,9 @@ function Index() {
   const handlerInc = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/increment/" + id;
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/increment/" +
+        id;
       axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data);
@@ -162,7 +166,9 @@ function Index() {
   const handlerDec = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/decrement/" + id;
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/decrement/" +
+        id;
       axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, "ASdasdas");
@@ -176,7 +182,9 @@ function Index() {
   const handlerRemove = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/remove/" + id;
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/remove/" +
+        id;
       axios({ url, method: "delete", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, "remooove");
@@ -235,7 +243,8 @@ function Index() {
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/indo-riau";
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/indo-riau";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
           setCarts(data);
@@ -363,7 +372,6 @@ function Index() {
 
   return (
     <div>
-      <div id="snap-container"></div>
       <div className="alamat">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Alamat Pengiriman</h2>
@@ -416,20 +424,23 @@ function Index() {
                     <div class="cart-product">
                       <Link to={`/products/${e.product.id}`}>
                         <img
+                          className="imgIR"
                           src={e.product.image}
                           alt={e.product.name}
                         />
                       </Link>
                       <div>
-                        <h3>{e.product.name}</h3>
-                        <p>{e.product.description}</p>
+                        <h3 style={{ fontSize: "16px", maxWidth: '258px' }}>
+                          {e.product.name.split(" ").slice(0, 4).join(" ")}...
+                        </h3>
+                        {/* <p>{e.product.description}</p> */}
                         <button onClick={() => handlerRemove(e.id)}>
                           Remove
                         </button>
                       </div>
                     </div>
                     <div class="cart-product-price">
-                      Rp.{e.product.unitPrice}
+                      Rp.{e.product.unitPrice.toLocaleString("id-ID", {})}
                     </div>
                     <div class="cart-product-quantity">
                       <button onClick={() => handlerDec(e.id)}>-</button>
@@ -437,7 +448,11 @@ function Index() {
                       <button onClick={() => handlerInc(e.id)}>+</button>
                     </div>
                     <div class="cart-product-total-price">
-                      Rp.{e.quantity * e.product.unitPrice}
+                      Rp.
+                      {(e.quantity * e.product.unitPrice).toLocaleString(
+                        "id-ID",
+                        {}
+                      )}
                     </div>
                   </div>
                 ))}
@@ -447,26 +462,20 @@ function Index() {
                 <div class="cart-checkout" style={{ lineHeight: "30px" }}>
                   <div class="subtotal">
                     <span>Subtotal :</span>
-                    <span class="amount">Rp.{calculateSubtotal()}</span>
+                    <span class="amount">
+                      Rp.{calculateSubtotal().toLocaleString("id-ID", {})}
+                    </span>
                   </div>
                   <div class="subtotal">
                     <span>Voucher 3% :</span>
-                    <span class="amount">Rp. {calculateVoucher()}</span>
+                    <span class="amount">
+                      Rp. {calculateVoucher().toLocaleString("id-ID", {})}
+                    </span>
                   </div>
-                  {/* <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontStyle: "italic",
-                    }}
-                  >
-                    <span>PPN 11% :</span>
-                    <span className="amount"> Rp. {calculatePPN()}</span>
-                  </div> */}
                   <div class="subtotal">
                     <span>Total :</span>
                     <span style={{ fontWeight: "700" }} class="amount">
-                      {calculateTotal()}
+                      {calculateTotal().toLocaleString("id-ID", {})}
                     </span>
                   </div>
                 </div>
@@ -516,28 +525,32 @@ function Index() {
             </label>
           </div>
         </div>
-        
-        <ShippingContainer>
 
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div
             className="calcongkir"
             style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
           >
             <h2>Pilih Metode Pengiriman</h2>
             <div>
-            <Select onChange={handlerSetCourier}>
-              <option value={courier}>Select Courier</option>
-              <option value="jne">JNE</option>
-              <option value="tiki">TIKI</option>
-              <option value="pos">Pos Indonesia</option>
-              <option value="jnt">J&T</option>
-            </Select>
-              {/* <input
-                type="number"
-                value={calculateTotalWeight()}
-                readOnly
-                placeholder="Total Weight in Grams"
-              /> */}
+              <select
+                value={courier}
+                onChange={handlerSetCourier}
+                className="methodDeliverySelect"
+              >
+                <option className="methodDeliveryOption" value="jne">
+                  jne
+                </option>
+                <option className="methodDeliveryOption" value="tiki">
+                  tiki
+                </option>
+                <option className="methodDeliveryOption" value="pos">
+                  pos
+                </option>
+                <option className="methodDeliveryOption" value="jnt">
+                  jnt
+                </option>
+              </select>
               <select
                 name="province"
                 id="province"
@@ -609,7 +622,8 @@ function Index() {
                         onChange={handleShippingCostChange}
                       />
                       <label htmlFor={`shippingChoice${index}`}>
-                        Shipping Cost: Rp.{el.cost[0].value}
+                        Shipping Cost: Rp.
+                        {el.cost[0].value.toLocaleString("id-ID", {})}
                       </label>
                       <p>Service: {el.service}</p>
                       <p>Description: {el.description}</p>
@@ -619,17 +633,22 @@ function Index() {
                 : null}
             </div>
           </div>
-        
 
-          <StyledPaymentSummary>
-
+          <div
+            style={{
+              padding: "20px 65px",
+              fontSize: "20px",
+              display: "flex",
+              justifyContent: "end",
+            }}
+          >
             <div style={{ paddingTop: "5px" }}>
               <span>Total Bayar : </span>
               <span
                 style={{ fontWeight: "700", paddingRight: "20px" }}
                 className="amount"
               >
-                Rp. {calculateTotalBayar()}
+                Rp. {calculateTotalBayar().toLocaleString("id-ID", {})}
               </span>
             </div>
             <div>
@@ -646,17 +665,34 @@ function Index() {
                 </button>
               )}
             </div>
-            </StyledPaymentSummary>
-            </ShippingContainer>
+            {isModalVisible && (
+              <div className="modal-overlay">
+                <div className="modal">
+                  <div className="modal-content">
+                    <span
+                      className="close"
+                      onClick={() => setModalVisible(false)}
+                    >
+                      &times;
+                    </span>
+                    <h2>Modal Title</h2>
+                    <div id="snap-container"></div>
+                    <p>Isi modal Anda di sini.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
+    </div>
   );
 }
 export default Index;
 
 const ShippingContainer = styled.div`
-max-width: 1350px;
-margin: auto;
+  max-width: 1350px;
+  margin: auto;
   padding: 20px;
   border: 1px solid rgb(244, 238, 238);
   border-radius: 10px;

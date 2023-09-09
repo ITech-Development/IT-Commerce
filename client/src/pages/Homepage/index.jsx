@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import HeroSection from "../../components/sections/hero";
 import Footer from "../../components/footer";
 import ProductCatgories from "../../components/sections/productCategories";
-import ClaimVoucher from "../../assets/popup.png";
+import ClaimVoucher from "../../assets/ClaimVouc.png";
 import { Link } from "react-router-dom";
 import CorouselBrands from "../../components/sections/corouselBrands";
 import { Chatbot } from "react-chatbot-kit";
