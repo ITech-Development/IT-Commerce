@@ -4,6 +4,7 @@ const { validationResult } = require('express-validator')
 const cloudinary = require('../helpers/cloudinary')
 const baseUrl = 'http://localhost:3100'; // Ubah dengan URL server Anda
 
+
 class ProductController {
 
     static async getAllProducts(req, res, next) {
@@ -62,7 +63,7 @@ class ProductController {
                 where: { categoryId: 2 },
                 order: [['createdAt', 'DESC']]
             })
-            
+
             const filteredProducts = deliveryValve.filter(product => !hiddenProductIds.includes(product.id));
             res.status(200).json(filteredProducts);
         } catch (error) {
@@ -247,10 +248,16 @@ class ProductController {
             }
             const folderName = 'product_images';
 
-            const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: folderName
-            })
+            // Cek apakah ada file yang diunggah
+            if (req.file) {
+                const result = await cloudinary.uploader.upload(req.file.path, {
+                    folder: folderName
+                });
 
+                // Update path gambar jika ada file yang diunggah
+                existingProduct.image = result.secure_url;
+            }
+            
             // Update the product's properties based on request body
             existingProduct.name = req.body.name;
             existingProduct.categoryId = req.body.categoryId;
@@ -266,10 +273,7 @@ class ProductController {
             existingProduct.stock = req.body.stock;
             existingProduct.authorId = req.warehouseAdmin.id;
 
-            if (req.file) {
-                // Update the image path if a new image is uploaded
-                existingProduct.image = result.secure_url
-            }
+
 
             // Save the updated product
             await existingProduct.save();
