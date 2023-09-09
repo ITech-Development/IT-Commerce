@@ -44,22 +44,27 @@ class ProductController {
 
     static async getNozzelCategory(req, res, next) {
         try {
-            const one = await Product.findAll({
+            const hiddenProductIds = [1, 2, 3];
+            const nozzle = await Product.findAll({
                 where: { categoryId: 1 },
                 order: [['createdAt', 'DESC']]
             })
-            res.status(200).json(one);
+            const filteredProducts = nozzle.filter(product => !hiddenProductIds.includes(product.id));
+            res.status(200).json(filteredProducts);
         } catch (error) {
             next(error);
         }
     }
     static async getDeliveryValve(req, res, next) {
         try {
-            const one = await Product.findAll({
+            const hiddenProductIds = [1, 2, 3];
+            const deliveryValve = await Product.findAll({
                 where: { categoryId: 2 },
                 order: [['createdAt', 'DESC']]
             })
-            res.status(200).json(one);
+            
+            const filteredProducts = deliveryValve.filter(product => !hiddenProductIds.includes(product.id));
+            res.status(200).json(filteredProducts);
         } catch (error) {
             next(error);
         }
@@ -67,11 +72,13 @@ class ProductController {
 
     static async getElementCategory(req, res, next) {
         try {
-            const one = await Product.findAll({
+            const hiddenProductIds = [1, 2, 3];
+            const element = await Product.findAll({
                 where: { categoryId: 3 },
                 order: [['createdAt', 'DESC']]
             })
-            res.status(200).json(one);
+            const filteredProducts = element.filter(product => !hiddenProductIds.includes(product.id));
+            res.status(200).json(filteredProducts);
         } catch (error) {
             next(error);
         }
@@ -79,11 +86,13 @@ class ProductController {
 
     static async getVEPumpCategory(req, res, next) {
         try {
-            const one = await Product.findAll({
+            const hiddenProductIds = [1, 2, 3];
+            const vePump = await Product.findAll({
                 where: { categoryId: 4 },
                 order: [['createdAt', 'DESC']]
             })
-            res.status(200).json(one);
+            const filteredProducts = vePump.filter(product => !hiddenProductIds.includes(product.id));
+            res.status(200).json(filteredProducts);
         } catch (error) {
             next(error);
         }
@@ -91,11 +100,13 @@ class ProductController {
 
     static async getVEPumpPartsCategory(req, res, next) {
         try {
-            const one = await Product.findAll({
+            const hiddenProductIds = [1, 2, 3];
+            const vePumpParts = await Product.findAll({
                 where: { categoryId: 5 },
                 order: [['createdAt', 'DESC']]
             })
-            res.status(200).json(one);
+            const filteredProducts = vePumpParts.filter(product => !hiddenProductIds.includes(product.id));
+            res.status(200).json(filteredProducts);
         } catch (error) {
             next(error);
         }
@@ -103,11 +114,13 @@ class ProductController {
 
     static async getHeadRotorCategory(req, res, next) {
         try {
-            const one = await Product.findAll({
+            const hiddenProductIds = [1, 2, 3];
+            const headRotor = await Product.findAll({
                 where: { categoryId: 6 },
                 order: [['createdAt', 'DESC']]
             })
-            res.status(200).json(one);
+            const filteredProducts = headRotor.filter(product => !hiddenProductIds.includes(product.id));
+            res.status(200).json(filteredProducts);
         } catch (error) {
             next(error);
         }
