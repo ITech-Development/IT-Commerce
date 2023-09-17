@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { productsApi } from '../features/product/productSlice'
-import { usersApi } from '../features/user/userSlice'
+import { productsApi } from '../features/product/apiProducts'
+import { usersApi } from '../features/user/apiUser'
 
 export default configureStore({
     reducer: {

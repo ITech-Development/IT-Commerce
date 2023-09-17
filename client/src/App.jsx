@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { createContext, useEffect, useReducer } from "react";
+import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import ProductList from "./pages/ProductList/ProductList";
@@ -12,16 +12,12 @@ import "react-toastify/dist/ReactToastify.css";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Logout from "./components/auth/Logout";
-import { useDispatch } from "react-redux";
-import { loadUser } from "./features/authslice";
 import ProductShipping from "./pages/productShipping";
 import FirstStep from "./pages/productShipping/firstStep";
 import SecondStep from "./pages/productShipping/secondStep";
 import CheckTrans from "./pages/CheckTrans";
 import ProfileUpdate from "./pages/profileUpdate";
 import ServiceList from "./pages/ServiceList";
-import { initialState, reducer } from "./reducer/UseReducer";
-import Chat from "./pages/Chat";
 import CheckTransItech from "./pages/CheckTrans/itech";
 import CheckTransIndoRiau from "./pages/CheckTrans/indoRiau";
 import CheckTransJuvindo from "./pages/CheckTrans/juvindo";
@@ -34,8 +30,9 @@ import ProductCategoryHeadRotor from "./pages/ProductCategories/headRotor";
 import MyOrder from "./pages/MyOrder";
 import DetailsOrder from "./pages/DetailsOrder";
 import store from './app/store'
+import { Provider } from "react-redux";
 
-export const UserContext = createContext();
+
 
 const Routing = () => {
   return (
@@ -55,7 +52,6 @@ const Routing = () => {
       <Route path="/profile-update" element={<ProfileUpdate />} />
       <Route path="/services" element={<ServiceList />} />
       <Route path="/profile-update/:id" element={<ProfileUpdate />} />
-      <Route path="/chat" element={<Chat />} />
       <Route path="/check-TransITech" element={<CheckTransItech />} />
       <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
       <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
@@ -72,21 +68,14 @@ const Routing = () => {
 };
 
 function App() {
-  const dispatchRedux = useDispatch();
-
-  useEffect(() => {
-    dispatchRedux(loadUser(null));
-  }, [dispatchRedux]);
-
-  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ state, dispatch }} store={store}>
+      <Provider  store={store}>
         <ToastContainer />
-        {/* <Navbar /> */}
+        <Navbar />
         <Routing />
-      </UserContext.Provider>
+      </Provider>
     </BrowserRouter>
   );
 }

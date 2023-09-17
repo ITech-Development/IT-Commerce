@@ -7,8 +7,8 @@ import { FiMail, FiLock } from "react-icons/fi";
 // import { UserContext } from "../../App.jsx";
 import Background from "./Fuel.png";
 import "./style.css"; // Import your CSS styles
-import { useLoginMutation } from '../../features/user/userSlice.js'
-
+import { useLoginMutation } from '../../features/user/apiUser.js'
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   // const { dispatch } = useContext(UserContext);
@@ -17,6 +17,7 @@ const Login = () => {
   // const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate()
 
 
 
@@ -36,6 +37,8 @@ const Login = () => {
     console.log(1);
     login(userData).then((res)=> {
       console.log(res.data);
+      localStorage.setItem("access_token", res.data.access_token);
+      navigate('/')
     })
 
 

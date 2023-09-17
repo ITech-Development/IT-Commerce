@@ -8,14 +8,13 @@ export const productsApi = createApi({
   // baseQuery: fetchBaseQuery({ baseUrl: 'https://indoteknikserver-732012365989.herokuapp.com/' }),
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3100/' }),
   endpoints: (builder) => ({
-    getCarts: builder.query({
-      query: () => "product-carts",
-      headers: {
-        access_token: localStorage.getItem("access_token"),
+    getCarts: builder.mutation({
+      query: () => ({ url: "product-carts", method: 'GET', headers: {
+        access_token: localStorage.access_token,
         "Content-type": "application/json; charset=UTF-8",
-      },
+      }, })
     }),
   })
 })
 
-export const { useGetCartsQuery } = productsApi
+export const { useGetCartsMutation } = productsApi
