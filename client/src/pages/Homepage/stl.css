@@ -10,6 +10,17 @@
 }
 
 @media screen and (max-width: 768px) {
+  .productlaris {
+    position: relative;
+    top: -180px;
+    left: 20px;
+    font-size: 16px !important;
+  }
+
+  .foot {
+    position: relative;
+    top: -350px;
+  }
 
   .ohya {
     margin-top: 143px;
@@ -20,7 +31,6 @@
     margin: 0;
   }
   .herohome {
-    position: relative;
-    top: -30px;
+    margin-top: 45px;
   }
 }

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useGetAllProductsQuery } from "../../features/productsApi";
-// import "./terlaris.css";
+import "./terlaris.css";
 import "../../App.css";
 import Star from "../../assets/star.png";
 import { FadeLoader } from "react-spinners";
@@ -74,6 +74,10 @@ const ProductListContainer = styled.div`
   max-width: 1450px; /* Lebar maksimum yang Anda inginkan */
   margin: 0 auto;
   padding: 20px; /* Atur sesuai kebutuhan Anda */
+  @media (max-width: 768px) {
+    position: relative;
+    top: -190px;
+  }
 `;
 
 const LoadMoreButton = styled.button`
@@ -88,6 +92,17 @@ const LoadMoreButton = styled.button`
 
   &:hover {
     background-color: #0056b3;
+  }
+`;
+
+const CardGridContainers = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 20px;
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 `;
 
@@ -199,7 +214,7 @@ const ProductList = () => {
           <p>An error occurred</p>
         ) : (
           <>
-            <div className="CardGridContainers">
+          <CardGridContainers>
               {filteredAndSortedData.slice(0, displayedCards).map((product) => (
                 <ProductCard
                   key={product.id}
@@ -207,7 +222,7 @@ const ProductList = () => {
                   onAddToCart={handleAddToCart}
                 />
               ))}
-            </div>
+            </CardGridContainers>
             {/* Tampilkan tombol "Muat Lebih Banyak" jika jumlah kartu yang ditampilkan belum mencapai total */}
             {displayedCards < filteredAndSortedData.length && (
               <div

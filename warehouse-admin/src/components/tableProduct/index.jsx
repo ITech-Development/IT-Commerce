@@ -24,7 +24,7 @@ import jsPDF from "jspdf";
 import { saveAs } from "file-saver";
 import "./tablePro.css";
 import styled from "styled-components";
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
 
 const NoUnderlineLink = styled(Link)`
   text-decoration: none;

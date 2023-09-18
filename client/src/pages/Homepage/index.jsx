@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import HeroSection from "../../components/sections/hero";
 import Footer from "../../components/footer";
-import ProductCatgories from "../../components/sections/productCategories";
+import ProductCategories from "../../components/sections/productCategories";
 import ClaimVoucher from "../../assets/ClaimVouc.png";
 import { Link } from "react-router-dom";
 import CorouselBrands from "../../components/sections/corouselBrands";
@@ -15,7 +15,7 @@ function Index() {
   const [isDragging, setIsDragging] = useState(false);
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
-  const [isChatbotMessageVisible, setIsChatbotMessageVisible] = useState(false); // Tambahkan state untuk mengontrol pesan chatbot
+  const [isChatbotMessageVisible, setIsChatbotMessageVisible] = useState(false);
 
   useEffect(() => {
     const hasModalBeenShown = localStorage.getItem("modalShown");
@@ -63,27 +63,13 @@ function Index() {
 
   return (
     <>
-      <div className="herohome" style={{ position: "relative", top: "50px" }}>
+      <div className="herohome">
         <HeroSection />
-        <div className="ohya">
-          <CorouselBrands />
-          <ProductCatgories />
-          <h1
-            style={{
-              display: "flex",
-              margin: "auto",
-              maxWidth: "1420px",
-              padding: "30px 0 0 0",
-              fontSize: "28px",
-              color: '#333333'
-
-            }}
-          >
-            Produk Terlaris
-          </h1>
-          <ProdukTerlaris />
-          <Footer />
-        </div>
+        <CorouselBrands />
+        <ProductCategories />
+        <h1 className="productlaris">Produk Terlaris</h1>
+        <ProdukTerlaris />
+        <Footer />
       </div>
 
       <Modal
@@ -114,12 +100,12 @@ function Index() {
           />
         </Link>
       </Modal>
-       {isChatbotMessageVisible && (
+      {isChatbotMessageVisible && (
         <div
           id="chatbot-message"
           style={{
             position: "fixed",
-            bottom: "130px", // Sesuaikan posisi pesan chatbot dengan modal
+            bottom: "130px",
             right: "20px",
             width: "200px",
             backgroundColor: "#fff",
@@ -127,32 +113,13 @@ function Index() {
             padding: "10px",
             borderRadius: "5px",
             zIndex: 9999,
-            animation: "slideInFromBottom 1s ease-in-out", // Animasi
+            animation: "slideInFromBottom 1s ease-in-out",
           }}
         >
           Hello, Selamat datang di Indoteknik
         </div>
       )}
-      {/* <img
-        id="chatbot-icon" // Added an ID to the chatbot icon element
-        src={ChatbotIcon}
-        alt="Chatbot"
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          width: "100px",
-          cursor: "pointer",
-        }}
-        onMouseDown={handleMouseDown}
-      /> */}
-      
-      {/* <Chatbot
-        config={config}
-        messageParser={MessageParser}
-        actionProvider={ActionProvider}
-      /> */}
-       <img
+      <img
         id="chatbot-icon"
         src={ChatbotIcon}
         alt="Chatbot"
@@ -163,7 +130,7 @@ function Index() {
           width: "100px",
           cursor: "pointer",
         }}
-        onClick={() => setIsChatbotMessageVisible(!isChatbotMessageVisible)} // Toggle tampilan pesan chatbot saat ikon diklik
+        onClick={() => setIsChatbotMessageVisible(!isChatbotMessageVisible)}
       />
     </>
   );

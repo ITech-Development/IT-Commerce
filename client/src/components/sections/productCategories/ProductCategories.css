@@ -10,13 +10,13 @@
   /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); */
   flex: 1;
   margin: auto;
-  width: 80%;
+  /* width: 60%; */
 }
 
 .category-section {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   padding: 20px;
   border-radius: 10px;
 
@@ -30,7 +30,7 @@
   padding: 20px;
   border-radius: 10px;
   border: #cfc9c9 1px solid;
-  max-width: 350px;
+  max-width: 420px;
   max-height: 192px;
   flex: 1;
   margin-left: 20px;
@@ -47,14 +47,14 @@
   flex-direction: row;
   align-items: center;
   gap: 20px;
-  padding: 15px;
+  padding: 5px 10px ;
   background-color: white;
 }
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(5, 1fr);
+  /* gap: 10px; */
 }
 
 .vchp {
@@ -63,14 +63,19 @@
   gap: 10px;
 }
 
+.category-image {
+  width: 80px;
+  height: 80px;
+}
+
 .imgvc {
   max-width: 100px;
 }
 
 .category-card {
   background-color: rgb(255, 255, 255);
-  border-radius: 7px;
-  border: #cfc9c9 1px solid;
+  /* border-radius: 7px;
+  border: #cfc9c9 1px solid; */
   /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); */
   padding: 10px;
   width: auto;
@@ -82,7 +87,7 @@
 }
 
 .category-card:hover {
-  background-color: #f0f0f0; /* Change to the desired hover background color */
+  background-color: none; /* Change to the desired hover background color */
   transform: scale(1.05); /* Increase card size on hover */
 }
 
@@ -141,11 +146,17 @@
 .seeAlltext {
   display: none;
 }
-
+.titleCategory {
+  color: black;
+}
 @media (max-width: 768px) {
+  .allmas {
+    position: relative;
+    top: 10px;
+  }
   .seeAll {
     display: inline-block;
-    width: 40px;
+    width: 45px;
     position: relative;
     left: 3px;
   }
@@ -155,8 +166,8 @@
     font-size: 10px;
     color: black;
     position: relative;
-    top: 18px;
-    left: -39.8px;
+    top: 23px;
+    left: -45px;
     font-weight: 600;
     display: inline-block;
 
@@ -170,7 +181,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    top: -305px;
+    top: -165px;
     left: -30px;
   }
   .category-container {
@@ -191,12 +202,12 @@
     margin: auto;
     padding: 0;
     border: none;
-    top: -97px;
+    top: -32px;
     left: 15px;
   }
  .secRight h3 {
-    font-size: 13px;
-    max-width: 120px;
+    font-size: 10px;
+    max-width: 190px;
     line-height: 16px;
   }
   .secRight p {
@@ -236,25 +247,55 @@
 
   .vchp {
     position: relative;
-    top: 32px;
-    grid-area: 1.2rem;
+    top: -2px;
+    display: flex;
   }
+
+  /* .imgvc {
+    display: flex;
+    padding: 0 5px;
+    margin: auto;
+
+  } */
 
   .card-grid {
     display: flex;
-    width: 15px;
+    width: 45px;
     height: 10px;
     position: relative;
-    top: -134px;
-    left: 70px;
+    top: -113px;
+    left: 75px;
     font-size: 10px;
     grid-template-columns: repeat(3, 1fr); /* Hanya 3 kolom di tampilan mobile */
+  }
+  
+  .category-image {
+    max-width: 50px;
+    max-height: 50px;
+  }
 
+  .titleCategory {
+    color: black;
+    width: 52px;
+    font-weight: 500;
   }
 
   .category-card {
-    font-size: 10px;
-
+    font-size: 8px;
+    display: none; /* Sembunyikan seluruh category-card */
+  }
+  
+  .category-card:nth-child(1) {
+    display: block; /* Tampilkan category-card pertama (atau yang sesuai dengan kebutuhan Anda) */
+  }
+  .category-card:nth-child(2) {
+    display: block; /* Tampilkan category-card pertama (atau yang sesuai dengan kebutuhan Anda) */
+  }
+  .category-card:nth-child(3) {
+    display: block; /* Tampilkan category-card pertama (atau yang sesuai dengan kebutuhan Anda) */
+  }
+  .category-card:nth-child(4) {
+    display: block; /* Tampilkan category-card pertama (atau yang sesuai dengan kebutuhan Anda) */
   }
 
   .category-card h1 {

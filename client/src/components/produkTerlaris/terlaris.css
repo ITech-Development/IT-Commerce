@@ -96,6 +96,11 @@
     .CardGridContainer {
       grid-template-columns: repeat(2, 1fr);
     }
+
+    .muat {
+      position: relative;
+      top: 25px;
+    }
     .productlist {
       display: grid; /* Mengubah tampilan container menjadi grid */
       grid-template-columns: repeat(2, 1fr); /* Menampilkan 2 card per baris */

@@ -19,7 +19,7 @@
     position: relative;
     padding: 0 auto;
     margin: 0 auto 0 20px; /* Mengatur margin otomatis di sisi kanan dan kiri untuk menengahkan elemen */
-    top: -276px;
+    top: -136px;
     width: 60%; /* Mengisi seluruh lebar parent container */
     max-width: 400px;
   }
