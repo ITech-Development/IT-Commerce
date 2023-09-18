@@ -5,6 +5,7 @@ import "./ProductCategories.css"; // Import your CSS file
 import vc01 from "../../../assets/TK01.png";
 import vc02 from "../../../assets/MS01.png";
 import vc03 from "../../../assets/IT01.png";
+import SeeAll from '../../../assets/seeAll.png'
 
 function ProductCategoryCard({ to, title }) {
   const cardAnimation = useSpring({
@@ -19,8 +20,8 @@ function ProductCategoryCard({ to, title }) {
 
   return (
     <animated.div className="category-card" style={cardAnimation}>
-      <Link to={to}>
-        <h1>{title}</h1>
+      <Link to={to} target="blank">
+        <h1 className="titleCategory">{title}</h1>
       </Link>
     </animated.div>
   );
@@ -28,23 +29,25 @@ function ProductCategoryCard({ to, title }) {
 
 function ProductCategories() {
   return (
-    <div
+    <div className="prdt"
       style={{
         display: "flex",
         justifyContent: "space-between",
         margin: "auto",
-        maxWidth: '1460px'
+        maxWidth: '1420px'
       }}
     >
       <div className="category-container">
         <div className="category-section">
           <h1>
+            Pilihan <br/>
             Kategori
-            <br />
-            Pilihan
-            <br />
             Terlaris
           </h1>
+          <Link to="/productlist">
+            <img className="seeAll" src={SeeAll} alt="" />
+            <p className="seeAlltext">lihat semua</p>
+          </Link>
           <Link to="/productlist">
             <button className="view-all-button">Lihat Semua Produk</button>
           </Link>
@@ -57,21 +60,24 @@ function ProductCategories() {
             <ProductCategoryCard to="/ve-pump" title="VE Pump" />
             <ProductCategoryCard to="/ve-pump-parts" title="VE Pump Parts" />
             <ProductCategoryCard to="/head-rotor" title="Head Rotor" />
+            <ProductCategoryCard to="/injector" title="Injector" />
+            <ProductCategoryCard to="/scv" title="Scv" />
+            <ProductCategoryCard to="/turboparts" title="Turbo & Parts" />
           </div>
         </div>
       </div>
       <div className="secRight">
-        <h3>Klaim Voucher Sekarang!</h3>
-        <p>Dapatkan diskon hingga 3% dari setiap transaksi anda</p>
+        <h3 className="sech3">Klaim Voucher Sekarang!</h3>
+        <p>Dapatkan diskon hingga 3% dari setiap transaksi anda!</p>
         <div className="vchp">
           <img className="imgvc" src={vc03} alt="" />
           <img className="imgvc" src={vc02} alt="" />
           <img className="imgvc" src={vc01} alt="" />
         </div>
-        <Link to="/productlist">
+        {/* <Link to="/productlist">
 
-        <button className="view-all-button-Voucher" style={{marginTop: '30px'}}>Ambil Voucher & Diskon 3% Sekarang Juga!</button>
-      </Link>
+        <button className="view-all-button-Voucher" style={{marginTop: '30px'}}>Lihat Semua Produk</button>
+      </Link> */}
       </div>
     </div>
   );

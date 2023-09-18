@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from 'axios'
-import { Link, useParams } from 'react-router-dom';
 
 const ProfileForm = () => {
 
@@ -10,14 +9,10 @@ const ProfileForm = () => {
     fullName: '',
     phoneNumber: '',
     address: '',
-    // Tambahkan atribut lainnya jika perlu
   });
-  // console.log(typeof user.id, 'testtesttest');
-  // const id = user.id
 
   useEffect(() => {
     fetchProfileData();
-    // fetchProductOwners();
   }, []);
 
   const fetchProfileData = async () => {
@@ -43,15 +38,11 @@ const ProfileForm = () => {
     try {
       const response = await axios.put(`https://indoteknikserver-732012365989.herokuapp.com/users/me`, user, {
         headers: {
-          // 'Content-Type': 'application/json',
           access_token: localStorage.getItem('access_token'),
-          // Tambahkan header lainnya sesuai kebutuhan
         },
       });
 
       if (response.status === 200) {
-        // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil edit produk.
-        // Contoh:
         console.log('Produk berhasil diupdate.');
         window.location.href = '/profile-update';
       } else {
@@ -62,11 +53,6 @@ const ProfileForm = () => {
     }
 
   };
-
-  // const handleProfilePictureChange = (event) => {
-  //   const file = event.target.files[0];
-  //   setProfilePicture(file);
-  // };
 
   return (
     <FormContainer>
@@ -185,12 +171,4 @@ const Button = styled.button`
   &:hover {
     background-color: #0056b3;
   }
-`;
-const ProfilePicture = styled.img`
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  margin-bottom: 20px;
-  object-fit: cover;
-  border: 2px solid #007bff;
 `;

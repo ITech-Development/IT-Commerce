@@ -10,6 +10,8 @@ import {
   TextField,
   IconButton,
 } from "@mui/material";
+
+
 import {
   Edit as EditIcon,
   Delete as DeleteIcon,
@@ -331,12 +333,7 @@ const TableComponent = () => {
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Berat
-                </TableCell>
-                <TableCell
-                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
-                >
-                  Tinggi
+                  Panjang
                 </TableCell>
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
@@ -346,7 +343,12 @@ const TableComponent = () => {
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Length
+                  Tinggi
+                </TableCell>
+                <TableCell
+                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
+                >
+                  Berat
                 </TableCell>
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
@@ -403,10 +405,10 @@ const TableComponent = () => {
                   <TableCell>{row.minimumOrder.toLocaleString('id-ID')}</TableCell>
                   <TableCell> Rp.{row.unitPrice.toLocaleString('id-ID')}</TableCell>
                   <TableCell>{row.stock.toLocaleString('id-ID')} unit</TableCell>
-                  <TableCell>{row.weight.toLocaleString('id-ID')} gram</TableCell>
-                  <TableCell>{row.height.toLocaleString('id-ID')} cm</TableCell>
-                  <TableCell>{row.width.toLocaleString('id-ID')} cm</TableCell>
                   <TableCell>{row.length} cm</TableCell>
+                  <TableCell>{row.width.toLocaleString('id-ID')} cm</TableCell>
+                  <TableCell>{row.height.toLocaleString('id-ID')} cm</TableCell>
+                  <TableCell>{row.weight.toLocaleString('id-ID')} gram</TableCell>
                   <TableCell>{row.product_owners?.name}</TableCell>
                   <TableCell>{row.authors?.fullName}</TableCell>
                   <TableCell className="action-column">

@@ -5,7 +5,6 @@ import "./velve.css";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
 
 const linkStyle = {
@@ -132,15 +131,15 @@ const ProductList = () => {
         style={{
           maxHeight: "1420px",
           display: "flex",
-          margin: "60px 0 0 0",
+          margin: "70px 0 0 0",
           width: "100%",
         }}
-        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1692343050/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Artboard_1_copy_17Kategori_xotqik.jpg"
+        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694142746/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Del_valve_osd99s.jpg"
         alt=""
       />
       <div className="productlist-container">
         <h2 style={{ margin: "40px 0 20px 0", textAlign: "start" }}>
-          Delivery Valve
+          Produk Delivery Valve
         </h2>
         <div
           style={{

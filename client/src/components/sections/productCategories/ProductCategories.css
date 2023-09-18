@@ -30,8 +30,8 @@
   padding: 20px;
   border-radius: 10px;
   border: #cfc9c9 1px solid;
-  max-width: 400px;
-  max-height: 230px;
+  max-width: 350px;
+  max-height: 192px;
   flex: 1;
   margin-left: 20px;
 }
@@ -47,14 +47,14 @@
   flex-direction: row;
   align-items: center;
   gap: 20px;
-  padding: 20px;
+  padding: 15px;
   background-color: white;
 }
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
 
 .vchp {
@@ -69,14 +69,16 @@
 
 .category-card {
   background-color: rgb(255, 255, 255);
-  border-radius: 10px;
+  border-radius: 7px;
   border: #cfc9c9 1px solid;
   /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); */
-  padding: 20px;
-  width: 80%;
+  padding: 10px;
+  width: auto;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
+  flex-basis: calc(100% - 10px); /* 50% lebar kartu minus jarak antara kartu */
+  max-width: calc(100% - 10px); /* 50% lebar kartu minus jarak antara kartu */
 }
 
 .category-card:hover {
@@ -85,11 +87,14 @@
 }
 
 .category-card h1 {
-  margin: 0;
-  padding: 40px 5px;
+  margin: auto;
   font-size: 18px;
   color: #333333;
-  width: 130px;
+  width: auto;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  align-content: center;
   text-decoration: none;
 }
 
@@ -129,24 +134,143 @@
   background-color: #0056b3;
 }
 
-/* Media query for smaller screens */
+.seeAll {
+  display: none;
+}
+
+.seeAlltext {
+  display: none;
+}
+
 @media (max-width: 768px) {
-  .category-container {
+  .seeAll {
+    display: inline-block;
+    width: 40px;
+    position: relative;
+    left: 3px;
+  }
+
+  .seeAlltext {
+    text-decoration: none ;
+    font-size: 10px;
+    color: black;
+    position: relative;
+    top: 18px;
+    left: -39.8px;
+    font-weight: 600;
+    display: inline-block;
+
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .prdt {
+    display: flex;
     flex-direction: column;
-    width: 90%;
+    position: relative;
+    top: -305px;
+    left: -30px;
+  }
+  .category-container {
+    position: relative;
+    max-width: 330px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 0;
+    border: none;
   }
 
   .secRight {
-    max-width: 100%;
-    margin-left: 0;
+    position: relative;
+    max-width: 330px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 0;
+    border: none;
+    top: -97px;
+    left: 15px;
+  }
+ .secRight h3 {
+    font-size: 13px;
+    max-width: 120px;
+    line-height: 16px;
+  }
+  .secRight p {
+    font-size: 10px;
+    position: relative;
+    top: -19px;
+    display: none;
+  }
+  .category-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .category-section h1 {
+    font-size: 14px;
+    max-width: 120px;
+  }
+
+  .category-section button {
+    font-size: 10px;
+    width: 130px;
+    padding: 8px;
+    display: none;
+  }
+
+  .view-all-button-Voucher {
+    position: relative;
+    width: 120px;
+    height: 24px;
+    font-size: 8px;
+    top: -82px;
+    display: flex;
+    align-items: center;
+  }
+
+  .vchp {
+    position: relative;
+    top: 32px;
+    grid-area: 1.2rem;
   }
 
   .card-grid {
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    width: 15px;
+    height: 10px;
+    position: relative;
+    top: -134px;
+    left: 70px;
+    font-size: 10px;
+    grid-template-columns: repeat(3, 1fr); /* Hanya 3 kolom di tampilan mobile */
+
   }
+
+  .category-card {
+    font-size: 10px;
+
+  }
+
+  .category-card h1 {
+    margin: 0;
+    padding: 40px 5px;
+    font-size: 8px; /* Mengatur ukuran font menjadi 10px */
+    color: #333333;
+    /* width: 100px; */
+    text-decoration: none;
+    position: relative;
+    left: -70px;
+    top: -12px;
+  }
+  
 }
 
-/* Media query for even smaller screens */
 @media (max-width: 480px) {
   .category-container {
     width: 95%;
@@ -154,5 +278,6 @@
 
   .card-grid {
     grid-template-columns: repeat(1, 1fr);
+    gap: 20px; /* Tambahkan gap antara kartu pada layar sangat kecil */
   }
 }

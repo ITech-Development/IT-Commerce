@@ -33,41 +33,50 @@ import ProductCategoryVEPumpParts from "./pages/ProductCategories/vePumpParts";
 import ProductCategoryHeadRotor from "./pages/ProductCategories/headRotor";
 import MyOrder from "./pages/MyOrder";
 import DetailsOrder from "./pages/DetailsOrder";
+import TurboParts from './pages/ProductCategories/turboparts'
+import SCV from './pages/ProductCategories/scv'
+import Injector from './pages/ProductCategories/Inject'
 
 export const UserContext = createContext();
 
 const Routing = () => {
   return (
     <>
-    <Routes>
-      <Route exact path="/" element={<Homepage />} />
-      <Route path="/productlist" element={<ProductList />} />
-      <Route path="/products/:id" element={<ProductDetails />} />
-      <Route path="/error404" element={<NotFound />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/logout" element={<Logout />} />
-      <Route path="/shipping" element={<ProductShipping />} />
-      <Route path="/shipping" element={<FirstStep />} />
-      <Route path="/shippingSecond" element={<SecondStep />} />
-      <Route path="/check-trans" element={<CheckTrans />} />
-      <Route path="/profile-update" element={<ProfileUpdate />} />
-      <Route path="/services" element={<ServiceList />} />
-      <Route path="/profile-update/:id" element={<ProfileUpdate />} />
-      <Route path="/chat" element={<Chat />} />
-      <Route path="/check-TransITech" element={<CheckTransItech />} />
-      <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
-      <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
-      <Route path="/nozzle" element={<ProductCategoryNozzle />} />
-      <Route path="/delivery-valve" element={<ProductCategoryDeliveryValve />} />
-      <Route path="/element" element={<ProductCategoryElement />} />
-      <Route path="/ve-pump" element={<ProductCategoryVEPump />} />
-      <Route path="/ve-pump-parts" element={<ProductCategoryVEPumpParts />} />
-      <Route path="/head-rotor" element={<ProductCategoryHeadRotor />} />
-      <Route path="/my-order" element={<MyOrder />} />
-      <Route path="/my-order/:id" element={<DetailsOrder />} />
-    </Routes>
+      <Routes>
+        <Route exact path="/" element={<Homepage />} />
+        <Route path="/productlist" element={<ProductList />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
+        <Route path="/error404" element={<NotFound />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/shipping" element={<ProductShipping />} />
+        <Route path="/shipping" element={<FirstStep />} />
+        <Route path="/shippingSecond" element={<SecondStep />} />
+        <Route path="/check-trans" element={<CheckTrans />} />
+        <Route path="/profile-update" element={<ProfileUpdate />} />
+        <Route path="/services" element={<ServiceList />} />
+        <Route path="/profile-update/:id" element={<ProfileUpdate />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/check-TransITech" element={<CheckTransItech />} />
+        <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
+        <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
+        <Route path="/nozzle" element={<ProductCategoryNozzle />} />
+        <Route path="/turboparts" element={<TurboParts />} />
+        <Route path="/scv" element={<SCV />} />
+        <Route path="/injector" element={<Injector />} />
+        <Route
+          path="/delivery-valve"
+          element={<ProductCategoryDeliveryValve />}
+        />
+        <Route path="/element" element={<ProductCategoryElement />} />
+        <Route path="/ve-pump" element={<ProductCategoryVEPump />} />
+        <Route path="/ve-pump-parts" element={<ProductCategoryVEPumpParts />} />
+        <Route path="/head-rotor" element={<ProductCategoryHeadRotor />} />
+        <Route path="/my-order" element={<MyOrder />} />
+        <Route path="/my-order/:id" element={<DetailsOrder />} />
+      </Routes>
     </>
   );
 };

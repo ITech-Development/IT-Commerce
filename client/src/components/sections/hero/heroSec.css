@@ -84,3 +84,24 @@
     max-width: 80%;
   }
 }
+
+/* Slideshow.css */
+.dot.active {
+  background-color: #2642af;
+  animation: dotAnimation 5s linear infinite; /* Atur durasi sesuai dengan durasi slide */
+}
+
+@keyframes dotAnimation {
+  0%, 20% {
+    transform: scale(1);
+  }
+  25%, 45% {
+    transform: scale(1.2);
+  }
+  50%, 70% {
+    transform: scale(1);
+  }
+  75%, 100% {
+    transform: scale(1.2);
+  }
+}

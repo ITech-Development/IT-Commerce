@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../App.css";
-import "./pumpParts.css";
+import "./inject.css";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
@@ -89,7 +89,7 @@ const ProductList = () => {
 
   const getCategoryOne = async () => {
     try {
-      const response = await axios.get(`${API_URL}/products/ve-pump-parts`);
+      const response = await axios.get(`${API_URL}/products/nozzle`);
       const jsonData = response.data;
       setCategoryOne(Array.isArray(jsonData) ? jsonData : []);
     } catch (error) {
@@ -106,6 +106,8 @@ const ProductList = () => {
           headers: { access_token: accessToken },
         });
         console.log(response.data, " ???Asdas");
+        // dispatch(addToCart(product));
+        // navigate('/cart');
       } catch (err) {
         console.log("asdsad");
       }
@@ -132,12 +134,12 @@ const ProductList = () => {
           margin: "60px 0 0 0",
           width: "100%",
         }}
-        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694850712/IndoTeknikMarketplace/product/banner/Banner%20Kategori/VE_PUMP_PARTS_hejqmx.jpg"
+        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694142746/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Injector_pkzsfp.jpg"
         alt=""
       />
       <div className="productlist-container">
         <h2 style={{ margin: "40px 0 20px 0", textAlign: "start" }}>
-          VE Pump Parts
+          Produk Injector
         </h2>
         <div
           style={{

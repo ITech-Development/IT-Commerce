@@ -1,0 +1,26 @@
+
+.stlimg {
+  max-width: 80%;
+  width: 35%;
+  margin: auto;
+  position: relative;
+  top: 100px;
+  background-color: none;
+  border: none;
+}
+
+@media screen and (max-width: 768px) {
+
+  .ohya {
+    margin-top: 143px;
+  }
+  .stlimg {
+    width: 120%; /* Lebar gambar menjadi 100% dari lebar modal */
+    max-height: 120vh; /* Batasi tinggi gambar agar tidak melewati tinggi layar */
+    margin: 0;
+  }
+  .herohome {
+    position: relative;
+    top: -30px;
+  }
+}

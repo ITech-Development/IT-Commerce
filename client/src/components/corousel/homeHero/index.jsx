@@ -5,23 +5,26 @@ import "react-slideshow-image/dist/styles.css";
 const divStyle = {
   display: "flex",
   alignItems: "center",
+  alignContent :'center',
   justifyContent: "center",
-  backgroundSize: "contain",
+  backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "center",
-  height: "370px",
-  width: "auto",
-  margin: "auto",
+  height: "350px",
+  width: "94%",
+  maxWidth: "100%",
+  margin: "35px 10px 0 45px",
+  border: "none",
+  borderRadius: "10px",
 };
 
-const mediaQueryStyles = {
-  "@media (max-width: 768px)": {
-    divStyle: {
-      height: "350px",
-      width: "100%",
-      maxWidth: "auto",
-    },
-  },
+const mediaQueryStyle = {
+  /* Add your styles for devices with a maximum width of 768px here */
+  width: "97%", // Adjust the width as needed for smaller screens
+  maxHeight: "100px", // Set a maximum height for the images
+  margin: "145px 70px 0 5px",
+  border: "none",
+  borderRadius: "5px",
 };
 
 const slideImages = [
@@ -38,27 +41,25 @@ const slideImages = [
 const Slideshow = () => {
   return (
     <div className="slide-container">
-      <Slide>
+      <Slide
+        images={slideImages.map((slideImage) => slideImage.url)}
+        prevArrow={<div></div>}
+        nextArrow={<div></div>}
+      >
         {slideImages.map((slideImage, index) => (
           <div key={index}>
             <div
               style={{
                 ...divStyle,
-                ...mediaQueryStyles.divStyle,
+                ...(window.innerWidth <= 768 ? mediaQueryStyle : {}),
                 backgroundImage: `url(${slideImage.url})`,
               }}
-            ></div>
+            >
+              {/* You can add caption or content here */}
+            </div>
           </div>
         ))}
       </Slide>
-      <style>
-        {`
-          .react-slideshow-container .prev-button,
-          .react-slideshow-container .next-button {
-            display: none !important; /* Menyembunyikan tombol navigasi */
-          }
-        `}
-      </style>
     </div>
   );
 };

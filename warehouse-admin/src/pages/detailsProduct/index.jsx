@@ -84,12 +84,14 @@ const ProductDetailPage = () => {
       </ProductDetailWrapper>
 
       <Description>
-        <h3>Deskripsi</h3>
+        <h3>Deskripsi Produk</h3>
         <p
           style={{
             fontSize: "0.9rem",
-            lineHeight: "20px",
-            whiteSpace: "pre-line",
+            lineHeight: "25px",
+            whiteSpace: "normal",
+            position: 'relative',
+            top: '-10px'
           }}
           dangerouslySetInnerHTML={{
             __html: product.description.replace(/\n/g, "<br>"),

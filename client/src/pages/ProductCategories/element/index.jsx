@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../App.css";
-import './element.css'
+import "./element.css";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
@@ -134,11 +134,11 @@ const ProductList = () => {
           margin: "60px 0 0 0",
           width: "100%",
         }}
-        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1692343050/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Artboard_1_copy_18Kategori_fb2ldi.jpg"
+        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694142746/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Element_smrpzd.jpg"
         alt=""
       />
       <div className="productlist-container">
-        <h2 style={{ margin: "40px 0 20px 0", textAlign: "start" }}>Element</h2>
+        <h2 style={{ margin: "40px 0 20px 0", textAlign: "start" }}>Produk Element</h2>
         <div
           style={{
             display: "flex",

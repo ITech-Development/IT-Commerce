@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../App.css";
-import "./pumpParts.css";
+import "./scv.css";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
@@ -18,7 +18,7 @@ const ProductCard = ({ product, onAddToCart }) => {
   const discountedPrice = originalPrice - discountAmount;
 
   return (
-    <div className="product-card">
+    <div className="product">
       <a
         href={`/products/${product.id}`}
         className="view-product-button"
@@ -26,17 +26,14 @@ const ProductCard = ({ product, onAddToCart }) => {
       >
         <img src={product.image} alt={product.name} />
       </a>
-      <div className="product-details">
+      <div className="details">
         <h3>{product.category}</h3>
         <p>{product.name}</p>
-        <span className="price">Rp. {originalPrice}</span>
+        <span className="price">{originalPrice}</span>
         <br />
-        <div className="discount-container">
-          <div className="discount">
-            <span className="percentage">3%</span>
-          </div>
-          <del className="original-price">{discountedPrice}</del>
-        </div>
+        <span className="price">
+          <i>3% off: {discountedPrice}</i>
+        </span>
         <p>Stock: {product.stock}</p>
       </div>
       <button
@@ -61,16 +58,16 @@ const ProductCard = ({ product, onAddToCart }) => {
 const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
-  const [categoryOne, setCategoryOne] = useState([]);
+  const [vePumpCategory, SetVEPumpCategory] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    getCategoryOne();
+    getVEPumpCategory();
   }, []);
 
   useEffect(() => {
     // Filter and sort products based on search query and sort option
-    const filteredAndSortedProducts = categoryOne
+    const filteredAndSortedProducts = vePumpCategory
       .filter((product) =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
       )
@@ -82,16 +79,18 @@ const ProductList = () => {
         } else if (sortOption === "stock") {
           return a.stock - b.stock;
         }
+        // Return 0 when no sorting condition is met
+        return 0;
       });
 
     setFilteredProducts(filteredAndSortedProducts);
-  }, [searchQuery, sortOption, categoryOne]);
+  }, [searchQuery, sortOption, vePumpCategory]);
 
-  const getCategoryOne = async () => {
+  const getVEPumpCategory = async () => {
     try {
-      const response = await axios.get(`${API_URL}/products/ve-pump-parts`);
+      const response = await axios.get(`${API_URL}/products/ve-pump`);
       const jsonData = response.data;
-      setCategoryOne(Array.isArray(jsonData) ? jsonData : []);
+      SetVEPumpCategory(Array.isArray(jsonData) ? jsonData : []);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -106,6 +105,8 @@ const ProductList = () => {
           headers: { access_token: accessToken },
         });
         console.log(response.data, " ???Asdas");
+        // dispatch(addToCart(product));
+        // navigate('/cart');
       } catch (err) {
         console.log("asdsad");
       }
@@ -132,13 +133,11 @@ const ProductList = () => {
           margin: "60px 0 0 0",
           width: "100%",
         }}
-        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694850712/IndoTeknikMarketplace/product/banner/Banner%20Kategori/VE_PUMP_PARTS_hejqmx.jpg"
+        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694142746/IndoTeknikMarketplace/product/banner/Banner%20Kategori/SCV_lvxytc.jpg"
         alt=""
       />
       <div className="productlist-container">
-        <h2 style={{ margin: "40px 0 20px 0", textAlign: "start" }}>
-          VE Pump Parts
-        </h2>
+        <h2 style={{ margin: "40px 0 20px 0", textAlign: "start" }}>Kategori Scv</h2>
         <div
           style={{
             display: "flex",
@@ -177,7 +176,6 @@ const ProductList = () => {
             <option value="stock">Stok Paling Sedikit - Terbanyak</option>
           </select>
         </div>
-
         <div className="products">
           {filteredProducts.length === 0 ? (
             <p>Dalam kategori yang anda pilih produk belum tersedia</p>

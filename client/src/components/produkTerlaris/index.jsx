@@ -1,12 +1,13 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import axios from "axios";
 import { useGetAllProductsQuery } from "../../features/productsApi";
-import Corousel from "../../components/corousel/product";
-import "./productliststyle.css";
+// import "./terlaris.css";
 import "../../App.css";
 import Star from "../../assets/star.png";
 import { FadeLoader } from "react-spinners";
 import styled, { keyframes } from "styled-components";
+import "./terlaris.css";
 
 const loadingContainerStyle = {
   display: "flex",
@@ -34,6 +35,8 @@ const Card = styled.div`
   overflow: hidden;
   transition: transform 0.2s ease;
   max-height: 330px;
+  max-width: 300px; /* Atur lebar maksimum sesuai kebutuhan Anda */
+  width: 100%; /* Gunakan lebar 100% agar sesuai dengan wadahnya */
 
   &:hover {
     animation: ${shadowAnimation} 1s ease-in-out infinite;
@@ -64,6 +67,30 @@ const Price = styled.p`
   padding-top: 2px;
 `;
 
+const ProductListContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1450px; /* Lebar maksimum yang Anda inginkan */
+  margin: 0 auto;
+  padding: 20px; /* Atur sesuai kebutuhan Anda */
+`;
+
+const LoadMoreButton = styled.button`
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
 const ProductCard = ({ product, onAddToCart }) => {
   const starRating = 1;
   return (
@@ -72,7 +99,7 @@ const ProductCard = ({ product, onAddToCart }) => {
         <CardImage src={product.image} alt={product.name} />
       </a>
       <CardContent>
-        <Title>{product.name.split(" ").slice(0, 5).join(" ")}...</Title>
+        <Title>{product.name.split(" ").slice(0, 4).join(" ")}...</Title>
         <Price>Rp.{product.unitPrice.toLocaleString("id-ID")}</Price>
         <div
           style={{
@@ -110,35 +137,11 @@ const ProductCard = ({ product, onAddToCart }) => {
   );
 };
 
-const searchContainerStyle = {
-  display: "flex",
-  alignItems: "center",
-  marginBottom: "20px",
-  width: "97.2%",
-};
-
-const searchInputStyle = {
-  padding: "8px",
-  height: "30px",
-  borderRadius: "4px",
-  border: "1px solid #ccc",
-  marginRight: "10px",
-  flex: 1,
-};
-
-const sortSelectStyle = {
-  padding: "8px",
-  height: "48px",
-  fontWeight: "500",
-  borderRadius: "4px",
-  border: "1px solid #ccc",
-  minWidth: "200px",
-};
-
 const ProductList = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
+  const [displayedCards, setDisplayedCards] = useState(7);
 
   const handleAddToCart = async (product) => {
     const accessToken = localStorage.getItem("access_token");
@@ -159,6 +162,9 @@ const ProductList = () => {
   };
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
+  };
+  const handleLoadMore = () => {
+    setDisplayedCards((prevDisplayedCards) => prevDisplayedCards + 7);
   };
 
   const handleSortOptionChange = (event) => {
@@ -184,8 +190,7 @@ const ProductList = () => {
     : [];
   return (
     <>
-      <Corousel />
-      <div className="productlist-container">
+      <ProductListContainer>
         {isLoading ? (
           <div style={loadingContainerStyle}>
             <FadeLoader color="#007bff" loading={isLoading} size={50} />
@@ -194,30 +199,8 @@ const ProductList = () => {
           <p>An error occurred</p>
         ) : (
           <>
-            <h2 className="productlist-title">Produk Rekomendasi</h2>
-            <div style={searchContainerStyle}>
-              <input
-                className="dropSearch"
-                type="text"
-                value={searchQuery}
-                onChange={handleSearchInputChange}
-                style={searchInputStyle}
-                placeholder="Cari Produk Berdasarkan Nama..."
-              />
-              <select
-                className="dropPil"
-                value={sortOption}
-                onChange={handleSortOptionChange}
-                style={sortSelectStyle}
-              >
-                <option value="name">Berdasarkan Nama</option>
-                <option value="price">Harga Terendah - Tertinggi</option>
-                <option value="stock">Stok Paling Sedikit - Terbanyak</option>
-              </select>
-            </div>
-
-            <div className="CardGridContainer">
-              {filteredAndSortedData.map((product) => (
+            <div className="CardGridContainers">
+              {filteredAndSortedData.slice(0, displayedCards).map((product) => (
                 <ProductCard
                   key={product.id}
                   product={product}
@@ -225,9 +208,24 @@ const ProductList = () => {
                 />
               ))}
             </div>
+            {/* Tampilkan tombol "Muat Lebih Banyak" jika jumlah kartu yang ditampilkan belum mencapai total */}
+            {displayedCards < filteredAndSortedData.length && (
+              <div
+                style={{
+                  textAlign: "center",
+                  display: "flex",
+                  maxWidth: "1420px",
+                  margin: "auto",
+                }}
+              >
+                <button className="muat" onClick={handleLoadMore}>
+                  Muat Lebih Banyak
+                </button>
+              </div>
+            )}
           </>
         )}
-      </div>
+      </ProductListContainer>
     </>
   );
 };

@@ -134,7 +134,7 @@ const ProductList = () => {
           margin: "60px 0 0 0",
           width: "100%",
         }}
-        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1692343049/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Artboard_1_copy_19Kategori_mkaei1.jpg"
+        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694142748/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Nozzle_pye3l7.jpg"
         alt=""
       />
       <div className="productlist-container">

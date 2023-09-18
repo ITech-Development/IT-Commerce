@@ -11,29 +11,21 @@ export default function Navigation() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('access_token')
-    // Implement your logout logic here, for example:
-    // Clear user session, tokens, or any other data related to authentication
-    // Redirect user to the logout page or the login page
-    // Example:
-    // localStorage.clear(); // Clear all data from local storage
-    window.location.href = "/"; // Redirect to the logout page
+    localStorage.removeItem("access_token");
+    window.location.href = "/";
   };
 
   const RenderMenu = () => {
-    const accessToken = localStorage.getItem('access_token')
-    // Implement your menu items here, for example:
+    const accessToken = localStorage.getItem("access_token");
     return (
       <>
         {accessToken && (
-          < li >
+          <li>
             <button onClick={handleLogout}>Keluar</button>
-          </li >
+          </li>
         )}
       </>
     );
-
-
   };
 
   return (
@@ -43,7 +35,7 @@ export default function Navigation() {
           <img style={{ height: "50px" }} src={Logo} alt="" />
         </Link>
         <div className="navigation-menu">
-        <ul className={isDropdownOpen ? "expanded" : ""}>
+          <ul className={isDropdownOpen ? "expanded" : ""}>
             <RenderMenu />
           </ul>
           <button className="hamburger" onClick={toggleDropdown}>

@@ -6,31 +6,84 @@ import ProductCatgories from "../../components/sections/productCategories";
 import ClaimVoucher from "../../assets/ClaimVouc.png";
 import { Link } from "react-router-dom";
 import CorouselBrands from "../../components/sections/corouselBrands";
-import { Chatbot } from "react-chatbot-kit";
-import config from "./chatbot/config";
-import MessageParser from "./chatbot/MessageParser";
-import ActionProvider from "./chatbot/ActionProvider";
+import "./stl.css";
+import ChatbotIcon from "../../assets/chatbot.png";
+import ProdukTerlaris from "../../components/produkTerlaris";
 
 function Index() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+  const [isDragging, setIsDragging] = useState(false);
+  const [offsetX, setOffsetX] = useState(0);
+  const [offsetY, setOffsetY] = useState(0);
+  const [isChatbotMessageVisible, setIsChatbotMessageVisible] = useState(false); // Tambahkan state untuk mengontrol pesan chatbot
+
+  useEffect(() => {
+    const hasModalBeenShown = localStorage.getItem("modalShown");
+
+    if (!hasModalBeenShown) {
+      setIsModalOpen(true);
+
+      localStorage.setItem("modalShown", "true");
+    }
+  }, []);
+
   const closeModal = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = "auto";
   };
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setOffsetX(e.clientX - e.target.getBoundingClientRect().left);
+    setOffsetY(e.clientY - e.target.getBoundingClientRect().top);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
   useEffect(() => {
-    openModal();
-  }, []);
+    const handleMouseMove = (e) => {
+      if (!isDragging) return;
+
+      const chatbotIcon = document.getElementById("chatbot-icon");
+      if (chatbotIcon) {
+        chatbotIcon.style.left = e.clientX - offsetX + "px";
+        chatbotIcon.style.top = e.clientY - offsetY + "px";
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging, offsetX, offsetY]);
 
   return (
     <>
-      <div style={{ position: "relative", top: "60px" }}>
+      <div className="herohome" style={{ position: "relative", top: "50px" }}>
         <HeroSection />
-        <CorouselBrands />
-        <ProductCatgories />
-        <Footer />
+        <div className="ohya">
+          <CorouselBrands />
+          <ProductCatgories />
+          <h1
+            style={{
+              display: "flex",
+              margin: "auto",
+              maxWidth: "1420px",
+              padding: "30px 0 0 0",
+              fontSize: "28px",
+              color: '#333333'
+
+            }}
+          >
+            Produk Terlaris
+          </h1>
+          <ProdukTerlaris />
+          <Footer />
+        </div>
       </div>
 
       <Modal
@@ -51,37 +104,66 @@ function Index() {
           },
         }}
       >
-        <button
-          onClick={closeModal}
-          style={{
-            position: "absolute",
-            top: "8px",
-            right: "-6px",
-            background: "gray",
-            cursor: "pointer",
-            fontSize: "30px",
-            color: "white",
-            border: "1px solid gray",
-            borderRadius: "50%",
-            padding: "0 8px",
-          }}
-        >
-          &times;
-        </button>
         <Link to="/productlist">
           <img
             src={ClaimVoucher}
             alt="Product"
             style={{
-              width: "100%",
+              width: "90%",
             }}
           />
         </Link>
       </Modal>
-      <Chatbot
+       {isChatbotMessageVisible && (
+        <div
+          id="chatbot-message"
+          style={{
+            position: "fixed",
+            bottom: "130px", // Sesuaikan posisi pesan chatbot dengan modal
+            right: "20px",
+            width: "200px",
+            backgroundColor: "#fff",
+            border: "1px solid #ccc",
+            padding: "10px",
+            borderRadius: "5px",
+            zIndex: 9999,
+            animation: "slideInFromBottom 1s ease-in-out", // Animasi
+          }}
+        >
+          Hello, Selamat datang di Indoteknik
+        </div>
+      )}
+      {/* <img
+        id="chatbot-icon" // Added an ID to the chatbot icon element
+        src={ChatbotIcon}
+        alt="Chatbot"
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          width: "100px",
+          cursor: "pointer",
+        }}
+        onMouseDown={handleMouseDown}
+      /> */}
+      
+      {/* <Chatbot
         config={config}
         messageParser={MessageParser}
         actionProvider={ActionProvider}
+      /> */}
+       <img
+        id="chatbot-icon"
+        src={ChatbotIcon}
+        alt="Chatbot"
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          width: "100px",
+          cursor: "pointer",
+        }}
+        onClick={() => setIsChatbotMessageVisible(!isChatbotMessageVisible)} // Toggle tampilan pesan chatbot saat ikon diklik
       />
     </>
   );

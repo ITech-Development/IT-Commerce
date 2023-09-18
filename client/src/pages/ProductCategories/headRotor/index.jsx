@@ -134,12 +134,12 @@ const ProductList = () => {
           margin: "60px 0 0 0",
           width: "100%",
         }}
-        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1692343050/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Artboard_1_copy_20Kategori_kh8hsf.jpg"
+        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694142749/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Head_Rotor_fiqs6w.jpg"
         alt="test tis"
       />
       <div className="productlist-container">
         <h2 style={{ margin: "40px 0 20px 0", textAlign: "start" }}>
-          Head Rotor
+          Produk Head Rotor
         </h2>
         <div
           style={{

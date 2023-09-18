@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import Star from "../../assets/star.png";
 
@@ -15,6 +15,20 @@ const ProductDetailPage = () => {
   const navigate = useNavigate();
   const [relatedProducts, setRelatedProducts] = useState([]);
   console.log(relatedProducts, "heiheihei");
+
+  const [zoom, setZoom] = useState(1);
+
+  const handleImageMouseMove = (e) => {
+    // Calculate the cursor position relative to the container
+    const container = e.currentTarget;
+    const x = e.nativeEvent.offsetX;
+    const y = e.nativeEvent.offsetY;
+
+    // Calculate the zoom level based on the cursor position
+    const zoomX = (x / container.clientWidth) * 2;
+    const zoomY = (y / container.clientHeight) * 2;
+    setZoom(Math.min(zoomX, zoomY));
+  };
 
   useEffect(() => {
     axios
@@ -88,29 +102,6 @@ const ProductDetailPage = () => {
     }
   };
 
-  // const handleAddRelatedToCart = (relatedProduct) => {
-  //   if (accessToken) {
-  //     axios
-  //       .post(`${API_URL}/product-carts`, relatedProduct, {
-  //         headers: { access_token: accessToken },
-  //       })
-  //       .then(({ data }) => {
-  //         console.log(
-  //           data,
-  //           "Related product berhasil ditambahkan ke keranjang"
-  //         );
-  //       })
-  //       .catch((err) => {
-  //         console.log(
-  //           err,
-  //           "Terjadi masalah saat menambahkan related product ke keranjang"
-  //         );
-  //       });
-  //   } else {
-  //     alert("Login terlebih dahulu agar dapat belanja");
-  //   }
-  // };
-
   if (!product) {
     return <p>Loading product details...</p>;
   }
@@ -119,14 +110,19 @@ const ProductDetailPage = () => {
     <ProductDetailContainer>
       <ProductDetailWrapper>
         <div>
-          <ProductImage src={product.image} alt={product.name} />
-          <div style={{ display: "flex", maxWidth: "60px", gap: "13px" }}>
-            <ProductImageSub src={product.image} alt={product.name} />
-            <ProductImageSub src={product.image} alt={product.name} />
-            <ProductImageSub src={product.image} alt={product.name} />
-            <ProductImageSub src={product.image} alt={product.name} />
-          </div>
-        </div>
+      <ProductImage
+        src={product.image}
+        alt={product.name}
+        onMouseMove={handleImageMouseMove}
+        zoom={zoom}
+      />
+      <div style={{ display: "flex", maxWidth: "60px", gap: "13px" }}>
+        <ProductImageSub src={product.image} alt={product.name} zoom={zoom} />
+        <ProductImageSub src={product.image} alt={product.name} zoom={zoom} />
+        <ProductImageSub src={product.image} alt={product.name} zoom={zoom} />
+        <ProductImageSub src={product.image} alt={product.name} zoom={zoom} />
+      </div>
+    </div>
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>
@@ -204,8 +200,8 @@ const ProductDetailPage = () => {
         <p
           style={{
             fontSize: "0.9rem",
-            lineHeight: "20px",
-            whiteSpace: "pre-line",
+            lineHeight: "25px",
+            whiteSpace: "normal",
           }}
           dangerouslySetInnerHTML={{
             __html: product.description.replace(/\n/g, "<br>"),
@@ -223,7 +219,7 @@ const ProductDetailPage = () => {
               )
               .map((relatedProduct) => (
                 <RelatedProductCard key={relatedProduct.id}>
-                  <Link to={`/products/${relatedProduct.id}`}>
+                  <Link to={`/products/${relatedProduct.id}`} target="blank">
                     <RelatedProductImage
                       src={relatedProduct.image}
                       alt={relatedProduct.name}
@@ -240,7 +236,9 @@ const ProductDetailPage = () => {
                       width: "90px",
                       margin: "0",
                       padding: "0",
-                      position: "",
+                      position: "relative",
+                      left: '-30px',
+                      top: '4px'
                     }}
                     className="star-rating"
                   >
@@ -254,43 +252,16 @@ const ProductDetailPage = () => {
                       />
                     ))}
                     <p
-                      style={{ position: "relative", top: "1px", left: "5px", fontSize: '12px' }}
+                      style={{
+                        position: "relative",
+                        top: "1px",
+                        left: "5px",
+                        fontSize: "12px",
+                      }}
                     >
                       5.0
                     </p>
                   </div>
-                  {/* <button
-                    className="cartyes"
-                    style={{
-                      maxWidth: "40px",
-                      border: "none",
-                      borderRadius: "50%",
-                      background: "#DDEFEF",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => handleAddRelatedToCart(relatedProduct)}
-                    disabled={relatedProduct.stock === 0}
-                  >
-                    {relatedProduct.stock > 0 ? (
-                      <img
-                        style={{ maxWidth: "24px" }}
-                        src={CartIcon}
-                        alt="Cart"
-                      />
-                    ) : (
-                      <p
-                        style={{
-                          color: "black",
-                          margin: "0",
-                          padding: "0",
-                          fontSize: "7px",
-                          fontWeight: "700",
-                        }}
-                      >
-                        Out of stock
-                      </p>
-                    )}
-                  </button> */}
                 </RelatedProductCard>
               ))}
           </RelatedProductGrid>
@@ -316,9 +287,9 @@ const shadowAnimation = keyframes`
 
 const RelatedProductCard = styled.div`
   border: 1px solid #ccc;
-  padding: 10px;
+  padding:  10px 10px 15px 10px;
   border-radius: 5px;
-  margin: 0 5px;
+  margin: 5px 5px;
   max-height: 282px;
 
   /* Mengatur bayangan awal */
@@ -334,6 +305,7 @@ const RelatedProductPrice = styled.h6`
   margin: 0;
   font-size: 16px;
 `;
+
 
 const RelatedProductImage = styled.img`
   max-width: 111.8%;
@@ -436,7 +408,7 @@ const Description = styled.div`
   display: flex;
   margin: 20px auto;
   flex-direction: column;
-  padding: 0 20px;
+  padding: 5px 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);

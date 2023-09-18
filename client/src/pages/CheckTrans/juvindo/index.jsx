@@ -9,8 +9,6 @@ import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
 import styled from "styled-components";
 
-// const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
-
 function Index() {
   let [carts, setCarts] = useState([]);
   const cart = useSelector((state) => state.cart);
