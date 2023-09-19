@@ -71,12 +71,12 @@ const ProductListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  max-width: 1450px; /* Lebar maksimum yang Anda inginkan */
+  max-width: 1420px;
   margin: 0 auto;
   padding: 20px; /* Atur sesuai kebutuhan Anda */
   @media (max-width: 768px) {
     position: relative;
-    top: -190px;
+    top: -220px;
   }
 `;
 

@@ -93,11 +93,7 @@ function ProductCategoryCard({ to, title, imageUrl }) {
   return (
     <animated.div className="category-card" style={cardAnimation}>
       <Link to={to} target="blank">
-        <img
-          src={imageUrl}
-          alt={title}
-          className="category-image"
-        />
+        <img src={imageUrl} alt={title} className="category-image" />
         <p className="titleCategory">{title}</p>
       </Link>
     </animated.div>
@@ -123,9 +119,8 @@ function ProductCategories() {
           </h1>
           <Link to="/productlist">
             <div className="allmas">
-
-            <img className="seeAll" src={SeeAll} alt="" />
-            <p className="seeAlltext">lihat semua</p>
+              <img className="seeAll" src={SeeAll} alt="" />
+              <p className="seeAlltext">lihat semua</p>
             </div>
           </Link>
           <Link to="/productlist">
