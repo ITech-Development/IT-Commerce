@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import HeroSection from "../../components/sections/hero";

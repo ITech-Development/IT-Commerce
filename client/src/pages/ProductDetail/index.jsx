@@ -4,6 +4,7 @@ import axios from "axios";
 import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import Star from "../../assets/star.png";
+import './indexDetail.css'
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
@@ -109,32 +110,47 @@ const ProductDetailPage = () => {
   return (
     <ProductDetailContainer>
       <ProductDetailWrapper>
-        <div>
-      <ProductImage
-        src={product.image}
-        alt={product.name}
-        onMouseMove={handleImageMouseMove}
-        zoom={zoom}
-      />
-      <div style={{ display: "flex", maxWidth: "60px", gap: "13px" }}>
-        <ProductImageSub src={product.image} alt={product.name} zoom={zoom} />
-        <ProductImageSub src={product.image} alt={product.name} zoom={zoom} />
-        <ProductImageSub src={product.image} alt={product.name} zoom={zoom} />
-        <ProductImageSub src={product.image} alt={product.name} zoom={zoom} />
-      </div>
-    </div>
+        <div className="productDetail">
+          <ProductImage
+            src={product.image}
+            alt={product.name}
+            onMouseMove={handleImageMouseMove}
+            zoom={zoom}
+          />
+          <div style={{ display: "flex", maxWidth: "60px", gap: "13px" }}>
+            <ProductImageSub
+              src={product.image}
+              alt={product.name}
+              zoom={zoom}
+            />
+            <ProductImageSub
+              src={product.image}
+              alt={product.name}
+              zoom={zoom}
+            />
+            <ProductImageSub
+              src={product.image}
+              alt={product.name}
+              zoom={zoom}
+            />
+            <ProductImageSub
+              src={product.image}
+              alt={product.name}
+              zoom={zoom}
+            />
+          </div>
+        </div>
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>
-            Harga
             <strong style={{ paddingLeft: "43px" }}>
               {" "}
-              : Rp. {product.unitPrice.toLocaleString("id-ID")}
+              Rp. {product.unitPrice.toLocaleString("id-ID")}
             </strong>
           </Price>
           <Stock>
             Stok Tersisa
-            <strong> : {product.stock.toLocaleString("id-ID")}</strong>
+            <strong>{product.stock.toLocaleString("id-ID")}</strong>
           </Stock>
           <hr />
           <Specifications>
@@ -142,21 +158,21 @@ const ProductDetailPage = () => {
               Kategori
               <strong style={{ paddingLeft: "50px" }}>
                 {" "}
-                : {product.categories?.name}
+                {product.categories?.name}
               </strong>
             </SpecificationItem>
             <SpecificationItem>
-              Brand <strong> : {product.types?.name}</strong>
+              Merek <strong>{product.types?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
               Minimum Order{" "}
-              <strong> : {product.minimumOrder.toLocaleString("id-ID")}</strong>
+              <strong>{product.minimumOrder.toLocaleString("id-ID")}</strong>
             </SpecificationItem>
             <SpecificationItem>
               Berat
               <strong style={{ paddingLeft: "6px" }}>
                 {" "}
-                : {product.weight.toLocaleString("id-ID")}{" "}
+                {product.weight.toLocaleString("id-ID")}{" "}
               </strong>{" "}
               gram
             </SpecificationItem>
@@ -164,7 +180,7 @@ const ProductDetailPage = () => {
               Tinggi{" "}
               <strong style={{ paddingLeft: "69px" }}>
                 {" "}
-                : {product.height.toLocaleString("id-ID")}{" "}
+                {product.height.toLocaleString("id-ID")}{" "}
               </strong>{" "}
               cm
             </SpecificationItem>
@@ -172,7 +188,7 @@ const ProductDetailPage = () => {
               Lebar{" "}
               <strong style={{ paddingLeft: "4px" }}>
                 {" "}
-                : {product.width.toLocaleString("id-ID")}{" "}
+                {product.width.toLocaleString("id-ID")}{" "}
               </strong>{" "}
               cm
             </SpecificationItem>
@@ -183,7 +199,7 @@ const ProductDetailPage = () => {
               Author: <strong>{product.authors?.fullName}</strong>
             </SpecificationItem> */}
           </Specifications>
-          <div style={{ marginTop: "30px" }}>
+          <div className="buyDetail" style={{ marginTop: "30px" }}>
             <BuyNowButton onClick={handleBuyNow}>Beli Sekarang</BuyNowButton>
             <AddToCartButton
               onClick={handleAddToCart}
@@ -237,8 +253,8 @@ const ProductDetailPage = () => {
                       margin: "0",
                       padding: "0",
                       position: "relative",
-                      left: '-30px',
-                      top: '4px'
+                      left: "-30px",
+                      top: "4px",
                     }}
                     className="star-rating"
                   >
@@ -287,15 +303,11 @@ const shadowAnimation = keyframes`
 
 const RelatedProductCard = styled.div`
   border: 1px solid #ccc;
-  padding:  10px 10px 15px 10px;
+  padding: 10px 10px 15px 10px;
   border-radius: 5px;
   margin: 5px 5px;
   max-height: 282px;
-
-  /* Mengatur bayangan awal */
   box-shadow: none;
-
-  /* Efek animasi bayangan saat hover */
   &:hover {
     animation: ${shadowAnimation} 1s ease-in-out infinite;
   }
@@ -305,7 +317,6 @@ const RelatedProductPrice = styled.h6`
   margin: 0;
   font-size: 16px;
 `;
-
 
 const RelatedProductImage = styled.img`
   max-width: 111.8%;
@@ -330,6 +341,11 @@ const RelatedProductGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 10px;
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
 `;
 
 const ProductDetailContainer = styled.div`
@@ -343,7 +359,6 @@ const ProductDetailContainer = styled.div`
 
 const ProductDetailWrapper = styled.div`
   max-width: 1225px;
-  min-width: 1225px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -352,6 +367,15 @@ const ProductDetailWrapper = styled.div`
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    max-width: auto;
+  }
 `;
 
 const ProductImage = styled.img`
@@ -359,35 +383,72 @@ const ProductImage = styled.img`
   margin-right: 20px;
   border-radius: 5px;
   border: none;
+  
+  @media (max-width: 768px) {
+    max-width: 100%; /* Membuat gambar sesuai dengan lebar layar pada perangkat kecil */
+    margin-right: 0;
+    margin-bottom: 20px; /* Memberikan jarak antara gambar dan informasi produk */
+  }
 `;
 
 const ProductImageSub = styled.img`
   max-width: 60px;
   border-radius: 5px;
   border: none;
+  
+  @media (max-width: 768px) {
+    max-width: 88px;
+    margin-bottom: 10px; /* Memberikan jarak antara gambar kecil */
+  }
 `;
 
 const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 80px;
+  
+  @media (max-width: 768px) {
+    margin-left: 0; /* Menghapus margin kiri pada perangkat kecil */
+  }
 `;
 
 const ProductName = styled.h2`
-  margin-top: 30px
+  margin-top: 30px;
   margin-bottom: 10px;
   max-width: 700px;
   font-size: 21px;
+  
+  @media (max-width: 768px) {
+    max-width: 350px;
+    font-size: 19px;
+    font-weight: 500;
+    padding-left: 12px;
+    margin-top: 0; /* Menghapus margin atas pada perangkat kecil */
+  }
 `;
 
 const Price = styled.p`
   margin: 0;
   margin-bottom: 10px;
+  
+  @media (max-width: 768px) {
+    position: relative;
+    left: -29px;
+    font-size: 19px;
+    color: blue;
+    margin: 0;
+  }
 `;
 
 const Stock = styled.p`
   margin: 0;
   margin-bottom: 20px;
+  
+  @media (max-width: 768px) {
+    padding-left: 15px;
+    padding-top: 3px;
+    font-size: 14px;
+  }
 `;
 
 const Specifications = styled.div`
@@ -395,12 +456,32 @@ const Specifications = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   max-width: 1350px;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+  }
 `;
 
 const SpecificationItem = styled.div`
   flex: 0 0 48%;
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    display: flex;
+    
+    strong {
+      display: block;
+      font-weight: bold;
+      padding-left: 45px;
+    }
+
+    &:nth-child(2) strong {
+      text-align: right;
+    }
+  }
 `;
+
 
 const Description = styled.div`
   max-width: 1225px;
@@ -412,6 +493,10 @@ const Description = styled.div`
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  @media (max-width: 768px) {
+    display: flex;
+    max-width: 330px;
+  }
 `;
 
 const RelatedProducts = styled.div`
@@ -420,6 +505,10 @@ const RelatedProducts = styled.div`
   margin: 20px auto;
   display: flex; /* Change to flex display */
   flex-direction: column;
+  @media (max-width: 768px) {
+    display: flex;
+    max-width: 380px;
+  }
 `;
 
 const BuyNowButton = styled.button`

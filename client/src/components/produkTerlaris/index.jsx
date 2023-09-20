@@ -7,7 +7,6 @@ import "../../App.css";
 import Star from "../../assets/star.png";
 import { FadeLoader } from "react-spinners";
 import styled, { keyframes } from "styled-components";
-import "./terlaris.css";
 
 const loadingContainerStyle = {
   display: "flex",

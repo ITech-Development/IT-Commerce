@@ -110,7 +110,9 @@
 /* Media query for mobile view */
 @media screen and (max-width: 768px) {
   .navigation {
-    padding: 0 1rem;
+    display: flex;
+    padding: 0 15px;
+    margin: 0;
   }
 
   .navigation-menu ul {
