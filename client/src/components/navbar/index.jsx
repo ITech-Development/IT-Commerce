@@ -4,56 +4,28 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Logo from "../../assets/Logo.png";
 import CartIcon from './iconCart.png'
-import { useGetCartsMutation } from '../../features/product/apiProducts'
+import { useGetCartsQuery } from '../../features/product/apiProducts'
+import { useGetMeMutation } from "../../features/user/apiUser";
 
 export default function Navigation() {
   const [carts, setCarts] = useState([]);
   const [profile, setProfile] = useState([]);
+  const {data, error, isLoading} = useGetCartsQuery()
+  const [dataGetMe] = useGetMeMutation()
 
-  const [data] = useGetCartsMutation()
 
   useEffect(() => {
-    data()
-    .then((res)=>{
-      console.log(res, 'data res');
-    })
-  }, [data])
-
-  const totalQuantity = carts.reduce((total, item) => total + item.quantity, 0);
-
-  // useEffect(() => {
-  //   const accessToken = localStorage.getItem("access_token");
-  //   if (accessToken) {
-  //     let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts";
-  //     axios({ url, headers: { access_token: accessToken } })
-  //       .then(async ({ data }) => {
-  //         setCarts(data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   const accessToken = localStorage.getItem("access_token");
-  //   if (accessToken) {
-  //     let url = "https://indoteknikserver-732012365989.herokuapp.com/users/me";
-  //     axios({ url, headers: { access_token: accessToken } })
-  //       .then(async ({ data }) => {
-  //         console.log(data, "dari profile");
-  //         setProfile(data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // }, []);
+    dataGetMe()
+      .then((res) => {
+        setProfile(res.data);
+      })
+  }, [dataGetMe])
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownHovered, setIsDropdownHovered] = useState(false);
-
   const dropdownRef = useRef(null);
+
+
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -71,6 +43,7 @@ export default function Navigation() {
 
     return (
       <>
+      
         <div style={{ display: "flex", alignItems: "center" }}>
           <li>
             <Link to="/productlist">Produk</Link>
@@ -99,7 +72,7 @@ export default function Navigation() {
                   fontSize: "10px",
                 }}
               >
-                {totalQuantity}
+                {isLoading? null : data.length}
               </span>
             </Link>
           </li>
@@ -153,6 +126,7 @@ export default function Navigation() {
             </Link>
           </li>
         )}
+      
       </>
     );
   };

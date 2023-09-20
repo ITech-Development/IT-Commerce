@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useGetAllProductsQuery } from "../../features/productsApi";
 import { Link } from "react-router-dom";
 import Corousel from "../../components/corousel/product";
 import "./productliststyle.css";
@@ -8,6 +7,7 @@ import "../../App.css";
 import Star from "../../assets/star.png";
 import CartIcon from "../../assets/cart2.png";
 import { FadeLoader } from "react-spinners";
+import { useAddProductToCartMutation, useGetAllProductsQuery,} from "../../features/product/apiProducts";
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
 const linkStyle = {
@@ -115,25 +115,22 @@ const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
 
-  const handleAddToCart = async (product) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      const url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts";
-      try {
-        const response = await axios.post(url, product, {
-          headers: { access_token: accessToken },
-        });
-        console.log(response.data, " ???Asdas");
-        // dispatch(addToCart(product));
-        // navigate('/cart');
-      } catch (err) {
-        console.log("asdsad");
-      }
-    } else {
-      alert('login dulu dong')
-      // navigate("/login");
-    }
-  };
+  const [addProductToCartMutation] = useAddProductToCartMutation()
+ 
+  
+
+  const handleAddToCart = (product) => {
+    console.log(product, '|||||||');
+    addProductToCartMutation(product)
+      .then((res) => {
+        console.log(res);
+        // countCarts()
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };

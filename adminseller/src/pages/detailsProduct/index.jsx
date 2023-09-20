@@ -28,7 +28,6 @@ const ProductDetailPage = () => {
     <ProductDetailContainer>
       <ProductDetailWrapper>
         <ProductImage src={product.image} alt={product.name} />
-
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>

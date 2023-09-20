@@ -25,7 +25,13 @@ export const usersApi = createApi({
         }
       }),
     }),
+    getMe: builder.mutation({
+      query: () => ({ url: "users/me", method: 'GET', headers: {
+        access_token: localStorage.access_token,
+        "Content-type": "application/json; charset=UTF-8",
+      }, })
+    }),
   })
 })
 
-export const { useLoginMutation, useRegisterMutation } = usersApi
+export const { useLoginMutation, useRegisterMutation, useGetMeMutation } = usersApi

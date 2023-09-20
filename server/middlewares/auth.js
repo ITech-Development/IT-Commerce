@@ -8,7 +8,6 @@ const {
 } = require("../models");
 
 async function authenticationUser(req, res, next) {
-  console.log(req.headers, 'masuk');
   try {
     let { access_token } = req.headers;
     let verify = verifyToken(access_token);

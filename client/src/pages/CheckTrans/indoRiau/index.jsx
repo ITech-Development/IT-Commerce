@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTotals } from "../../../features/cartSlice";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -67,9 +66,7 @@ function Index() {
     setSelectedVoucher(event.target.value);
   };
 
-  useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
+ 
 
   const handlePaymentProcess = async (data) => {
 
@@ -131,13 +128,13 @@ function Index() {
 
   useEffect(() => {
     // const midtransUrl = "https://app.midtrans.com/snap/snap.js";
-    const midtransUrl = "https://app.midtrans.com/snap/snap.js";
+    const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
     // const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
-    const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
+    const midtransClientKey = "SB-Mid-client-QQE6F6PJ1nniyWS-";
     scriptTag.setAttribute("data-client-key-indo-riau", midtransClientKey);
 
     document.body.appendChild(scriptTag);
@@ -207,7 +204,6 @@ function Index() {
     const subtotal = calculateSubtotal(); // Panggil fungsi calculateSubtotal untuk mendapatkan nilai subtotal
     const voucherPercentage = 3;
     const discountAmount = (subtotal * voucherPercentage) / 100;
-    // const result = subtotal - discountAmount;
     return discountAmount;
   };
 
@@ -365,7 +361,7 @@ function Index() {
 
   return (
     <div>
-
+      <div id="snap-container"></div>
       <div className="alamat">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Alamat Pengiriman</h2>
@@ -666,14 +662,11 @@ function Index() {
                       &times;
                     </span>
                     <h2>Modal Title</h2>
-                    <div id="snap-container"></div>
                     <p>Isi modal Anda di sini.</p>
                   </div>
                 </div>
               </div>
             )}
-
-
           </div>
         </div>
       </div>

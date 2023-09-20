@@ -71,8 +71,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Provider  store={store}>
-        <ToastContainer />
+      <ToastContainer />
+      <Provider store={store}>
         <Navbar />
         <Routing />
       </Provider>

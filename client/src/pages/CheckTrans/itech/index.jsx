@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTotals } from "../../../features/cartSlice";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -57,9 +56,7 @@ function Index() {
     setSelectedVoucher(event.target.value);
   };
 
-  useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
+
 
   const handlePaymentProcess = async (data) => {
     const bayar = calculateTotalBayar();
