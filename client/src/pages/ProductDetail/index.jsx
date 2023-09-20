@@ -4,7 +4,7 @@ import axios from "axios";
 import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import Star from "../../assets/star.png";
-import './indexDetail.css'
+import "./indexDetail.css";
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
@@ -143,14 +143,11 @@ const ProductDetailPage = () => {
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>
-            <strong style={{ paddingLeft: "43px" }}>
-              {" "}
               Rp. {product.unitPrice.toLocaleString("id-ID")}
-            </strong>
           </Price>
           <Stock>
-            Stok Tersisa
-            <strong>{product.stock.toLocaleString("id-ID")}</strong>
+            Stok Tersisa {" "}
+            <strong>: {product.stock.toLocaleString("id-ID")}</strong>
           </Stock>
           <hr />
           <Specifications>
@@ -383,7 +380,7 @@ const ProductImage = styled.img`
   margin-right: 20px;
   border-radius: 5px;
   border: none;
-  
+
   @media (max-width: 768px) {
     max-width: 100%; /* Membuat gambar sesuai dengan lebar layar pada perangkat kecil */
     margin-right: 0;
@@ -395,7 +392,7 @@ const ProductImageSub = styled.img`
   max-width: 60px;
   border-radius: 5px;
   border: none;
-  
+
   @media (max-width: 768px) {
     max-width: 88px;
     margin-bottom: 10px; /* Memberikan jarak antara gambar kecil */
@@ -406,7 +403,7 @@ const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 80px;
-  
+
   @media (max-width: 768px) {
     margin-left: 0; /* Menghapus margin kiri pada perangkat kecil */
   }
@@ -417,7 +414,7 @@ const ProductName = styled.h2`
   margin-bottom: 10px;
   max-width: 700px;
   font-size: 21px;
-  
+
   @media (max-width: 768px) {
     max-width: 350px;
     font-size: 19px;
@@ -430,11 +427,15 @@ const ProductName = styled.h2`
 const Price = styled.p`
   margin: 0;
   margin-bottom: 10px;
-  
+  font-weight: 600;
+  color: blue;
+  font-size: 22px;
+
   @media (max-width: 768px) {
-    position: relative;
-    left: -29px;
-    font-size: 19px;
+    padding-left: 15px;
+    font-weight: 600;
+    // left: -19px;
+    font-size: 20px;
     color: blue;
     margin: 0;
   }
@@ -443,7 +444,7 @@ const Price = styled.p`
 const Stock = styled.p`
   margin: 0;
   margin-bottom: 20px;
-  
+
   @media (max-width: 768px) {
     padding-left: 15px;
     padding-top: 3px;
@@ -469,19 +470,23 @@ const SpecificationItem = styled.div`
 
   @media (max-width: 768px) {
     display: flex;
-    
+
     strong {
       display: block;
       font-weight: bold;
-      padding-left: 45px;
     }
-
-    &:nth-child(2) strong {
+    &:nth-child(1) strong,
+    &:nth-child(2) strong,
+    &:nth-child(4) strong {
       text-align: right;
+      padding-left: 96px;
+    }
+    &:nth-child(3) strong {
+      text-align: right;
+      padding-left: 26px;
     }
   }
 `;
-
 
 const Description = styled.div`
   max-width: 1225px;
