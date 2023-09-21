@@ -50,7 +50,11 @@ const CardSection = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/voucher");
+        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/transaction-list", {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching product data:", error);
@@ -59,6 +63,7 @@ const CardSection = () => {
 
     const fetchUsers = async () => {
       try {
+        
         const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/order-list", {
           headers: {
             access_token: localStorage.getItem("access_token"),
