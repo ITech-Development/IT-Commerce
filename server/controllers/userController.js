@@ -23,7 +23,14 @@ class UserController {
   static async getAllUsersByVoucher(req, res, next) {
     if (req.adminSeller.id === 4) {
       try {
-        const checkouts = await Checkout.findAll();
+        const checkouts = await Checkout.findAll({
+          include: [
+            {
+              model: User,
+              as: 'users'
+            }
+          ]
+        });
         const targetVoucherCode = "IT01";
         
         // Buat objek untuk mengelompokkan pesanan berdasarkan ID pengguna

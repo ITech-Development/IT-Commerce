@@ -1,7 +1,7 @@
 // Dashboard.js
 import React from 'react';
-import Header from '../../components/headerUser';
-import MainContent from '../../components/mainContentUser';
+import Header from '../../components/headerOrderList';
+import MainContent from '../../components/mainContentOrderList';
 
 const Product = () => {
     return (

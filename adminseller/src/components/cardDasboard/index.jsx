@@ -84,10 +84,10 @@ const CardSection = () => {
         maxWidth: "1320px",
       }}
     >
-      <Link to="/users">
+      <Link to="/order-list">
         <Card
           imageUrl="https://e7.pngegg.com/pngimages/389/412/png-clipart-font-awesome-computer-icons-user-profile-users-group-blind-miscellaneous-blue.png"
-          title="Users"
+          title="Order List"
           count={Object.keys(users).length}
         />
       </Link>

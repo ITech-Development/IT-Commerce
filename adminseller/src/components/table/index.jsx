@@ -86,7 +86,6 @@ const TableComponent = () => {
             <TableCell>Weight</TableCell>
             <TableCell>Height</TableCell>
             <TableCell>Width</TableCell>
-            <TableCell>Length</TableCell>
             <TableCell>Product Owner</TableCell>
             <TableCell>Author</TableCell>
           </TableRow>
@@ -104,7 +103,7 @@ const TableComponent = () => {
               <TableCell>{row?.product?.types?.name}</TableCell>
               <TableCell>
                 <img
-                  src={row?.product?.image}
+                  src={`${API_URL}/${row?.product?.image}`}
                   alt={row.image}
                   style={{ maxWidth: "100px", maxHeight: "100px" }}
                 />
@@ -116,7 +115,6 @@ const TableComponent = () => {
               <TableCell>{row?.product?.weight}</TableCell>
               <TableCell>{row?.product?.height}</TableCell>
               <TableCell>{row?.product?.width}</TableCell>
-              <TableCell>{row?.product?.length}</TableCell>
               <TableCell>{row?.product?.product_owners?.name}</TableCell>
               <TableCell>{row?.product?.authors?.fullName}</TableCell>
             </TableRow>
