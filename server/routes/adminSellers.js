@@ -4,7 +4,6 @@ const { authenticationAdminSeller } = require('../middlewares/auth')
 const router = express.Router()
 
 router.get('/', AdminSellerController.getAllAdminSellers)
-router.get('/voucher', authenticationAdminSeller, AdminSellerController.getAllProductsByVoucherCode)
 router.get('/order-list', authenticationAdminSeller, AdminSellerController.getOrderListByVoucherCode)
 router.get('/transaction-list', authenticationAdminSeller, AdminSellerController.getTransactionListByVoucherCode)
 router.post('/register', AdminSellerController.registerAdminSeller)
