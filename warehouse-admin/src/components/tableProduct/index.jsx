@@ -330,7 +330,7 @@ const TableComponent = () => {
                 >
                   Stok
                 </TableCell>
-                <TableCell
+                {/* <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
                   Panjang
@@ -344,7 +344,7 @@ const TableComponent = () => {
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
                   Tinggi
-                </TableCell>
+                </TableCell> */}
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
@@ -405,9 +405,9 @@ const TableComponent = () => {
                   <TableCell>{row.minimumOrder.toLocaleString('id-ID')}</TableCell>
                   <TableCell> Rp.{row.unitPrice.toLocaleString('id-ID')}</TableCell>
                   <TableCell>{row.stock.toLocaleString('id-ID')} unit</TableCell>
-                  <TableCell>{row.length} cm</TableCell>
+                  {/* <TableCell>{row.length} cm</TableCell>
                   <TableCell>{row.width.toLocaleString('id-ID')} cm</TableCell>
-                  <TableCell>{row.height.toLocaleString('id-ID')} cm</TableCell>
+                  <TableCell>{row.height.toLocaleString('id-ID')} cm</TableCell> */}
                   <TableCell>{row.weight.toLocaleString('id-ID')} gram</TableCell>
                   <TableCell>{row.product_owners?.name}</TableCell>
                   <TableCell>{row.authors?.fullName}</TableCell>
