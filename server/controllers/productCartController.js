@@ -109,22 +109,22 @@ class ProductCartController {
     try {
       const productCart = await ProductCart.findOne({
         where: {
-          id: req.params.id
+          id: req.params.id,
         },
         include: [
           {
             model: Cart,
-            as: "cart"
+            as: "cart",
           },
-        ]
-      })
+        ],
+      });
       if (productCart) {
-        res.status(200).json(productCart)
+        res.status(200).json(productCart);
       } else {
-        throw { name: 'NotFoundError' }
+        throw { name: "NotFoundError" };
       }
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
@@ -224,7 +224,6 @@ class ProductCartController {
   }
 
   static async addProductCart(req, res, next) {
-    
     const t = await sequelize.transaction();
     const { id } = req.body;
     try {

@@ -28,7 +28,7 @@ const Login = () => {
     try {
       // Call the API to perform login
       const response = await axios.post(
-        "http://localhost:3100/admin-sellers/login",
+        "https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/login",
         userData
       );
       console.log("Login response:", response.data);
@@ -42,7 +42,7 @@ const Login = () => {
 
       // Redirect to the Home page
       dispatch({ type: "USER", payload: true });
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       console.error("Login error:", error);
       alert("Login failed. Please try again.");

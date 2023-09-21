@@ -1,7 +1,6 @@
-const { Profile, User } = require('../models')
+const { Profile, User } = require("../models");
 
 class ProfileController {
-
   static async getProfileByUserId(req, res, next) {
     // try {
     //     const profiles = await Profile.findAll({
@@ -20,39 +19,33 @@ class ProfileController {
       const profiles = await Profile.findOne({
         where: { userId: req.user.id },
         include: [
-                      {
-                          model: User,
-                          as: 'user'
-                      }
-                  ]
-      })
-      res.status(200).json(profiles)
+          {
+            model: User,
+            as: "user",
+          },
+        ],
+      });
+      res.status(200).json(profiles);
     } catch (error) {
-      next(error)
+      next(error);
     }
-
   }
 
   static async addProfile(req, res, next) {
     try {
-      const {
-        phoneNumber,
-        gender,
-        address,
-        postalCode
-      } = req.body
+      const { phoneNumber, gender, address, postalCode } = req.body;
 
       const profile = await Profile.create({
         userId: req.user.id,
         phoneNumber,
         gender,
         address,
-        postalCode
-      })
-      res.status(201).json({ status: 'success', data: profile })
+        postalCode,
+      });
+      res.status(201).json({ status: "success", data: profile });
     } catch (error) {
       console.log(error);
-      next(error)
+      next(error);
     }
   }
 
@@ -82,4 +75,4 @@ class ProfileController {
   }
 }
 
-module.exports = ProfileController
+module.exports = ProfileController;

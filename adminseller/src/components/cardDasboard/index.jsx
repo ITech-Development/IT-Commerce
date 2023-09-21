@@ -36,7 +36,9 @@ const Card = ({ imageUrl, title, count }) => {
         height="100px"
       />
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <h4 className={`total-${title.toLowerCase()}`}>{count} {title}</h4>
+        <h4 className={`total-${title.toLowerCase()}`}>
+          {count} {title}
+        </h4>
         <h2 className="card-title">Total {title}</h2>
       </div>
     </animated.div>
@@ -50,7 +52,14 @@ const CardSection = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/voucher");
+        const response = await axios.get(
+          "https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/transaction-list",
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching product data:", error);
@@ -59,11 +68,14 @@ const CardSection = () => {
 
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/users/voucher", {
-          headers: {
-            access_token: localStorage.getItem("access_token"),
-          },
-        });
+        const response = await axios.get(
+          "https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/order-list",
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -84,17 +96,17 @@ const CardSection = () => {
         maxWidth: "1320px",
       }}
     >
-      <Link to="/users">
+      <Link to="/order-list">
         <Card
           imageUrl="https://e7.pngegg.com/pngimages/389/412/png-clipart-font-awesome-computer-icons-user-profile-users-group-blind-miscellaneous-blue.png"
-          title="Users"
+          title="Order List"
           count={Object.keys(users).length}
         />
       </Link>
-      <Link to="/products">
+      <Link to="/transaction-list">
         <Card
           imageUrl="https://image.pngaaa.com/123/2193123-middle.png"
-          title="Products"
+          title="Transaction List"
           count={products.length}
         />
       </Link>

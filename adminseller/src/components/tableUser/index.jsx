@@ -1,101 +1,102 @@
-import React, { useEffect, useState } from "react";
-import {
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Paper,
-} from "@mui/material";
-import axios from "axios";
+import React, { useState } from "react";
+import styled from 'styled-components';
 
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
+const CartTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  max-width: 100%;
+`;
 
-const TableComponent = () => {
-  const [orders, setOrders] = useState([]);
-  const [filteredOrders, setFilteredOrders] = useState([]);
+const CartHeader = styled.th`
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: left;
+`;
 
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/users/voucher`, {
-        headers: {
-          // Include any necessary headers here
-          access_token: localStorage.getItem('access_token')
-        }
-      })
-      .then(({ data }) => {
-        // Flatten the data into an array of orders
-        const flattenedOrders = Object.values(data).flatMap(userOrders => userOrders);
-        setOrders(flattenedOrders);
-        setFilteredOrders(flattenedOrders);
-      })
-      .catch((error) => {
-        console.error(error.response?.data ?? "There was an error.");
-      });
-  }, []);
+const CartRow = styled.tr`
+  border-bottom: 1px solid #ddd;
+`;
 
-  const handleFilter = (filterText) => {
-    if (!filterText) {
-      setFilteredOrders(orders);
-    } else {
-      const filteredData = orders.filter((order) =>
-        JSON.stringify(order).toLowerCase().includes(filterText.toLowerCase())
-      );
-      setFilteredOrders(filteredData);
-    }
-  };
+const CartData = styled.td`
+  padding: 10px;
+`;
+
+const SearchInput = styled.input`
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+`;
+
+const CheckoutDetailsRow = ({ checkout }) => (
+  <CartRow>
+    <CartData>Checkout ID:</CartData>
+    <CartData>{checkout.checkout.id}</CartData>
+    <CartData>Total Price:</CartData>
+    <CartData>{checkout.checkout.totalPrice}</CartData>
+  </CartRow>
+);
+
+const ProductRow = ({ product }) => (
+  <CartRow key={product.id}>
+    <CartData>
+      <img src={product.image} alt={product.name} width='100px' />
+    </CartData>
+    <CartData>
+      <h4>{product.name}</h4>
+      <p>{product.description}</p>
+    </CartData>
+    <CartData>Unit Price:</CartData>
+    <CartData>{product.unitPrice}</CartData>
+  </CartRow>
+);
+
+const CheckoutList = ({ data }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredCheckouts = data.filter((checkout) =>
+    checkout.checkout?.users?.fullName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <TableContainer
-      component={Paper}
-      style={{
-        margin: "auto",
-        maxWidth: "1400px",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <div style={{ padding: "10px", display: "flex", justifyContent: "end" }}>
-        <input
-          style={{ padding: "10px 20px", flex: 1, maxWidth: "500px" }}
-          type="text"
-          placeholder="Search by order details"
-          onChange={(e) => handleFilter(e.target.value)}
-        />
-      </div>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>User ID</TableCell>
-            <TableCell>Total Price</TableCell>
-            <TableCell>Payment Status</TableCell>
-            <TableCell>Shipping Address</TableCell>
-            <TableCell>Voucher Code</TableCell>
-            <TableCell>Midtrans Code</TableCell>
-            <TableCell>Created At</TableCell>
-            <TableCell>Updated At</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {filteredOrders.map((order) => (
-            <TableRow key={order.id}>
-              <TableCell>{order.id}</TableCell>
-              <TableCell>{order.userId}</TableCell>
-              <TableCell>{order.totalPrice}</TableCell>
-              <TableCell>{order.paymentStatus}</TableCell>
-              <TableCell>{order.shippingAddress}</TableCell>
-              <TableCell>{order.voucherCode}</TableCell>
-              <TableCell>{order.midtransCode}</TableCell>
-              <TableCell>{order.createdAt}</TableCell>
-              <TableCell>{order.updatedAt}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div>
+      <SearchInput
+        type="text"
+        placeholder="Search by User Name"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      {filteredCheckouts.map((checkout) => (
+        <CartTable key={checkout.checkout.id}>
+          <thead>
+            <tr>
+              <CartHeader colSpan="2">Checkout Details</CartHeader>
+              <CartHeader colSpan="2">Product Details</CartHeader>
+            </tr>
+          </thead>
+          <tbody>
+            <CheckoutDetailsRow checkout={checkout} />
+            <CartRow>
+              <CartData>User:</CartData>
+              <CartData>{checkout.checkout?.users?.fullName}</CartData>
+              <CartData>Shipping Address:</CartData>
+              <CartData>{checkout.checkout.shippingAddress}</CartData>
+            </CartRow>
+            <CartRow>
+              <CartData>Order Date:</CartData>
+              <CartData>{checkout.checkout.createdAt}</CartData>
+              <CartData>Qty:</CartData>
+              <CartData>{checkout.products.length}</CartData>
+            </CartRow>
+          </tbody>
+          <tbody>
+            {checkout.products.map((product) => (
+              <ProductRow key={product.id} product={product} />
+            ))}
+          </tbody>
+        </CartTable>
+      ))}
+    </div>
   );
 };
 
-export default TableComponent;
+export default CheckoutList;
