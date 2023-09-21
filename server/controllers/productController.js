@@ -1,12 +1,9 @@
-
 const { Product, ProductCategory, ProductType, User, SuperAdmin, ProductOwner, WarehouseAdmin } = require('../models')
 const { validationResult } = require('express-validator')
 const cloudinary = require('../helpers/cloudinary')
 const baseUrl = 'http://localhost:3100'; // Ubah dengan URL server Anda
 
-
 class ProductController {
-
     static async getAllProducts(req, res, next) {
         try {
             const hiddenProductIds = [1, 2, 3];

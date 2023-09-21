@@ -59,7 +59,7 @@ const CardSection = () => {
 
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/users/voucher", {
+        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/order-list", {
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
@@ -91,10 +91,10 @@ const CardSection = () => {
           count={Object.keys(users).length}
         />
       </Link>
-      <Link to="/products">
+      <Link to="/transaction-list">
         <Card
           imageUrl="https://image.pngaaa.com/123/2193123-middle.png"
-          title="Products"
+          title="Transaction List"
           count={products.length}
         />
       </Link>

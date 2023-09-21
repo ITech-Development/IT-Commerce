@@ -3,7 +3,7 @@ import "./App.css";
 import Navbar from "./components/navbar";
 import Login from "./components/auth/Login";
 import Dashboard from "./pages/dashboard";
-import GetProduct from "./pages/getProducts";
+import GetTransactionList from "./pages/getTransactionList";
 import GetOrderList from "./pages/getOrderList";
 import DetailsProduct from "./pages/detailsProduct";
 import NotFound from "./pages/notFound";
@@ -28,7 +28,7 @@ const Routing = () => {
         <>
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Dashboard />} />
-          <Route path="/products" element={<GetProduct />} />
+          <Route path="/transaction-list" element={<GetTransactionList />} />
           <Route path="/order-list" element={<GetOrderList />} />
           <Route path="/products/:id" element={<DetailsProduct />} />
           <Route path="/chat" element={<Chat />} />

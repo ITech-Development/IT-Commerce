@@ -15,61 +15,124 @@ class AdminSellerController {
         }
     }
 
-    static async getOrderListByVoucherCode(req, res, next) {
-        try {
-            // Ambil semua checkout products dari database dengan filter berdasarkan voucherCode
-            const checkoutProducts = await CheckoutProduct.findAll({
-                include: [
-                    {
-                        model: Checkout,
-                        as: 'checkouts',
-                        include: [
-                            {
-                                model: User,
-                                as: 'users'
-                            }
-                        ]
-                    },
-                    {
-                        model: Product,
-                        as: 'products'
+    static async getTransactionListByVoucherCode(req, res, next) {
+        if (req.adminSeller.id === 4) {
+            try {
+                // Ambil semua checkout products dari database dengan filter berdasarkan voucherCode
+                const checkoutProducts = await CheckoutProduct.findAll({
+                    include: [
+                        {
+                            model: Checkout,
+                            as: 'checkouts',
+                            include: [
+                                {
+                                    model: User,
+                                    as: 'users'
+                                }
+                            ]
+                        },
+                        {
+                            model: Product,
+                            as: 'products'
+                        }
+                    ],
+                    where: {
+                        '$checkouts.voucherCode$': 'IT01' // Filter by voucherCode
                     }
-                ],
-                where: {
-                    '$checkouts.voucherCode$': 'IT01' // Filter by voucherCode
+                });
+
+                // Buat objek untuk menyimpan daftar pesanan
+                const orderList = {};
+
+                // Iterasi melalui setiap checkout product
+                for (const checkoutProduct of checkoutProducts) {
+                    const checkoutId = checkoutProduct.checkoutId;
+
+                    // Jika checkout ID belum ada dalam daftar pesanan, tambahkan
+                    if (!orderList[checkoutId]) {
+                        orderList[checkoutId] = {
+                            checkout: checkoutProduct.checkouts,
+                            products: []
+                        };
+                    }
+
+                    // Tambahkan produk ke dalam daftar pesanan yang sesuai dengan checkout ID
+                    orderList[checkoutId].products.push(checkoutProduct.products);
                 }
-            });
-    
-            // Buat objek untuk menyimpan daftar pesanan
-            const orderList = {};
-    
-            // Iterasi melalui setiap checkout product
-            for (const checkoutProduct of checkoutProducts) {
-                const checkoutId = checkoutProduct.checkoutId;
-    
-                // Jika checkout ID belum ada dalam daftar pesanan, tambahkan
-                if (!orderList[checkoutId]) {
-                    orderList[checkoutId] = {
-                        checkout: checkoutProduct.checkouts,
-                        products: []
-                    };
-                }
-    
-                // Tambahkan produk ke dalam daftar pesanan yang sesuai dengan checkout ID
-                orderList[checkoutId].products.push(checkoutProduct.products);
+
+                // Ubah objek pesanan menjadi array
+                const orderListArray = Object.values(orderList);
+
+                // Kirim daftar pesanan sebagai respons JSON
+                res.status(200).json(orderListArray);
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ error: 'Internal server error' });
             }
-    
-            // Ubah objek pesanan menjadi array
-            const orderListArray = Object.values(orderList);
-    
-            // Kirim daftar pesanan sebagai respons JSON
-            res.status(200).json(orderListArray);
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: 'Internal server error' });
+        } else {
+            console.log('check lagi servernya ya');
         }
     }
-    
+
+    static async getOrderListByVoucherCode(req, res, next) {
+        if (req.adminSeller.id === 4) {
+            try {
+                // Ambil semua checkout products dari database dengan filter berdasarkan voucherCode
+                const checkoutProducts = await CheckoutProduct.findAll({
+                    include: [
+                        {
+                            model: Checkout,
+                            as: 'checkouts',
+                            include: [
+                                {
+                                    model: User,
+                                    as: 'users'
+                                }
+                            ]
+                        },
+                        {
+                            model: Product,
+                            as: 'products'
+                        }
+                    ],
+                    where: {
+                        '$checkouts.voucherCode$': 'IT01' // Filter by voucherCode
+                    }
+                });
+
+                // Buat objek untuk menyimpan daftar pesanan
+                const orderList = {};
+
+                // Iterasi melalui setiap checkout product
+                for (const checkoutProduct of checkoutProducts) {
+                    const checkoutId = checkoutProduct.checkoutId;
+
+                    // Jika checkout ID belum ada dalam daftar pesanan, tambahkan
+                    if (!orderList[checkoutId]) {
+                        orderList[checkoutId] = {
+                            checkout: checkoutProduct.checkouts,
+                            products: []
+                        };
+                    }
+
+                    // Tambahkan produk ke dalam daftar pesanan yang sesuai dengan checkout ID
+                    orderList[checkoutId].products.push(checkoutProduct.products);
+                }
+
+                // Ubah objek pesanan menjadi array
+                const orderListArray = Object.values(orderList);
+
+                // Kirim daftar pesanan sebagai respons JSON
+                res.status(200).json(orderListArray);
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ error: 'Internal server error' });
+            }
+        } else {
+            console.log('check lagi servernya ya');
+        }
+    }
+
 
 
     static async getAllProductsByVoucherCode(req, res, next) {
