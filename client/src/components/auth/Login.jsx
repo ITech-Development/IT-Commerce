@@ -1,6 +1,6 @@
 /* eslint-disable */
 // import React, { useContext, useState } from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 // import { Link } from "react-router-dom";
 // import axios from "axios";
 import { FiMail, FiLock } from "react-icons/fi";
@@ -11,12 +11,15 @@ import { useLoginMutation } from '../../features/user/apiUser.js'
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  // const { dispatch } = useContext(UserContext);
   const [login] = useLoginMutation()
 
   // const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate()
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,10 +35,9 @@ const Login = () => {
     };
 
     console.log(1);
-    login(userData).then((res) => {
+    login(userData).then((res)=> {
+      console.log(res.data);
       localStorage.setItem("access_token", res.data.access_token);
-      setEmail("");
-      setPassword("");
       navigate('/')
     })
 

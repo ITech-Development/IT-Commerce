@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getTotals } from "../../../features/cartSlice";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -33,7 +34,7 @@ function Index() {
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
   const [checkoutCost, setCheckoutCost] = useState();
 
-  // const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
 
@@ -66,7 +67,9 @@ function Index() {
     setSelectedVoucher(event.target.value);
   };
 
-
+  useEffect(() => {
+    dispatch(getTotals());
+  }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
 
@@ -94,7 +97,7 @@ function Index() {
       headers: config,
       method: "post",
     });
-    // setModalVisible(true);
+    setModalVisible(true);
     setToken(response.data.token);
   };
 
@@ -362,7 +365,7 @@ function Index() {
 
   return (
     <div>
-      <div id="snap-container"></div>
+
       <div className="alamat">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Alamat Pengiriman</h2>
@@ -655,7 +658,7 @@ function Index() {
                 </button>
               )}
             </div>
-            {/* {isModalVisible && (
+            {isModalVisible && (
               <div className="modal-overlay">
                 <div className="modal">
                   <div className="modal-content">
@@ -663,12 +666,12 @@ function Index() {
                       &times;
                     </span>
                     <h2>Modal Title</h2>
-
+                    <div id="snap-container"></div>
                     <p>Isi modal Anda di sini.</p>
                   </div>
                 </div>
               </div>
-            )} */}
+            )}
 
 
           </div>

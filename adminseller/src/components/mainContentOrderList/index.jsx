@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import TableComponent from "../tableUser";
+import TableComponent from "../tableOrderList";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 

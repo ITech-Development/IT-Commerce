@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useGetAllProductsQuery } from "../../features/productsApi";
 import Corousel from '../../components/corousel/services'
 
 import "../../App.css";
@@ -33,7 +34,7 @@ const sortSelectStyle = {
 };
 
 const ProductList = () => {
-  // const { error, isLoading } = useGetAllProductsQuery();
+  const { error, isLoading } = useGetAllProductsQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
 
@@ -46,49 +47,49 @@ const ProductList = () => {
   };
 
 
-  // return (
-  //   <>
-  //       <Corousel/>
+  return (
+    <>
+        <Corousel/>
 
-  //     <div >
-  //       {/* <img src={Hero} alt="" /> */}
-  //       <div className="productlist-container">
-  //         {isLoading ? (
-  //           <p>Loading...</p>
-  //         ) : error ? (
-  //           <p>An error occurred</p>
-  //         ) : (
-  //           <>
-  //             <h2 style={{ margin: "30px 0 20px 0", textAlign: "start" }}>
-  //               Semua Servis
-  //             </h2>
-  //             <div style={searchContainerStyle}>
-  //               <input
-  //                 type="text"
-  //                 value={searchQuery}
-  //                 onChange={handleSearchInputChange}
-  //                 style={searchInputStyle}
-  //                 placeholder="Cari Servis Berdasarkan Nama..."
-  //               />
-  //               <select
-  //                 value={sortOption}
-  //                 onChange={handleSortOptionChange}
-  //                 style={sortSelectStyle}
-  //               >
-  //                 <option value="name">Berdasarkan Nama</option>
-  //                 <option value="price">Harga Terendah - Tertinggi</option>
-  //                 <option value="stock">Stok Paling Sedikit - Terbanyak</option>
-  //               </select>
-  //             </div>
-  //             <div className="products">
-  //               <h2>Under Development</h2>
-  //             </div>
-  //           </>
-  //         )}
-  //       </div>
-  //     </div>
-  //   </>
-  // );
+      <div >
+        {/* <img src={Hero} alt="" /> */}
+        <div className="productlist-container">
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p>An error occurred</p>
+          ) : (
+            <>
+              <h2 style={{ margin: "30px 0 20px 0", textAlign: "start" }}>
+                Semua Servis
+              </h2>
+              <div style={searchContainerStyle}>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleSearchInputChange}
+                  style={searchInputStyle}
+                  placeholder="Cari Servis Berdasarkan Nama..."
+                />
+                <select
+                  value={sortOption}
+                  onChange={handleSortOptionChange}
+                  style={sortSelectStyle}
+                >
+                  <option value="name">Berdasarkan Nama</option>
+                  <option value="price">Harga Terendah - Tertinggi</option>
+                  <option value="stock">Stok Paling Sedikit - Terbanyak</option>
+                </select>
+              </div>
+              <div className="products">
+                <h2>Under Development</h2>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default ProductList;

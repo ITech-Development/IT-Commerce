@@ -12,6 +12,7 @@ export default configureStore({
             .concat(productsApi.middleware)
             .concat(usersApi.middleware)
     },
+
 })
 
 

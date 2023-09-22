@@ -17,7 +17,7 @@ const CheckoutList = ({ data }) => {
           <ul>
             {checkout.products.map((product) => (
               <li key={product.id}>
-                <img src={product.image} alt={product.name} width='100px'/>
+                <img src={product.image} alt={product.name} width='100px' />
                 <h4>{product.name}</h4>
                 <p>Description: {product.description}</p>
                 <p>Unit Price: {product.unitPrice}</p>

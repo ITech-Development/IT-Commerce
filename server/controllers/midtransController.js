@@ -7,6 +7,79 @@ let { sequelize } = require("../models/");
 
 class MidtransController {
 
+  static async midtransItech(req, res, next) {
+    console.log(req.body, '<<itech');
+    const t = await sequelize.transaction();
+    try {
+      let temp = []
+      const user = await User.findByPk(req.user.id);
+      let snap = new midtransClient.Snap({
+        // Set to true if you want Production Environment (accept real transaction).
+        isProduction: false,
+        serverKey: midtransKey,
+      });
+      let order_id = "ITECH-ORDERID-" +
+        Math.floor(1000000 + Math.random() * 9000000)
+      let parameter = {
+        transaction_details: {
+          order_id,
+          gross_amount: +req.query.total, //kalkulasikan total harga di sini
+        },
+        credit_card: {
+          secure: true,
+        },
+        customer_details: {
+          fullName: user.fullName,
+          email: user.email,
+          password: user.password,
+          phoneNumber: user.phoneNumber,
+          address: user.address,
+          imageProfile: user.imageProfile,
+        },
+      };
+      const midtransToken = await snap.createTransaction(parameter);
+      const {
+        checkoutProvince,
+        checkoutCity,
+        bayar,
+        checkoutSubdistrict,
+        selectedVoucher,
+      } = req.body
+      const createCheckout = await Checkout.create({
+        userId: req.user.id,
+        shippingAddress: `${checkoutProvince}, ${checkoutCity}, ${checkoutSubdistrict}`,
+        totalPrice: bayar,
+        voucherCode: selectedVoucher,
+        midtransCode: order_id,
+        transaction: t
+      })
+
+      req.body.carts.forEach(async (el) => {
+        temp.push({
+          // id: await helpers.getId(),
+          checkoutId: createCheckout.id,
+          productId: el.productId,
+          quantity: el.quantity,
+          createdAt: new Date(),
+          updateAt: new Date(),
+        })
+        let dec = await Product.findOne({ where: { id: el.productId } });
+        if (dec && dec.stock > el.quantity) {
+          await dec.decrement("stock", { by: el.quantity, transaction: t });
+        } else {
+          throw ({ message: 'Data yang anda minta tidak atau terlalu banyak dari stok produk' })
+        }
+      })
+      let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t })
+      await t.commit()
+      res.status(201).json({ token: midtransToken.token })
+    } catch (error) {
+      console.log(error, 'errornya apa');
+      await t.rollback()
+      res.status(500).json(error)
+    }
+  }
+
   static async midtransTokenIndoRiau(req, res, next) {
     console.log(req.body, 'indo  riau');
     const t = await sequelize.transaction();
@@ -159,11 +232,13 @@ class MidtransController {
             midtransCode: req.body.order_id
           }
         })
-      } 
+      }
     } catch (error) {
       console.log(error);
     }
   }
+
+
 }
 
 module.exports = MidtransController;

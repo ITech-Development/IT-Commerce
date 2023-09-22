@@ -32,8 +32,6 @@ import DetailsOrder from "./pages/DetailsOrder";
 import store from './app/store'
 import { Provider } from "react-redux";
 
-
-
 const Routing = () => {
   return (
     <Routes>
@@ -71,8 +69,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ToastContainer />
       <Provider store={store}>
+        <ToastContainer />
         <Navbar />
         <Routing />
       </Provider>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { getTotals } from "../../features/cartSlice";
 import IndoRiau from "../../assets/Indoriau.png";
 import Juvindo from "../../assets/JUVINDO.png";
 import styled from "styled-components";
@@ -9,12 +10,7 @@ import Itech from "../../assets/Itech.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FaShoppingCart } from "react-icons/fa"; // Menggunakan react-icons/fa5 untuk ikon dari Font Awesome 5
-import {
-  useGetCartsIndoRiauMutation,
-  useGetCartsJuvindoMutation,
-  useGetCartsItechMutation,
-  useIncrementProductMutation
-} from "../../features/product/apiProducts";
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
 const Cart = () => {
   const [carts, setCarts] = useState([]);
@@ -24,53 +20,9 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  const [dataCartsIndoRiau] = useGetCartsIndoRiauMutation()
-  const [dataCartsJuvindo] = useGetCartsJuvindoMutation()
-  const [dataCartsItech] = useGetCartsItechMutation()
-  const [incrementProductMutation] = useIncrementProductMutation();
-
-
-
   useEffect(() => {
-    dataCartsIndoRiau()
-      .then((res) => {
-        setCartsIndoRiau(res.data)
-      })
-  }, [dataCartsIndoRiau])
-
-  useEffect(() => {
-    dataCartsJuvindo()
-      .then((res) => {
-        setCartsJuvindo(res.data)
-      })
-  }, [dataCartsIndoRiau])
-
-  useEffect(() => {
-    dataCartsItech()
-      .then((res) => {
-        setCartsItech(res.data)
-      })
-  }, [dataCartsItech])
-
-  const handlerInc = (id) => {
-    incrementProductMutation(id)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log('incrementttt');
-      });
-  };
-
-  useEffect((id) => {
-    incrementProductMutation(id)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log('incrementttt');
-      });
-  }, [incrementProductMutation])
+    dispatch(getTotals());
+  }, [cart, dispatch]);
 
   useEffect(() => {
     const fetchCarts = async () => {
@@ -89,6 +41,75 @@ const Cart = () => {
     };
     fetchCarts();
   }, []);
+
+  useEffect(() => {
+    const fetchCartsJuvindo = async () => {
+      const accessToken = localStorage.getItem("access_token");
+      if (accessToken) {
+        try {
+          const response = await axios.get(
+            "https://indoteknikserver-732012365989.herokuapp.com/product-carts/juvindo",
+            { headers: { access_token: accessToken } }
+          );
+          setCartsJuvindo(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchCartsJuvindo();
+  }, []);
+
+  useEffect(() => {
+    const fetchCartsItech = async () => {
+      const accessToken = localStorage.getItem("access_token");
+      if (accessToken) {
+        try {
+          const response = await axios.get(
+            "https://indoteknikserver-732012365989.herokuapp.com/product-carts/itech",
+            { headers: { access_token: accessToken } }
+          );
+          setCartsItech(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchCartsItech();
+  }, []);
+
+  useEffect(() => {
+    const fetchCartsIndoRiau = async () => {
+      const accessToken = localStorage.getItem("access_token");
+      if (accessToken) {
+        try {
+          const response = await axios.get(
+            "https://indoteknikserver-732012365989.herokuapp.com/product-carts/indo-riau",
+            { headers: { access_token: accessToken } }
+          );
+          setCartsIndoRiau(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchCartsIndoRiau();
+  }, []);
+
+
+  const handlerInc = (id) => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/increment/" + id;
+      axios({ url, method: "patch", headers: { access_token: accessToken } })
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log("incrementttt");
+        });
+    }
+  };
 
   const handlerDec = (id) => {
     const accessToken = localStorage.getItem("access_token");
@@ -502,7 +523,7 @@ const Cart = () => {
                         padding: "8px 0",
                       }}
                     >
-
+                      
                       <span>PPN 11% :</span>
                       <span className="amount"> Rp. {calculatePPNItech()}</span>
                     </div>
