@@ -2,8 +2,57 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSpring, animated } from "react-spring";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-const Card = ({ imageUrl, title, count }) => {
+const CardContent = styled(animated.div)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const CardImage = styled.img`
+  width: 200px;
+  height: 100px;
+  transition: transform 0.2s;
+
+  ${CardContent}:hover & {
+    transform: scale(1.05);
+  }
+`;
+
+const TotalCount = styled.h4`
+  &.total-order {
+    color: blue;
+  }
+
+  &.total-transaction {
+    color: green;
+  }
+`;
+
+const CardTitle = styled.h2`
+  font-size: 18px;
+`;
+
+const CardContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  max-width: 1320px;
+`;
+
+const Card = ({ imageUrl, title, count, to }) => {
   const [visible, setVisible] = useState(false);
 
   const fadeIn = useSpring({
@@ -16,32 +65,17 @@ const Card = ({ imageUrl, title, count }) => {
   }, []);
 
   return (
-    <animated.div
-      className="card-content"
-      style={{
-        ...fadeIn,
-        display: "flex",
-        justifyContent: "space-between",
-        border: "1px solid gray",
-        borderRadius: "5px",
-        padding: "10px",
-        margin: "0 20px",
-      }}
-    >
-      <img
-        src={imageUrl}
-        alt=""
-        className="card-image"
-        width="200px"
-        height="100px"
-      />
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <h4 className={`total-${title.toLowerCase()}`}>
-          {count} {title}
-        </h4>
-        <h2 className="card-title">Total {title}</h2>
-      </div>
-    </animated.div>
+    <Link to={to} style={{ textDecoration: "none" }}>
+      <CardContent style={{ ...fadeIn }}>
+        <CardImage src={imageUrl} alt="" />
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <TotalCount className={`total-${title.toLowerCase()}`}>
+            {count} {title}
+          </TotalCount>
+          <CardTitle>Total {title}</CardTitle>
+        </div>
+      </CardContent>
+    </Link>
   );
 };
 
@@ -87,35 +121,26 @@ const CardSection = () => {
   }, []);
 
   return (
-    <div
-      className="card flex"
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        margin: "auto",
-        maxWidth: "1320px",
-      }}
-    >
-      <Link to="/order-list">
-        <Card
-          imageUrl="https://e7.pngegg.com/pngimages/389/412/png-clipart-font-awesome-computer-icons-user-profile-users-group-blind-miscellaneous-blue.png"
-          title="Order List"
-          count={Object.keys(users).length}
-        />
-      </Link>
-      <Link to="/transaction-list">
-        <Card
-          imageUrl="https://image.pngaaa.com/123/2193123-middle.png"
-          title="Transaction List"
-          count={products.length}
-        />
-      </Link>
+    <CardContainer>
+      <Card
+        imageUrl="https://res.cloudinary.com/dcbryptkx/image/upload/v1695196688/IndoTeknikMarketplace/product/Icon/Website%20Icon/Order/Order_msfr89.png"
+        title="Order List"
+        count={Object.keys(users).length}
+        to="/order-list"
+      />
+      <Card
+        imageUrl="https://res.cloudinary.com/dcbryptkx/image/upload/v1695196687/IndoTeknikMarketplace/product/Icon/Website%20Icon/Pembayaran/Rincian_Biaya_atau_Riwayat_belanja_ndgxgb.png"
+        title="Transaction List"
+        count={products.length}
+        to="/transaction-list"
+      />
       <Card
         imageUrl="https://png.pngtree.com/png-clipart/20210312/original/pngtree-simple-medal-of-honor-linear-icon-png-image_6074699.png"
         title="Points"
-        count={0} // Replace with the actual value of points
+        count={0}
+        to="/points"
       />
-    </div>
+    </CardContainer>
   );
 };
 

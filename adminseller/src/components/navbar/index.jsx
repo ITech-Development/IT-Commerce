@@ -2,6 +2,21 @@ import React, { useState } from "react";
 import "./style.css";
 import Logo from "../../assets/Logo.png";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+const LogoutButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
 
 export default function Navigation() {
 
@@ -13,22 +28,16 @@ export default function Navigation() {
 
   const handleLogout = () => {
     localStorage.removeItem('access_token')
-    // Implement your logout logic here, for example:
-    // Clear user session, tokens, or any other data related to authentication
-    // Redirect user to the logout page or the login page
-    // Example:
-    // localStorage.clear(); // Clear all data from local storage
     window.location.href = "/"; // Redirect to the logout page
   };  
 
   const RenderMenu = () => {
     const accessToken = localStorage.getItem('access_token')
-    // Implement your menu items here, for example:
     return (
       <>
         {accessToken && (
           < li >
-            <button onClick={handleLogout}>Logout</button>
+            <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
           </li >
         )}
       </>

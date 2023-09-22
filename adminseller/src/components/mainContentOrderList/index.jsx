@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import TableComponent from "../tableUser";
+import TableComponent from "../tableOrderList";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
-// Membuat styled-component untuk button
 const DashboardButton = styled.button`
   background-color: #007bff;
   color: #fff;
@@ -23,8 +22,7 @@ const MainContentContainer = styled.main`
   display: flex;
   margin: auto;
   flex-direction: column;
-  // align-items: center;
-  // text-align: center;
+  max-width: 1420px;
 `;
 
 const MainContent = () => {
