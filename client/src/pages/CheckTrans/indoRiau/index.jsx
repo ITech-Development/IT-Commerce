@@ -7,8 +7,9 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
+import styled from "styled-components";
 
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
+// const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
 
 function Index() {
   let [carts, setCarts] = useState([]);
@@ -37,7 +38,6 @@ function Index() {
   const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       let url = "https://indoteknikserver-732012365989.herokuapp.com/users/me";
@@ -54,7 +54,9 @@ function Index() {
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
-        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers");
+        const response = await axios.get(
+          "https://indoteknikserver-732012365989.herokuapp.com/admin-sellers"
+        );
         setVouchers(response.data);
       } catch (error) {
         console.log("Error fetching vouchers:", error);
@@ -72,7 +74,6 @@ function Index() {
   }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
-
     const bayar = calculateTotalBayar();
     const config = {
       "Content-Type": "application/json",
@@ -92,7 +93,7 @@ function Index() {
         selectedShippingCost,
         selectedVoucher,
         checkoutPengiriman,
-        bayar
+        bayar,
       },
       headers: config,
       method: "post",
@@ -130,12 +131,9 @@ function Index() {
   }, [token]);
 
   useEffect(() => {
-    // const midtransUrl = "https://app.midtrans.com/snap/snap.js";
     const midtransUrl = "https://app.midtrans.com/snap/snap.js";
-
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
-
     // const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
     const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
     scriptTag.setAttribute("data-client-key-indo-riau", midtransClientKey);
@@ -150,7 +148,9 @@ function Index() {
   const handlerInc = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/increment/" + id;
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/increment/" +
+        id;
       axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data);
@@ -164,7 +164,9 @@ function Index() {
   const handlerDec = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/decrement/" + id;
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/decrement/" +
+        id;
       axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, "ASdasdas");
@@ -178,7 +180,9 @@ function Index() {
   const handlerRemove = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/remove/" + id;
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/remove/" +
+        id;
       axios({ url, method: "delete", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, "remooove");
@@ -211,20 +215,20 @@ function Index() {
     return discountAmount;
   };
 
-  const calculatePPN = () => {
-    const subtotal = calculateSubtotal();
-    const voucherDiscount = calculateVoucher();
-    const afterVoucherSubtotal = subtotal - voucherDiscount;
-    const ppnPercentage = 11;
-    const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
-    return ppnAmount;
-  };
+  // const calculatePPN = () => {
+  //   const subtotal = calculateSubtotal();
+  //   const voucherDiscount = calculateVoucher();
+  //   const afterVoucherSubtotal = subtotal - voucherDiscount;
+  //   const ppnPercentage = 11;
+  //   const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
+  //   return ppnAmount;
+  // };
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     const voucherDiscount = calculateVoucher();
-    const ppnAmount = calculatePPN();
-    const total = subtotal - voucherDiscount + ppnAmount;
+    // const ppnAmount = calculatePPN();
+    const total = subtotal - voucherDiscount;
     return total;
   };
 
@@ -237,7 +241,8 @@ function Index() {
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/indo-riau";
+      let url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/indo-riau";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
           setCarts(data);
@@ -355,17 +360,17 @@ function Index() {
   };
 
   const paymentButtonStyle = {
-    backgroundColor: 'blue',
-    color: 'white',
-    padding: '10px 20px',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
+    backgroundColor: "blue",
+    color: "white",
+    padding: "10px 20px",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
   };
 
   return (
     <div>
-
+      <div id="snap-container"></div>
       <div className="alamat">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Alamat Pengiriman</h2>
@@ -398,10 +403,10 @@ function Index() {
             <div class="cart-empty">
               <p>Your cart is empty</p>
               <div class="start-shopping">
-                <a href="/productlist">
+                <Link to="/productlist">
                   <span>&lt;</span>
                   <span>Start Shopping</span>
-                </a>
+                </Link>
               </div>
             </div>
           ) : (
@@ -418,20 +423,23 @@ function Index() {
                     <div class="cart-product">
                       <Link to={`/products/${e.product.id}`}>
                         <img
+                          className="imgIR"
                           src={e.product.image}
                           alt={e.product.name}
                         />
                       </Link>
                       <div>
-                        <h3>{e.product.name}</h3>
-                        <p>{e.product.description}</p>
+                        <h3 style={{ fontSize: "16px", maxWidth: '258px' }}>
+                          {e.product.name.split(" ").slice(0, 4).join(" ")}...
+                        </h3>
+                        {/* <p>{e.product.description}</p> */}
                         <button onClick={() => handlerRemove(e.id)}>
                           Remove
                         </button>
                       </div>
                     </div>
                     <div class="cart-product-price">
-                      Rp.{e.product.unitPrice}
+                      Rp.{e.product.unitPrice.toLocaleString("id-ID", {})}
                     </div>
                     <div class="cart-product-quantity">
                       <button onClick={() => handlerDec(e.id)}>-</button>
@@ -439,7 +447,11 @@ function Index() {
                       <button onClick={() => handlerInc(e.id)}>+</button>
                     </div>
                     <div class="cart-product-total-price">
-                      Rp.{e.quantity * e.product.unitPrice}
+                      Rp.
+                      {(e.quantity * e.product.unitPrice).toLocaleString(
+                        "id-ID",
+                        {}
+                      )}
                     </div>
                   </div>
                 ))}
@@ -449,26 +461,20 @@ function Index() {
                 <div class="cart-checkout" style={{ lineHeight: "30px" }}>
                   <div class="subtotal">
                     <span>Subtotal :</span>
-                    <span class="amount">Rp.{calculateSubtotal()}</span>
+                    <span class="amount">
+                      Rp.{calculateSubtotal().toLocaleString("id-ID", {})}
+                    </span>
                   </div>
                   <div class="subtotal">
                     <span>Voucher 3% :</span>
-                    <span class="amount">Rp. {calculateVoucher()}</span>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontStyle: "italic",
-                    }}
-                  >
-                    <span>PPN 11% :</span>
-                    <span className="amount"> Rp. {calculatePPN()}</span>
+                    <span class="amount">
+                      Rp. {calculateVoucher().toLocaleString("id-ID", {})}
+                    </span>
                   </div>
                   <div class="subtotal">
                     <span>Total :</span>
                     <span style={{ fontWeight: "700" }} class="amount">
-                      {calculateTotal()}
+                      {calculateTotal().toLocaleString("id-ID", {})}
                     </span>
                   </div>
                 </div>
@@ -526,7 +532,6 @@ function Index() {
           >
             <h2>Pilih Metode Pengiriman</h2>
             <div>
-
               <select
                 value={courier}
                 onChange={handlerSetCourier}
@@ -545,12 +550,6 @@ function Index() {
                   jnt
                 </option>
               </select>
-              {/* <input
-                type="number"
-                value={calculateTotalWeight()}
-                readOnly
-                placeholder="Total Weight in Grams"
-              /> */}
               <select
                 name="province"
                 id="province"
@@ -622,7 +621,8 @@ function Index() {
                       onChange={handleShippingCostChange}
                     />
                     <label htmlFor={`shippingChoice${index}`}>
-                      Shipping Cost: Rp.{el.cost[0].value}
+                      Shipping Cost: Rp.
+                      {el.cost[0].value.toLocaleString("id-ID", {})}
                     </label>
                     <p>Service: {el.service}</p>
                     <p>Description: {el.description}</p>
@@ -634,19 +634,25 @@ function Index() {
           </div>
 
           <div
-            style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end' }}
+            style={{
+              padding: "20px 65px",
+              fontSize: "20px",
+              display: "flex",
+              justifyContent: "end",
+            }}
           >
-            <div style={{ paddingTop: '5px' }}>
-
-              <span >Total Bayar : </span>
-              <span style={{ fontWeight: "700", paddingRight: '20px' }} className="amount">
-                Rp. {calculateTotalBayar()}
+            <div style={{ paddingTop: "5px" }}>
+              <span>Total Bayar : </span>
+              <span
+                style={{ fontWeight: "700", paddingRight: "20px" }}
+                className="amount"
+              >
+                Rp. {calculateTotalBayar().toLocaleString("id-ID", {})}
               </span>
             </div>
             <div>
-
               {totalShippingCost === 0 ? (
-                <p >
+                <p>
                   <i>Silahkan pilih metode pengiriman</i>
                 </p>
               ) : (
@@ -662,23 +668,73 @@ function Index() {
               <div className="modal-overlay">
                 <div className="modal">
                   <div className="modal-content">
-                    <span className="close" onClick={() => setModalVisible(false)}>
+                    <span
+                      className="close"
+                      onClick={() => setModalVisible(false)}
+                    >
                       &times;
                     </span>
                     <h2>Modal Title</h2>
-                    <div id="snap-container"></div>
+
                     <p>Isi modal Anda di sini.</p>
                   </div>
                 </div>
               </div>
             )}
-
-
           </div>
         </div>
       </div>
-
     </div>
   );
 }
 export default Index;
+
+const ShippingContainer = styled.div`
+  max-width: 1350px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid rgb(244, 238, 238);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const Select = styled.select`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+  width: 100%;
+`;
+
+const StyledPaymentSummary = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+
+  .amount {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #f0f0f5;
+    }
+  }
+`;

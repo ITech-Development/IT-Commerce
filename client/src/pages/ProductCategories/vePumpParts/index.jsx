@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../App.css";
+import "./pumpParts.css";
+import IconButton from "@mui/material/IconButton";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
 
@@ -15,7 +18,7 @@ const ProductCard = ({ product, onAddToCart }) => {
   const discountedPrice = originalPrice - discountAmount;
 
   return (
-    <div className="product">
+    <div className="product-card">
       <a
         href={`/products/${product.id}`}
         className="view-product-button"
@@ -23,24 +26,33 @@ const ProductCard = ({ product, onAddToCart }) => {
       >
         <img src={product.image} alt={product.name} />
       </a>
-      <div className="details">
+      <div className="product-details">
         <h3>{product.category}</h3>
         <p>{product.name}</p>
-        <span className="price">{originalPrice}</span>
+        <span className="price">Rp. {originalPrice}</span>
         <br />
-        <span className="price">
-          <i>
-            3% <del>{discountedPrice}</del>
-          </i>
-        </span>
+        <div className="discount-container">
+          <div className="discount">
+            <span className="percentage">3%</span>
+          </div>
+          <del className="original-price">{discountedPrice}</del>
+        </div>
         <p>Stock: {product.stock}</p>
       </div>
       <button
-        className="add-to-cart-button"
+        className={`add-to-cart-button ${
+          product.stock === 0 ? "out-of-stock" : ""
+        }`}
         onClick={() => onAddToCart(product)}
         disabled={product.stock === 0}
       >
-        {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
+        {product.stock > 0 ? (
+          <IconButton aria-label="add to cart">
+            <ShoppingCartIcon style={{ color: "white" }} />
+          </IconButton>
+        ) : (
+          "Out of Stock"
+        )}
       </button>
     </div>
   );
@@ -120,7 +132,7 @@ const ProductList = () => {
           margin: "60px 0 0 0",
           width: "100%",
         }}
-        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1692343050/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Artboard_1_copy_22Kategori_tsvngg.jpg"
+        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694850712/IndoTeknikMarketplace/product/banner/Banner%20Kategori/VE_PUMP_PARTS_hejqmx.jpg"
         alt=""
       />
       <div className="productlist-container">

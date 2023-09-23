@@ -1,88 +1,113 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useGetAllProductsQuery } from "../../features/productsApi";
-import { Link } from "react-router-dom";
+import { useGetProductsQuery } from "../../features/product/apiProducts";
 import Corousel from "../../components/corousel/product";
 import "./productliststyle.css";
 import "../../App.css";
 import Star from "../../assets/star.png";
-import CartIcon from "../../assets/cart2.png";
 import { FadeLoader } from "react-spinners";
-import { useGetProductsQuery } from "../../features/product/apiProducts";
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
-
-const linkStyle = {
-  color: "white",
-  textDecoration: "none",
-};
+import styled, { keyframes } from "styled-components";
 
 const loadingContainerStyle = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  minHeight: "200px", // Atur ketinggian minimum sesuai kebutuhan
+  minHeight: "200px",
 };
 
-const ProductCard = ({ product, onAddToCart }) => {
-  const starRating = 5;
+const shadowAnimation = keyframes`
+  0% {
+    box-shadow: none;
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+  100% {
+    box-shadow: none;
+  }
+`;
 
-  const originalPrice = product.unitPrice;
-  const discountAmount = originalPrice * 0.03;
-  const discountedPrice = originalPrice - discountAmount;
+const Card = styled.div`
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  max-height: 330px;
+
+  &:hover {
+    animation: ${shadowAnimation} 1s ease-in-out infinite;
+  }
+`;
+
+const CardImage = styled.img`
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+`;
+
+const CardContent = styled.div`
+  padding: 16px;
+`;
+
+const Title = styled.h3`
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  padding-bottom: 7px;
+`;
+
+const Price = styled.p`
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  padding-top: 2px;
+`;
+
+const ProductCard = ({ product, onAddToCart }) => {
+  const starRating = 1;
   return (
-    <div className="product">
-      <Link
-        to={`/products/${product.id}`}
-        className="view-product-button"
-        style={linkStyle}
-      >
-        <img src={product.image} alt={product.name} />
-      </Link>
-      <div className="details">
-        <h3>{product.category}</h3>
-        <h3 style={{ padding: "5px 0", margin: "0" }}>{product.name}</h3>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>
-            <div style={{ width: "90px" }} className="star-rating">
-              {/* Render star images for the star rating */}
-              {[...Array(starRating)].map((_, index) => (
-                <img
-                  key={index}
-                  style={{ maxWidth: "15px" }}
-                  src={Star} // Replace with your star icon image
-                  alt="rating"
-                />
-              ))}
-            </div>
-            <span className="price">Rp.{product.unitPrice}</span>
-            <br />
-            <span className="price">
-              <i>
-                3% <del>{discountedPrice}</del>
-              </i>
-            </span>
-          </div>
-          <button
-            className="cartyes"
+    <Card>
+      <a href={`/products/${product.id}`}>
+        <CardImage src={product.image} alt={product.name} />
+      </a>
+      <CardContent>
+        <Title>{product.name.split(" ").slice(0, 5).join(" ")}...</Title>
+        <Price>Rp.{product.unitPrice.toLocaleString("id-ID")}</Price>
+        <div
+          style={{
+            width: "90px",
+            margin: "0",
+            padding: "5",
+            position: "relative",
+            left: "-30px",
+            top: "5px",
+          }}
+          className="star-rating"
+        >
+          {/* Render star images for the star rating */}
+          {[...Array(starRating)].map((_, index) => (
+            <img
+              key={index}
+              style={{ maxWidth: "15px" }}
+              src={Star} // Replace with your star icon image
+              alt="rating"
+            />
+          ))}
+          <p
             style={{
-              maxWidth: "40px",
-              border: "none",
-              borderRadius: "50%",
-              background: "#DDEFEF",
-              cursor: "pointer",
+              position: "relative",
+              top: "1px",
+              left: "5px",
+              fontSize: "12px",
             }}
-            onClick={() => onAddToCart(product)}
-            disabled={product.stock === 0}
           >
-            {product.stock > 0 ? (
-              <img style={{ maxWidth: "24px" }} src={CartIcon} alt="Cart" />
-            ) : (
-              <p style={{ color: 'black', margin: '0', padding: '0', fontSize: '7px', fontWeight: '700' }}>Out of stock</p>
-            )}
-          </button>
+            5.0
+          </p>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -90,7 +115,7 @@ const searchContainerStyle = {
   display: "flex",
   alignItems: "center",
   marginBottom: "20px",
-  width: "100%",
+  width: "97.2%",
 };
 
 const searchInputStyle = {
@@ -120,20 +145,18 @@ const ProductList = () => {
   const handleAddToCart = async (product) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      const url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts";
+      const url =
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts";
       try {
         const response = await axios.post(url, product, {
           headers: { access_token: accessToken },
         });
         console.log(response.data, " ???Asdas");
-        // dispatch(addToCart(product));
-        // navigate('/cart');
       } catch (err) {
         console.log("asdsad");
       }
     } else {
-      alert('login dulu dong')
-      // navigate("/login");
+      alert("login dulu dong");
     }
   };
   const handleSearchInputChange = (event) => {
@@ -176,6 +199,7 @@ const ProductList = () => {
             <h2 className="productlist-title">Produk Rekomendasi</h2>
             <div style={searchContainerStyle}>
               <input
+                className="dropSearch"
                 type="text"
                 value={searchQuery}
                 onChange={handleSearchInputChange}
@@ -183,6 +207,7 @@ const ProductList = () => {
                 placeholder="Cari Produk Berdasarkan Nama..."
               />
               <select
+                className="dropPil"
                 value={sortOption}
                 onChange={handleSortOptionChange}
                 style={sortSelectStyle}
@@ -193,7 +218,7 @@ const ProductList = () => {
               </select>
             </div>
 
-            <div className="products">
+            <div className="CardGridContainer">
               {filteredAndSortedData.map((product) => (
                 <ProductCard
                   key={product.id}

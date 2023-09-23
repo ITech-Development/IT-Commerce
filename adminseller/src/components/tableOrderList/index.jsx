@@ -12,7 +12,7 @@ const CheckoutList = ({ data }) => {
           <h2>User: {checkout.checkout?.users?.fullName}</h2>
           <p>Total Price: {checkout.checkout.totalPrice}</p>
           <p>Shipping Address: {checkout.checkout.shippingAddress}</p>
-          <p>Order Date: {checkout.checkout.createdAt}</p>
+          <p>Order Date: {new Date(checkout.checkout.createdAt).toLocaleString()}</p>
           <h3>Products:</h3>
           <ul>
             {checkout.products.map((product) => (

@@ -38,7 +38,8 @@ class AdminSellerController {
                     ],
                     where: {
                         '$checkouts.voucherCode$': 'IT01' // Filter by voucherCode
-                    }
+                    },
+                    order: [['createdAt', 'ASC']],
                 });
 
                 // Buat objek untuk menyimpan daftar pesanan

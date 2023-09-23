@@ -51,7 +51,7 @@
 
 /* Styles for the shipping method selection section */
 .calcongkir {
-  max-width: 1420px;
+  max-width: 1350px;
   margin: auto;
   padding: 20px;
   border: 1px solid rgb(244, 238, 238);
@@ -82,6 +82,7 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 10px;
 }
+
 
 .calcongkir input[type="radio"] {
   display: none;

@@ -89,7 +89,7 @@ class MidtransController {
       const user = await User.findByPk(req.user.id);
       let snap = new midtransClient.Snap({
         // Set to true if you want Production Environment (accept real transaction).
-        isProduction: false,
+        isProduction: true,
         serverKey: midtransKeyIndoRiau,
       });
       let order_id = "INDORIAU-ORDERID-" +

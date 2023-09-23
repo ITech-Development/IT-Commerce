@@ -1,8 +1,3 @@
-
-body {
-  font-family: Arial, sans-serif;
-}
-
 /* Navigation styles */
 .navigation {
   margin: 0;
@@ -11,18 +6,17 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100; /* Ensure it's on top of other elements */
-  height: 65px;
+  z-index: 100;
+  height: 70px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  background-color: #DEEEF7;
+  background-color: #ffffff;
   color: black;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
-
 
 .navigation img {
   height: 40px;
@@ -77,6 +71,7 @@ body {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 0.5rem;
+  margin: 0;
   border-radius: 4px;
   display: none;
 }
@@ -115,7 +110,9 @@ body {
 /* Media query for mobile view */
 @media screen and (max-width: 768px) {
   .navigation {
-    padding: 0 1rem;
+    display: flex;
+    padding: 0 15px;
+    margin: 0;
   }
 
   .navigation-menu ul {
@@ -146,13 +143,23 @@ body {
   .navigation-menu.expanded li a {
     padding: 1rem;
   }
+
+  .hamburger i:before {
+    content: '\f0c9'; /* Unicode for the hamburger icon */
+    font-family: FontAwesome; /* Assuming you're using Font Awesome for icons */
+    font-size: 1.8rem;
+  }
+
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
 }
+
 .cart-icon {
   width: 30px;
   height: 30px;
   margin-right: 10px;
   cursor: pointer;
-  /* display: flex; */
   position: relative;
-  top:12px;
+  top: 12px;
 }

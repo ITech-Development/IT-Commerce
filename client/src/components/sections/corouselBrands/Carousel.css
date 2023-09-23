@@ -1,0 +1,32 @@
+.carouselbrand {
+    display: flex;
+    gap: 60px;
+    padding: 30px 0;
+    margin: auto;
+    width: 1350px;
+    justify-content: space-between;
+  }
+  .imgcorouselBrand {
+    width: 100px;
+    height: 40px;
+  }
+  
+  @media screen and (max-width: 767px) {
+    .carouselbrand {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr); /* Membuat 4 kolom dengan lebar yang sama */
+      gap: 14px; /* Mengatur jarak antar elemen dalam grid */
+      position: relative;
+      padding: 0 auto;
+      margin: 0 auto 0 20px; /* Mengatur margin otomatis di sisi kanan dan kiri untuk menengahkan elemen */
+      top: -136px;
+      width: 60%; /* Mengisi seluruh lebar parent container */
+      max-width: 400px;
+    }
+    .imgcorouselBrand {
+      width: auto;
+      height: 15px;
+      max-width: 700px;
+    }
+    
+  }

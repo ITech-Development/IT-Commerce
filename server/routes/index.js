@@ -54,4 +54,5 @@ router.get('/', (req, res) => {
     res.send('Halo ini adalah server milik Indo Teknik');
 })
 
+
 module.exports = router

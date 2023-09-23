@@ -1,19 +1,45 @@
 .category-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
   justify-content: space-between;
   gap: 20px;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  border: #cfc9c9 1px solid;
+  /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); */
   flex: 1;
+  margin: auto;
+  /* width: 60%; */
 }
 
 .category-section {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   padding: 20px;
+  border-radius: 10px;
+
+  /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); */
+  flex: 1;
+}
+
+.secRight {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 10px;
+  border: #cfc9c9 1px solid;
+  max-width: 420px;
+  max-height: 192px;
+  flex: 1;
+  margin-left: 20px;
+}
+
+.category-section h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #333333;
 }
 
 .category-sectionCategories {
@@ -21,36 +47,62 @@
   flex-direction: row;
   align-items: center;
   gap: 20px;
-  padding: 20px;
+  padding: 5px 10px;
   background-color: white;
 }
 
-.category-section h1 {
-  margin: 0;
-  font-size: 28px;
-  color: #333333;
-  /* text-align: center; */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  /* gap: 10px; */
+}
+
+.vchp {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.category-image {
+  width: 80px;
+  height: 80px;
+}
+
+.imgvc {
+  max-width: 100px;
 }
 
 .category-card {
   background-color: rgb(255, 255, 255);
-  border-radius: 10px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 100%;
+  /* border-radius: 7px;
+  border: #cfc9c9 1px solid; */
+  /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); */
+  padding: 10px;
+  width: auto;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
+  flex-basis: calc(100% - 10px); /* 50% lebar kartu minus jarak antara kartu */
+  max-width: calc(100% - 10px); /* 50% lebar kartu minus jarak antara kartu */
+}
+
+.category-card:hover {
+  background-color: none; /* Change to the desired hover background color */
+  transform: scale(1.05); /* Increase card size on hover */
 }
 
 .category-card h1 {
-  margin: 0;
-  padding: 40px 5px;
+  margin: auto;
   font-size: 18px;
   color: #333333;
-  width: 130px;
+  width: auto;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  align-content: center;
   text-decoration: none;
 }
+
 .category-card a {
   text-decoration: none;
 }
@@ -68,4 +120,206 @@
 
 .view-all-button:hover {
   background-color: #0056b3;
+}
+
+.view-all-button-Voucher {
+  margin-top: 20px;
+  width: auto;
+  padding: 13px 23px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.view-all-button-Voucher:hover {
+  background-color: #0056b3;
+}
+
+.seeAll {
+  display: none;
+}
+
+.seeAlltext {
+  display: none;
+}
+.titleCategory {
+  color: black;
+}
+@media (max-width: 768px) {
+  .allmas {
+    position: relative;
+    top: 10px;
+  }
+  .seeAll {
+    display: inline-block;
+    width: 45px;
+    position: relative;
+    left: 3px;
+  }
+
+  .seeAlltext {
+    text-decoration: none;
+    font-size: 10px;
+    color: black;
+    position: relative;
+    top: 23px;
+    left: -45px;
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .prdt {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: -165px;
+    left: -30px;
+  }
+  .category-container {
+    position: relative;
+    max-width: 330px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 0;
+    border: none;
+  }
+
+  .secRight {
+    position: relative;
+    max-width: 330px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 0;
+    border: none;
+    top: -32px;
+    left: 15px;
+  }
+  .secRight h3 {
+    font-size: 10px;
+    max-width: 190px;
+    line-height: 16px;
+  }
+  .secRight p {
+    font-size: 10px;
+    position: relative;
+    top: -19px;
+    display: none;
+  }
+  .category-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .category-section h1 {
+    font-size: 14px;
+    max-width: 120px;
+  }
+
+  .category-section button {
+    font-size: 10px;
+    width: 130px;
+    padding: 8px;
+    display: none;
+  }
+
+  .view-all-button-Voucher {
+    position: relative;
+    width: 120px;
+    height: 24px;
+    font-size: 8px;
+    top: -82px;
+    display: flex;
+    align-items: center;
+  }
+
+  .vchp {
+    position: relative;
+    top: -2px;
+    display: flex;
+  }
+
+  /* .imgvc {
+    display: flex;
+    padding: 0 5px;
+    margin: auto;
+
+  } */
+
+  .card-grid {
+    display: flex;
+    width: 45px;
+    height: 10px;
+    position: relative;
+    top: -113px;
+    left: 75px;
+    font-size: 10px;
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ); /* Hanya 3 kolom di tampilan mobile */
+  }
+
+  .category-image {
+    max-width: 50px;
+    max-height: 50px;
+  }
+
+  .titleCategory {
+    color: black;
+    width: 52px;
+    font-weight: 500;
+  }
+
+  .category-card {
+    font-size: 8px;
+    display: none; /* Sembunyikan seluruh category-card */
+  }
+
+  .category-card:nth-child(1) {
+    display: block; /* Tampilkan category-card pertama (atau yang sesuai dengan kebutuhan Anda) */
+  }
+  .category-card:nth-child(2) {
+    display: block; /* Tampilkan category-card pertama (atau yang sesuai dengan kebutuhan Anda) */
+  }
+  .category-card:nth-child(3) {
+    display: block; /* Tampilkan category-card pertama (atau yang sesuai dengan kebutuhan Anda) */
+  }
+  .category-card:nth-child(4) {
+    display: block; /* Tampilkan category-card pertama (atau yang sesuai dengan kebutuhan Anda) */
+  }
+
+  .category-card h1 {
+    margin: 0;
+    padding: 40px 5px;
+    font-size: 8px; /* Mengatur ukuran font menjadi 10px */
+    color: #333333;
+    /* width: 100px; */
+    text-decoration: none;
+    position: relative;
+    left: -70px;
+    top: -12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-container {
+    width: 95%;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px; /* Tambahkan gap antara kartu pada layar sangat kecil */
+  }
 }
