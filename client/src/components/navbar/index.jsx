@@ -5,12 +5,15 @@ import axios from "axios";
 import Logo from "../../assets/Logoss.png";
 import CartIcon from "./iconCart.png";
 import "@fortawesome/fontawesome-free/css/all.css";
+import { useSelector } from "react-redux";
 
 export default function Navigation() {
   const [carts, setCarts] = useState([]);
   const [profile, setProfile] = useState([]);
 
   const totalQuantity = carts.reduce((total, item) => total + item.quantity, 0);
+
+  const cartItems = useSelector((state) => state.cart.items);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
@@ -95,7 +98,8 @@ export default function Navigation() {
                   fontSize: "10px",
                 }}
               >
-                {totalQuantity}
+                {/* {totalQuantity} */}
+                {cartItems.length}
               </span>
             </Link>
           </li>

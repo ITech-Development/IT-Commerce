@@ -10,6 +10,7 @@ import Itech from "../../assets/Itech.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FaShoppingCart } from "react-icons/fa"; // Menggunakan react-icons/fa5 untuk ikon dari Font Awesome 5
+import { removeFromCart } from "../../features/cart/cartSlice";
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
 const Cart = () => {
@@ -132,6 +133,7 @@ const Cart = () => {
       axios({ url, method: "delete", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, "remooove");
+          dispatch(removeFromCart(data))
         })
         .catch((error) => {
           console.log("asdasd remove");
@@ -523,7 +525,7 @@ const Cart = () => {
                         padding: "8px 0",
                       }}
                     >
-                      
+
                       <span>PPN 11% :</span>
                       <span className="amount"> Rp. {calculatePPNItech()}</span>
                     </div>

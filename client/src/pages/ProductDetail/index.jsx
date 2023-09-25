@@ -5,6 +5,8 @@ import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import Star from "../../assets/star.png";
 import "./indexDetail.css";
+import { addToCart } from "../../features/cart/cartSlice";
+import { useDispatch } from "react-redux";
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
@@ -66,6 +68,8 @@ const ProductDetailPage = () => {
       });
   }, [id]);
 
+  const dispatch = useDispatch()
+
   const handleAddToCart = () => {
     if (accessToken) {
       axios
@@ -74,6 +78,8 @@ const ProductDetailPage = () => {
         })
         .then(({ data }) => {
           console.log(data, "berhasil ditambahkan ke keranjang");
+          dispatch(addToCart(data))
+          navigate("/cart");
         })
         .catch((err) => {
           console.log(err, "handle add to cart anda bermasalah");
@@ -142,7 +148,7 @@ const ProductDetailPage = () => {
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>
-              Rp. {product.unitPrice.toLocaleString("id-ID")}
+            Rp. {product.unitPrice.toLocaleString("id-ID")}
           </Price>
           <Stock>
             Stok Tersisa {" "}
