@@ -2,22 +2,6 @@ const { ProductType, ProductCategory } = require('../models')
 
 class ProductTypeController {
 
-    // static async getAllProductType(req, res, next) {
-    //     try {
-    //         const productTypes = await ProductType.findAll({
-    //             include: [
-    //                 {
-    //                     model: ProductCategory,
-    //                     as: 'product_categories'
-    //                 }
-    //             ]
-    //         })
-    //         res.status(200).json(productTypes)
-    //     } catch (error) {
-    //         next(error)
-    //     }
-    // }
-
     static async getAllProductType(req, res, next) {
         console.log(req.params, 'dari type');
         try {
