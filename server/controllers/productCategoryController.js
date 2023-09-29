@@ -26,7 +26,7 @@ class ProductCategoryController {
             })
             res.status(200).json(productCategories)
         } catch (error) {
-            console.log(error,'test eror');
+            console.log(error, 'test eror');
             next(error)
         }
     }

@@ -32,6 +32,7 @@ import DetailsOrder from "./pages/DetailsOrder";
 import store from './app/store'
 import { Provider } from "react-redux";
 import CategoryList from './pages/CategoryList/CategoryList'
+import CategoryDetail from './pages/CategoryDetail' 
 
 const Routing = () => {
   return (
@@ -39,6 +40,7 @@ const Routing = () => {
       <Route exact path="/" element={<Homepage />} />
       <Route path="/productlist" element={<ProductList />} />
       <Route path="/category-list" element={<CategoryList />} />
+      <Route path="/category-list/:id" element={<CategoryDetail />} />
       <Route path="/products/:id" element={<ProductDetails />} />
       <Route path="/error404" element={<NotFound />} />
       <Route path="/cart" element={<Cart />} />
