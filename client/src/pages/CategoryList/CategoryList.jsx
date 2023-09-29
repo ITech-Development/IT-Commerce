@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useGetAllProductsQuery } from "../../features/productsApi";
-import { useGetProductsQuery } from "../../features/product/apiProducts";
+import { useGetProductCategoriesQuery } from "../../features/product/apiProducts";
 import Corousel from "../../components/corousel/product";
-import "./productliststyle.css";
+import "./categoryliststyle.css";
 import "../../App.css";
-import Star from "../../assets/star.png";
 import { FadeLoader } from "react-spinners";
 import styled, { keyframes } from "styled-components";
 
@@ -66,15 +64,10 @@ const Price = styled.p`
 `;
 
 const ProductCard = ({ product, onAddToCart }) => {
-  const starRating = 1;
   return (
     <Card>
-      <a href={`/products/${product.id}`}>
-        <CardImage src={product.image} alt={product.name} />
-      </a>
       <CardContent>
         <Title>{product.name.split(" ").slice(0, 5).join(" ")}...</Title>
-        <Price>Rp.{product.unitPrice.toLocaleString("id-ID")}</Price>
         <div
           style={{
             width: "90px",
@@ -86,25 +79,6 @@ const ProductCard = ({ product, onAddToCart }) => {
           }}
           className="star-rating"
         >
-          {/* Render star images for the star rating */}
-          {[...Array(starRating)].map((_, index) => (
-            <img
-              key={index}
-              style={{ maxWidth: "15px" }}
-              src={Star} // Replace with your star icon image
-              alt="rating"
-            />
-          ))}
-          <p
-            style={{
-              position: "relative",
-              top: "1px",
-              left: "5px",
-              fontSize: "12px",
-            }}
-          >
-            5.0
-          </p>
         </div>
       </CardContent>
     </Card>
@@ -138,7 +112,7 @@ const sortSelectStyle = {
 
 const ProductList = () => {
   // const { data, error, isLoading } = useGetAllProductsQuery();
-  const { data, error, isLoading } = useGetProductsQuery();
+  const { data, error, isLoading } = useGetProductCategoriesQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
 

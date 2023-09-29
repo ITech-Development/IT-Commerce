@@ -9,7 +9,7 @@ import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
 import styled from "styled-components";
 
-// const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
+// const API_URL = "http://localhost:3100";
 
 function Index() {
   let [carts, setCarts] = useState([]);
@@ -40,7 +40,7 @@ function Index() {
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/users/me";
+      let url = "http://localhost:3100/users/me";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
           setProfile(data);
@@ -55,7 +55,7 @@ function Index() {
     const fetchVouchers = async () => {
       try {
         const response = await axios.get(
-          "https://indoteknikserver-732012365989.herokuapp.com/admin-sellers"
+          "http://localhost:3100/admin-sellers"
         );
         setVouchers(response.data);
       } catch (error) {
@@ -82,7 +82,7 @@ function Index() {
 
     let params = { total: bayar };
     const response = await axios({
-      url: `https://indoteknikserver-732012365989.herokuapp.com/midtrans/indo-riau`,
+      url: `http://localhost:3100/midtrans/indo-riau`,
       params,
       data: {
         carts,
@@ -149,7 +149,7 @@ function Index() {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       let url =
-        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/increment/" +
+        "http://localhost:3100/product-carts/increment/" +
         id;
       axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
@@ -165,7 +165,7 @@ function Index() {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       let url =
-        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/decrement/" +
+        "http://localhost:3100/product-carts/decrement/" +
         id;
       axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
@@ -181,7 +181,7 @@ function Index() {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       let url =
-        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/remove/" +
+        "http://localhost:3100/product-carts/remove/" +
         id;
       axios({ url, method: "delete", headers: { access_token: accessToken } })
         .then(({ data }) => {
@@ -242,7 +242,7 @@ function Index() {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       let url =
-        "https://indoteknikserver-732012365989.herokuapp.com/product-carts/indo-riau";
+        "http://localhost:3100/product-carts/indo-riau";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
           setCarts(data);
@@ -258,7 +258,7 @@ function Index() {
     const fetchProvinceData = async () => {
       try {
         const response = await axios.get(
-          "https://indoteknikserver-732012365989.herokuapp.com/users/province",
+          "http://localhost:3100/users/province",
           {
             headers: { access_token: localStorage.getItem("access_token") },
           }
@@ -279,7 +279,7 @@ function Index() {
     setCheckoutProvince(found.province);
     try {
       const response = await axios.get(
-        `https://indoteknikserver-732012365989.herokuapp.com/users/city/${checkoutProvinceId}`,
+        `http://localhost:3100/users/city/${checkoutProvinceId}`,
         {
           headers: { access_token: localStorage.getItem("access_token") },
         }
@@ -296,7 +296,7 @@ function Index() {
     setCheckoutCity(found.city_name);
     try {
       const response = await axios.get(
-        `https://indoteknikserver-732012365989.herokuapp.com/users/subdistrict/${selectedCityId}`,
+        `http://localhost:3100/users/subdistrict/${selectedCityId}`,
         {
           headers: { access_token: localStorage.getItem("access_token") },
         }
@@ -316,7 +316,7 @@ function Index() {
     setCheckoutSubdistrict(found.subdistrict_name);
     const totalWeight = calculateTotalWeight(); // Calculate total weight dynamically
     let query = { destination: selectedCityId, courier, weight: totalWeight };
-    let url = `https://indoteknikserver-732012365989.herokuapp.com/users/cost`;
+    let url = `http://localhost:3100/users/cost`;
     let { data } = await axios({
       url,
       params: query,

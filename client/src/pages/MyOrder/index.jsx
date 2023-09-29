@@ -6,7 +6,7 @@ function CheckoutProductsPage() {
   const [checkoutProducts, setCheckoutProducts] = useState({});
 
   useEffect(() => {
-    fetch('https://indoteknikserver-732012365989.herokuapp.com/checkout-products',
+    fetch('http://localhost:3100/checkout-products',
       {
         headers: {
           access_token: localStorage.getItem('access_token')

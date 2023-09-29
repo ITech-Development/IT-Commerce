@@ -31,12 +31,14 @@ import MyOrder from "./pages/MyOrder";
 import DetailsOrder from "./pages/DetailsOrder";
 import store from './app/store'
 import { Provider } from "react-redux";
+import CategoryList from './pages/CategoryList/CategoryList'
 
 const Routing = () => {
   return (
     <Routes>
       <Route exact path="/" element={<Homepage />} />
       <Route path="/productlist" element={<ProductList />} />
+      <Route path="/category-list" element={<CategoryList />} />
       <Route path="/products/:id" element={<ProductDetails />} />
       <Route path="/error404" element={<NotFound />} />
       <Route path="/cart" element={<Cart />} />

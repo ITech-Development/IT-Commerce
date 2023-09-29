@@ -123,8 +123,8 @@ function ProductCategories() {
               <p className="seeAlltext">lihat semua</p>
             </div>
           </Link>
-          <Link to="/productlist">
-            <button className="view-all-button">Lihat Semua Produk</button>
+          <Link to="/category-list">
+            <button className="view-all-button">Lihat Semua Produk Kategori</button>
           </Link>
         </div>
         <div className="category-sectionCategories">

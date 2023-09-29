@@ -163,7 +163,7 @@ const ProductList = () => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       const url =
-        "https://indoteknikserver-732012365989.herokuapp.com/product-carts";
+        "http://localhost:3100/product-carts";
       try {
         const response = await axios.post(url, product, {
           headers: { access_token: accessToken },

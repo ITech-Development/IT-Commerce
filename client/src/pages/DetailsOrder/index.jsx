@@ -11,7 +11,7 @@ function CheckoutProductsPage() {
     useEffect(() => {
         async function fetchCheckoutProducts() {
             try {
-                const response = await axios.get(`https://indoteknikserver-732012365989.herokuapp.com/checkout-products/${id}`, {
+                const response = await axios.get(`http://localhost:3100/checkout-products/${id}`, {
                     headers: {
                         access_token: localStorage.getItem('access_token')
                     }

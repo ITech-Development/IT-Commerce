@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FaShoppingCart } from "react-icons/fa"; // Menggunakan react-icons/fa5 untuk ikon dari Font Awesome 5
 import { removeFromCart } from "../../features/cart/cartSlice";
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
+const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const Cart = () => {
   const [carts, setCarts] = useState([]);
@@ -31,7 +31,7 @@ const Cart = () => {
       if (accessToken) {
         try {
           const response = await axios.get(
-            "https://indoteknikserver-732012365989.herokuapp.com/product-carts/",
+            "http://localhost:3100/product-carts/",
             { headers: { access_token: accessToken } }
           );
           setCarts(response.data);
@@ -49,7 +49,7 @@ const Cart = () => {
       if (accessToken) {
         try {
           const response = await axios.get(
-            "https://indoteknikserver-732012365989.herokuapp.com/product-carts/juvindo",
+            "http://localhost:3100/product-carts/juvindo",
             { headers: { access_token: accessToken } }
           );
           setCartsJuvindo(response.data);
@@ -67,7 +67,7 @@ const Cart = () => {
       if (accessToken) {
         try {
           const response = await axios.get(
-            "https://indoteknikserver-732012365989.herokuapp.com/product-carts/itech",
+            "http://localhost:3100/product-carts/itech",
             { headers: { access_token: accessToken } }
           );
           setCartsItech(response.data);
@@ -85,7 +85,7 @@ const Cart = () => {
       if (accessToken) {
         try {
           const response = await axios.get(
-            "https://indoteknikserver-732012365989.herokuapp.com/product-carts/indo-riau",
+            "http://localhost:3100/product-carts/indo-riau",
             { headers: { access_token: accessToken } }
           );
           setCartsIndoRiau(response.data);
@@ -101,7 +101,7 @@ const Cart = () => {
   const handlerInc = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/increment/" + id;
+      let url = "http://localhost:3100/product-carts/increment/" + id;
       axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data);
@@ -115,7 +115,7 @@ const Cart = () => {
   const handlerDec = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/decrement/" + id;
+      let url = "http://localhost:3100/product-carts/decrement/" + id;
       axios({ url, method: "patch", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, "ASdasdas");
@@ -129,7 +129,7 @@ const Cart = () => {
   const handlerRemove = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/product-carts/remove/" + id;
+      let url = "http://localhost:3100/product-carts/remove/" + id;
       axios({ url, method: "delete", headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, "remooove");
@@ -147,7 +147,7 @@ const Cart = () => {
   const updateCartItemQuantity = async (id, action) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = `https://indoteknikserver-732012365989.herokuapp.com/product-carts/${action}`;
+      let url = `http://localhost:3100/product-carts/${action}`;
       if (id) {
         url += `/${id}`;
       }
