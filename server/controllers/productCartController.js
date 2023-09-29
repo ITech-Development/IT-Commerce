@@ -27,6 +27,28 @@ class ProductCartController {
     }
   }
 
+  static async getCountCarts(req, res, next) {
+    try {
+      let cart = await Cart.findOne({
+        where: { userId: req.user.id}
+      })
+      let data = await ProductCart.findAll({
+        where: { cartId: cart.id}
+      })
+      let total = 0
+      if (data.length) {
+        for await (let item of data ) {
+          console.log(item, 'ini item');
+          total += item.quantity
+        }
+      }
+      res.json(total)
+      // console.log(data, 'count cart dari backend');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   static async getAllProductItechs(req, res, next) {
     try {
       let findedCart = await Cart.findOne({
@@ -224,9 +246,9 @@ class ProductCartController {
   }
 
   static async addProductCart(req, res, next) {
-    
+
     const t = await sequelize.transaction();
-    const { id } = req.body;
+    const { id } = req.body.product;
     try {
       let findedCart = await Cart.findOne({ where: { userId: req.user.id } });
       let idTemp;

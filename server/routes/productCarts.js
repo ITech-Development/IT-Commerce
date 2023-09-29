@@ -5,6 +5,7 @@ const { authenticationUser } = require("../middlewares/auth");
 
 router.use(authenticationUser)
 router.get("/", ProductCartController.getAllProductCarts);
+router.get("/count-carts", ProductCartController.getCountCarts);
 router.get("/itech", ProductCartController.getAllProductItechs);
 router.get("/indo-riau", ProductCartController.getAllProductIndoRiaus);
 router.get("/juvindo", ProductCartController.getAllProductJuvindos);

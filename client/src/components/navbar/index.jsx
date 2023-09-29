@@ -6,34 +6,41 @@ import Logo from "../../assets/Logoss.png";
 import CartIcon from "./iconCart.png";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { useSelector } from "react-redux";
+import { useGetCountCartsQuery } from "../../features/product/apiProducts";
 
 export default function Navigation() {
   const [carts, setCarts] = useState([]);
   const [profile, setProfile] = useState([]);
 
+  const { data: totalCart } = useGetCountCartsQuery()
+  useEffect(() => {
+    console.log(totalCart, 'test total cart');
+  }, [totalCart])
+
   const totalQuantity = carts.reduce((total, item) => total + item.quantity, 0);
 
   const cartItems = useSelector((state) => state.cart.items);
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url =
-        "https://indoteknikserver-732012365989.herokuapp.com/product-carts";
-      axios({ url, headers: { access_token: accessToken } })
-        .then(async ({ data }) => {
-          setCarts(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   const accessToken = localStorage.getItem("access_token");
+  //   if (accessToken) {
+  //     let url =
+  //       "http://localhost:3100/product-carts";
+  //     axios({ url, headers: { access_token: accessToken } })
+  //       .then(async ({ data }) => {
+  //         console.log(data, 'data di sini');
+  //         setCarts(data);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // }, []);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = "https://indoteknikserver-732012365989.herokuapp.com/users/me";
+      let url = "http://localhost:3100/users/me";
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
           console.log(data, "dari profile");
@@ -99,7 +106,8 @@ export default function Navigation() {
                 }}
               >
                 {/* {totalQuantity} */}
-                {cartItems.length}
+                {/* {cartItems.length} */}
+                {totalCart}
               </span>
             </Link>
           </li>
