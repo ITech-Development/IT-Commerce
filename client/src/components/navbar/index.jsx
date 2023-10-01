@@ -7,50 +7,17 @@ import CartIcon from "./iconCart.png";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { useSelector } from "react-redux";
 import { useGetCountCartsQuery } from "../../features/product/apiProducts";
+import { useGetMeQuery } from "../../features/user/apiUser";
 
 export default function Navigation() {
   const [carts, setCarts] = useState([]);
-  const [profile, setProfile] = useState([]);
 
   const { data: totalCart } = useGetCountCartsQuery()
+  const { data: me } = useGetMeQuery()
+
   useEffect(() => {
     console.log(totalCart, 'test total cart');
   }, [totalCart])
-
-  const totalQuantity = carts.reduce((total, item) => total + item.quantity, 0);
-
-  const cartItems = useSelector((state) => state.cart.items);
-
-  // useEffect(() => {
-  //   const accessToken = localStorage.getItem("access_token");
-  //   if (accessToken) {
-  //     let url =
-  //       "http://localhost:3100/product-carts";
-  //     axios({ url, headers: { access_token: accessToken } })
-  //       .then(async ({ data }) => {
-  //         console.log(data, 'data di sini');
-  //         setCarts(data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // }, []);
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/users/me";
-      axios({ url, headers: { access_token: accessToken } })
-        .then(async ({ data }) => {
-          console.log(data, "dari profile");
-          setProfile(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, []);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownHovered, setIsDropdownHovered] = useState(false);
@@ -105,9 +72,7 @@ export default function Navigation() {
                   fontSize: "10px",
                 }}
               >
-                {/* {totalQuantity} */}
-                {/* {cartItems.length} */}
-                {totalCart}
+                {totalCart === 0 ? '0' : totalCart}
               </span>
             </Link>
           </li>
@@ -127,7 +92,7 @@ export default function Navigation() {
               }}
             >
               <p style={{ fontSize: "16px", paddingRight: "5px" }}>
-                Halo, <strong>{profile.fullName}</strong>{" "}
+                Halo, <strong>{me?.fullName}</strong>{" "}
               </p>
               <img
                 style={{
