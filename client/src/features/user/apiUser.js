@@ -33,11 +33,22 @@ export const usersApi = createApi({
     getMe: builder.query({
       query: () => "users/me"
     }),
+    editMe: builder.mutation({
+      query: (updatedUserData) => ({
+        url: 'users/me', // URL untuk mengedit profil pengguna
+        method: 'PUT', // Gunakan metode PUT untuk mengganti data profil
+        body: updatedUserData, // Data yang akan dikirim dalam permintaan
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }),
+    }),
   })
 })
 
-export const { 
+export const {
+  useEditMeMutation,
   useGetMeQuery,
-  useLoginMutation, 
+  useLoginMutation,
   useRegisterMutation
- } = usersApi
+} = usersApi

@@ -1,121 +1,88 @@
-// ProfileForm.js
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from 'axios'
-import { Link, useParams } from 'react-router-dom';
+import { useGetMeQuery, useEditMeMutation } from "../../features/user/apiUser"; // Import the hooks
+import { useDispatch } from "react-redux";
 
 const ProfileForm = () => {
+  // Use the useGetMeQuery hook to fetch the user's profile data
+  const { data: userData, isError, isLoading } = useGetMeQuery();
 
-  const [user, setUser] = useState({
-    fullName: '',
-    phoneNumber: '',
-    address: '',
-    // Tambahkan atribut lainnya jika perlu
-  });
-  // console.log(typeof user.id, 'testtesttest');
-  // const id = user.id
+  // Use the useEditMeMutation hook to update the user's profile data
+  const [editMe, { isLoading: isEditing }] = useEditMeMutation();
+
+  const dispatch = useDispatch();
+
+  // Create state variables to track form input values
+  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
 
   useEffect(() => {
-    fetchProfileData();
-    // fetchProductOwners();
-  }, []);
-
-  const fetchProfileData = async () => {
-    try {
-      const response = await axios.get(`https://indoteknikserver-732012365989.herokuapp.com/users/me`, {
-        headers: {
-          access_token: localStorage.getItem('access_token')
-        }
-      });
-      setUser(response.data);
-    } catch (error) {
-      console.error('Terjadi kesalahan saat mengambil data produk:', error);
+    // Populate the form fields with user data when userData is available
+    if (userData) {
+      setFullName(userData.fullName);
+      setPhoneNumber(userData.phoneNumber);
+      setAddress(userData.address);
     }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-  };
+  }, [userData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Create an object with updated user data
+    const updatedUserData = {
+      fullName,
+      phoneNumber,
+      address,
+    };
+
     try {
-      const response = await axios.put(`https://indoteknikserver-732012365989.herokuapp.com/users/me`, user, {
-        headers: {
-          // 'Content-Type': 'application/json',
-          access_token: localStorage.getItem('access_token'),
-          // Tambahkan header lainnya sesuai kebutuhan
-        },
-      });
+      // Call the editMe mutation to update the user's profile
+      const response = await editMe(updatedUserData).unwrap();
 
-      if (response.status === 200) {
-        // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil edit produk.
-        // Contoh:
-        console.log('Produk berhasil diupdate.');
-        window.location.href = '/profile-update';
-      } else {
-        console.error('Terjadi kesalahan saat mengupdate produk.');
-      }
+      // Optionally, you can dispatch an action to update the user's data in Redux store
+      // dispatch(updateUserData(response));
+
+      // Handle success, e.g., show a success message
+      console.log("Profile updated successfully", response);
     } catch (error) {
-      console.error('Terjadi kesalahan:', error);
+      // Handle errors, e.g., show an error message
+      console.error("Error updating profile", error);
     }
-
   };
 
-  // const handleProfilePictureChange = (event) => {
-  //   const file = event.target.files[0];
-  //   setProfilePicture(file);
-  // };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading profile data.</div>;
+  }
 
   return (
     <FormContainer>
       <Heading>Update Your Profile</Heading>
       <form onSubmit={handleSubmit}>
         <Label>Full Name</Label>
-        <Input
-          name="fullName"
-          type="text"
-          value={user.fullName}
-          onChange={handleChange}
-        />
+        <Input name="fullName" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} />
 
         <Label>Email</Label>
-        <Input
-          name="email"
-          type="email"
-          value={user.email}
-          onChange={handleChange}
-          readOnly
-        // onChange={(e) => setEmail(e.target.value)}
-        />
+        <Input name="email" type="email" value={userData?.email} readOnly />
 
         <Label>Phone</Label>
-        <Input
-          name="phoneNumber"
-          type="tel"
-          value={user.phoneNumber}
-          onChange={handleChange}
-        // onChange={(e) => setPhone(e.target.value)}
-        />
+        <Input name="phoneNumber" type="tel" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
 
         <Label>Address</Label>
-        <TextArea
-          type="text"
-          name="address"
-          value={user.address}
-          onChange={handleChange}
-          // onChange={(e) => setAddress(e.target.value)}
-          rows={4}
-        />
+        <TextArea name="address" rows={4} value={address} onChange={(e) => setAddress(e.target.value)} />
 
-
-
-        <Button type="submit">Update Profile</Button>
+        <Button type="submit" disabled={isEditing}>
+          {isEditing ? "Updating..." : "Update Profile"}
+        </Button>
       </form>
     </FormContainer>
   );
 };
+
 
 export default ProfileForm;
 

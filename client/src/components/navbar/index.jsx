@@ -14,6 +14,7 @@ export default function Navigation() {
 
   const { data: totalCart } = useGetCountCartsQuery()
   const { data: me } = useGetMeQuery()
+  console.log(me, 'dari me');
 
   useEffect(() => {
     console.log(totalCart, 'test total cart');
