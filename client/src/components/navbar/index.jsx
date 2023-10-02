@@ -4,11 +4,10 @@ import { Link } from "react-router-dom";
 import Logo from "../../assets/Logoss.png";
 import CartIcon from "./iconCart.png";
 import "@fortawesome/fontawesome-free/css/all.css";
-import { useGetCountCartsQuery } from "../../features/product/apiProducts";
+import { useGetCountCartsQuery } from "../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../features/user/apiUser";
 
 export default function Navigation() {
-
   const { data: totalCart } = useGetCountCartsQuery()
   const { data: me } = useGetMeQuery()
 

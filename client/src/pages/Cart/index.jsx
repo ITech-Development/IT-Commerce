@@ -10,25 +10,34 @@ import Itech from "../../assets/Itech.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FaShoppingCart } from "react-icons/fa"; // Menggunakan react-icons/fa5 untuk ikon dari Font Awesome 5
-import { removeFromCart } from "../../features/cart/cartSlice";
+
 import {
   useRemoveItemFromCartMutation,
   useIncrementCartItemMutation,
-  useDecrementCartItemMutation
+  useDecrementCartItemMutation,
+  useGetCartsIndoRiauQuery,
+  useGetCartsJuvindoQuery,
+  useGetCartsItechQuery
 } from "../../features/cart/apiCarts";
-const API_URL = "http://localhost:3100"; // Define your API URL here
+
 
 const Cart = () => {
   const [carts, setCarts] = useState([]);
-  const [cartsJuvindo, setCartsJuvindo] = useState([]);
-  const [cartsItech, setCartsItech] = useState([]);
-  const [cartsIndoRiau, setCartsIndoRiau] = useState([]);
+  // const [cartsJuvindo, setCartsJuvindo] = useState([]);
+  // const [cartsItech, setCartsItech] = useState([]);
+  // const [cartsIndoRiau, setCartsIndoRiau] = useState([]);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+
+  const { data: cartsIndoRiau } = useGetCartsIndoRiauQuery()
+  const { data: cartsJuvindo } = useGetCartsJuvindoQuery()
+  const { data: cartsItech } = useGetCartsItechQuery()
 
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
   const [incrementCartItem] = useIncrementCartItemMutation()
   const [decrementCartItem] = useDecrementCartItemMutation()
+
+
 
   useEffect(() => {
     dispatch(getTotals());
@@ -52,59 +61,61 @@ const Cart = () => {
     fetchCarts();
   }, []);
 
-  useEffect(() => {
-    const fetchCartsJuvindo = async () => {
-      const accessToken = localStorage.getItem("access_token");
-      if (accessToken) {
-        try {
-          const response = await axios.get(
-            "http://localhost:3100/product-carts/juvindo",
-            { headers: { access_token: accessToken } }
-          );
-          setCartsJuvindo(response.data);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-    fetchCartsJuvindo();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCartsJuvindo = async () => {
+  //     const accessToken = localStorage.getItem("access_token");
+  //     if (accessToken) {
+  //       try {
+  //         const response = await axios.get(
+  //           "http://localhost:3100/product-carts/juvindo",
+  //           { headers: { access_token: accessToken } }
+  //         );
+  //         setCartsJuvindo(response.data);
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     }
+  //   };
+  //   fetchCartsJuvindo();
+  // }, []);
 
-  useEffect(() => {
-    const fetchCartsItech = async () => {
-      const accessToken = localStorage.getItem("access_token");
-      if (accessToken) {
-        try {
-          const response = await axios.get(
-            "http://localhost:3100/product-carts/itech",
-            { headers: { access_token: accessToken } }
-          );
-          setCartsItech(response.data);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-    fetchCartsItech();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCartsItech = async () => {
+  //     const accessToken = localStorage.getItem("access_token");
+  //     if (accessToken) {
+  //       try {
+  //         const response = await axios.get(
+  //           "http://localhost:3100/product-carts/itech",
+  //           { headers: { access_token: accessToken } }
+  //         );
+  //         setCartsItech(response.data);
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     }
+  //   };
+  //   fetchCartsItech();
+  // }, []);
 
-  useEffect(() => {
-    const fetchCartsIndoRiau = async () => {
-      const accessToken = localStorage.getItem("access_token");
-      if (accessToken) {
-        try {
-          const response = await axios.get(
-            "http://localhost:3100/product-carts/indo-riau",
-            { headers: { access_token: accessToken } }
-          );
-          setCartsIndoRiau(response.data);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-    fetchCartsIndoRiau();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCartsIndoRiau = async () => {
+  //     const accessToken = localStorage.getItem("access_token");
+  //     if (accessToken) {
+  //       try {
+  //         const response = await axios.get(
+  //           "http://localhost:3100/product-carts/indo-riau",
+  //           { headers: { access_token: accessToken } }
+  //         );
+  //         setCartsIndoRiau(response.data);
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     }
+  //   };
+  //   fetchCartsIndoRiau();
+  // }, []);
+
+
 
   const handlerInc = (id) => {
     incrementCartItem(id);
@@ -116,29 +127,6 @@ const Cart = () => {
 
   const handlerRemove = (id) => {
     removeItemFromCart(id);
-  };
-
-  const handleClear = () => {
-    updateCartItemQuantity(null, "clear");
-  };
-
-  const updateCartItemQuantity = async (id, action) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = `http://localhost:3100/product-carts/${action}`;
-      if (id) {
-        url += `/${id}`;
-      }
-
-      try {
-        const response = await axios.patch(url, null, {
-          headers: { access_token: accessToken },
-        });
-        setCarts(response.data);
-      } catch (error) {
-        console.log(`${action} error`, error);
-      }
-    }
   };
 
   //juvindo
@@ -203,9 +191,9 @@ const Cart = () => {
 
   return (
     <>
-      {cartsJuvindo.length === 0 &&
-        cartsItech.length === 0 &&
-        cartsIndoRiau.length === 0 ? (
+      {cartsJuvindo?.length === 0 &&
+        cartsItech?.length === 0 &&
+        cartsIndoRiau?.length === 0 ? (
         <div
           className="cart-container"
           style={{ position: "relative", top: "50px" }}
@@ -222,7 +210,7 @@ const Cart = () => {
       ) : (
         // ... Kode yang ada jika ada item dalam keranjang belanja
         <>
-          {cartsIndoRiau.length > 0 && (
+          {cartsIndoRiau?.length > 0 && (
             <div
               className="cart-container"
               style={{ position: "relative", top: "50px" }}
@@ -322,7 +310,7 @@ const Cart = () => {
               </div>
             </div>
           )}
-          {cartsJuvindo.length > 0 && (
+          {cartsJuvindo?.length > 0 && (
             <div
               className="cart-container"
               style={{ position: "relative", top: "50px" }}
@@ -428,7 +416,7 @@ const Cart = () => {
               </div>
             </div>
           )}
-          {cartsItech.length > 0 && (
+          {cartsItech?.length > 0 && (
             <div
               className="cart-container"
               style={{ position: "relative", top: "50px" }}

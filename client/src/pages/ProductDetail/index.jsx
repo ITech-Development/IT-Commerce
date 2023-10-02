@@ -7,7 +7,7 @@ import Star from "../../assets/star.png";
 import "./indexDetail.css";
 // import { addToCart } from "../../features/cart/cartSlice";
 import { useDispatch } from "react-redux";
-import { useAddToCartMutation } from "../../features/product/apiProducts";
+import { useAddToCartMutation } from "../../features/cart/apiCarts";
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");

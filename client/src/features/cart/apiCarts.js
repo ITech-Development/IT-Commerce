@@ -11,6 +11,14 @@ export const cartsApi = createApi({
     }),
     tagTypes: ['Post', 'Get'],
     endpoints: (builder) => ({
+        getCountCarts: builder.query({
+            query: () => "product-carts/count-carts",
+            providesTags: ['Post']
+        }),
+        addToCart: builder.mutation({
+            query: (body) => ({ url: "product-carts", method: 'POST', body }),
+            invalidatesTags: ['Post']
+        }),
         removeItemFromCart: builder.mutation({
             query: (id) => ({
                 url: `product-carts/remove/${id}`, // Ganti dengan URL endpoint penghapusan
@@ -22,6 +30,7 @@ export const cartsApi = createApi({
                 url: `product-carts/increment/${id}`, // Ganti dengan URL endpoint peningkatan
                 method: 'PATCH',
             }),
+            invalidatesTags: ['Post']
         }),
         decrementCartItem: builder.mutation({ // Menambahkan endpoint untuk mengurangi jumlah item
             query: (id) => ({
@@ -29,10 +38,24 @@ export const cartsApi = createApi({
                 method: 'PATCH',
             }),
         }),
+        getCartsIndoRiau: builder.query({
+            query: () => 'product-carts/indo-riau', // Ganti dengan URL endpoint yang sesuai
+        }),
+        getCartsJuvindo: builder.query({
+            query: () => 'product-carts/juvindo', // Ganti dengan URL endpoint yang sesuai
+        }),
+        getCartsItech: builder.query({
+            query: () => 'product-carts/itech', // Ganti dengan URL endpoint yang sesuai
+        }),
     })
 })
 
 export const {
+    useGetCartsIndoRiauQuery,
+    useGetCartsJuvindoQuery,
+    useGetCartsItechQuery,
+    useGetCountCartsQuery,
+    useAddToCartMutation,
     useDecrementCartItemMutation,
     useRemoveItemFromCartMutation,
     useIncrementCartItemMutation,
