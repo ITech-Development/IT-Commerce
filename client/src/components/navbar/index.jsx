@@ -64,11 +64,14 @@ export default function Navigation() {
     return (
       <>
         <div style={{ display: "flex", alignItems: "center" }}>
+        <li>
+            <Link to="/productlist">Artikel</Link>
+          </li>
           <li>
             <Link to="/productlist">Produk</Link>
           </li>
           <li>
-            <Link to="/services">Layanan</Link>
+            <Link to="/services">Servis</Link>
           </li>
         </div>
         {showCart && (

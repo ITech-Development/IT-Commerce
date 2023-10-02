@@ -126,20 +126,13 @@ const searchInputStyle = {
   flex: 1,
 };
 
-const sortSelectStyle = {
-  padding: "8px",
-  height: "48px",
-  fontWeight: "500",
-  borderRadius: "4px",
-  border: "1px solid #ccc",
-  minWidth: "200px",
-};
-
 const ProductList = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortOption, setSortOption] = useState("name");
+  const [selectedSortOption, setSelectedSortOption] = useState("name"); // Initialize the selectedSortOption state
+  const [selectedCategories, setSelectedCategories] = useState([]); // State for selected categories
 
+  
   const handleAddToCart = async (product) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
@@ -157,31 +150,51 @@ const ProductList = () => {
       alert("login dulu dong");
     }
   };
+
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
-
+  
   const handleSortOptionChange = (event) => {
-    setSortOption(event.target.value);
+    setSelectedSortOption(event.target.value); // Update the selectedSortOption state
   };
-
+  
+  // Filter and sort the data based on searchQuery and selectedSortOption
+  const handleCategoryCheckboxChange = (event) => {
+    const category = event.target.value;
+    if (event.target.checked) {
+      // If the checkbox is checked, add the category to the selectedCategories
+      setSelectedCategories([...selectedCategories, category]);
+    } else {
+      // If the checkbox is unchecked, remove the category from the selectedCategories
+      setSelectedCategories(selectedCategories.filter((c) => c !== category));
+    }
+  };
   const filteredAndSortedData = data
-    ? data
-        .filter((product) =>
-          product.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-        .sort((a, b) => {
-          switch (sortOption) {
-            case "price":
-              return a.unitPrice - b.unitPrice;
-            case "stock":
-              return a.stock - b.stock;
-            default:
-              // Sort by name by default
-              return a.name.localeCompare(b.name);
-          }
-        })
-    : [];
+  ? data
+      .filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .filter((product) => {
+        // Filter products by selected categories
+        if (selectedCategories.length === 0) {
+          return true; // If no categories are selected, show all products
+        }
+        return selectedCategories.includes(product.category);
+      })
+      .sort((a, b) => {
+        switch (selectedSortOption) {
+          case "price":
+            return a.unitPrice - b.unitPrice;
+          case "stock":
+            return a.stock - b.stock;
+          default:
+            // Sort by name by default
+            return a.name.localeCompare(b.name);
+        }
+      })
+  : [];
+
   return (
     <>
       <Corousel />
@@ -204,26 +217,100 @@ const ProductList = () => {
                 style={searchInputStyle}
                 placeholder="Cari Produk Berdasarkan Nama..."
               />
-              <select
-                className="dropPil"
-                value={sortOption}
-                onChange={handleSortOptionChange}
-                style={sortSelectStyle}
-              >
-                <option value="name">Berdasarkan Nama</option>
-                <option value="price">Harga Terendah - Tertinggi</option>
-                <option value="stock">Stok Paling Sedikit - Terbanyak</option>
-              </select>
             </div>
-
-            <div className="CardGridContainer">
-              {filteredAndSortedData.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onAddToCart={handleAddToCart}
-                />
-              ))}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                marginLeft: "20px",
+              }}
+            >
+              <div
+                style={{
+                  border: "1px solid gray",
+                  borderRadius: "5px",
+                  padding: "10px 20px 10px 20px",
+                  maxHeight: "450px",
+                  width: "1250px",
+                  marginTop: "20px",
+                }}
+              >
+                <div>
+                  <h2>Filter</h2>
+                  <hr />
+                  <div>
+                    <h3>Kategori</h3>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <label className="container">
+                        <input type="checkbox" checked={selectedCategories.includes("Delivery Valve")}
+                          onChange={handleCategoryCheckboxChange}/>
+                        <span className="checkmark"></span>
+                        Delivery Valve
+                      </label>
+                      <label className="container">
+                        <input type="checkbox" checked={selectedCategories.includes("Element")}
+                          onChange={handleCategoryCheckboxChange}/>
+                        <span className="checkmark"></span>
+                        Element
+                      </label>
+                      <label className="container">
+                        <input type="checkbox" checked={selectedCategories.includes("Head Rotor")}
+                          onChange={handleCategoryCheckboxChange}/>
+                        <span className="checkmark"></span>
+                        Head Rotor
+                      </label>
+                      <label className="container">
+                        <input type="checkbox" checked={selectedCategories.includes("Nozzle")}
+                          onChange={handleCategoryCheckboxChange}/>
+                        <span className="checkmark"></span>
+                        Nozzle
+                      </label>
+                    </div>
+                  </div>{" "}
+                  <hr />
+                  <div>
+                    <h3>Harga</h3>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      {/* <label className="container">
+                        <input
+                          type="radio"
+                          value="name"
+                          checked={selectedSortOption === "name"}
+                          onChange={handleSortOptionChange}
+                        />
+                        Berdasarkan Nama
+                      </label> */}
+                      <label className="container">
+                        <input
+                          type="radio"
+                          value="price"
+                          checked={selectedSortOption === "price"}
+                          onChange={handleSortOptionChange}
+                        />
+                        Harga Terendah - Tertinggi
+                      </label>
+                      <label className="container">
+                        <input
+                          type="radio"
+                          value="stock"
+                          checked={selectedSortOption === "stock"}
+                          onChange={handleSortOptionChange}
+                        />
+                        Stok Paling Sedikit - Terbanyak
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="CardGridContainer">
+                {filteredAndSortedData.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onAddToCart={handleAddToCart}
+                  />
+                ))}
+              </div>
             </div>
           </>
         )}
