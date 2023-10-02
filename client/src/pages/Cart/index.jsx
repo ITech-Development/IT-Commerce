@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { getTotals } from "../../features/cartSlice";
 import IndoRiau from "../../assets/Indoriau.png";
 import Juvindo from "../../assets/JUVINDO.png";
@@ -22,10 +21,6 @@ import {
 
 
 const Cart = () => {
-  const [carts, setCarts] = useState([]);
-  // const [cartsJuvindo, setCartsJuvindo] = useState([]);
-  // const [cartsItech, setCartsItech] = useState([]);
-  // const [cartsIndoRiau, setCartsIndoRiau] = useState([]);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -37,85 +32,9 @@ const Cart = () => {
   const [incrementCartItem] = useIncrementCartItemMutation()
   const [decrementCartItem] = useDecrementCartItemMutation()
 
-
-
   useEffect(() => {
     dispatch(getTotals());
   }, [cart, dispatch]);
-
-  useEffect(() => {
-    const fetchCarts = async () => {
-      const accessToken = localStorage.getItem("access_token");
-      if (accessToken) {
-        try {
-          const response = await axios.get(
-            "http://localhost:3100/product-carts/",
-            { headers: { access_token: accessToken } }
-          );
-          setCarts(response.data);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-    fetchCarts();
-  }, []);
-
-  // useEffect(() => {
-  //   const fetchCartsJuvindo = async () => {
-  //     const accessToken = localStorage.getItem("access_token");
-  //     if (accessToken) {
-  //       try {
-  //         const response = await axios.get(
-  //           "http://localhost:3100/product-carts/juvindo",
-  //           { headers: { access_token: accessToken } }
-  //         );
-  //         setCartsJuvindo(response.data);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     }
-  //   };
-  //   fetchCartsJuvindo();
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchCartsItech = async () => {
-  //     const accessToken = localStorage.getItem("access_token");
-  //     if (accessToken) {
-  //       try {
-  //         const response = await axios.get(
-  //           "http://localhost:3100/product-carts/itech",
-  //           { headers: { access_token: accessToken } }
-  //         );
-  //         setCartsItech(response.data);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     }
-  //   };
-  //   fetchCartsItech();
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchCartsIndoRiau = async () => {
-  //     const accessToken = localStorage.getItem("access_token");
-  //     if (accessToken) {
-  //       try {
-  //         const response = await axios.get(
-  //           "http://localhost:3100/product-carts/indo-riau",
-  //           { headers: { access_token: accessToken } }
-  //         );
-  //         setCartsIndoRiau(response.data);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     }
-  //   };
-  //   fetchCartsIndoRiau();
-  // }, []);
-
-
 
   const handlerInc = (id) => {
     incrementCartItem(id);

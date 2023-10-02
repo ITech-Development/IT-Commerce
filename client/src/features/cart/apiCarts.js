@@ -24,6 +24,7 @@ export const cartsApi = createApi({
                 url: `product-carts/remove/${id}`, // Ganti dengan URL endpoint penghapusan
                 method: 'DELETE',
             }),
+            invalidatesTags: ['Post']
         }),
         incrementCartItem: builder.mutation({
             query: (id) => ({
@@ -37,9 +38,11 @@ export const cartsApi = createApi({
                 url: `product-carts/decrement/${id}`, // Ganti dengan URL endpoint pengurangan
                 method: 'PATCH',
             }),
+            invalidatesTags: ['Post']
         }),
         getCartsIndoRiau: builder.query({
             query: () => 'product-carts/indo-riau', // Ganti dengan URL endpoint yang sesuai
+            invalidatesTags: ['Post']
         }),
         getCartsJuvindo: builder.query({
             query: () => 'product-carts/juvindo', // Ganti dengan URL endpoint yang sesuai
