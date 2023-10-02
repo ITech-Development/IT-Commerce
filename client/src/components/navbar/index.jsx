@@ -1,20 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import Logo from "../../assets/Logoss.png";
 import CartIcon from "./iconCart.png";
 import "@fortawesome/fontawesome-free/css/all.css";
-import { useSelector } from "react-redux";
 import { useGetCountCartsQuery } from "../../features/product/apiProducts";
 import { useGetMeQuery } from "../../features/user/apiUser";
 
 export default function Navigation() {
-  const [carts, setCarts] = useState([]);
 
   const { data: totalCart } = useGetCountCartsQuery()
   const { data: me } = useGetMeQuery()
-  console.log(me, 'dari me');
 
   useEffect(() => {
     console.log(totalCart, 'test total cart');

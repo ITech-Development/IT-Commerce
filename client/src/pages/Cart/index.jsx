@@ -11,6 +11,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FaShoppingCart } from "react-icons/fa"; // Menggunakan react-icons/fa5 untuk ikon dari Font Awesome 5
 import { removeFromCart } from "../../features/cart/cartSlice";
+import {
+  useRemoveItemFromCartMutation,
+  useIncrementCartItemMutation,
+  useDecrementCartItemMutation
+} from "../../features/cart/apiCarts";
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const Cart = () => {
@@ -20,6 +25,10 @@ const Cart = () => {
   const [cartsIndoRiau, setCartsIndoRiau] = useState([]);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+
+  const [removeItemFromCart] = useRemoveItemFromCartMutation()
+  const [incrementCartItem] = useIncrementCartItemMutation()
+  const [decrementCartItem] = useDecrementCartItemMutation()
 
   useEffect(() => {
     dispatch(getTotals());
@@ -97,49 +106,18 @@ const Cart = () => {
     fetchCartsIndoRiau();
   }, []);
 
-
   const handlerInc = (id) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/product-carts/increment/" + id;
-      axios({ url, method: "patch", headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.log("incrementttt");
-        });
-    }
+    incrementCartItem(id);
   };
 
   const handlerDec = (id) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/product-carts/decrement/" + id;
-      axios({ url, method: "patch", headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data, "ASdasdas");
-        })
-        .catch((error) => {
-          console.log("asdasd");
-        });
-    }
+    decrementCartItem(id)
   };
 
   const handlerRemove = (id) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/product-carts/remove/" + id;
-      axios({ url, method: "delete", headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data, "remooove");
-          dispatch(removeFromCart(data))
-        })
-        .catch((error) => {
-          console.log("asdasd remove");
-        });
-    }
+    removeItemFromCart(id);
   };
+
   const handleClear = () => {
     updateCartItemQuantity(null, "clear");
   };

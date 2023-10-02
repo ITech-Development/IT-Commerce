@@ -1,6 +1,5 @@
 // reducers/cartSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-
 // Fungsi untuk mengambil keranjang dari local storage saat aplikasi dimuat
 const loadCartFromLocalStorage = () => {
     const cartData = localStorage.getItem('cart');
