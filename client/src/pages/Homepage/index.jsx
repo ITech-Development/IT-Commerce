@@ -17,6 +17,16 @@ function Index() {
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
   const [isChatbotMessageVisible, setIsChatbotMessageVisible] = useState(false);
+  const [isChatbotModalOpen, setIsChatbotModalOpen] = useState(false);
+
+  const openChatbotModal = () => {
+    setIsChatbotModalOpen(true);
+  };
+  
+  const closeChatbotModal = () => {
+    setIsChatbotModalOpen(false);
+  };
+  
 
   useEffect(() => {
     const hasModalBeenShown = localStorage.getItem("modalShown");
@@ -107,17 +117,22 @@ function Index() {
           style={{
             position: "fixed",
             bottom: "130px",
-            right: "20px",
-            width: "200px",
-            backgroundColor: "#fff",
-            border: "1px solid #ccc",
-            padding: "10px",
-            borderRadius: "5px",
+            top: '10px',
+            right: "26px",
+            width: "300px",
+            backgroundColor: "blue",
+            border: "1px solid blue",
+            padding: "10px 20px",
+            borderRadius: "8px",
             zIndex: 9999,
             animation: "slideInFromBottom 1s ease-in-out",
           }}
         >
-          Hello, Selamat datang di Indoteknik
+          <h2 style={{color: 'white'}}><span>Hai</span> <br/> Bagaimana kami dapat membantu?</h2>
+          <div style={{background: 'white', border: '1px solid', borderRadius: '5px', padding: '10px'}}>
+            <p>Cari bantuan</p>
+            <p>Dapatkah Anda membantu saya menemukan suku cadang khusus untuk mobil saya?</p>
+          </div>
         </div>
       )}
       <img
@@ -128,7 +143,7 @@ function Index() {
           position: "fixed",
           bottom: "20px",
           right: "20px",
-          width: "100px",
+          width: "70px",
           cursor: "pointer",
         }}
         onClick={() => setIsChatbotMessageVisible(!isChatbotMessageVisible)}
