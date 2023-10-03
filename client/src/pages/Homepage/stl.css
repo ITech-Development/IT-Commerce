@@ -1,6 +1,8 @@
+/* Tampilan Default */
 .herohome {
   margin-top: 45px;
 }
+
 .stlimg {
   max-width: 80%;
   width: 35%;
@@ -19,12 +21,124 @@
   font-size: 28px;
 }
 
+.peopleBot {
+  padding-top: 8px;
+  width: 105px;
+  height: 40px;
+}
+
+.questionList {
+  background: white;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.headBot {
+  display: flex;
+  justify-content: space-around;
+}
+
+.hand {
+  width: 45px;
+  height: 30px;
+  position: relative;
+  right: 278px;
+  top: 21px;
+}
+
+.butSec {
+  width: 25px;
+  height: 20px;
+}
+
+.boxbot {
+  background-image: linear-gradient(#0090fe, white);
+}
+
+.ParBut {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
+.boxbot {
+  background-image: linear-gradient(#0090fe, white);
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: auto;
+}
+
+.content {
+  margin-bottom: auto; /* Konten akan tetap di atas tombol */
+  padding: 20px;
+}
+
+.conbut {
+  background-color: white;
+  padding-top: 25px;
+  margin-top: auto; /* Tombol akan tetap di bawah konten */
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+
+.chilBut {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  margin: auto;
+  cursor: pointer;
+}
+
+/* Style hover untuk .chilBut */
+.chilBut:hover {
+  color: blue;
+}
+
+/* Tampilan di Layar Lebar (lebih besar dari 769px) */
+@media screen and (min-width: 769px) {
+  .productlaris {
+    position: relative;
+    top: 0;
+    padding-left: 0;
+    font-size: 28px;
+  }
+
+  .foot {
+    position: relative;
+    top: 0;
+  }
+
+  .ohya {
+    margin-top: 0;
+  }
+  .stlimg {
+    width: 35%;
+    max-height: none;
+  }
+  .herohome {
+    margin-top: 45px;
+  }
+}
+
+/* Tampilan di Layar Kecil (kurang dari atau sama dengan 769px) */
 @media screen and (max-width: 769px) {
   .productlaris {
     position: relative;
     top: -210px;
     padding-left: 20px;
-    /* left: 20px; */
     font-size: 16px !important;
   }
 
@@ -37,11 +151,22 @@
     margin-top: 143px;
   }
   .stlimg {
-    width: 100%; /* Lebar gambar menjadi 100% dari lebar modal */
-    max-height: 120vh; /* Batasi tinggi gambar agar tidak melewati tinggi layar */
+    width: 100%;
+    max-height: 120vh;
     margin: 0;
   }
   .herohome {
     margin-top: 48px;
   }
+}
+
+
+/* Style khusus untuk perangkat Android */
+@media screen and (max-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
+  /* Tambahkan style khusus untuk Android di sini */
+}
+
+/* Style khusus untuk perangkat iOS */
+@media screen and (max-width: 768px) and (-webkit-min-device-pixel-ratio: 2) and (device-aspect-ratio: 40/71) {
+  /* Tambahkan style khusus untuk iOS di sini */
 }
