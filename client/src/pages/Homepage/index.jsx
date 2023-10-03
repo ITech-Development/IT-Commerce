@@ -197,62 +197,83 @@ function Index() {
           }}
         >
           {/* <div className="container"> */}
-            <div className="content">
-              <img className="peopleBot" src={PeopleBot} alt="" />
-              <div className="headBot">
-                <h2 style={{ color: "white" }}>
-                  <span style={{ color: "#CABAEA" }}>Hai</span> <br /> Bagaimana
-                  kami dapat membantu?
-                </h2>
-                <img className="hand" src={Hand} alt="" />
-              </div>
-              <div className="questionList">
-                {activeContent === "home" && (
+          <div className="content">
+            <div className="questionList">
+              {activeContent === "home" && (
+                <div>
                   <div>
+                    <img className="peopleBot" src={PeopleBot} alt="" />
+                    <div className="headBot">
+                      <h2 style={{ color: "white" }}>
+                        <span style={{ color: "#CABAEA" }}>Hai</span> <br />{" "}
+                        Bagaimana kami dapat membantu?
+                      </h2>
+                      <img className="hand" src={Hand} alt="" />
+                    </div>
+                  </div>
+                  <div className="qna">
                     <h3>Layar Utama</h3>
                     <p>Konten untuk Layar Utama</p>
                   </div>
-                )}
-                {activeContent === "help" && (
-                  <div>
-                    <h3>Bantuan</h3>
-                    <p>Konten untuk Bantuan</p>
+                </div>
+              )}
+              {activeContent === "help" && (
+                <div className="helpConcep">
+                  <h2 style={{ textAlign: "center", color: "white" }}>
+                    Bantuan
+                  </h2>
+                  <div class="search-container">
+                    <input
+                      className="dropSearch"
+                      type="text"
+                      placeholder="Cari bantuan"
+                    />
                   </div>
-                )}
-                {activeContent === "message" && (
-                  <div>
-                    <h3>Pesan</h3>
+
+                  
+                </div>
+              )}
+              {activeContent === "message" && (
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      lineHeight: "5px",
+                    }}
+                  >
+                    <h2 style={{ color: "white" }}>Customer Service</h2>
+                    <img className="peoplesBot" src={PeopleBot} alt="" />
+                  </div>
+
+                  <div className="messageConcep">
                     <p>Konten untuk Pesan</p>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
-            <div className="conbut">
-              <div className="ParBut">
-                <div
-                  className="chilBut"
-                  onClick={() => setActiveContent("home")}
-                >
-                  <img className="butSec" src={Home} alt="" />
-                  <p>Layar utama</p>
-                </div>
-                <div
-                  className="chilBut"
-                  onClick={() => setActiveContent("help")}
-                >
-                  <img className="butSec" src={Help} alt="" />
-                  <p>Bantuan</p>
-                </div>
-                <div
-                  className="chilBut"
-                  onClick={() => setActiveContent("message")}
-                >
-                  <img className="butSec" src={Message} alt="" />
-                  <p>Pesan</p>
-                </div>
+          </div>
+          <div className="conbut">
+            <div className="ParBut">
+              <div className="chilBut" onClick={() => setActiveContent("home")}>
+                <img className="butSec" src={Home} alt="" />
+                <p>Layar utama</p>
+              </div>
+              <div className="chilBut" onClick={() => setActiveContent("help")}>
+                <img className="butSec" src={Help} alt="" />
+                <p>Bantuan</p>
+              </div>
+              <div
+                className="chilBut"
+                onClick={() => setActiveContent("message")}
+              >
+                <img className="butSec" src={Message} alt="" />
+                <p>Pesan</p>
               </div>
             </div>
           </div>
+        </div>
         // </div>
       )}
 
