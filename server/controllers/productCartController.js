@@ -30,14 +30,14 @@ class ProductCartController {
   static async getCountCarts(req, res, next) {
     try {
       let cart = await Cart.findOne({
-        where: { userId: req.user.id}
+        where: { userId: req.user.id }
       })
       let data = await ProductCart.findAll({
-        where: { cartId: cart.id}
+        where: { cartId: cart.id }
       })
       let total = 0
       if (data.length) {
-        for await (let item of data ) {
+        for await (let item of data) {
           console.log(item, 'ini item');
           total += item.quantity
         }
@@ -150,6 +150,30 @@ class ProductCartController {
     }
   }
 
+  // static async incrementQtyProductCart(req, res, next) {
+  //   const t = await sequelize.transaction();
+  //   let id = req.params.id;
+  //   try {
+  //     let productCart = await ProductCart.findOne({
+  //       where: { id },
+  //     });
+  //     if (productCart) {
+  //       let product = await Product.findOne({
+  //         where: { id: productCart.productId },
+  //       });
+  //       if (product && product.stock > 0) {
+  //         await productCart.increment("quantity", { by: 1, transaction: t });
+  //         await product.decrement("stock", { by: 1, transaction: t });
+  //       }
+  //     }
+  //     await t.commit();
+  //   } catch (error) {
+  //     console.log(error, "error increment");
+  //     await t.rollback();
+  //     next(error);
+  //   }
+  // }
+
   static async incrementQtyProductCart(req, res, next) {
     const t = await sequelize.transaction();
     let id = req.params.id;
@@ -164,15 +188,46 @@ class ProductCartController {
         if (product && product.stock > 0) {
           await productCart.increment("quantity", { by: 1, transaction: t });
           await product.decrement("stock", { by: 1, transaction: t });
+
+          // Operasi berhasil, beri respons HTTP OK (status 200)
+          await t.commit();
+          return res.status(200).json({ message: "Product quantity incremented successfully." });
         }
       }
-      await t.commit();
+
+      // Produk atau keranjang belanja tidak ditemukan atau stok habis
+      await t.rollback();
+      return res.status(404).json({ error: "Product or cart not found, or stock is empty." });
     } catch (error) {
       console.log(error, "error increment");
       await t.rollback();
+
+      // Jika terjadi kesalahan, beri respons HTTP Internal Server Error (status 500)
+      return res.status(500).json({ error: "An error occurred while incrementing product quantity." });
       next(error);
     }
   }
+
+
+  // static async decrementQtyProductCart(req, res, next) {
+  //   const t = await sequelize.transaction();
+  //   let id = req.params.id;
+  //   try {
+  //     let dec = await ProductCart.findOne({ where: { id } });
+  //     if (dec && dec.quantity > 1) {
+  //       await dec.decrement("quantity", { by: 1, transaction: t });
+
+  //       let find = await Product.findOne({ where: { id: dec.productId } });
+  //       if (find) {
+  //         await find.increment("stock", { by: 1, transaction: t });
+  //       }
+  //     }
+  //     await t.commit();
+  //   } catch (error) {
+  //     await t.rollback();
+  //     next(error);
+  //   }
+  // }
 
   static async decrementQtyProductCart(req, res, next) {
     const t = await sequelize.transaction();
@@ -185,11 +240,21 @@ class ProductCartController {
         let find = await Product.findOne({ where: { id: dec.productId } });
         if (find) {
           await find.increment("stock", { by: 1, transaction: t });
+
+          // Operasi berhasil, beri respons HTTP OK (status 200)
+          await t.commit();
+          return res.status(200).json({ message: "Product quantity decremented successfully." });
         }
       }
-      await t.commit();
+
+      // Produk tidak ditemukan atau kuantitas tidak mencukupi untuk dikurangi
+      await t.rollback();
+      return res.status(404).json({ error: "Product not found or quantity is not sufficient for decrement." });
     } catch (error) {
       await t.rollback();
+
+      // Jika terjadi kesalahan, beri respons HTTP Internal Server Error (status 500)
+      return res.status(500).json({ error: "An error occurred while decrementing product quantity." });
       next(error);
     }
   }

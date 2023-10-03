@@ -30,7 +30,7 @@ export const cartsApi = createApi({
             query: (id) => ({
                 url: `product-carts/increment/${id}`, // Ganti dengan URL endpoint peningkatan
                 method: 'PATCH',
-            }),
+            }),            
             invalidatesTags: ['Post']
         }),
         decrementCartItem: builder.mutation({ // Menambahkan endpoint untuk mengurangi jumlah item
