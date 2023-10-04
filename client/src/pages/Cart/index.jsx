@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import CartsIndoRiau from "./CartsIndoRiau";
 import CartsJuvindo from "./CartsJuvindo";
@@ -15,7 +15,7 @@ const Cart = () => {
   const { data: cartsIndoRiau } = useGetCartsIndoRiauQuery()
   const { data: cartsJuvindo } = useGetCartsJuvindoQuery()
   const { data: cartsItech } = useGetCartsItechQuery()
-
+  
   return (
     <>
       {cartsJuvindo?.length === 0 &&

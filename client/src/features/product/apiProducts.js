@@ -29,6 +29,9 @@ export const productsApi = createApi({
     addToCart: builder.mutation({
       query: (body) => ({ url: "product-carts", method: 'POST', body }),
       invalidatesTags: ['Post']
+    }),
+    detailsProduct: builder.query({
+      query: (id) => `products/${id}`
     })
   })
 })

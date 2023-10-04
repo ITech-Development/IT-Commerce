@@ -5,7 +5,6 @@ import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import Star from "../../assets/star.png";
 import "./indexDetail.css";
-// import { addToCart } from "../../features/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import { useAddToCartMutation } from "../../features/cart/apiCarts";
 
@@ -80,23 +79,6 @@ const ProductDetailPage = () => {
       .catch((error) => {
         console.log(error);
       })
-    // if (accessToken) {
-    //   axios
-    //     .post(`${API_URL}/product-carts`, product, {
-    //       headers: { access_token: accessToken },
-    //     })
-    //     .then(({ data }) => {
-    //       console.log(data, "berhasil ditambahkan ke keranjang");
-    //       dispatch(addToCart(data))
-    //       navigate("/cart");
-    //     })
-    //     .catch((err) => {
-    //       console.log(err, "handle add to cart anda bermasalah");
-    //     });
-    // } else {
-    //   // navigate("/login");
-    //   alert("Login terlebih dahulu agar dapat belanja");
-    // }
   };
 
   const handleBuyNow = () => {

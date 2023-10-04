@@ -68,6 +68,7 @@ class ProductCartController {
             as: "cart",
           },
         ],
+        order: [['createdAt', 'DESC']]
       });
       res.status(200).json(productCarts);
     } catch (error) {
@@ -94,6 +95,7 @@ class ProductCartController {
             as: "cart",
           },
         ],
+        order: [['createdAt', 'DESC']]
       });
       res.status(200).json(productCarts);
     } catch (error) {
@@ -120,6 +122,7 @@ class ProductCartController {
             as: "cart",
           },
         ],
+        order: [['createdAt', 'DESC']]
       });
       res.status(200).json(productCarts);
     } catch (error) {
