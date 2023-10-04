@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getTotals } from "../../../features/cartSlice";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -18,8 +16,6 @@ function Index() {
   const { data: profile } = useGetMeQuery()
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
 
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
   const [token, setToken] = useState("");
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
@@ -31,7 +27,6 @@ function Index() {
   const [totalShippingCost, setTotalShippingCost] = useState(0);
   const [selectedVoucher, setSelectedVoucher] = useState(null);
   const [vouchers, setVouchers] = useState([]);
-  // const [profile, setProfile] = useState([]);
 
   const [checkoutProvince, setCheckoutProvince] = useState();
   const [checkoutCity, setCheckoutCity] = useState();
@@ -59,9 +54,6 @@ function Index() {
     setSelectedVoucher(event.target.value);
   };
 
-  useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
     const bayar = calculateTotalBayar();
@@ -134,10 +126,6 @@ function Index() {
       document.body.removeChild(scriptTag);
     };
   });
-
-
-
-
 
   const handlerRemove = (id) => {
     removeItemFromCart(id)
@@ -254,8 +242,8 @@ function Index() {
     // Assuming that the first shipping cost is selected by default, you can update this logic as needed.
     if (data && data.length > 0) {
       setCheckoutPengiriman(data[0]);
-      setSelectedShippingCost(data[0].cost[0].value);
-      setTotalShippingCost(data[0].cost[0].value);
+      setSelectedShippingCost(data[0]?.cost[0]?.value);
+      setTotalShippingCost(data[0]?.cost[0]?.value);
     } else {
       setSelectedShippingCost(null);
       setTotalShippingCost(0);
@@ -418,34 +406,34 @@ function Index() {
               marginBottom: "30px",
             }}
           >
-            <label key={vouchers[3]?.id}>
+            <label key={vouchers?.[3]?.id}>
               <input
                 type="radio"
-                value={vouchers[3]?.voucherCode}
-                checked={selectedVoucher === vouchers[3]?.voucherCode}
+                value={vouchers?.[3]?.voucherCode}
+                checked={selectedVoucher === vouchers?.[3]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {/* {vouchers[3]?.voucherCode} */}
+              {/* {vouchers?.[3]?.voucherCode} */}
               <img src={VCR1} alt="IT 01" width="150" />
             </label>
-            <label key={vouchers[4]?.id}>
+            <label key={vouchers?.[4]?.id}>
               <input
                 type="radio"
-                value={vouchers[4]?.voucherCode}
-                checked={selectedVoucher === vouchers[4]?.voucherCode}
+                value={vouchers?.[4]?.voucherCode}
+                checked={selectedVoucher === vouchers?.[4]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {/* {vouchers[4]?.voucherCode} */}
+              {/* {vouchers?.[4]?.voucherCode} */}
               <img src={VCR2} alt="MS 01" width="150" />
             </label>
-            <label key={vouchers[5]?.id}>
+            <label key={vouchers?.[5]?.id}>
               <input
                 type="radio"
-                value={vouchers[5]?.voucherCode}
-                checked={selectedVoucher === vouchers[5]?.voucherCode}
+                value={vouchers?.[5]?.voucherCode}
+                checked={selectedVoucher === vouchers?.[5]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {/* {vouchers[5]?.voucherCode} */}
+              {/* {vouchers?.[5]?.voucherCode} */}
               <img src={VCR3} alt="MS 01" width="150" />
             </label>
           </div>
@@ -542,17 +530,17 @@ function Index() {
                       type="radio"
                       id={`shippingChoice${index}`}
                       name="shipping"
-                      value={el.cost[0].value}
-                      checked={selectedShippingCost === el.cost[0].value}
+                      value={el.cost[0]?.value}
+                      checked={selectedShippingCost === el.cost[0]?.value}
                       onChange={handleShippingCostChange}
                     />
                     <label htmlFor={`shippingChoice${index}`}>
                       Shipping Cost: Rp.
-                      {el.cost[0].value.toLocaleString("id-ID", {})}
+                      {el.cost[0]?.value.toLocaleString("id-ID", {})}
                     </label>
                     <p>Service: {el.service}</p>
                     <p>Description: {el.description}</p>
-                    <p>Est: {el.cost[0].etd} Days</p>
+                    <p>Est: {el.cost[0]?.etd} Days</p>
                   </div>
                 ))
                 : null}

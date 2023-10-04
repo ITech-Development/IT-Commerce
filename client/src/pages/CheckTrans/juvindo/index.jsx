@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getTotals } from "../../../features/cartSlice";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
-import styled from "styled-components";
+import {
+  useGetCartsJuvindoQuery,
+  useRemoveItemFromCartMutation
+} from "../../../features/cart/apiCarts";
+import { useGetMeQuery } from "../../../features/user/apiUser";
 
 function Index() {
-  let [carts, setCarts] = useState([]);
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
+  const { data: carts } = useGetCartsJuvindoQuery()
+  const { data: profile } = useGetMeQuery()
+  const [removeItemFromCart] = useRemoveItemFromCartMutation()
+
   const [token, setToken] = useState("");
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
@@ -24,31 +27,14 @@ function Index() {
   const [totalShippingCost, setTotalShippingCost] = useState(0);
   const [selectedVoucher, setSelectedVoucher] = useState(null);
   const [vouchers, setVouchers] = useState([]);
-  const [profile, setProfile] = useState([]);
 
   const [checkoutProvince, setCheckoutProvince] = useState();
   const [checkoutCity, setCheckoutCity] = useState();
   const [checkoutSubdistrict, setCheckoutSubdistrict] = useState();
   const [checkoutCourier, setCheckoutCourier] = useState("jne");
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
-  const [checkoutCost, setCheckoutCost] = useState();
 
   const [isModalVisible, setModalVisible] = useState(false);
-
-  useEffect(() => {
-
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/users/me";
-      axios({ url, headers: { access_token: accessToken } })
-        .then(async ({ data }) => {
-          setProfile(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, []);
 
   useEffect(() => {
     const fetchVouchers = async () => {
@@ -67,10 +53,6 @@ function Index() {
   const handleVoucherChange = (event) => {
     setSelectedVoucher(event.target.value);
   };
-
-  useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
 
@@ -148,57 +130,15 @@ function Index() {
     };
   });
 
-  const handlerInc = (id) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url =
-        "http://localhost:3100/product-carts/increment/" +
-        id;
-      axios({ url, method: "patch", headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.log("incrementttt");
-        });
-    }
-  };
-
-  const handlerDec = (id) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url =
-        "http://localhost:3100/product-carts/decrement/" +
-        id;
-      axios({ url, method: "patch", headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data, "ASdasdas");
-        })
-        .catch((error) => {
-          console.log("asdasd");
-        });
-    }
-  };
+  
 
   const handlerRemove = (id) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url =
-        "http://localhost:3100/product-carts/remove/" +
-        id;
-      axios({ url, method: "delete", headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data, "remooove");
-        })
-        .catch((error) => {
-          console.log("asdasd remove");
-        });
-    }
+    removeItemFromCart(id)
   };
 
   const calculateSubtotal = () => {
     let subtotal = 0;
-    carts.forEach((e) => {
+    carts?.forEach((e) => {
       const productPrice = e.product.unitPrice;
       const quantity = e.quantity;
       const totalProductPrice = productPrice * quantity;
@@ -218,14 +158,7 @@ function Index() {
     return discountAmount;
   };
 
-  // const calculatePPN = () => {
-  //   const subtotal = calculateSubtotal();
-  //   const voucherDiscount = calculateVoucher();
-  //   const afterVoucherSubtotal = subtotal - voucherDiscount;
-  //   const ppnPercentage = 11;
-  //   const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
-  //   return ppnAmount;
-  // };
+
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
@@ -241,20 +174,6 @@ function Index() {
     return Math.floor(result);
   };
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url =
-        "http://localhost:3100/product-carts/juvindo";
-      axios({ url, headers: { access_token: accessToken } })
-        .then(async ({ data }) => {
-          setCarts(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, []);
 
   useEffect(() => {
     // Fetch province data from the server
@@ -339,7 +258,7 @@ function Index() {
 
   const calculateTotalWeight = () => {
     let totalWeight = 0;
-    carts.forEach((cartItem) => {
+    carts?.forEach((cartItem) => {
       const productWeight = cartItem.product.weight; // Assuming each product has a 'weight' property
       const quantity = cartItem.quantity;
       totalWeight += productWeight * quantity;
@@ -352,8 +271,6 @@ function Index() {
     // const value = event.target.value
     setSelectedShippingCost(value);
     setTotalShippingCost(value);
-
-    setCheckoutCost(value);
   };
 
   const handlerSetCourier = async (event) => {
@@ -383,15 +300,15 @@ function Index() {
         </div>
         <div className="address-info">
           <h4>Nama Lengkap</h4>
-          <p style={{ paddingLeft: "40px" }}>: {profile.fullName}</p>
+          <p style={{ paddingLeft: "40px" }}>: {profile?.fullName}</p>
         </div>
         <div className="address-info">
           <h4>Nomor Handphone</h4>
-          <p style={{ paddingLeft: "5px" }}>: {profile.phoneNumber}</p>
+          <p style={{ paddingLeft: "5px" }}>: {profile?.phoneNumber}</p>
         </div>
         <div className="address-info">
           <h4>Detail Alamat</h4>
-          <p style={{ paddingLeft: "55px" }}>: {profile.address}</p>
+          <p style={{ paddingLeft: "55px" }}>: {profile?.address}</p>
         </div>
       </div>
 
@@ -402,7 +319,7 @@ function Index() {
         <h2>Produk Dipesan</h2>
         {/* <CartCheckTrans /> */}
         <div class="cart-container">
-          {carts.length === 0 ? (
+          {carts?.length === 0 ? (
             <div class="cart-empty">
               <p>Your cart is empty</p>
               <div class="start-shopping">
@@ -442,9 +359,9 @@ function Index() {
                       Rp.{e.product.unitPrice}
                     </div>
                     <div class="cart-product-quantity">
-                      <button onClick={() => handlerDec(e.id)}>-</button>
+                      <button disabled >-</button>
                       <div class="count">{e.quantity}</div>
-                      <button onClick={() => handlerInc(e.id)}>+</button>
+                      <button disabled>+</button>
                     </div>
                     <div class="cart-product-total-price">
                       Rp.{e.quantity * e.product.unitPrice}
@@ -692,118 +609,3 @@ function Index() {
 }
 export default Index;
 
-// const StyledContainer = styled.div`
-//   max-width: 1350px;
-//   margin: auto;
-// `;
-
-const ShippingContainer = styled.div`
-  padding: 20px;
-  border: 1px solid rgb(244, 238, 238);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`;
-
-const Select = styled.select`
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: #fff;
-  color: #333;
-  width: 100%;
-`;
-
-// const RadioLabel = styled.label`
-//   padding: 10px 15px;
-//   background-color: ${({ checked }) => (checked ? '#fff' : '#f0f0f5')};
-//   border-radius: 8px;
-//   cursor: pointer;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   transition: all 0.3s ease;
-//   border: 2px solid ${({ checked }) => (checked ? '#007bff' : 'transparent')};
-
-//   p {
-//     margin: 5px 0;
-//     font-size: 16px;
-//     font-weight: bold;
-//   }
-// `;
-
-const StyledPaymentSummary = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #007bff;
-  color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-
-  .amount {
-    font-size: 24px;
-    font-weight: bold;
-  }
-
-  button {
-    padding: 10px 20px;
-    background-color: #fff;
-    color: #007bff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: #f0f0f5;
-    }
-  }
-`;
-
-// const StyledAddress = styled.div`
-//   position: relative;
-//   top: 90px;
-//   max-width: auto;
-//   margin: 0 20px;
-//   padding: 15px 30px 25px 30px;
-//   border: 1px solid rgb(232, 215, 215);
-//   border-radius: 10px;
-// `;
-
-// const AddressContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   gap: 10px;
-// `;
-
-// const AddressInfo = styled.div`
-//   display: flex;
-//   align-items: center;
-
-//   h4 {
-//     margin: 0;
-//     font-size: 18px;
-//     font-weight: bold;
-//     line-height: 25px;
-//   }
-
-//   p {
-//     margin: 0;
-//     font-size: 16px;
-//     color: #666;
-//   }
-// `;
-
-// const EditButton = styled.button`
-//   border: none;
-//   background: none;
-//   cursor: pointer;
-//   font-weight: bold;
-//   color: blue;
-//   font-size: 18px;
-//   text-decoration: underline;
-// `;

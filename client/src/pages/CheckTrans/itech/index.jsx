@@ -7,11 +7,17 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
-
-const API_URL = "http://localhost:3100"; // Define your API URL here
+import {
+  useGetCartsItechQuery,
+  useRemoveItemFromCartMutation
+} from "../../../features/cart/apiCarts";
+import { useGetMeQuery } from "../../../features/user/apiUser";
 
 function Index() {
-  let [carts, setCarts] = useState([]);
+  const { data: carts } = useGetCartsItechQuery()
+  const { data: profile } = useGetMeQuery()
+  const [removeItemFromCart] = useRemoveItemFromCartMutation()
+
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [token, setToken] = useState("");
@@ -25,28 +31,12 @@ function Index() {
   const [totalShippingCost, setTotalShippingCost] = useState(0);
   const [selectedVoucher, setSelectedVoucher] = useState(null);
   const [vouchers, setVouchers] = useState([]);
-  const [profile, setProfile] = useState([]);
 
   const [checkoutProvince, setCheckoutProvince] = useState();
   const [checkoutCity, setCheckoutCity] = useState();
   const [checkoutSubdistrict, setCheckoutSubdistrict] = useState();
   const [checkoutCourier, setCheckoutCourier] = useState("jne");
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
-  const [checkoutCost, setCheckoutCost] = useState();
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/users/me";
-      axios({ url, headers: { access_token: accessToken } })
-        .then(async ({ data }) => {
-          setProfile(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, []);
 
   useEffect(() => {
     const fetchVouchers = async () => {
@@ -141,51 +131,13 @@ function Index() {
     };
   });
 
-  const handlerInc = (id) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/product-carts/increment/" + id;
-      axios({ url, method: "patch", headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.log("incrementttt");
-        });
-    }
-  };
-
-  const handlerDec = (id) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/product-carts/decrement/" + id;
-      axios({ url, method: "patch", headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data, "ASdasdas");
-        })
-        .catch((error) => {
-          console.log("asdasd");
-        });
-    }
-  };
-
   const handlerRemove = (id) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/product-carts/remove/" + id;
-      axios({ url, method: "delete", headers: { access_token: accessToken } })
-        .then(({ data }) => {
-          console.log(data, "remooove");
-        })
-        .catch((error) => {
-          console.log("asdasd remove");
-        });
-    }
+    removeItemFromCart(id)
   };
 
   const calculateSubtotal = () => {
     let subtotal = 0;
-    carts.forEach((e) => {
+    carts?.forEach((e) => {
       const productPrice = e.product.unitPrice;
       const quantity = e.quantity;
       const totalProductPrice = productPrice * quantity;
@@ -204,20 +156,12 @@ function Index() {
     return discountAmount;
   };
 
-  const calculatePPN = () => {
-    const subtotal = calculateSubtotal();
-    const voucherDiscount = calculateVoucher();
-    const afterVoucherSubtotal = subtotal - voucherDiscount;
-    const ppnPercentage = 11;
-    const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
-    return ppnAmount;
-  };
+
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     const voucherDiscount = calculateVoucher();
-    const ppnAmount = calculatePPN();
-    const total = subtotal - voucherDiscount + ppnAmount;
+    const total = subtotal - voucherDiscount 
     return total;
   };
 
@@ -227,19 +171,7 @@ function Index() {
     return Math.floor(result);
   };
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      let url = "http://localhost:3100/product-carts/itech";
-      axios({ url, headers: { access_token: accessToken } })
-        .then(async ({ data }) => {
-          setCarts(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, []);
+
 
   useEffect(() => {
     // Fetch province data from the server
@@ -324,7 +256,7 @@ function Index() {
 
   const calculateTotalWeight = () => {
     let totalWeight = 0;
-    carts.forEach((cartItem) => {
+    carts?.forEach((cartItem) => {
       const productWeight = cartItem.product.weight; // Assuming each product has a 'weight' property
       const quantity = cartItem.quantity;
       totalWeight += productWeight * quantity;
@@ -338,7 +270,6 @@ function Index() {
     setSelectedShippingCost(value);
     setTotalShippingCost(value);
 
-    setCheckoutCost(value);
   };
 
   const handlerSetCourier = async (event) => {
@@ -368,15 +299,15 @@ function Index() {
         </div>
         <div className="address-info">
           <h4>Nama Lengkap</h4>
-          <p style={{ paddingLeft: "40px" }}>: {profile.fullName}</p>
+          <p style={{ paddingLeft: "40px" }}>: {profile?.fullName}</p>
         </div>
         <div className="address-info">
           <h4>Nomor Handphone</h4>
-          <p style={{ paddingLeft: "5px" }}>: {profile.phoneNumber}</p>
+          <p style={{ paddingLeft: "5px" }}>: {profile?.phoneNumber}</p>
         </div>
         <div className="address-info">
           <h4>Detail Alamat</h4>
-          <p style={{ paddingLeft: "55px" }}>: {profile.address}</p>
+          <p style={{ paddingLeft: "55px" }}>: {profile?.address}</p>
         </div>
       </div>
 
@@ -387,7 +318,7 @@ function Index() {
         <h2>Produk Dipesan</h2>
         {/* <CartCheckTrans /> */}
         <div className="cart-container">
-          {carts.length === 0 ? (
+          {carts?.length === 0 ? (
             <div class="cart-empty">
               <p>Your cart is empty</p>
               <div class="start-shopping">
@@ -427,9 +358,9 @@ function Index() {
                       Rp.{e.product.unitPrice}
                     </div>
                     <div class="cart-product-quantity">
-                      <button onClick={() => handlerDec(e.id)}>-</button>
+                      <button disabled>-</button>
                       <div class="count">{e.quantity}</div>
-                      <button onClick={() => handlerInc(e.id)}>+</button>
+                      <button disabled>+</button>
                     </div>
                     <div class="cart-product-total-price">
                       Rp.{e.quantity * e.product.unitPrice}
@@ -455,8 +386,6 @@ function Index() {
                       fontStyle: "italic",
                     }}
                   >
-                    <span>PPN 11% :</span>
-                    <span className="amount"> Rp. {calculatePPN()}</span>
                   </div>
                   <div class="subtotal">
                     <span>Total :</span>

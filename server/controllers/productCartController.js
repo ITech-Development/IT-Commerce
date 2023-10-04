@@ -38,14 +38,13 @@ class ProductCartController {
       let total = 0
       if (data.length) {
         for await (let item of data) {
-          console.log(item, 'ini item');
           total += item.quantity
         }
       }
       res.json(total)
       // console.log(data, 'count cart dari backend');
     } catch (error) {
-      console.log(error);
+      next(error)
     }
   }
 
