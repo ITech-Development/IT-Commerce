@@ -186,14 +186,14 @@ function Index() {
           style={{
             position: "fixed",
             bottom: "130px",
-            top: "69px",
+            top: "9px",
             maxheight: "auto",
             right: "26px",
-            width: "400px",
-            border: "0.3px solid #0090fe",
-            borderRadius: "8px",
+            width: "340px",
+            border: "0.3px solid white",
+            borderRadius: "15px",
             zIndex: 9999,
-            overflow: "revert",
+            // overflow: "scroll",
           }}
         >
           {/* <div className="container"> */}
@@ -201,7 +201,7 @@ function Index() {
             <div className="questionList">
               {activeContent === "home" && (
                 <div>
-                  <div>
+                  <div style={{padding: '20px', lineHeight: '29px'}}>
                     <img className="peopleBot" src={PeopleBot} alt="" />
                     <div className="headBot">
                       <h2 style={{ color: "white" }}>
@@ -212,16 +212,43 @@ function Index() {
                     </div>
                   </div>
                   <div className="qna">
-                    <h3>Layar Utama</h3>
-                    <p>Konten untuk Layar Utama</p>
+                    <div style={{ maxHeight: "245px" }}>
+                      <div class="select-button">
+                        <button id="kontenLayarUtamaButton" class="buttons">
+                          Konten 1
+                          <i class="fa fa-caret-right"></i>
+                        </button>
+                        <button id="kontenLayarUtamaButton" class="buttons">
+                          Konten 2
+                          <i class="fa fa-caret-right"></i>
+                        </button>
+                        <button id="kontenLayarUtamaButton" class="buttons">
+                          Konten 3
+                          <i class="fa fa-caret-right"></i>
+                        </button>
+                        <button id="kontenLayarUtamaButton" class="buttons">
+                          Konten 4
+                          <i class="fa fa-caret-right"></i>
+                        </button>
+                        <button id="kontenLayarUtamaButton" class="buttons">
+                          Konten 5
+                          <i class="fa fa-caret-right"></i>
+                        </button>
+                        <button id="kontenLayarUtamaButton" class="buttons">
+                          Konten 6
+                          <i class="fa fa-caret-right"></i>
+                        </button>
+                        
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
               {activeContent === "help" && (
                 <div className="helpConcep">
-                  <h2 style={{ textAlign: "center", color: "white" }}>
+                  <h3 style={{ textAlign: "center", color: "white" }}>
                     Bantuan
-                  </h2>
+                  </h3>
                   <div class="search-container">
                     <input
                       className="dropSearch"
@@ -229,8 +256,9 @@ function Index() {
                       placeholder="Cari bantuan"
                     />
                   </div>
-
-                  
+                  <div className="helpContent" style={{ margin: 0 }}>
+                    <strong>18 Collections</strong>
+                  </div>
                 </div>
               )}
               {activeContent === "message" && (
@@ -240,11 +268,14 @@ function Index() {
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
-                      lineHeight: "5px",
                     }}
                   >
-                    <h2 style={{ color: "white" }}>Customer Service</h2>
+                    <div style={{lineHeight: '9px', textAlign: 'center'}}>
+
+                    <h3 style={{ color: "white" }}>Customer Service</h3>
                     <img className="peoplesBot" src={PeopleBot} alt="" />
+                    </div>
+                    <h3 className="subHEadChatbot">Kami biasanya membalas pada pukul 08.00 WIB - 17.30 WIB </h3>
                   </div>
 
                   <div className="messageConcep">

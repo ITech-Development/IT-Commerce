@@ -33,7 +33,7 @@ const slideImages = [
     caption: "Slide 1",
   },
   {
-    url: "https://res.cloudinary.com/dcbryptkx/image/upload/v1692322296/IndoTeknikMarketplace/product/banner/Banner%20Dan%20Card%20Spesial%20Kemerdekaan/Banner_Kemerdekaan_2_tjmdw6.png",
+    url: "https://res.cloudinary.com/dcbryptkx/image/upload/v1696228243/IndoTeknikMarketplace/product/banner/Banner%20Hari%20Batik/Banner_Hari_Batik_Website_dnsbmr.jpg",
     caption: "Slide 2",
   },
 ];
