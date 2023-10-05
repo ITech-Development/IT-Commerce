@@ -28,8 +28,8 @@
 }
 .peoplesBot {
   padding-top: 8px;
-  width: 175px;
-  height: 64px;
+  width: 145px;
+  height: 55px;
 }
 .qna {
   background: white;
@@ -117,10 +117,17 @@
 
 .messageConcep {
   background-color: white;
-  padding: 0px 8px;
+  /* padding: 0px 8px; */
   border: 1px solid transparent;
-  border-radius: 5px;
+  border-radius: 15px 15px 0 0;
   margin-top: 10px;
+  max-height: auto;
+}
+
+.giftMascot {
+  /* padding: 10px 5px; */
+  width: 55px;
+  height: 30px;
 }
 
 /* .helpConcep {
@@ -180,6 +187,141 @@
 .subHEadChatbot {
   text-align: center;
   color: white;
+  max-width: 80%;
+  font-weight: 500;
+}
+
+.clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+  }
+}
+/* CSS untuk komponen ChatApp */
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 40vh;
+}
+
+.conversation {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.messages {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.messages--sent {
+  justify-content: flex-end;
+}
+
+.message {
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f1f0f0;
+  max-width: 70%;
+}
+
+/* Gaya pesan yang dikirim (sent) */
+.message {
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+/* Gaya pesan yang diterima (received) */
+.messages--received .message {
+  background-color: #f1f0f0;
+  color: #333;
+}
+
+.text-bar {
+  height: 50px;
+  border-top: 1px solid #ccc;
+  width: 100%;
+  display: flex; /* Menggunakan flexbox untuk tata letak */
+  align-items: center; /* Pusatkan vertikal */
+}
+
+.text-bar__field {
+  flex-grow: 1; /* Biarkan input memenuhi sisa ruang */
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  height: 100%;
+  padding: 0 20px;
+  border: none;
+  font-size: 14px;
+}
+
+.text-bar__thumb {
+  width: 50px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Pusatkan horizontal */
+  padding: 10px;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+
+/* 
+.thumb {
+  display: block;
+} */
+
+
+.anim-wiggle {
+  animation: wiggle 0.2s ease infinite;
+}
+.anim-wiggle-2 {
+  animation: wiggle2 0.2s ease infinite;
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotateZ(5deg);
+  }
+  50% {
+    transform: rotateZ(-5deg);
+  }
+  100% {
+    transform: rotateZ(5deg);
+  }
+}
+@keyframes wiggle2 {
+  0% {
+    transform: rotateZ(10deg);
+  }
+  50% {
+    transform: rotateZ(-10deg);
+  }
+  100% {
+    transform: rotateZ(10deg);
+  }
+}
+.thumb {
+  width: 25px;
+  height: 25px;
+  display: block;
 }
 
 /* Tampilan di Layar Lebar (lebih besar dari 769px) */
@@ -206,6 +348,10 @@
   .herohome {
     margin-top: 45px;
   }
+}
+
+.selected-emoji {
+  cursor: pointer;
 }
 
 /* Tampilan di Layar Kecil (kurang dari atau sama dengan 769px) */
