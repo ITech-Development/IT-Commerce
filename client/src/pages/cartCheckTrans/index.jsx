@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios'
 
 const Cart = () => {
-  
 
   let [carts, setCarts] = useState([])
   const cart = useSelector((state) => state.cart);
