@@ -114,15 +114,18 @@ const searchContainerStyle = {
   display: "flex",
   alignItems: "center",
   marginBottom: "20px",
-  width: "97.2%",
+  width: "96.7%",
+  marginLeft: "20px",
 };
 
 const searchInputStyle = {
-  padding: "8px",
+  padding: "8px 8px 8px 15px",
   height: "30px",
+  width: "auto",
   borderRadius: "4px",
   border: "1px solid #ccc",
-  marginRight: "10px",
+  // marginRight: "10px",
+  margin: "0",
   flex: 1,
 };
 
@@ -130,9 +133,8 @@ const ProductList = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSortOption, setSelectedSortOption] = useState("name"); // Initialize the selectedSortOption state
-  const [selectedCategories, setSelectedCategories] = useState([]); // State for selected categories
+  // const [selectedCategories, setSelectedCategories] = useState([]); // State for selected categories
 
-  
   const handleAddToCart = async (product) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
@@ -154,46 +156,46 @@ const ProductList = () => {
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
-  
+
   const handleSortOptionChange = (event) => {
     setSelectedSortOption(event.target.value); // Update the selectedSortOption state
   };
-  
+
   // Filter and sort the data based on searchQuery and selectedSortOption
-  const handleCategoryCheckboxChange = (event) => {
-    const category = event.target.value;
-    if (event.target.checked) {
-      // If the checkbox is checked, add the category to the selectedCategories
-      setSelectedCategories([...selectedCategories, category]);
-    } else {
-      // If the checkbox is unchecked, remove the category from the selectedCategories
-      setSelectedCategories(selectedCategories.filter((c) => c !== category));
-    }
-  };
+  // const handleCategoryCheckboxChange = (event) => {
+  //   const category = event.target.value;
+  //   if (event.target.checked) {
+  //     // If the checkbox is checked, add the category to the selectedCategories
+  //     setSelectedCategories([...selectedCategories, category]);
+  //   } else {
+  //     // If the checkbox is unchecked, remove the category from the selectedCategories
+  //     setSelectedCategories(selectedCategories.filter((c) => c !== category));
+  //   }
+  // };
   const filteredAndSortedData = data
-  ? data
-      .filter((product) =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      .filter((product) => {
-        // Filter products by selected categories
-        if (selectedCategories.length === 0) {
-          return true; // If no categories are selected, show all products
-        }
-        return selectedCategories.includes(product.category);
-      })
-      .sort((a, b) => {
-        switch (selectedSortOption) {
-          case "price":
-            return a.unitPrice - b.unitPrice;
-          case "stock":
-            return a.stock - b.stock;
-          default:
-            // Sort by name by default
-            return a.name.localeCompare(b.name);
-        }
-      })
-  : [];
+    ? data
+        .filter((product) =>
+          product.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        // .filter((product) => {
+        //   // Filter products by selected categories
+        //   if (selectedCategories.length === 0) {
+        //     return true; // If no categories are selected, show all products
+        //   }
+        //   return selectedCategories.includes(product.category);
+        // })
+        .sort((a, b) => {
+          switch (selectedSortOption) {
+            case "price":
+              return a.unitPrice - b.unitPrice;
+            case "stock":
+              return a.stock - b.stock;
+            default:
+              // Sort by name by default
+              return a.name.localeCompare(b.name);
+          }
+        })
+    : [];
 
   return (
     <>
@@ -208,16 +210,7 @@ const ProductList = () => {
         ) : (
           <>
             <h2 className="productlist-title">Produk Rekomendasi</h2>
-            <div style={searchContainerStyle}>
-              <input
-                className="dropSearch"
-                type="text"
-                value={searchQuery}
-                onChange={handleSearchInputChange}
-                style={searchInputStyle}
-                placeholder="Cari Produk Berdasarkan Nama..."
-              />
-            </div>
+
             <div
               style={{
                 display: "flex",
@@ -227,89 +220,105 @@ const ProductList = () => {
             >
               <div
                 style={{
-                  border: "1px solid gray",
-                  borderRadius: "5px",
-                  padding: "10px 20px 10px 20px",
+                  padding: "10px",
                   maxHeight: "450px",
-                  width: "1250px",
+                  maxWidthwidth: "1350px",
                   marginTop: "20px",
                 }}
               >
-                <div>
+                <div style={{ width: "280px", paddingTop: "30px" }}>
                   <h2>Filter</h2>
                   <hr />
                   <div>
                     <h3>Kategori</h3>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <label className="container">
-                        <input type="checkbox" checked={selectedCategories.includes("Delivery Valve")}
-                          onChange={handleCategoryCheckboxChange}/>
-                        <span className="checkmark"></span>
-                        Delivery Valve
+                    <div className="containPrice">
+                      <label>
+                        <input
+                          type="radio"
+                          // checked={selectedCategories.includes(
+                          //   "Delivery Valve"
+                          // )}
+                          // onChange={handleCategoryCheckboxChange}
+                        />
+                        <p className="filterCategories">Delivery Valve</p>
                       </label>
-                      <label className="container">
-                        <input type="checkbox" checked={selectedCategories.includes("Element")}
-                          onChange={handleCategoryCheckboxChange}/>
-                        <span className="checkmark"></span>
-                        Element
+                      <label>
+                        <input
+                          type="radio"
+                          // checked={selectedCategories.includes("Element")}
+                          // onChange={handleCategoryCheckboxChange}
+                        />
+                        <p className="filterCategories">Element</p>
                       </label>
-                      <label className="container">
-                        <input type="checkbox" checked={selectedCategories.includes("Head Rotor")}
-                          onChange={handleCategoryCheckboxChange}/>
-                        <span className="checkmark"></span>
-                        Head Rotor
+                      <label>
+                        <input
+                          type="radio"
+                          // checked={selectedCategories.includes("Head Rotor")}
+                          // onChange={handleCategoryCheckboxChange}
+                        />
+                        <p className="filterCategories">Head Rotor</p>
                       </label>
-                      <label className="container">
-                        <input type="checkbox" checked={selectedCategories.includes("Nozzle")}
-                          onChange={handleCategoryCheckboxChange}/>
-                        <span className="checkmark"></span>
-                        Nozzle
+                      <label>
+                        <input
+                          type="radio"
+                          // checked={selectedCategories.includes("Nozzle")}
+                          // onChange={handleCategoryCheckboxChange}
+                        />
+                        <p className="filterCategories">Nozzle</p>
                       </label>
                     </div>
                   </div>{" "}
                   <hr />
                   <div>
                     <h3>Harga</h3>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      {/* <label className="container">
-                        <input
-                          type="radio"
-                          value="name"
-                          checked={selectedSortOption === "name"}
-                          onChange={handleSortOptionChange}
-                        />
-                        Berdasarkan Nama
-                      </label> */}
-                      <label className="container">
+                    <div className="containPrices">
+                      <label>
                         <input
                           type="radio"
                           value="price"
                           checked={selectedSortOption === "price"}
                           onChange={handleSortOptionChange}
                         />
-                        Harga Terendah - Tertinggi
+                        <p className="filterCategoriess">Harga Terendah - Tertinggi</p>
                       </label>
-                      <label className="container">
+                    </div>
+                  </div>{" "}
+                  <hr />
+                  <div>
+                    <h3>Stok</h3>
+                    <div className="containPrices">
+                      <label>
                         <input
                           type="radio"
                           value="stock"
                           checked={selectedSortOption === "stock"}
                           onChange={handleSortOptionChange}
                         />
-                        Stok Paling Sedikit - Terbanyak
+                        <p className="filterCategoriess">Stok Paling Sedikit - Terbanyak</p>
                       </label>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="CardGridContainer">
-                {filteredAndSortedData.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onAddToCart={handleAddToCart}
+              <div className="productsLIST">
+                <div style={searchContainerStyle}>
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                    style={searchInputStyle}
+                    placeholder="Produk apa yang anda cari ?.."
                   />
-                ))}
+                </div>
+                <div className="CardGridContainer">
+                  {filteredAndSortedData.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onAddToCart={handleAddToCart}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </>

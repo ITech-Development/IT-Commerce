@@ -65,7 +65,7 @@ export default function Navigation() {
       <>
         <div style={{ display: "flex", alignItems: "center" }}>
         <li>
-            <Link to="/productlist">Artikel</Link>
+            <Link to="/articles">Artikel</Link>
           </li>
           <li>
             <Link to="/productlist">Produk</Link>

@@ -14,6 +14,10 @@
   margin: 1%; /* Add some margin between cards */
 }
 
+.productlist-title {
+  padding: 20px 0
+}
+
 .product a {
   text-decoration: none;
   color: inherit;
@@ -64,7 +68,59 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
-  padding: 20px;
+  padding: 10px 20px;
+}
+
+label {
+  display: flex;
+  padding-right: 160px;
+}
+
+input {
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.containerFilters {
+  display: flex;
+}
+
+.filterCategories {
+  width: 200px;
+  position: relative;
+  top: -13px;
+  left: -30px;
+  line-height: 10px;
+}
+
+.filterCategoriess {
+  width: 280px;
+  position: relative;
+  top: -18px;
+  left: -44px;
+  /* line-height: 10px; */
+}
+
+.containPrice {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+.containPrices {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  padding-left: 40px;
+}
+
+.productsLIST {
+  display: flex;
+  flex-direction: column;
 }
 
 /* Responsive styles for mobile devices */
