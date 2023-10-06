@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getTotals } from "../../../features/cartSlice";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -16,6 +18,8 @@ function Index() {
   const { data: profile } = useGetMeQuery()
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
 
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
   const [token, setToken] = useState("");
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
@@ -34,14 +38,10 @@ function Index() {
   const [checkoutCourier, setCheckoutCourier] = useState("jne");
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
 
-  const [isModalVisible, setModalVisible] = useState(false);
-
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3100/admin-sellers"
-        );
+        const response = await axios.get("http://localhost:3100/admin-sellers");
         setVouchers(response.data);
       } catch (error) {
         console.log("Error fetching vouchers:", error);
@@ -54,6 +54,9 @@ function Index() {
     setSelectedVoucher(event.target.value);
   };
 
+  useEffect(() => {
+    dispatch(getTotals());
+  }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
     const bayar = calculateTotalBayar();
@@ -75,12 +78,11 @@ function Index() {
         selectedShippingCost,
         selectedVoucher,
         checkoutPengiriman,
-        bayar,
+        bayar
       },
       headers: config,
       method: "post",
     });
-    setModalVisible(true);
     setToken(response.data.token);
   };
 
@@ -113,11 +115,12 @@ function Index() {
   }, [token]);
 
   useEffect(() => {
-    const midtransUrl = "https://app.midtrans.com/snap/snap.js";
+    const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
-    // const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
-    const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
+
+    const midtransClientKey = "SB-Mid-client-QQE6F6PJ1nniyWS-";
     scriptTag.setAttribute("data-client-key-indo-riau", midtransClientKey);
 
     document.body.appendChild(scriptTag);
@@ -149,16 +152,15 @@ function Index() {
     const subtotal = calculateSubtotal(); // Panggil fungsi calculateSubtotal untuk mendapatkan nilai subtotal
     const voucherPercentage = 3;
     const discountAmount = (subtotal * voucherPercentage) / 100;
-    // const result = subtotal - discountAmount;
     return discountAmount;
   };
+
 
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     const voucherDiscount = calculateVoucher();
-    // const ppnAmount = calculatePPN();
-    const total = subtotal - voucherDiscount;
+    const total = subtotal - voucherDiscount 
     return total;
   };
 
@@ -167,6 +169,7 @@ function Index() {
     const result = total + totalShippingCost;
     return Math.floor(result);
   };
+
 
 
   useEffect(() => {
@@ -242,8 +245,8 @@ function Index() {
     // Assuming that the first shipping cost is selected by default, you can update this logic as needed.
     if (data && data.length > 0) {
       setCheckoutPengiriman(data[0]);
-      setSelectedShippingCost(data[0]?.cost[0]?.value);
-      setTotalShippingCost(data[0]?.cost[0]?.value);
+      setSelectedShippingCost(data[0].cost[0].value);
+      setTotalShippingCost(data[0].cost[0].value);
     } else {
       setSelectedShippingCost(null);
       setTotalShippingCost(0);
@@ -265,6 +268,7 @@ function Index() {
     // const value = event.target.value
     setSelectedShippingCost(value);
     setTotalShippingCost(value);
+
   };
 
   const handlerSetCourier = async (event) => {
@@ -274,12 +278,12 @@ function Index() {
   };
 
   const paymentButtonStyle = {
-    backgroundColor: "blue",
-    color: "white",
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
+    backgroundColor: 'blue',
+    color: 'white',
+    padding: '10px 20px',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
   };
 
   return (
@@ -312,15 +316,15 @@ function Index() {
       >
         <h2>Produk Dipesan</h2>
         {/* <CartCheckTrans /> */}
-        <div class="cart-container">
+        <div className="cart-container">
           {carts?.length === 0 ? (
             <div class="cart-empty">
               <p>Your cart is empty</p>
               <div class="start-shopping">
-                <Link to="/productlist">
+                <a href="/productlist">
                   <span>&lt;</span>
                   <span>Start Shopping</span>
-                </Link>
+                </a>
               </div>
             </div>
           ) : (
@@ -337,23 +341,20 @@ function Index() {
                     <div class="cart-product">
                       <Link to={`/products/${e.product.id}`}>
                         <img
-                          className="imgIR"
                           src={e.product.image}
                           alt={e.product.name}
                         />
                       </Link>
                       <div>
-                        <h3 style={{ fontSize: "16px", maxWidth: '258px' }}>
-                          {e.product.name.split(" ").slice(0, 4).join(" ")}...
-                        </h3>
-                        {/* <p>{e.product.description}</p> */}
+                        <h3>{e.product.name}</h3>
+                        <p>{e.product.description}</p>
                         <button onClick={() => handlerRemove(e.id)}>
                           Remove
                         </button>
                       </div>
                     </div>
                     <div class="cart-product-price">
-                      Rp.{e.product.unitPrice.toLocaleString("id-ID", {})}
+                      Rp.{e.product.unitPrice}
                     </div>
                     <div class="cart-product-quantity">
                       <button disabled>-</button>
@@ -361,11 +362,7 @@ function Index() {
                       <button disabled>+</button>
                     </div>
                     <div class="cart-product-total-price">
-                      Rp.
-                      {(e.quantity * e.product.unitPrice).toLocaleString(
-                        "id-ID",
-                        {}
-                      )}
+                      Rp.{e.quantity * e.product.unitPrice}
                     </div>
                   </div>
                 ))}
@@ -375,20 +372,24 @@ function Index() {
                 <div class="cart-checkout" style={{ lineHeight: "30px" }}>
                   <div class="subtotal">
                     <span>Subtotal :</span>
-                    <span class="amount">
-                      Rp.{calculateSubtotal().toLocaleString("id-ID", {})}
-                    </span>
+                    <span class="amount">Rp.{calculateSubtotal()}</span>
                   </div>
                   <div class="subtotal">
                     <span>Voucher 3% :</span>
-                    <span class="amount">
-                      Rp. {calculateVoucher().toLocaleString("id-ID", {})}
-                    </span>
+                    <span class="amount">Rp. {calculateVoucher()}</span>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      fontStyle: "italic",
+                    }}
+                  >
                   </div>
                   <div class="subtotal">
                     <span>Total :</span>
                     <span style={{ fontWeight: "700" }} class="amount">
-                      {calculateTotal().toLocaleString("id-ID", {})}
+                      {calculateTotal()}
                     </span>
                   </div>
                 </div>
@@ -406,34 +407,34 @@ function Index() {
               marginBottom: "30px",
             }}
           >
-            <label key={vouchers?.[3]?.id}>
+            <label key={vouchers[3]?.id}>
               <input
                 type="radio"
-                value={vouchers?.[3]?.voucherCode}
-                checked={selectedVoucher === vouchers?.[3]?.voucherCode}
+                value={vouchers[3]?.voucherCode}
+                checked={selectedVoucher === vouchers[3]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {/* {vouchers?.[3]?.voucherCode} */}
+              {/* {vouchers[3]?.voucherCode} */}
               <img src={VCR1} alt="IT 01" width="150" />
             </label>
-            <label key={vouchers?.[4]?.id}>
+            <label key={vouchers[4]?.id}>
               <input
                 type="radio"
-                value={vouchers?.[4]?.voucherCode}
-                checked={selectedVoucher === vouchers?.[4]?.voucherCode}
+                value={vouchers[4]?.voucherCode}
+                checked={selectedVoucher === vouchers[4]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {/* {vouchers?.[4]?.voucherCode} */}
+              {/* {vouchers[4]?.voucherCode} */}
               <img src={VCR2} alt="MS 01" width="150" />
             </label>
-            <label key={vouchers?.[5]?.id}>
+            <label key={vouchers[5]?.id}>
               <input
                 type="radio"
-                value={vouchers?.[5]?.voucherCode}
-                checked={selectedVoucher === vouchers?.[5]?.voucherCode}
+                value={vouchers[5]?.voucherCode}
+                checked={selectedVoucher === vouchers[5]?.voucherCode}
                 onChange={handleVoucherChange}
               />
-              {/* {vouchers?.[5]?.voucherCode} */}
+              {/* {vouchers[5]?.voucherCode} */}
               <img src={VCR3} alt="MS 01" width="150" />
             </label>
           </div>
@@ -446,6 +447,7 @@ function Index() {
           >
             <h2>Pilih Metode Pengiriman</h2>
             <div>
+
               <select
                 value={courier}
                 onChange={handlerSetCourier}
@@ -464,6 +466,12 @@ function Index() {
                   jnt
                 </option>
               </select>
+              {/* <input
+                type="number"
+                value={calculateTotalWeight()}
+                readOnly
+                placeholder="Total Weight in Grams"
+              /> */}
               <select
                 name="province"
                 id="province"
@@ -530,43 +538,34 @@ function Index() {
                       type="radio"
                       id={`shippingChoice${index}`}
                       name="shipping"
-                      value={el.cost[0]?.value}
-                      checked={selectedShippingCost === el.cost[0]?.value}
+                      value={el.cost[0].value}
+                      checked={selectedShippingCost === el.cost[0].value}
                       onChange={handleShippingCostChange}
                     />
                     <label htmlFor={`shippingChoice${index}`}>
-                      Shipping Cost: Rp.
-                      {el.cost[0]?.value.toLocaleString("id-ID", {})}
+                      Shipping Cost: Rp.{el.cost[0].value}
                     </label>
                     <p>Service: {el.service}</p>
                     <p>Description: {el.description}</p>
-                    <p>Est: {el.cost[0]?.etd} Days</p>
+                    <p>Est: {el.cost[0].etd} Days</p>
                   </div>
                 ))
                 : null}
             </div>
           </div>
-
           <div
-            style={{
-              padding: "20px 65px",
-              fontSize: "20px",
-              display: "flex",
-              justifyContent: "end",
-            }}
+            style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end' }}
           >
-            <div style={{ paddingTop: "5px" }}>
-              <span>Total Bayar : </span>
-              <span
-                style={{ fontWeight: "700", paddingRight: "20px" }}
-                className="amount"
-              >
-                Rp. {calculateTotalBayar().toLocaleString("id-ID", {})}
+            <div style={{ paddingTop: '5px' }}>
+
+              <span >Total Bayar : </span>
+              <span style={{ fontWeight: "700", paddingRight: '20px' }} className="amount">
+                Rp. {calculateTotalBayar()}
               </span>
             </div>
             <div>
               {totalShippingCost === 0 ? (
-                <p>
+                <p >
                   <i>Silahkan pilih metode pengiriman</i>
                 </p>
               ) : (
@@ -578,28 +577,12 @@ function Index() {
                 </button>
               )}
             </div>
-            {isModalVisible && (
-              <div className="modal-overlay">
-                <div className="modal">
-                  <div className="modal-content">
-                    <span
-                      className="close"
-                      onClick={() => setModalVisible(false)}
-                    >
-                      &times;
-                    </span>
-                    <h2>Modal Title</h2>
 
-                    <p>Isi modal Anda di sini.</p>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>
+
     </div>
   );
 }
 export default Index;
-

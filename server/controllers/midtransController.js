@@ -81,15 +81,14 @@ class MidtransController {
   }
 
   static async midtransTokenIndoRiau(req, res, next) {
-    console.log(req.body, 'indo  riau');
+    console.log(req.body, '<<indoriau');
     const t = await sequelize.transaction();
-    // console.log(req.user.id);
     try {
       let temp = []
       const user = await User.findByPk(req.user.id);
       let snap = new midtransClient.Snap({
         // Set to true if you want Production Environment (accept real transaction).
-        isProduction: true,
+        isProduction: false,
         serverKey: midtransKeyIndoRiau,
       });
       let order_id = "INDORIAU-ORDERID-" +
@@ -154,15 +153,15 @@ class MidtransController {
     }
   }
 
-  static async midtransTokenJuvindo(req, res, next) {
+  static async midtransItech(req, res, next) {
+    console.log(req.body, '<<juvindo');
     const t = await sequelize.transaction();
-    // console.log(req.user.id);
     try {
       let temp = []
       const user = await User.findByPk(req.user.id);
       let snap = new midtransClient.Snap({
         // Set to true if you want Production Environment (accept real transaction).
-        isProduction: true,
+        isProduction: false,
         serverKey: midtransKeyJuvindo,
       });
       let order_id = "JUVINDO-ORDERID-" +
@@ -185,13 +184,18 @@ class MidtransController {
         },
       };
       const midtransToken = await snap.createTransaction(parameter);
+      const {
+        checkoutProvince,
+        checkoutCity,
+        bayar,
+        checkoutSubdistrict,
+        selectedVoucher,
+      } = req.body
       const createCheckout = await Checkout.create({
         userId: req.user.id,
-        // checkoutDate: ,
-        // totalPrice: ,
-        // paymentStatus: DataTypes.STRING,
-        // shippingAddress: ,
-        voucherCode: req.body.selectedVoucher,
+        shippingAddress: `${checkoutProvince}, ${checkoutCity}, ${checkoutSubdistrict}`,
+        totalPrice: bayar,
+        voucherCode: selectedVoucher,
         midtransCode: order_id,
         transaction: t
       })

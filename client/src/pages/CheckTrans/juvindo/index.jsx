@@ -34,7 +34,6 @@ function Index() {
   const [checkoutCourier, setCheckoutCourier] = useState("jne");
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
 
-  const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchVouchers = async () => {
@@ -80,7 +79,6 @@ function Index() {
       headers: config,
       method: "post",
     });
-    setModalVisible(true);
     setToken(response.data.token);
   };
 
@@ -119,8 +117,7 @@ function Index() {
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
-    // const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
-    const midtransClientKey = "Mid-client-R2krmA7ZU84Yd2Ug";
+    const midtransClientKey = "SB-Mid-client-_MWorWyIPYpYXjUo";
     scriptTag.setAttribute("data-client-key-juvindo", midtransClientKey);
 
     document.body.appendChild(scriptTag);
@@ -290,7 +287,7 @@ function Index() {
 
   return (
     <div>
-
+      <div id="snap-container"></div>
       <div className="alamat">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Alamat Pengiriman</h2>
@@ -583,20 +580,7 @@ function Index() {
                 </button>
               )}
             </div>
-            {isModalVisible && (
-              <div className="modal-overlay">
-                <div className="modal">
-                  <div className="modal-content">
-                    <span className="close" onClick={() => setModalVisible(false)}>
-                      &times;
-                    </span>
-                    <h2>Modal Title</h2>
-                    <div id="snap-container"></div>
-                    <p>Isi modal Anda di sini.</p>
-                  </div>
-                </div>
-              </div>
-            )}
+            
 
 
           </div>

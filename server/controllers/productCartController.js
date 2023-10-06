@@ -2,6 +2,7 @@ const { ProductCart, Cart, Product, User } = require("../models");
 let { sequelize } = require("../models/");
 
 class ProductCartController {
+  
   static async getAllProductCarts(req, res, next) {
     try {
       let findedCart = await Cart.findOne({
