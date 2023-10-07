@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getTotals } from "../../../features/cartSlice";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -16,6 +18,8 @@ function Index() {
   const { data: profile } = useGetMeQuery()
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
 
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
   const [token, setToken] = useState("");
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
@@ -34,13 +38,10 @@ function Index() {
   const [checkoutCourier, setCheckoutCourier] = useState("jne");
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
 
-
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3100/admin-sellers"
-        );
+        const response = await axios.get("http://localhost:3100/admin-sellers");
         setVouchers(response.data);
       } catch (error) {
         console.log("Error fetching vouchers:", error);
@@ -52,6 +53,10 @@ function Index() {
   const handleVoucherChange = (event) => {
     setSelectedVoucher(event.target.value);
   };
+
+  useEffect(() => {
+    dispatch(getTotals());
+  }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
 
@@ -111,13 +116,12 @@ function Index() {
   }, [token]);
 
   useEffect(() => {
-    // const midtransUrl = "https://app.midtrans.com/snap/snap.js";
-    const midtransUrl = "https://app.midtrans.com/snap/snap.js";
+    const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
-    const midtransClientKey = "SB-Mid-client-_MWorWyIPYpYXjUo";
+    const midtransClientKey = "SB-Mid-client-eHjBIkJvPUq1rcDM";
     scriptTag.setAttribute("data-client-key-juvindo", midtransClientKey);
 
     document.body.appendChild(scriptTag);
@@ -126,8 +130,6 @@ function Index() {
       document.body.removeChild(scriptTag);
     };
   });
-
-  
 
   const handlerRemove = (id) => {
     removeItemFromCart(id)
@@ -151,7 +153,6 @@ function Index() {
     const subtotal = calculateSubtotal(); // Panggil fungsi calculateSubtotal untuk mendapatkan nilai subtotal
     const voucherPercentage = 3;
     const discountAmount = (subtotal * voucherPercentage) / 100;
-    // const result = subtotal - discountAmount;
     return discountAmount;
   };
 
@@ -160,8 +161,7 @@ function Index() {
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     const voucherDiscount = calculateVoucher();
-    // const ppnAmount = calculatePPN();
-    const total = subtotal - voucherDiscount;
+    const total = subtotal - voucherDiscount
     return total;
   };
 
@@ -170,6 +170,7 @@ function Index() {
     const result = total + totalShippingCost;
     return Math.floor(result);
   };
+
 
 
   useEffect(() => {
@@ -268,6 +269,7 @@ function Index() {
     // const value = event.target.value
     setSelectedShippingCost(value);
     setTotalShippingCost(value);
+
   };
 
   const handlerSetCourier = async (event) => {
@@ -315,15 +317,15 @@ function Index() {
       >
         <h2>Produk Dipesan</h2>
         {/* <CartCheckTrans /> */}
-        <div class="cart-container">
+        <div className="cart-container">
           {carts?.length === 0 ? (
             <div class="cart-empty">
               <p>Your cart is empty</p>
               <div class="start-shopping">
-                <Link to="/productlist">
+                <a href="/productlist">
                   <span>&lt;</span>
                   <span>Start Shopping</span>
-                </Link>
+                </a>
               </div>
             </div>
           ) : (
@@ -356,7 +358,7 @@ function Index() {
                       Rp.{e.product.unitPrice}
                     </div>
                     <div class="cart-product-quantity">
-                      <button disabled >-</button>
+                      <button disabled>-</button>
                       <div class="count">{e.quantity}</div>
                       <button disabled>+</button>
                     </div>
@@ -377,16 +379,14 @@ function Index() {
                     <span>Voucher 3% :</span>
                     <span class="amount">Rp. {calculateVoucher()}</span>
                   </div>
-                  {/* <div
+                  <div
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
                       fontStyle: "italic",
                     }}
                   >
-                    <span>PPN 11% :</span>
-                    <span className="amount"> Rp. {calculatePPN()}</span>
-                  </div> */}
+                  </div>
                   <div class="subtotal">
                     <span>Total :</span>
                     <span style={{ fontWeight: "700" }} class="amount">
@@ -554,7 +554,6 @@ function Index() {
                 : null}
             </div>
           </div>
-
           <div
             style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end' }}
           >
@@ -566,7 +565,6 @@ function Index() {
               </span>
             </div>
             <div>
-
               {totalShippingCost === 0 ? (
                 <p >
                   <i>Silahkan pilih metode pengiriman</i>
@@ -580,16 +578,12 @@ function Index() {
                 </button>
               )}
             </div>
-            
-
 
           </div>
         </div>
-
       </div>
 
     </div>
   );
 }
 export default Index;
-
