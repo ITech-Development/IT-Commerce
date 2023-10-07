@@ -124,7 +124,7 @@ function ProductCategories() {
             </div>
           </Link>
           <Link to="/productlist">
-            <button className="view-all-button">Lihat Semua Produk</button>
+            <button className="view-all-button">Lihat Semua Kategori</button>
           </Link>
         </div>
         <div className="category-sectionCategories">

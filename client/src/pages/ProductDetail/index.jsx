@@ -117,7 +117,7 @@ const ProductDetailPage = () => {
             onMouseMove={handleImageMouseMove}
             zoom={zoom}
           />
-          <div style={{ display: "flex", maxWidth: "60px", gap: "13px" }}>
+          <div style={{ display: "flex", maxWidth: "60px", gap: "13px", paddingTop: '8px' }}>
             <ProductImageSub
               src={product.image}
               alt={product.name}

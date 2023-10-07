@@ -114,7 +114,7 @@ const searchContainerStyle = {
   display: "flex",
   alignItems: "center",
   marginBottom: "20px",
-  width: "96.7%",
+  width: "96.3%",
   marginLeft: "20px",
 };
 
