@@ -90,7 +90,6 @@ class MidtransController {
       let temp = []
       const user = await User.findByPk(req.user.id);
       let snap = new midtransClient.Snap({
-        // Set to true if you want Production Environment (accept real transaction).
         isProduction: false,
         serverKey: midtransKeyIndoRiau,
       });
@@ -99,7 +98,7 @@ class MidtransController {
       let parameter = {
         transaction_details: {
           order_id,
-          gross_amount: +req.query.total, //kalkulasikan total harga di sini
+          gross_amount: +req.query.total,
         },
         credit_card: {
           secure: true,
@@ -107,20 +106,22 @@ class MidtransController {
         customer_details: {
           fullName: user.fullName,
           email: user.email,
-          password: user.password,
           phoneNumber: user.phoneNumber,
           address: user.address,
-          imageProfile: user.imageProfile,
+          // Avoid sending sensitive user data like password here.
         },
       };
       const midtransToken = await snap.createTransaction(parameter);
+  
       const {
         checkoutProvince,
         checkoutCity,
         bayar,
         checkoutSubdistrict,
         selectedVoucher,
-      } = req.body
+        carts,
+      } = req.body;
+  
       const createCheckout = await Checkout.create({
         userId: req.user.id,
         shippingAddress: `${checkoutProvince}, ${checkoutCity}, ${checkoutSubdistrict}`,
@@ -128,31 +129,32 @@ class MidtransController {
         voucherCode: selectedVoucher,
         midtransCode: order_id,
         transaction: t
-      })
-
-      req.body.carts.forEach(async (el) => {
+      });
+  
+      for (const el of carts) {
         temp.push({
-          // id: await helpers.getId(),
           checkoutId: createCheckout.id,
           productId: el.productId,
           quantity: el.quantity,
           createdAt: new Date(),
-          updateAt: new Date(),
-        })
+          updatedAt: new Date(),
+        });
+  
         let dec = await Product.findOne({ where: { id: el.productId } });
-        if (dec && dec.stock > el.quantity) {
+        if (dec && dec.stock >= el.quantity) {
           await dec.decrement("stock", { by: el.quantity, transaction: t });
         } else {
-          throw ({ message: 'Data yang anda minta tidak atau terlalu banyak dari stok produk' })
+          throw new Error('Produk tidak memiliki cukup stok.');
         }
-      })
-      let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t })
-      await t.commit()
-      res.status(201).json({ token: midtransToken.token })
+      }
+  
+      let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t });
+      await t.commit();
+      res.status(201).json({ token: midtransToken.token });
     } catch (error) {
-      console.log(error, 'errornya apa');
-      await t.rollback()
-      res.status(500).json(error)
+      console.error(error, 'errornya apa');
+      await t.rollback();
+      res.status(500).json({ message: 'Terjadi kesalahan dalam proses pembayaran.' });
     }
   }
 
