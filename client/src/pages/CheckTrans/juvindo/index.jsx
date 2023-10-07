@@ -121,7 +121,7 @@ function Index() {
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
-    const midtransClientKey = "SB-Mid-client-eHjBIkJvPUq1rcDM";
+    const midtransClientKey = "SB-Mid-client-_MWorWyIPYpYXjUo";
     scriptTag.setAttribute("data-client-key-juvindo", midtransClientKey);
 
     document.body.appendChild(scriptTag);
