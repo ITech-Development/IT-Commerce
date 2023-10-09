@@ -168,7 +168,7 @@ function Index() {
   const calculateTotalBayar = () => {
     const total = calculateTotal();
     const result = total + totalShippingCost;
-    return Math.floor(result);
+    return Math.round(result);
   };
 
   useEffect(() => {

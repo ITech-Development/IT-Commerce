@@ -146,10 +146,9 @@ function CartsJuvindo({ cartsJuvindo }) {
                         <button 
                         style={checkoutButtonStyle}
                         disabled={isCheckoutDisabled}
-
                         >
                             <Link to="/check-TransJuvindo" style={linkStyle}>
-                                Check Out
+                            {!isCheckoutDisabled ? 'Checkout' : 'Stok produk kosong'}
                             </Link>
                         </button>
                         <ContinueShoppingContainer>

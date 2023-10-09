@@ -143,7 +143,7 @@ function CartsItech({ cartsItech }) {
                         disabled={isCheckoutDisabled}
                         >
                             <Link to="/check-TransITech" style={linkStyle}>
-                                Check Out
+                            {!isCheckoutDisabled ? 'Checkout' : 'Stok produk kosong'}
                             </Link>
                         </button>
                         <ContinueShoppingButton>

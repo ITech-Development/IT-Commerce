@@ -151,7 +151,7 @@ function CartsIndoRiau({ cartsIndoRiau }) {
                         >
                             <Link to="/check-TransIR" style={linkStyle}>
 
-                                Check Out
+                                {!isCheckoutDisabled ? 'Checkout' : 'Stok produk kosong'}
                             </Link>
                         </button>
                         <ContinueShoppingContainer>
