@@ -13,6 +13,8 @@ import {
 
 function CartsJuvindo({ cartsJuvindo }) {
 
+    const isCheckoutDisabled = cartsJuvindo.some((cartItem) => cartItem.product.stock <= 0);
+
     const [removeItemFromCart] = useRemoveItemFromCartMutation()
     const [incrementCartItem] = useIncrementCartItemMutation()
     const [decrementCartItem] = useDecrementCartItemMutation()
@@ -141,7 +143,11 @@ function CartsJuvindo({ cartsJuvindo }) {
                                 {calculateTotalJuvindo()}
                             </span>
                         </div>
-                        <button style={checkoutButtonStyle}>
+                        <button 
+                        style={checkoutButtonStyle}
+                        disabled={isCheckoutDisabled}
+
+                        >
                             <Link to="/check-TransJuvindo" style={linkStyle}>
                                 Check Out
                             </Link>

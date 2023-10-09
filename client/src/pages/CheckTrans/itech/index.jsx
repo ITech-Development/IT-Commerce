@@ -171,8 +171,6 @@ function Index() {
     return Math.floor(result);
   };
 
-
-
   useEffect(() => {
     // Fetch province data from the server
     const fetchProvinceData = async () => {

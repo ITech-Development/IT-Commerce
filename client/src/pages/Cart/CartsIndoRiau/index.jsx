@@ -11,7 +11,12 @@ import {
     useDecrementCartItemMutation,
 } from "../../../features/cart/apiCarts";
 
+
+
 function CartsIndoRiau({ cartsIndoRiau }) {
+
+    const isCheckoutDisabled = cartsIndoRiau.some((cartItem) => cartItem.product.stock <= 0);
+
     const [removeItemFromCart] = useRemoveItemFromCartMutation()
     const [incrementCartItem] = useIncrementCartItemMutation()
     const [decrementCartItem] = useDecrementCartItemMutation()
@@ -32,7 +37,7 @@ function CartsIndoRiau({ cartsIndoRiau }) {
 
     const handlerRemove = (id) => {
         removeItemFromCart(id)
-            
+
     };
 
     //IndoRiau
@@ -54,6 +59,7 @@ function CartsIndoRiau({ cartsIndoRiau }) {
         const ppn = subtotal * 0.11;
         return ppn.toFixed(2);
     };
+
     return (
         <div
             className="cart-container"
@@ -89,7 +95,6 @@ function CartsIndoRiau({ cartsIndoRiau }) {
                                     <p>{e.product.description}</p>
                                     <button onClick={() => handlerRemove(e.id)}>
                                         <FontAwesomeIcon icon={faTrash} /> Hapus
-
                                     </button>
                                 </div>
                             </div>
@@ -140,8 +145,12 @@ function CartsIndoRiau({ cartsIndoRiau }) {
                                 {calculateTotalIndoRiau()}
                             </span>
                         </div>
-                        <button style={checkoutButtonStyle}>
+                        <button
+                            style={checkoutButtonStyle}
+                            disabled={isCheckoutDisabled} // Disable the button if any product is out of stock
+                        >
                             <Link to="/check-TransIR" style={linkStyle}>
+
                                 Check Out
                             </Link>
                         </button>
