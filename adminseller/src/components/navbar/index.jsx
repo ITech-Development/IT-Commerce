@@ -2,24 +2,23 @@ import React, { useState } from "react";
 import "./style.css";
 import Logo from "../../assets/Logo.png";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+// import styled from "styled-components";
 
-const LogoutButton = styled.button`
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
+// const LogoutButton = styled.button`
+//   background-color: #007bff;
+//   color: white;
+//   border: none;
+//   border-radius: 4px;
+//   padding: 10px 20px;
+//   cursor: pointer;
+//   font-size: 16px;
 
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
+//   &:hover {
+//     background-color: #0056b3;
+//   }
+// `;
 
 export default function Navigation() {
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -27,18 +26,23 @@ export default function Navigation() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('access_token')
+    localStorage.removeItem("access_token");
     window.location.href = "/"; // Redirect to the logout page
-  };  
+  };
 
   const RenderMenu = () => {
-    const accessToken = localStorage.getItem('access_token')
+    const accessToken = localStorage.getItem("access_token");
     return (
       <>
         {accessToken && (
-          < li >
-            <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
-          </li >
+          <li>
+            <button>Pesan</button>
+          </li>
+        )}
+        {accessToken && (
+          <li>
+            <button onClick={handleLogout}>Logout</button>
+          </li>
         )}
       </>
     );

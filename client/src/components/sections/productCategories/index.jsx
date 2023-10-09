@@ -117,14 +117,11 @@ function ProductCategories() {
             Pilihan <br />
             Kategori Terlaris
           </h1>
-          <Link to="/productlist">
+          <Link to="/category-list">
             <div className="allmas">
               <img className="seeAll" src={SeeAll} alt="" />
-              <p className="seeAlltext">lihat semua</p>
+              <p className="seeAlltext">lihat semua  Kategori</p>
             </div>
-          </Link>
-          <Link to="/productlist">
-            <button className="view-all-button">Lihat Semua Kategori</button>
           </Link>
         </div>
         <div className="category-sectionCategories">

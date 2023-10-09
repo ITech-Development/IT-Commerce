@@ -5,6 +5,8 @@ import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import Star from "../../assets/star.png";
 import "./indexDetail.css";
+import { useDispatch } from "react-redux";
+import { useAddToCartMutation } from "../../features/cart/apiCarts";
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
@@ -15,8 +17,8 @@ const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [relatedProducts, setRelatedProducts] = useState([]);
-  console.log(relatedProducts, "heiheihei");
-
+  
+  const [addToCart] = useAddToCartMutation()
   const [zoom, setZoom] = useState(1);
 
   const handleImageMouseMove = (e) => {
@@ -67,22 +69,16 @@ const ProductDetailPage = () => {
       });
   }, [id]);
 
+  const dispatch = useDispatch()
+
   const handleAddToCart = () => {
-    if (accessToken) {
-      axios
-        .post(`${API_URL}/product-carts`, product, {
-          headers: { access_token: accessToken },
-        })
-        .then(({ data }) => {
-          console.log(data, "berhasil ditambahkan ke keranjang");
-        })
-        .catch((err) => {
-          console.log(err, "handle add to cart anda bermasalah");
-        });
-    } else {
-      // navigate("/login");
-      alert("Login terlebih dahulu agar dapat belanja");
-    }
+    addToCart({ product })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   };
 
   const handleBuyNow = () => {
@@ -117,7 +113,7 @@ const ProductDetailPage = () => {
             onMouseMove={handleImageMouseMove}
             zoom={zoom}
           />
-          <div style={{ display: "flex", maxWidth: "60px", gap: "13px", paddingTop: '8px' }}>
+          <div style={{ display: "flex", maxWidth: "60px", gap: "13px" }}>
             <ProductImageSub
               src={product.image}
               alt={product.name}
@@ -143,7 +139,7 @@ const ProductDetailPage = () => {
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>
-              Rp. {product.unitPrice.toLocaleString("id-ID")}
+            Rp. {product.unitPrice.toLocaleString("id-ID")}
           </Price>
           <Stock>
             Stok Tersisa {" "}

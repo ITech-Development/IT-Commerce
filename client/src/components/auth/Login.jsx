@@ -1,17 +1,25 @@
-import React, { useContext, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+/* eslint-disable */
+// import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+// import { Link } from "react-router-dom";
+// import axios from "axios";
 import { FiMail, FiLock } from "react-icons/fi";
-import { UserContext } from "../../App.jsx";
+// import { UserContext } from "../../App.jsx";
 import Background from "./Fuel.png";
 import "./style.css"; // Import your CSS styles
+import { useLoginMutation } from '../../features/user/apiUser.js'
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { dispatch } = useContext(UserContext);
+  // const { dispatch } = useContext(UserContext);
+  const [login] = useLoginMutation()
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate()
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,24 +34,33 @@ const Login = () => {
       password,
     };
 
-    try {
-      const response = await axios.post(
-        "https://indoteknikserver-732012365989.herokuapp.com/users/login",
-        userData
-      );
-      console.log("Login response:", response.data);
+    console.log(1);
+    login(userData).then((res)=> {
+      console.log(res.data);
+      localStorage.setItem("access_token", res.data.access_token);
+      navigate('/')
+    })
 
-      localStorage.setItem("access_token", response.data.access_token);
 
-      setEmail("");
-      setPassword("");
+    console.log(2);
+    // try {
+    //   const response = await axios.post(
+    //     "https://indoteknikserver-732012365989.herokuapp.com/users/login",
+    //     userData
+    //   );
+    //   console.log("Login response:", response.data);
 
-      dispatch({ type: "USER", payload: true });
-      navigate("/");
-    } catch (error) {
-      console.error("Login error:", error);
-      alert("Login failed. Please try again.");
-    }
+    //   localStorage.setItem("access_token", response.data.access_token);
+
+    //   setEmail("");
+    //   setPassword("");
+
+    //   dispatch({ type: "USER", payload: true });
+    //   navigate("/");
+    // } catch (error) {
+    //   console.error("Login error:", error);
+    //   alert("Login failed. Please try again.");
+    // }
   };
 
   return (
@@ -83,7 +100,7 @@ const Login = () => {
           </button>
         </form>
         <p className="p">
-          Belum punya akun? <Link to="/register">Daftar</Link>
+          {/* Don't have an account? <Link to="/register">Register</Link> */}
         </p>
       </div>
     </div>

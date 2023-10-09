@@ -1,3 +1,5 @@
+// src/components/TransactionList.js
+
 import React from "react";
 
 const TransactionList = ({ data }) => {
@@ -26,11 +28,11 @@ const TransactionList = ({ data }) => {
           </ul>
           <h3>Qty: </h3>
           <ul>{checkout.products.length}</ul>
-          <h3>Paymen Status: </h3>
+          <h3>Payment Status: </h3>
           <ul>
             {checkout.checkout.paymentStatus === null
               ? "null"
-              : checkout.checkout.paymentStatus === null}
+              : checkout.checkout.paymentStatus}
           </ul>
           <hr />
         </div>

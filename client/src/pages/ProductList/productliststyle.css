@@ -165,4 +165,19 @@ input {
     margin: 0;
     padding: 0;
   }
+
+  .star-rating img {
+    max-width: 12px; /* Adjust star size for mobile */
+  }
+
+  .star-rating p {
+    font-size: 10px; /* Adjust font size for mobile */
+  }
+  .dropPil {
+    display: none;
+  }
+  .dropSearch {
+    margin: 0;
+    padding: 0;
+  }
 }

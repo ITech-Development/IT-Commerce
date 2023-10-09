@@ -86,14 +86,11 @@ const CardSection = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          "https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/transaction-list",
-          {
-            headers: {
-              access_token: localStorage.getItem("access_token"),
-            },
-          }
-        );
+        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/transaction-list", {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching product data:", error);
@@ -102,14 +99,12 @@ const CardSection = () => {
 
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(
-          "https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/order-list",
-          {
-            headers: {
-              access_token: localStorage.getItem("access_token"),
-            },
-          }
-        );
+        
+        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/order-list", {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -122,18 +117,20 @@ const CardSection = () => {
 
   return (
     <CardContainer>
-      <Card
-        imageUrl="https://res.cloudinary.com/dcbryptkx/image/upload/v1695196688/IndoTeknikMarketplace/product/Icon/Website%20Icon/Order/Order_msfr89.png"
-        title="Order List"
-        count={Object.keys(users).length}
-        to="/order-list"
-      />
-      <Card
-        imageUrl="https://res.cloudinary.com/dcbryptkx/image/upload/v1695196687/IndoTeknikMarketplace/product/Icon/Website%20Icon/Pembayaran/Rincian_Biaya_atau_Riwayat_belanja_ndgxgb.png"
-        title="Transaction List"
-        count={products.length}
-        to="/transaction-list"
-      />
+      <Link to="/order-list">
+        <Card
+          imageUrl="https://e7.pngegg.com/pngimages/389/412/png-clipart-font-awesome-computer-icons-user-profile-users-group-blind-miscellaneous-blue.png"
+          title="Order List"
+          count={Object.keys(users).length}
+        />
+      </Link>
+      <Link to="/transaction-list">
+        <Card
+          imageUrl="https://image.pngaaa.com/123/2193123-middle.png"
+          title="Transaction List"
+          count={products.length}
+        />
+      </Link>
       <Card
         imageUrl="https://png.pngtree.com/png-clipart/20210312/original/pngtree-simple-medal-of-honor-linear-icon-png-image_6074699.png"
         title="Points"

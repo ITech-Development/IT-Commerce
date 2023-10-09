@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { createContext, useEffect, useReducer } from "react";
+import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import ProductList from "./pages/ProductList/ProductList";
@@ -12,16 +12,12 @@ import "react-toastify/dist/ReactToastify.css";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Logout from "./components/auth/Logout";
-import { useDispatch } from "react-redux";
-import { loadUser } from "./features/authslice";
 import ProductShipping from "./pages/productShipping";
 import FirstStep from "./pages/productShipping/firstStep";
 import SecondStep from "./pages/productShipping/secondStep";
 import CheckTrans from "./pages/CheckTrans";
 import ProfileUpdate from "./pages/profileUpdate";
 import ServiceList from "./pages/ServiceList";
-import { initialState, reducer } from "./reducer/UseReducer";
-import Chat from "./pages/Chat";
 import CheckTransItech from "./pages/CheckTrans/itech";
 import CheckTransIndoRiau from "./pages/CheckTrans/indoRiau";
 import CheckTransJuvindo from "./pages/CheckTrans/juvindo";
@@ -33,70 +29,55 @@ import ProductCategoryVEPumpParts from "./pages/ProductCategories/vePumpParts";
 import ProductCategoryHeadRotor from "./pages/ProductCategories/headRotor";
 import MyOrder from "./pages/MyOrder";
 import DetailsOrder from "./pages/DetailsOrder";
-import TurboParts from './pages/ProductCategories/turboparts'
-import SCV from './pages/ProductCategories/scv'
-import Injector from './pages/ProductCategories/Inject'
-
-export const UserContext = createContext();
+import store from './app/store'
+import { Provider } from "react-redux";
+import CategoryList from './pages/CategoryList/CategoryList'
+import CategoryDetail from './pages/CategoryDetail' 
 
 const Routing = () => {
   return (
-    <>
-      <Routes>
-        <Route exact path="/" element={<Homepage />} />
-        <Route path="/productlist" element={<ProductList />} />
-        <Route path="/products/:id" element={<ProductDetails />} />
-        <Route path="/error404" element={<NotFound />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/shipping" element={<ProductShipping />} />
-        <Route path="/shipping" element={<FirstStep />} />
-        <Route path="/shippingSecond" element={<SecondStep />} />
-        <Route path="/check-trans" element={<CheckTrans />} />
-        <Route path="/profile-update" element={<ProfileUpdate />} />
-        <Route path="/services" element={<ServiceList />} />
-        <Route path="/profile-update/:id" element={<ProfileUpdate />} />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/check-TransITech" element={<CheckTransItech />} />
-        <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
-        <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
-        <Route path="/nozzle" element={<ProductCategoryNozzle />} />
-        <Route path="/turboparts" element={<TurboParts />} />
-        <Route path="/scv" element={<SCV />} />
-        <Route path="/injector" element={<Injector />} />
-        <Route
-          path="/delivery-valve"
-          element={<ProductCategoryDeliveryValve />}
-        />
-        <Route path="/element" element={<ProductCategoryElement />} />
-        <Route path="/ve-pump" element={<ProductCategoryVEPump />} />
-        <Route path="/ve-pump-parts" element={<ProductCategoryVEPumpParts />} />
-        <Route path="/head-rotor" element={<ProductCategoryHeadRotor />} />
-        <Route path="/my-order" element={<MyOrder />} />
-        <Route path="/my-order/:id" element={<DetailsOrder />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route exact path="/" element={<Homepage />} />
+      <Route path="/productlist" element={<ProductList />} />
+      <Route path="/category-list" element={<CategoryList />} />
+      <Route path="/category-list/:id" element={<CategoryDetail />} />
+      <Route path="/products/:id" element={<ProductDetails />} />
+      <Route path="/error404" element={<NotFound />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/logout" element={<Logout />} />
+      <Route path="/shipping" element={<ProductShipping />} />
+      <Route path="/shipping" element={<FirstStep />} />
+      <Route path="/shippingSecond" element={<SecondStep />} />
+      <Route path="/check-trans" element={<CheckTrans />} />
+      <Route path="/profile-update" element={<ProfileUpdate />} />
+      <Route path="/services" element={<ServiceList />} />
+      <Route path="/profile-update/:id" element={<ProfileUpdate />} />
+      <Route path="/check-TransITech" element={<CheckTransItech />} />
+      <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
+      <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
+      <Route path="/nozzle" element={<ProductCategoryNozzle />} />
+      <Route path="/delivery-valve" element={<ProductCategoryDeliveryValve />} />
+      <Route path="/element" element={<ProductCategoryElement />} />
+      <Route path="/ve-pump" element={<ProductCategoryVEPump />} />
+      <Route path="/ve-pump-parts" element={<ProductCategoryVEPumpParts />} />
+      <Route path="/head-rotor" element={<ProductCategoryHeadRotor />} />
+      <Route path="/my-order" element={<MyOrder />} />
+      <Route path="/my-order/:id" element={<DetailsOrder />} />
+    </Routes>
   );
 };
 
 function App() {
-  const dispatchRedux = useDispatch();
-
-  useEffect(() => {
-    dispatchRedux(loadUser(null));
-  }, [dispatchRedux]);
-
-  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ state, dispatch }}>
+      <Provider store={store}>
         <ToastContainer />
         <Navbar />
         <Routing />
-      </UserContext.Provider>
+      </Provider>
     </BrowserRouter>
   );
 }

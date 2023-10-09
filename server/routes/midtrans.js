@@ -7,5 +7,6 @@ router.post('/pay', MidtransController.pay)
 router.use(authenticationUser)
 router.post('/indo-riau', MidtransController.midtransTokenIndoRiau)
 router.post('/juvindo', MidtransController.midtransTokenJuvindo)
+router.post('/itech', MidtransController.midtransItech)
 
 module.exports = router

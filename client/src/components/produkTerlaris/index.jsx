@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import axios from "axios";
-import { useGetAllProductsQuery } from "../../features/productsApi";
+// import { useGetAllProductsQuery } from "../../features/productsApi";
+import { useGetProductsQuery } from "../../features/product/apiProducts";
 import "./terlaris.css";
 import "../../App.css";
 import Star from "../../assets/star.png";
@@ -152,7 +153,8 @@ const ProductCard = ({ product, onAddToCart }) => {
 };
 
 const ProductList = () => {
-  const { data, error, isLoading } = useGetAllProductsQuery();
+  // const { data, error, isLoading } = useGetAllProductsQuery();
+  const { data, error, isLoading } = useGetProductsQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
   const [displayedCards, setDisplayedCards] = useState(7);
