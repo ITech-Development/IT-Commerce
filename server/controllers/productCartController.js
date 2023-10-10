@@ -275,7 +275,7 @@ class ProductCartController {
       });
       if (product) {
         // Menambahkan stok produk yang dihapus
-        await product.increment("stock", { by: productC.quantity });
+        // await product.increment("stock", { by: productC.quantity });
 
         await productC.destroy();
 
@@ -295,14 +295,14 @@ class ProductCartController {
       await ProductCart.destroy({ where: {} }); // Menghapus semua produk dari keranjang
 
       // Mengembalikan stok produk yang dihapus
-      for (const productCart of deletedProductCarts) {
-        const product = await Product.findOne({
-          where: { id: productCart.productId },
-        });
-        if (product) {
-          await product.increment("stock", { by: productCart.quantity });
-        }
-      }
+      // for (const productCart of deletedProductCarts) {
+      //   const product = await Product.findOne({
+      //     where: { id: productCart.productId },
+      //   });
+      //   if (product) {
+      //     await product.increment("stock", { by: productCart.quantity });
+      //   }
+      // }
 
       return res
         .status(200)

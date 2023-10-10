@@ -112,7 +112,7 @@ class CheckoutProductController {
             let findedProduct = await Product.findOne({ where: { id } });
             await findedProduct.decrement("stock", { by: 1, transaction: t });
         } catch (error) {
-
+            console.log(error);
         }
         // try {
         //     const {

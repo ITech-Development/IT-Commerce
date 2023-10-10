@@ -8,6 +8,7 @@ import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
 import {
+  useClearProductCartMutation,
   useGetCartsIndoRiauQuery,
   useRemoveItemFromCartMutation
 } from "../../../features/cart/apiCarts";
@@ -17,6 +18,7 @@ function Index() {
   const { data: carts } = useGetCartsIndoRiauQuery()
   const { data: profile } = useGetMeQuery()
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
+  const [clearItemFromCart] = useClearProductCartMutation()
 
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -83,6 +85,7 @@ function Index() {
       headers: config,
       method: "post",
     });
+    clearItemFromCart()
     setToken(response.data.token);
   };
 

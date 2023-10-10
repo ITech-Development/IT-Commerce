@@ -11,8 +11,6 @@ import {
     useDecrementCartItemMutation,
 } from "../../../features/cart/apiCarts";
 
-
-
 function CartsIndoRiau({ cartsIndoRiau }) {
 
     const isCheckoutDisabled = cartsIndoRiau.some((cartItem) => cartItem.product.stock <= 0);
