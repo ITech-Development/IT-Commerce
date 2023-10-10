@@ -5,7 +5,7 @@ import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import Star from "../../assets/star.png";
 import "./indexDetail.css";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { useAddToCartMutation } from "../../features/cart/apiCarts";
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
@@ -69,7 +69,7 @@ const ProductDetailPage = () => {
       });
   }, [id]);
 
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   const handleAddToCart = () => {
     addToCart({ product })
