@@ -36,7 +36,9 @@ function CheckoutProductsPage() {
                     <th>Status Pembayaran</th>
                     <th>Total Bayar</th>
                     <th>Alamat Pengiriman</th>
+                    <th>Metode Pengiriman</th>
                     <th>Status Pengiriman</th>
+                    <th>PPN</th>
                     <th>Tanggal Belanja</th>
                   </tr>
                 </thead>
@@ -56,7 +58,9 @@ function CheckoutProductsPage() {
                       <td>{productInfo.checkout.paymentStatus}</td>
                       <td>{productInfo.checkout.totalPrice}</td>
                       <td>{productInfo.checkout.shippingAddress}</td>
-                      <td>Sedang dikemas</td>
+                      <td>{productInfo.checkout.shippingMethod}</td>
+                      <td>{productInfo.checkout.deliveryStatus}</td>
+                      <td>{productInfo.checkout.setPPN}</td>
                       <td>{productInfo.createdAt}</td>
                     </tr>
                   ))}

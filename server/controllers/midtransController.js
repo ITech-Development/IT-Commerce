@@ -44,6 +44,8 @@ class MidtransController {
         checkoutSubdistrict,
         selectedVoucher,
         carts,
+        checkoutCourier,
+        checkoutPengiriman
       } = req.body;
 
       const createCheckout = await Checkout.create({
@@ -52,6 +54,8 @@ class MidtransController {
         totalPrice: bayar,
         voucherCode: selectedVoucher,
         midtransCode: order_id,
+        setPPN: '-',
+        shippingMethod: `Kurir: ${checkoutCourier}`,
         transaction: t
       });
 
@@ -114,12 +118,15 @@ class MidtransController {
       const midtransToken = await snap.createTransaction(parameter);
 
       const {
+        pajak,
         checkoutProvince,
         checkoutCity,
         bayar,
         checkoutSubdistrict,
         selectedVoucher,
         carts,
+        checkoutCourier,
+        checkoutPengiriman
       } = req.body;
 
       const createCheckout = await Checkout.create({
@@ -128,6 +135,8 @@ class MidtransController {
         totalPrice: bayar,
         voucherCode: selectedVoucher,
         midtransCode: order_id,
+        setPPN: `${pajak}`,
+        shippingMethod: `Kurir: ${checkoutCourier}`,
         transaction: t
       });
 
@@ -189,12 +198,15 @@ class MidtransController {
       const midtransToken = await snap.createTransaction(parameter);
 
       const {
+        pajak,
         checkoutProvince,
         checkoutCity,
         bayar,
         checkoutSubdistrict,
         selectedVoucher,
         carts,
+        checkoutCourier,
+        checkoutPengiriman
       } = req.body;
 
       const createCheckout = await Checkout.create({
@@ -203,6 +215,8 @@ class MidtransController {
         totalPrice: bayar,
         voucherCode: selectedVoucher,
         midtransCode: order_id,
+        setPPN: `${pajak}`,
+        shippingMethod: `Kurir: ${checkoutCourier}`,
         transaction: t
       });
 
