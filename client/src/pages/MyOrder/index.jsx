@@ -32,7 +32,11 @@ function CheckoutProductsPage() {
                   <tr>
                     <th>Produk</th>
                     <th>Kuantitas</th>
+                    <th>Kode Voucher</th>
                     <th>Status Pembayaran</th>
+                    <th>Total Bayar</th>
+                    <th>Alamat Pengiriman</th>
+                    <th>Status Pengiriman</th>
                     <th>Tanggal Belanja</th>
                   </tr>
                 </thead>
@@ -48,7 +52,11 @@ function CheckoutProductsPage() {
                         </Link>
                       </td>
                       <td>{productInfo.quantity}</td>
+                      <td>{productInfo.checkout.voucherCode}</td>
                       <td>{productInfo.checkout.paymentStatus}</td>
+                      <td>{productInfo.checkout.totalPrice}</td>
+                      <td>{productInfo.checkout.shippingAddress}</td>
+                      <td>Sedang dikemas</td>
                       <td>{productInfo.createdAt}</td>
                     </tr>
                   ))}

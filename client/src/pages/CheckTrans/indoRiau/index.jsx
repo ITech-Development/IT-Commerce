@@ -62,6 +62,7 @@ function Index() {
 
   const handlePaymentProcess = async (data) => {
     const bayar = calculateTotalBayar();
+    const pajak = calculatePPN()
     const config = {
       "Content-Type": "application/json",
       access_token: localStorage.getItem("access_token"),
@@ -80,7 +81,8 @@ function Index() {
         selectedShippingCost,
         selectedVoucher,
         checkoutPengiriman,
-        bayar
+        bayar,
+        pajak
       },
       headers: config,
       method: "post",
@@ -158,12 +160,21 @@ function Index() {
     return discountAmount;
   };
 
+  const calculatePPN = () => {
+    const subtotal = calculateSubtotal();
+    const voucherDiscount = calculateVoucher();
+    const afterVoucherSubtotal = subtotal - voucherDiscount;
+    const ppnPercentage = 11;
+    const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
+    return ppnAmount;
+  };
 
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     const voucherDiscount = calculateVoucher();
-    const total = subtotal - voucherDiscount 
+    const ppnAmount = calculatePPN();
+    const total = subtotal - voucherDiscount + ppnAmount;
     return total;
   };
 
@@ -172,8 +183,6 @@ function Index() {
     const result = total + totalShippingCost;
     return Math.round(result);
   };
-
-
 
   useEffect(() => {
     // Fetch province data from the server
@@ -388,6 +397,8 @@ function Index() {
                       fontStyle: "italic",
                     }}
                   >
+                    <span>PPN 11% :</span>
+                    <span className="amount"> Rp. {calculatePPN()}</span>
                   </div>
                   <div class="subtotal">
                     <span>Total :</span>

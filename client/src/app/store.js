@@ -4,6 +4,7 @@ import { usersApi } from '../features/user/apiUser'
 import { cartsApi } from '../features/cart/apiCarts'
 import { adminSellersApi } from '../features/adminSeller/apiAdminSeller'
 import { rajaOngkirApi } from '../features/rajaOngkir/apiRajaOngkir'
+import { checkoutProductsApi } from '../features/checkoutProduct/apiCheckoutProducts'
 import cartReducer from '../features/cart/cartSlice'
 
 export default configureStore({
@@ -13,6 +14,7 @@ export default configureStore({
         [cartsApi.reducerPath]: cartsApi.reducer,
         [adminSellersApi.reducerPath]: adminSellersApi.reducer,
         [rajaOngkirApi.reducerPath]: rajaOngkirApi.reducer,
+        [checkoutProductsApi.reducerPath]: checkoutProductsApi.reducer,
         cart: cartReducer
     },
     middleware: (getDefaultMiddleware) => {
@@ -22,6 +24,7 @@ export default configureStore({
             .concat(cartsApi.middleware)
             .concat(adminSellersApi.middleware)
             .concat(rajaOngkirApi.middleware)
+            .concat(checkoutProductsApi.middleware)
     },
 
 })

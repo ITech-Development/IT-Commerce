@@ -1,32 +1,6 @@
-const { CheckoutProduct, Checkout, Product, ProductOwner,sequelize, User } = require('../models')
+const { CheckoutProduct, Checkout, Product, ProductOwner, sequelize, User } = require('../models')
 
 class CheckoutProductController {
-    // static async getAllCheckoutProducts(req, res, next) {
-    //     try {
-    //         let findedCheckout = await Checkout.findOne({
-    //             where: { userId: req.user.id },
-    //         });
-    //         let userId = findedCheckout.userId;
-    //         const checkoutProduct = await CheckoutProduct.findAll({
-    //             include: [
-    //                 {
-    //                     model: Checkout,
-    //                     as: 'checkouts',
-    //                     where: {
-    //                         userId: userId // Filter berdasarkan userId
-    //                     }
-    //                 },
-    //                 {
-    //                     model: Product,
-    //                     as: 'products'
-    //                 },
-    //             ]
-    //         })
-    //         res.status(200).json(checkoutProduct)
-    //     } catch (error) {
-    //         next(error)
-    //     }
-    // }
 
     static async getAllCheckoutProducts(req, res, next) {
         try {
@@ -34,13 +8,13 @@ class CheckoutProductController {
             const checkouts = await Checkout.findAll({
                 where: { userId: req.user.id },
             });
-    
+
             const checkoutProductsMap = {};
-    
+
             // Iterate through checkouts
             for (const checkout of checkouts) {
                 const checkoutId = checkout.id;
-    
+
                 // Retrieve checkout products and include associated product data
                 const checkoutProducts = await CheckoutProduct.findAll({
                     where: {
@@ -62,24 +36,26 @@ class CheckoutProductController {
                             as: 'checkouts'
                         }
                     ],
-                    order: [['createdAt', 'DESC']]
+                    order: [['createdAt', 'ASC']]
                 });
-    
-                // Store checkout products with quantity in the map
-                checkoutProductsMap[checkoutId] = checkoutProducts.map(cp => ({
-                    product: cp.products,
-                    checkout: cp.checkouts,
-                    quantity: cp.quantity,
-                    createdAt: cp.createdAt
-                }));
+
+                if (checkoutProducts.length > 0) {
+                    // Store checkout products with quantity in the map
+                    checkoutProductsMap[checkoutId] = checkoutProducts.map(cp => ({
+                        product: cp.products,
+                        checkout: cp.checkouts,
+                        quantity: cp.quantity,
+                        createdAt: cp.createdAt
+                    }));
+                }
             }
-    
+
             res.status(200).json(checkoutProductsMap);
         } catch (error) {
             next(error);
         }
     }
-    
+
     static async addCheckoutProduct(req, res, next) {
         const t = await sequelize.transaction();
         const { id } = req.body;
@@ -136,7 +112,7 @@ class CheckoutProductController {
     static async detailsCheckoutProduct(req, res, next) {
         try {
             const checkoutId = req.params.id; // Assuming checkoutId is passed as a parameter
-    
+
             const checkoutProducts = await CheckoutProduct.findAll({
                 where: {
                     checkoutId: checkoutId
@@ -165,24 +141,24 @@ class CheckoutProductController {
                 ],
                 order: [['createdAt', 'DESC']]
             });
-    
+
             if (checkoutProducts.length === 0) {
                 return res.status(404).json({ message: 'Checkout products not found.' });
             }
-    
+
             const formattedCheckoutProducts = checkoutProducts.map(cp => ({
                 product: cp.products,
                 checkout: cp.checkouts,
                 quantity: cp.quantity,
                 createdAt: cp.createdAt
             }));
-    
+
             res.status(200).json(formattedCheckoutProducts);
         } catch (error) {
             next(error);
         }
     }
-    
+
 
 
 

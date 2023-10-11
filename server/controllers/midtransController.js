@@ -234,7 +234,6 @@ class MidtransController {
   }
 
   static async pay(req, res, next) {
-    console.log(req.body, 'ini req body pay');
     try {
       if (req.body.transaction_status === 'settlement') {
         await Checkout.update({
