@@ -8,6 +8,7 @@ import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
 import {
+  useClearProductCartMutation,
   useGetCartsIndoRiauQuery,
   useRemoveItemFromCartMutation
 } from "../../../features/cart/apiCarts";
@@ -17,6 +18,7 @@ function Index() {
   const { data: carts } = useGetCartsIndoRiauQuery()
   const { data: profile } = useGetMeQuery()
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
+  const [clearItemFromCart] = useClearProductCartMutation()
 
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -60,6 +62,7 @@ function Index() {
 
   const handlePaymentProcess = async (data) => {
     const bayar = calculateTotalBayar();
+    const pajak = calculatePPN()
     const config = {
       "Content-Type": "application/json",
       access_token: localStorage.getItem("access_token"),
@@ -78,11 +81,13 @@ function Index() {
         selectedShippingCost,
         selectedVoucher,
         checkoutPengiriman,
-        bayar
+        bayar,
+        pajak
       },
       headers: config,
       method: "post",
     });
+    clearItemFromCart()
     setToken(response.data.token);
   };
 
@@ -155,12 +160,21 @@ function Index() {
     return discountAmount;
   };
 
+  const calculatePPN = () => {
+    const subtotal = calculateSubtotal();
+    const voucherDiscount = calculateVoucher();
+    const afterVoucherSubtotal = subtotal - voucherDiscount;
+    const ppnPercentage = 11;
+    const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
+    return ppnAmount;
+  };
 
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     const voucherDiscount = calculateVoucher();
-    const total = subtotal - voucherDiscount 
+    const ppnAmount = calculatePPN();
+    const total = subtotal - voucherDiscount + ppnAmount;
     return total;
   };
 
@@ -169,8 +183,6 @@ function Index() {
     const result = total + totalShippingCost;
     return Math.round(result);
   };
-
-
 
   useEffect(() => {
     // Fetch province data from the server
@@ -385,6 +397,8 @@ function Index() {
                       fontStyle: "italic",
                     }}
                   >
+                    <span>PPN 11% :</span>
+                    <span className="amount"> Rp. {calculatePPN()}</span>
                   </div>
                   <div class="subtotal">
                     <span>Total :</span>

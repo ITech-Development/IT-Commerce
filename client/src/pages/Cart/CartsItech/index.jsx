@@ -15,6 +15,7 @@ import {
 
 function CartsItech({ cartsItech }) {
 
+    const isCheckoutDisabled = cartsItech.some((cartItem) => cartItem.product.stock <= 0);
 
     const [removeItemFromCart] = useRemoveItemFromCartMutation()
     const [incrementCartItem] = useIncrementCartItemMutation()
@@ -137,9 +138,12 @@ function CartsItech({ cartsItech }) {
                                 {calculateTotalItech()}
                             </span>
                         </div>
-                        <button style={checkoutButtonStyle}>
+                        <button 
+                        style={checkoutButtonStyle}
+                        disabled={isCheckoutDisabled}
+                        >
                             <Link to="/check-TransITech" style={linkStyle}>
-                                Check Out
+                            {!isCheckoutDisabled ? 'Checkout' : 'Stok produk kosong'}
                             </Link>
                         </button>
                         <ContinueShoppingButton>

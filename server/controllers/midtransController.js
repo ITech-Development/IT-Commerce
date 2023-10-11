@@ -36,7 +36,7 @@ class MidtransController {
         },
       };
       const midtransToken = await snap.createTransaction(parameter);
-  
+
       const {
         checkoutProvince,
         checkoutCity,
@@ -45,7 +45,7 @@ class MidtransController {
         selectedVoucher,
         carts,
       } = req.body;
-  
+
       const createCheckout = await Checkout.create({
         userId: req.user.id,
         shippingAddress: `${checkoutProvince}, ${checkoutCity}, ${checkoutSubdistrict}`,
@@ -54,7 +54,7 @@ class MidtransController {
         midtransCode: order_id,
         transaction: t
       });
-  
+
       for (const el of carts) {
         temp.push({
           checkoutId: createCheckout.id,
@@ -63,7 +63,7 @@ class MidtransController {
           createdAt: new Date(),
           updatedAt: new Date(),
         });
-  
+
         let dec = await Product.findOne({ where: { id: el.productId } });
         if (dec && dec.stock >= el.quantity) {
           await dec.decrement("stock", { by: el.quantity, transaction: t });
@@ -71,7 +71,7 @@ class MidtransController {
           throw new Error('Produk tidak memiliki cukup stok.');
         }
       }
-  
+
       let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t });
       await t.commit();
       res.status(201).json({ token: midtransToken.token });
@@ -81,7 +81,7 @@ class MidtransController {
       res.status(500).json({ message: 'Terjadi kesalahan dalam proses pembayaran.' });
     }
   }
-  
+
 
   static async midtransTokenIndoRiau(req, res, next) {
     console.log(req.body, '<<indoriau');
@@ -112,7 +112,7 @@ class MidtransController {
         },
       };
       const midtransToken = await snap.createTransaction(parameter);
-  
+
       const {
         checkoutProvince,
         checkoutCity,
@@ -121,7 +121,7 @@ class MidtransController {
         selectedVoucher,
         carts,
       } = req.body;
-  
+
       const createCheckout = await Checkout.create({
         userId: req.user.id,
         shippingAddress: `${checkoutProvince}, ${checkoutCity}, ${checkoutSubdistrict}`,
@@ -130,7 +130,7 @@ class MidtransController {
         midtransCode: order_id,
         transaction: t
       });
-  
+
       for (const el of carts) {
         temp.push({
           checkoutId: createCheckout.id,
@@ -139,7 +139,7 @@ class MidtransController {
           createdAt: new Date(),
           updatedAt: new Date(),
         });
-  
+
         let dec = await Product.findOne({ where: { id: el.productId } });
         if (dec && dec.stock >= el.quantity) {
           await dec.decrement("stock", { by: el.quantity, transaction: t });
@@ -147,7 +147,7 @@ class MidtransController {
           throw new Error('Produk tidak memiliki cukup stok.');
         }
       }
-  
+
       let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t });
       await t.commit();
       res.status(201).json({ token: midtransToken.token });
@@ -187,7 +187,7 @@ class MidtransController {
         },
       };
       const midtransToken = await snap.createTransaction(parameter);
-  
+
       const {
         checkoutProvince,
         checkoutCity,
@@ -196,7 +196,7 @@ class MidtransController {
         selectedVoucher,
         carts,
       } = req.body;
-  
+
       const createCheckout = await Checkout.create({
         userId: req.user.id,
         shippingAddress: `${checkoutProvince}, ${checkoutCity}, ${checkoutSubdistrict}`,
@@ -205,7 +205,7 @@ class MidtransController {
         midtransCode: order_id,
         transaction: t
       });
-  
+
       for (const el of carts) {
         temp.push({
           checkoutId: createCheckout.id,
@@ -214,7 +214,7 @@ class MidtransController {
           createdAt: new Date(),
           updatedAt: new Date(),
         });
-  
+
         let dec = await Product.findOne({ where: { id: el.productId } });
         if (dec && dec.stock >= el.quantity) {
           await dec.decrement("stock", { by: el.quantity, transaction: t });
@@ -222,7 +222,7 @@ class MidtransController {
           throw new Error('Produk tidak memiliki cukup stok.');
         }
       }
-  
+
       let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t });
       await t.commit();
       res.status(201).json({ token: midtransToken.token });

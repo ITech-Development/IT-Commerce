@@ -30,7 +30,7 @@ export const cartsApi = createApi({
             query: (id) => ({
                 url: `product-carts/increment/${id}`, // Ganti dengan URL endpoint peningkatan
                 method: 'PATCH',
-            }),            
+            }),
             invalidatesTags: ['Post']
         }),
         decrementCartItem: builder.mutation({ // Menambahkan endpoint untuk mengurangi jumlah item
@@ -39,6 +39,12 @@ export const cartsApi = createApi({
                 method: 'PATCH',
             }),
             invalidatesTags: ['Post']
+        }),
+        clearProductCart: builder.mutation({
+            query: () => ({
+                url: 'product-carts/clear', // Replace with the appropriate URL endpoint
+                method: 'DELETE', // Use the appropriate HTTP method
+            }),
         }),
         getCartsIndoRiau: builder.query({
             query: () => 'product-carts/indo-riau', // Ganti dengan URL endpoint yang sesuai
@@ -64,4 +70,6 @@ export const {
     useDecrementCartItemMutation,
     useRemoveItemFromCartMutation,
     useIncrementCartItemMutation,
+    useClearProductCartMutation
 } = cartsApi
+
