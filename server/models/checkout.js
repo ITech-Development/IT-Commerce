@@ -27,6 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     paymentStatus: DataTypes.STRING,
     shippingAddress: DataTypes.STRING,
     voucherCode: DataTypes.STRING,
+    setPPN: DataTypes.STRING,
+    shippingMethod: DataTypes.STRING,
+    deliveryStatus: DataTypes.STRING,
     midtransCode: DataTypes.STRING
   }, {
     sequelize,

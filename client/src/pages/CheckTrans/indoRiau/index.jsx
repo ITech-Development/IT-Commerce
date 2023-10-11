@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getTotals } from "../../../features/cartSlice";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -20,8 +18,6 @@ function Index() {
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
   const [clearItemFromCart] = useClearProductCartMutation()
 
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
   const [token, setToken] = useState("");
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
@@ -56,9 +52,6 @@ function Index() {
     setSelectedVoucher(event.target.value);
   };
 
-  useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
     const bayar = calculateTotalBayar();
