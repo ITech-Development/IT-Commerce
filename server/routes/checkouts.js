@@ -1,13 +1,13 @@
 const express = require('express')
 const CheckoutController = require('../controllers/checkoutController')
-const { authenticationUser } = require('../middlewares/auth')
+const { authenticationUser, authenticationAdminSeller } = require('../middlewares/auth')
 
 const router = express.Router()
 
-router.get('/', CheckoutController.getAllCeckouts)
-router.post('/', authenticationUser, CheckoutController.addCeckout)
-router.get('/:id', CheckoutController.detailsCeckout)
-router.put('/:id', CheckoutController.editCeckout)
-router.delete('/:id', CheckoutController.deleteCeckout)
+router.get('/', CheckoutController.getAllCheckouts)
+router.post('/', authenticationUser, CheckoutController.addCheckout)
+router.get('/:id', CheckoutController.detailsCheckout)
+router.put('/:id', authenticationAdminSeller,CheckoutController.editCheckout)
+router.delete('/:id', CheckoutController.deleteCheckout)
 
 module.exports = router

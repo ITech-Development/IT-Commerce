@@ -9,7 +9,7 @@ const MainContent = () => {
 
   useEffect(() => {
     // Ganti URL dengan URL endpoint API Anda
-    axios.get('https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/order-list', {
+    axios.get('http://localhost:3100/admin-sellers/order-list', {
       headers: {
         access_token : localStorage.getItem('access_token')
       }

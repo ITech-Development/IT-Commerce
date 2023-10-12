@@ -2,7 +2,7 @@ const { Checkout, User } = require('../models')
 
 class CheckoutController {
 
-    static async getAllCeckouts(req, res, next) {
+    static async getAllCheckouts(req, res, next) {
         try {
             const checkouts = await Checkout.findAll({
                 include: [
@@ -18,34 +18,34 @@ class CheckoutController {
         }
     }
 
-    static async addCeckout(req, res, next) {
+    static async addCheckout(req, res, next) {
         // const addCheckout = async (req, res) => {
-            try {
-                // Assuming the authenticated user ID is available in req.user.id (provided by the authentication middleware)
-                const { firstName, lastName, contact, status, address, city, postalCode } = req.body;
-                const userId = req.user.id;
+        try {
+            // Assuming the authenticated user ID is available in req.user.id (provided by the authentication middleware)
+            const { firstName, lastName, contact, status, address, city, postalCode } = req.body;
+            const userId = req.user.id;
 
-                // Create a new checkout record in the database
-                const newCheckout = await Checkout.create({
-                    firstName,
-                    lastName,
-                    contact,
-                    status,
-                    address,
-                    city,
-                    postalCode,
-                    userId,
-                });
+            // Create a new checkout record in the database
+            const newCheckout = await Checkout.create({
+                firstName,
+                lastName,
+                contact,
+                status,
+                address,
+                city,
+                postalCode,
+                userId,
+            });
 
-                res.status(201).json({ success: true, data: newCheckout });
-            } catch (error) {
-                console.error('Error adding checkout:', error);
-                res.status(500).json({ success: false, message: 'Failed to add checkout.' });
-            }
+            res.status(201).json({ success: true, data: newCheckout });
+        } catch (error) {
+            console.error('Error adding checkout:', error);
+            res.status(500).json({ success: false, message: 'Failed to add checkout.' });
+        }
         // };
     }
 
-    static async detailsCeckout(req, res, next) {
+    static async detailsCheckout(req, res, next) {
         try {
             const checkout = await Checkout.findOne({
                 where: {
@@ -62,27 +62,15 @@ class CheckoutController {
         }
     }
 
-    static async editCeckout(req, res, next) {
+    static async editCheckout(req, res, next) {
         try {
             const checkoutId = req.params.id
             const {
-                fullName,
-                phoneNumber,
-                status,
-                address,
-                city,
-                postalCode,
-                userId
+                deliveryStatus
             } = req.body
 
             await Checkout.update({
-                fullName,
-                phoneNumber,
-                status,
-                address,
-                city,
-                postalCode,
-                userId
+                deliveryStatus
             },
                 {
                     where: {
@@ -95,7 +83,7 @@ class CheckoutController {
         }
     }
 
-    static async deleteCeckout(req, res, next) {
+    static async deleteCheckout(req, res, next) {
         try {
             const checkout = await Checkout.findOne({
                 where: {

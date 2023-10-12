@@ -5,6 +5,7 @@ import Login from "./components/auth/Login";
 import Dashboard from "./pages/dashboard";
 import GetTransactionList from "./pages/getTransactionList";
 import GetOrderList from "./pages/getOrderList";
+import EditDeliveryStatus from "./pages/editDeliveryStatus/index";
 import DetailsProduct from "./pages/detailsProduct";
 import NotFound from "./pages/notFound";
 import React, { createContext, useEffect, useReducer } from "react";
@@ -30,6 +31,7 @@ const Routing = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/transaction-list" element={<GetTransactionList />} />
           <Route path="/order-list" element={<GetOrderList />} />
+          <Route path="/order-list/:id" element={<EditDeliveryStatus />} />
           <Route path="/products/:id" element={<DetailsProduct />} />
           <Route path="/chat" element={<Chat />} />
         </>
