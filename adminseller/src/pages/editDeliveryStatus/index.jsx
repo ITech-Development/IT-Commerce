@@ -8,7 +8,7 @@ function EditCheckout() {
 
     useEffect(() => {
         // Fetch data as before
-        fetch(`http://localhost:3100/checkouts/${id}`)
+        fetch(`https://indoteknikserver-732012365989.herokuapp.com/checkouts/${id}`)
             .then(response => response.json())
             .then(data => setDeliveryStatus(data.deliveryStatus));
     }, [id]);
@@ -20,7 +20,7 @@ function EditCheckout() {
     const handleSubmit = (event) => {
         event.preventDefault();
         // Send the HTTP request as before
-        fetch(`http://localhost:3100/checkouts/${id}`, {
+        fetch(`https://indoteknikserver-732012365989.herokuapp.com/checkouts/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
