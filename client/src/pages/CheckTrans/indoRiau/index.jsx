@@ -18,7 +18,7 @@ function Index() {
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
   const [clearItemFromCart] = useClearProductCartMutation()
 
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(null);
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
   const [subdistrict, setSubdistrict] = useState([]);

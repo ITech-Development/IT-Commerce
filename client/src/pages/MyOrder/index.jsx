@@ -43,7 +43,7 @@ function CheckoutProductsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {checkoutProducts[checkoutId].map((productInfo, index) => (
+                {Array.isArray(checkoutProducts[checkoutId]) && checkoutProducts[checkoutId].map((productInfo, index) => (
                     <tr key={index}>
                       <td>
                         <Link to={`/my-order/${productInfo.checkout.id}`}>
