@@ -32,7 +32,7 @@ function CheckoutProductsPage() {
                   <tr>
                     <th>Produk</th>
                     <th>Kuantitas</th>
-                    <th>Kode Voucher</th>
+                    {/* <th>Kode Voucher</th> */}
                     <th>Status Pembayaran</th>
                     <th>Total Bayar</th>
                     <th>Alamat Pengiriman</th>
@@ -49,12 +49,12 @@ function CheckoutProductsPage() {
                         <Link to={`/my-order/${productInfo.checkout.id}`}>
                           <div className="product-info">
                             <img src={productInfo.product.image} alt={productInfo.product.name} />
-                            <span>{productInfo.product.name}</span>
+                            {/* <span>{productInfo.product.name}</span> */}
                           </div>
                         </Link>
                       </td>
                       <td>{productInfo.quantity}</td>
-                      <td>{productInfo.checkout.voucherCode}</td>
+                      {/* <td>{productInfo.checkout.voucherCode}</td> */}
                       <td>{productInfo.checkout.paymentStatus}</td>
                       <td>{productInfo.checkout.totalPrice}</td>
                       <td>{productInfo.checkout.shippingAddress}</td>

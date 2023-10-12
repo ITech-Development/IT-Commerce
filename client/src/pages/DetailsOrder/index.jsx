@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import './CheckoutProductsPage.css';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 function CheckoutProductsPage() {
     const [checkoutProducts, setCheckoutProducts] = useState([]);
-    console.log(checkoutProducts, 'test test');
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
+    const invoiceRef = useRef(null);
 
     useEffect(() => {
         async function fetchCheckoutProducts() {
@@ -26,28 +29,54 @@ function CheckoutProductsPage() {
         fetchCheckoutProducts();
     }, [id]);
 
+    function downloadInvoiceAsPDF() {
+        if (invoiceRef.current) {
+            html2canvas(invoiceRef.current).then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm');
+                const pdfWidth = 210;
+                const pdfHeight = pdf.internal.pageSize.height;
+                const position = 0;
+                pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+                pdf.save('invoice.pdf');
+            });
+        }
+    }
+
     if (loading) {
         return <p>Loading...</p>;
     }
 
     return (
-        <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <h2>Detail Order</h2>
-            <p>Order Id: {checkoutProducts[0].checkout.midtransCode}</p>
-            <p>Alamat Pengiriman: {checkoutProducts[0].checkout.shippingAddress}</p>
-            {checkoutProducts.map((checkoutProduct, index) => (
-                <div key={index}>
-                    <hr/>
-                    <h3>{checkoutProduct.product.name}</h3>
-                    <img src={checkoutProduct.product.image} alt={checkoutProduct.product.name} width="100px"/>
-                    <p>x: {checkoutProduct.quantity}</p>
-                    <p>Created At: {checkoutProduct.createdAt}</p>
+        <div className="checkout-page" ref={invoiceRef}>
+            <div className="invoice-header">
+                <h2>Invoice</h2>
+                <div className="invoice-details">
+                    <p>Invoice Id: {checkoutProducts[0].checkout.midtransCode}</p>
+                    <p>Alamat Pengiriman: {checkoutProducts[0].checkout.shippingAddress}</p>
                 </div>
-            ))}
+            </div>
+            <table className="product-table">
+                <thead>
+                    <tr>
+                        <th>Produk</th>
+                        <th>Gambar</th>
+                        <th>Jumlah</th>
+                        <th>Belanja Pada</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {checkoutProducts.map((checkoutProduct, index) => (
+                        <tr key={index}>
+                            <td>{checkoutProduct.product.name}</td>
+                            <td><img src={checkoutProduct.product.image} alt={checkoutProduct.product.name} width="100px" /></td>
+                            <td>{checkoutProduct.quantity}</td>
+                            <td>{checkoutProduct.createdAt}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <button onClick={downloadInvoiceAsPDF}>Download Invoice as PDF</button>
         </div>
     );
 }
