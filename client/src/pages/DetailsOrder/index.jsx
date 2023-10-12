@@ -4,7 +4,6 @@ import axios from 'axios';
 
 function CheckoutProductsPage() {
     const [checkoutProducts, setCheckoutProducts] = useState([]);
-    console.log(checkoutProducts, 'test test');
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
 
@@ -39,6 +38,7 @@ function CheckoutProductsPage() {
             <h2>Detail Order</h2>
             <p>Order Id: {checkoutProducts[0].checkout.midtransCode}</p>
             <p>Alamat Pengiriman: {checkoutProducts[0].checkout.shippingAddress}</p>
+            <p>Status Pesanan</p>
             {checkoutProducts.map((checkoutProduct, index) => (
                 <div key={index}>
                     <hr/>

@@ -9,7 +9,8 @@ const CheckoutList = ({ data }) => {
       <hr />
       {data.map((checkout) => (
         <div key={checkout.checkout.id}>
-          <h2>Checkout ID: {checkout.checkout.id}</h2>
+          {/* <h2>Checkout ID: {checkout.checkout.id}</h2> */}
+          <h2>Midtrans Code: {checkout.checkout.midtransCode}</h2>
           <h2>User: {checkout.checkout?.users?.fullName}</h2>
           <p>Total Price: {checkout.checkout.totalPrice}</p>
           <p>Payment Status: {checkout.checkout.paymentStatus}</p>

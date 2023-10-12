@@ -50,7 +50,6 @@ function EditCheckout() {
                     >
                         <option value="Sedang dikemas">Sedang dikemas</option>
                         <option value="Dikirim">Dikirim</option>
-                        <option value="Diterima">Diterima</option>
                         {/* Add more options as needed */}
                     </select>
                 </div>
