@@ -86,7 +86,7 @@ const CardSection = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/transaction-list", {
+        const response = await axios.get("http://localhost:3100/admin-sellers/transaction-list", {
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
@@ -100,7 +100,7 @@ const CardSection = () => {
     const fetchUsers = async () => {
       try {
         
-        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/order-list", {
+        const response = await axios.get("http://localhost:3100/admin-sellers/order-list", {
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
