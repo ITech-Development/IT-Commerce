@@ -91,7 +91,7 @@ function Index() {
 
         onSuccess: function (result) {
           /* You may add your own implementation here */
-          alert("payment success!");
+          alert("payment success!"); 
           console.log(result);
         },
         onPending: function (result) {
