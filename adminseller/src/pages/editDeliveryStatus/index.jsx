@@ -30,6 +30,7 @@ function EditCheckout() {
         })
             .then(response => {
                 if (response.status === 201) {
+                    alert('ok')
                     navigate('/order-list');
                 } else {
                     alert('error');
