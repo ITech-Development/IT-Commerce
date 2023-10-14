@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -77,45 +77,57 @@ const SearchInput = styled.input`
 `;
 
 const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
     minimumFractionDigits: 0,
   }).format(amount);
 };
 
 const CheckoutList = ({ data }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredData = data.filter((checkout) =>
-    checkout.checkout?.users?.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    checkout.products.some((product) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+  const filteredData = data.filter(
+    (checkout) =>
+      checkout.checkout?.users?.fullName
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      checkout.products.some((product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
   );
 
   return (
     <Container>
       <SearchInput
-          type="text"
-          placeholder="Search by User or Product"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        type="text"
+        placeholder="Search by User or Product"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
       {filteredData.map((checkout) => (
         <CheckoutCard key={checkout.checkout.id}>
           <CheckoutHeader>
             <Title>Invoice #{checkout.checkout.id}</Title>
-            <Subtitle>Order Date: {new Date(checkout.checkout.createdAt).toLocaleString()}</Subtitle>
+            <Subtitle>
+              Order Date:{" "}
+              {new Date(checkout.checkout.createdAt).toLocaleString()}
+            </Subtitle>
           </CheckoutHeader>
           <Subtitle>User: {checkout.checkout?.users?.fullName}</Subtitle>
-          <Subtitle>Shipping Address: {checkout.checkout.shippingAddress}</Subtitle>
-          <Price>Total Price: {formatCurrency(checkout.checkout.totalPrice)}</Price>
+          <Subtitle>
+            Shipping Address: {checkout.checkout.shippingAddress}
+          </Subtitle>
+          <Price>
+            Total Price: {formatCurrency(checkout.checkout.totalPrice)}
+          </Price>
           <p>Payment Status: {checkout.checkout.paymentStatus}</p>
           <p>Shipping Method: {checkout.checkout.shippingMethod}</p>
           <p>
-            Delivery Status:{' '}
-            <Link to={`/${checkout.checkout.id}`}>{checkout.checkout.deliveryStatus}</Link>
+            Delivery Status:{" "}
+            <Link to={`/${checkout.checkout.id}`}>
+              {checkout.checkout.deliveryStatus}
+            </Link>
           </p>
           <ProductList>
             {checkout.products.map((product) => (
