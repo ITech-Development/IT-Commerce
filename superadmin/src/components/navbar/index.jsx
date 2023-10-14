@@ -1,7 +1,7 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import "./style.css";
 import Logo from "../../assets/Logo.png";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Navigation() {
 
@@ -22,6 +22,19 @@ export default function Navigation() {
             <i className="fas fa-bars"></i>
           </button>
         </div>
+        <div className="navigation-menu">
+        <ul>
+          <li>
+            <Link to="/users">Users</Link>
+          </li>
+          <li>
+            <Link to="/products">Products</Link>
+          </li>
+          <li>
+            <Link to="/transactions">Transactions</Link>
+          </li>
+        </ul>
+      </div>
       </nav>
     </>
   );

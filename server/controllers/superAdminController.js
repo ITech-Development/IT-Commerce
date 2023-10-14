@@ -1,5 +1,5 @@
 const { compare } = require('../helpers/bcryptjs');
-const { SuperAdmin } = require('../models')
+const { SuperAdmin, CheckoutProduct, Checkout, Product, ProductOwner } = require('../models')
 const { createToken } = require('../helpers/jwt')
 
 class SuperAdminController {
@@ -56,7 +56,61 @@ class SuperAdminController {
         }
     }
 
-    
+    static async getAllTransactions(req, res, next) {
+      
+            try {
+                // Find checkouts associated with the user
+                const checkouts = await Checkout.findAll();
+
+                const checkoutProductsMap = {};
+
+                // Iterate through checkouts
+                for (const checkout of checkouts) {
+                    const checkoutId = checkout.id;
+
+                    // Retrieve checkout products and include associated product data
+                    const checkoutProducts = await CheckoutProduct.findAll({
+                        where: {
+                            checkoutId: checkoutId
+                        },
+                        include: [
+                            {
+                                model: Product,   // Include Product model
+                                as: 'products',    // Define alias for the association,
+                                include: [
+                                    {
+                                        model: ProductOwner,
+                                        as: 'product_owners'
+                                    }
+                                ]
+                            },
+                            {
+                                model: Checkout,
+                                as: 'checkouts'
+                            }
+                        ],
+                        order: [['createdAt', 'ASC']]
+                    });
+
+                    if (checkoutProducts.length > 0) {
+                        // Store checkout products with quantity in the map
+                        checkoutProductsMap[checkoutId] = checkoutProducts.map(cp => ({
+                            product: cp.products,
+                            checkout: cp.checkouts,
+                            quantity: cp.quantity,
+                            createdAt: cp.createdAt
+                        }));
+                    }
+                }
+
+                res.status(200).json(checkoutProductsMap);
+           
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
 }
 
 module.exports = SuperAdminController

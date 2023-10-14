@@ -7,6 +7,7 @@ class AdController {
             res.status(200).json(ads)
         } catch (error) {
             next(error)
+            
         }
     }
 

@@ -4,6 +4,9 @@ import Login from "./components/auth/Login";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 
 import Products from "./pages/products";
+import Users from "./pages/users";
+import Transactions from "./pages/transactions";
+import NotFound from "./pages/notFound";
 import Dashboard from "./pages/dashboard";
 import Home from "./pages/homepage";
 // import { useDispatch } from "react-redux";
@@ -18,14 +21,20 @@ const isLoggedIn = localStorage.getItem('access_token'); // Simulasikan status l
 const Routing = () => {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          isLoggedIn ? <Navigate to="/dashboard" /> : <Login />
-        }
-      />
-      <Route exact path="/products" element={<Products />} />
-      <Route exact path="/dashboard" element={<Dashboard />} />
+      {!isLoggedIn ? (
+        <>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<Login />} />
+        </>
+      ) : (
+        <>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/" element={<Dashboard />} />
+        </>
+      )}
     </Routes>
   );
 };

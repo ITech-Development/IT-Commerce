@@ -44,7 +44,7 @@ const Login = () => {
 
       // Redirect to the Home page
       dispatch({ type: "USER", payload: true });
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       console.error("Login error:", error);
       alert("Login failed. Please try again.");
