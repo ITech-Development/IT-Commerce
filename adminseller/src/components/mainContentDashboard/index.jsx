@@ -10,22 +10,23 @@ const MainContentContainer = styled.main`
 
 const MainContentTitle = styled.h2`
   font-size: 24px;
-  margin-bottom: 10px;
-  margin-left: 18px;
+  text-align: center;
+  padding: 30px 0 20px 0;
+  margin: auto;
 `;
 
 const MainContentDescription = styled.p`
   font-size: 16px;
-  margin-bottom: 20px;
-  margin-left: 18px;
+  text-align: center;
+  margin: auto;
 `;
 
 const MainContent = () => {
   return (
     <MainContentContainer>
-      <MainContentTitle>Dashboard</MainContentTitle>
+      <MainContentTitle>Selamat Datang di Dashboard Indoteknik!</MainContentTitle>
       <MainContentDescription>
-        Welcome to the Indo Teknik Dashboard!
+        Selamat Bekerja!
       </MainContentDescription>
       <CardComponent />
     </MainContentContainer>

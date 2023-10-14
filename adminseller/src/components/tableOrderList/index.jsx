@@ -3,9 +3,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  // background-color: #f8f8f8;
+  width: auto;
+  margin: 0 30px;
 `;
 
 const CheckoutCard = styled.div`
@@ -13,6 +12,7 @@ const CheckoutCard = styled.div`
   padding: 20px;
   margin: 20px 0;
   background-color: #fff;
+  border-radius: 7px;
 `;
 
 const CheckoutHeader = styled.div`
@@ -30,6 +30,7 @@ const Title = styled.h2`
 
 const Subtitle = styled.h3`
   margin: 0;
+  padding-top: 15px;
   color: #777;
 `;
 
@@ -64,15 +65,30 @@ const Qty = styled.p`
 `;
 
 const SearchInput = styled.input`
-  width: 98%; /* Gunakan lebar faktur sebagai referensi */
+  width: 98.5%;
   padding: 10px;
   font-size: 16px;
   border: 2px solid #007bff;
   border-radius: 5px;
-  margin-bottom: 20px;
+  margin: 30px 30px 20px 0;
   :focus {
     outline: none;
     border-color: #0056b3;
+  }
+`;
+
+const DeliveryButton = styled(Link)`
+  display: inline-block;
+  background-color: #007BFF;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none; /* Menghilangkan garis bawah dari tautan */
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0056b3;
   }
 `;
 
@@ -108,27 +124,25 @@ const CheckoutList = ({ data }) => {
       {filteredData.map((checkout) => (
         <CheckoutCard key={checkout.checkout.id}>
           <CheckoutHeader>
-            <Title>Invoice #{checkout.checkout.id}</Title>
+            <Title>Invoice : {checkout.checkout.midtransCode}</Title>
             <Subtitle>
-              Order Date:{" "}
+              Waktu Pesanan :{" "}
               {new Date(checkout.checkout.createdAt).toLocaleString()}
             </Subtitle>
           </CheckoutHeader>
-          <Subtitle>User: {checkout.checkout?.users?.fullName}</Subtitle>
-          <Subtitle>
-            Shipping Address: {checkout.checkout.shippingAddress}
-          </Subtitle>
+          <Subtitle>Nama : {checkout.checkout?.users?.fullName}</Subtitle>
           <Price>
-            Total Price: {formatCurrency(checkout.checkout.totalPrice)}
+            Total Bayar : {formatCurrency(checkout.checkout.totalPrice)}
           </Price>
-          <p>Payment Status: {checkout.checkout.paymentStatus}</p>
-          <p>Shipping Method: {checkout.checkout.shippingMethod}</p>
+          <p>Status Pembayaran : {checkout.checkout.paymentStatus}</p>
+          <p>Metode Pengiriman : {checkout.checkout.shippingMethod}</p>
+          <p>Alamat Pengiriman : {checkout.checkout.shippingAddress}</p>
           <p>
-            Delivery Status:{" "}
-            <Link to={`/${checkout.checkout.id}`}>
-              {checkout.checkout.deliveryStatus}
-            </Link>
-          </p>
+            Delivery Status :{" "}
+            <DeliveryButton to={`${checkout.checkout.id}`}>
+  {checkout.checkout.deliveryStatus}
+</DeliveryButton>
+          </p>{" "}
           <ProductList>
             {checkout.products.map((product) => (
               <ProductItem key={product.id}>
@@ -137,7 +151,7 @@ const CheckoutList = ({ data }) => {
                   <h4>{product.name}</h4>
                   <p>Description: {product.description}</p>
                 </div>
-                <Qty>Qty: {1}</Qty>
+                <Qty>x : {1}</Qty>
                 <Price>{formatCurrency(product.unitPrice)}</Price>
               </ProductItem>
             ))}

@@ -2,28 +2,6 @@ import React, { useEffect, useState } from "react";
 import TableComponent from "../tableOrderList";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import styled from "styled-components";
-
-const DashboardButton = styled.button`
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 30px;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
-const MainContentContainer = styled.main`
-  display: flex;
-  margin: auto;
-  flex-direction: column;
-  max-width: 1420px;
-`;
 
 const MainContent = () => {
   const [checkoutData, setCheckoutData] = useState([]);
@@ -46,16 +24,40 @@ const MainContent = () => {
       });
   }, []);
 
+  const totalOrders = checkoutData.length;
+
   return (
-    <MainContentContainer>
-      <h2>Order List</h2>
-      <p>Welcome to the Order List!</p>
-      <Link to="/">
-        <DashboardButton>Dashboard</DashboardButton>
+    <main style={mainStyles}>
+      <h2> History Pesanan</h2>
+      <p>Total Transaksi : {totalOrders}</p>
+      <Link to="/" style={buttonStyles}>
+        Dashboard
       </Link>
       <TableComponent data={checkoutData} />
-    </MainContentContainer>
+    </main>
   );
 };
+
+const mainStyles = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  margin: "auto",
+  paddingTop: '80px',
+  borderRadius: "8px",
+  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+  width: 'auto'
+};
+
+const buttonStyles = {
+  display: "inline-block",
+  padding: "10px 20px",
+  backgroundColor: "#007bff",
+  color: "#fff",
+  textDecoration: "none",
+  borderRadius: "5px",
+  margin: "10px 0",
+};
+
 
 export default MainContent;

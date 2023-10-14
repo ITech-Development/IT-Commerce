@@ -3,26 +3,32 @@ import axios from "axios";
 import { useSpring, animated } from "react-spring";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import OrderIcon from '../../assets/order-delivery.png'
+import TransactionIcon from '../../assets/transaction-history.png'
+import Coin from '../../assets/coin.png'
 
 const CardContent = styled(animated.div)`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-content: center;
   align-items: center;
-  border: 1px solid gray;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 10px;
+  padding: 50px;
   margin: 0 20px;
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
+  background-color: #fff;
+  // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
   }
 `;
 
 const CardImage = styled.img`
-  width: 200px;
+  width: 100px;
   height: 100px;
   transition: transform 0.2s;
 
@@ -31,25 +37,28 @@ const CardImage = styled.img`
   }
 `;
 
-const TotalCount = styled.h4`
-  &.total-order {
-    color: blue;
-  }
+// const TotalCount = styled.h4`
+//   &.total-order {
+//     color: #007bff;
+//   }
 
-  &.total-transaction {
-    color: green;
-  }
-`;
+//   &.total-transaction {
+//     color: #28a745;
+//   }
+// `;
 
 const CardTitle = styled.h2`
   font-size: 18px;
+  color: #333;
 `;
 
 const CardContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin: auto;
+  justify-content: space-around;
   max-width: 1320px;
+  margin: 0 auto;
+  padding: 20px 0;
 `;
 
 const Card = ({ imageUrl, title, count, to }) => {
@@ -69,10 +78,10 @@ const Card = ({ imageUrl, title, count, to }) => {
       <CardContent style={{ ...fadeIn }}>
         <CardImage src={imageUrl} alt="" />
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <TotalCount className={`total-${title.toLowerCase()}`}>
-            {count} {title}
-          </TotalCount>
-          <CardTitle>Total {title}</CardTitle>
+          {/* <TotalCount className={`total-${title.toLowerCase()}`}>
+            {count}
+          </TotalCount> */}
+          <CardTitle>{title}</CardTitle>
         </div>
       </CardContent>
     </Link>
@@ -123,22 +132,22 @@ const CardSection = () => {
   return (
     <CardContainer>
       <Card
-        imageUrl="https://e7.pngegg.com/pngimages/389/412/png-clipart-font-awesome-computer-icons-user-profile-users-group-blind-miscellaneous-blue.png"
-        title="Order List"
+        imageUrl={OrderIcon}
+        title="Pesanan"
         count={Object.keys(users).length}
         to="/order-list"
       />
 
       <Card
-        imageUrl="https://image.pngaaa.com/123/2193123-middle.png"
-        title="Transaction List"
+        imageUrl={TransactionIcon}
+        title="Transaksi"
         count={products.length}
         to="/transaction-list"
       />
 
       <Card
-        imageUrl="https://png.pngtree.com/png-clipart/20210312/original/pngtree-simple-medal-of-honor-linear-icon-png-image_6074699.png"
-        title="Points"
+        imageUrl={Coin}
+        title="Coin"
         count={0}
         to="/points"
       />

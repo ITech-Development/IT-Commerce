@@ -37,15 +37,15 @@ export default function Navigation() {
     return (
       <>
         <div style={{ display: "flex", alignItems: "center" }}>
-        <li>
+        {/* <li>
             <Link to="/articles">Artikel</Link>
-          </li>
+          </li> */}
           <li>
-            <Link to="/productlist">Produk</Link>
+            <Link to="/productlist">Semua Produk</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/services">Servis</Link>
-          </li>
+          </li> */}
         </div>
         {showCart && (
           <li>

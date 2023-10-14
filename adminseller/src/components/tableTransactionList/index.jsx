@@ -11,6 +11,7 @@ const CheckoutCard = styled.div`
   padding: 20px;
   margin: 20px 0;
   background-color: #fff;
+  border-radius: 7px;
 `;
 
 const CheckoutHeader = styled.div`
@@ -28,6 +29,7 @@ const Title = styled.h2`
 
 const Subtitle = styled.h3`
   margin: 0;
+  padding-top: 15px;
   color: #777;
 `;
 
@@ -56,18 +58,13 @@ const ProductImage = styled.img`
   border-radius: 5px;
 `;
 
-const Qty = styled.p`
-  font-weight: bold;
-  color: #555;
-`;
-
 const SearchInput = styled.input`
-  width: 98%;
+  width: 98.5%;
   padding: 10px;
   font-size: 16px;
   border: 2px solid #007bff;
   border-radius: 5px;
-  margin-bottom: 20px;
+  margin : 30px 30px 20px 0;
   :focus {
     outline: none;
     border-color: #0056b3;
@@ -106,18 +103,18 @@ const CheckoutList = ({ data }) => {
       {filteredData.map((checkout) => (
         <CheckoutCard key={checkout.checkout.id}>
           <CheckoutHeader>
-            <Title>Invoice #{checkout.checkout.id}</Title>
+            <Title>Invoice : {checkout.checkout.midtransCode}</Title>
             <Subtitle>
-              Order Date:{" "}
+              Waktu Belanja :{" "}
               {new Date(checkout.checkout.createdAt).toLocaleString()}
             </Subtitle>
           </CheckoutHeader>
-          <Subtitle>User: {checkout.checkout?.users?.fullName}</Subtitle>
+          <Subtitle>Nama : {checkout.checkout?.users?.fullName}</Subtitle>
           <Price>
-            Total Price: {formatCurrency(checkout.checkout.totalPrice)}
+            Total Bayar: {formatCurrency(checkout.checkout.totalPrice)}
           </Price>
-          <p>Shipping Address: {checkout.checkout.shippingAddress}</p>
-          <p>Order Date: {checkout.checkout.createdAt}</p>
+          <p>Alamat Pengiriman: {checkout.checkout.shippingAddress}</p>
+          {/* <p>Order Date: {checkout.checkout.createdAt}</p> */}
           <h3>Products:</h3>
           <ProductList>
             {checkout.products.map((product) => (
@@ -131,7 +128,7 @@ const CheckoutList = ({ data }) => {
                     ...
                   </p>
                 </div>
-                <Qty>Qty: {product.quantity}</Qty>
+                <p>x : {product.quantity}</p>
                 <Price>{formatCurrency(product.unitPrice)}</Price>
               </ProductItem>
             ))}

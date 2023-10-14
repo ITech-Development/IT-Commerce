@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./style.css";
-import Logo from "../../assets/Logo.png";
+import Logo from "../../assets/Logoss.png";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -17,21 +17,6 @@ const LogoutButton = styled.button`
     background-color: #0056b3;
   }
 `;
-
-const NavButton = styled.button`
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
 
 export default function Navigation() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -51,12 +36,7 @@ export default function Navigation() {
       <>
         {accessToken && (
           <li>
-          <NavButton>Pesan</NavButton>
-          </li>
-        )}
-        {accessToken && (
-          <li>
-          <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+            <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
           </li>
         )}
       </>
