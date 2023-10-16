@@ -351,10 +351,11 @@ const ProductDetailContainer = styled.div`
 `;
 
 const ProductDetailWrapper = styled.div`
-  max-width: 1225px;
+  width: 93%;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  justify-content: space-between;
   margin: auto;
   padding: 20px;
   border: 1px solid #ccc;
@@ -367,13 +368,12 @@ const ProductDetailWrapper = styled.div`
     padding: 0;
     border: none;
     box-shadow: none;
-    max-width: auto;
+    width: 100%;
   }
 `;
 
 const ProductImage = styled.img`
   max-width: 280px;
-  margin-right: 20px;
   border-radius: 5px;
   border: none;
 
@@ -398,7 +398,6 @@ const ProductImageSub = styled.img`
 const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 80px;
 
   @media (max-width: 768px) {
     margin-left: 0; /* Menghapus margin kiri pada perangkat kecil */

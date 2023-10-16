@@ -66,7 +66,7 @@
   .CardGridContainers {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 20px;
+    gap: 60px;
     padding: 20px;
   }
 
@@ -95,6 +95,15 @@
   @media (max-width: 768px) {
     .CardGridContainer {
       grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .prdtlrs {
+      position: relative;
+      top: -90px;
+    }
+
+    .titleTer {
+      font-size: 16px;
     }
 
     .muat {

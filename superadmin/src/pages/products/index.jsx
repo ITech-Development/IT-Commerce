@@ -1,7 +1,17 @@
-import React from 'react'
+// ProductsPage.js
+import React from 'react';
+import Header from '../../components/navbar/products/header';
+import MainContent from '../../components/navbar/products/mainContent/index';
 
-export default function index() {
+const ProductsPage = () => {
   return (
-    <div>index</div>
-  )
-}
+    <div>
+      <Header />
+      <div style={{ display: 'flex' }}>
+        <MainContent />
+      </div>
+    </div>
+  );
+};
+
+export default ProductsPage;

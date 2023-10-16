@@ -250,12 +250,12 @@
   height: 50px;
   border-top: 1px solid #ccc;
   width: 100%;
-  display: flex; /* Menggunakan flexbox untuk tata letak */
-  align-items: center; /* Pusatkan vertikal */
+  display: flex;
+  align-items: center;
 }
 
 .text-bar__field {
-  flex-grow: 1; /* Biarkan input memenuhi sisa ruang */
+  flex-grow: 1;
   height: 100%;
   display: flex;
   align-items: center;
@@ -274,20 +274,13 @@ input {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center; /* Pusatkan horizontal */
+  justify-content: center;
   padding: 10px;
   cursor: pointer;
   &:hover {
     opacity: 0.8;
   }
 }
-
-
-/* 
-.thumb {
-  display: block;
-} */
-
 
 .anim-wiggle {
   animation: wiggle 0.2s ease infinite;

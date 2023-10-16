@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSpring, animated } from "react-spring";
+// import { useSpring, animated } from "react-spring";
 import "./ProductCategories.css"; // Import your CSS file
 import vc01 from "../../../assets/TK01.png";
 import vc02 from "../../../assets/MS01.png";
@@ -79,31 +79,41 @@ const voucherData = [
   },
 ];
 
-function ProductCategoryCard({ to, title, imageUrl }) {
-  const cardAnimation = useSpring({
-    from: { transform: "scale(1)" },
-    to: async (next) => {
-      while (true) {
-        await next({ transform: "scale(1.05)" });
-        await next({ transform: "scale(1)" });
-      }
-    },
-  });
+// function ProductCategoryCard({ to, title, imageUrl }) {
+//   const cardAnimation = useSpring({
+//     from: { transform: "scale(1)" },
+//     to: async (next) => {
+//       while (true) {
+//         await next({ transform: "scale(1.05)" });
+//         await next({ transform: "scale(1)" });
+//       }
+//     },
+//   });
 
+//   return (
+//     <animated.div className="category-card" style={cardAnimation}>
+//       <Link to={to} target="blank">
+//         <img src={imageUrl} alt={title} className="category-image" />
+//         <p className="titleCategory">{title}</p>
+//       </Link>
+//     </animated.div>
+//   );
+// }
+
+function ProductCategoryCard({ to, title, imageUrl }) {
   return (
-    <animated.div className="category-card" style={cardAnimation}>
+    <div className="category-card">
       <Link to={to} target="blank">
         <img src={imageUrl} alt={title} className="category-image" />
         <p className="titleCategory">{title}</p>
       </Link>
-    </animated.div>
+    </div>
   );
 }
 
 function ProductCategories() {
   return (
     <div style={{margin: '0 30px'}}>
-
     <div
       className="prdt"
       style={{
@@ -122,7 +132,7 @@ function ProductCategories() {
           <Link to="/category-list">
             <div className="allmas">
               <img className="seeAll" src={SeeAll} alt="" />
-              <p className="seeAlltext">lihat semua  Kategori</p>
+              <p className="seeAlltext">lihat semua</p>
             </div>
           </Link>
         </div>

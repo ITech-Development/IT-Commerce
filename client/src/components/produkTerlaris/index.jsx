@@ -28,6 +28,18 @@ const shadowAnimation = keyframes`
   }
 `;
 
+const CardGridContainers = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 15px;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+`;
+
 const Card = styled.div`
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -35,8 +47,8 @@ const Card = styled.div`
   overflow: hidden;
   transition: transform 0.2s ease;
   max-height: 330px;
-  max-width: 320px; /* Atur lebar maksimum sesuai kebutuhan Anda */
-  width: auto; /* Gunakan lebar 100% agar sesuai dengan wadahnya */
+  max-width: 360px;
+  width: auto;
 
   &:hover {
     animation: ${shadowAnimation} 1s ease-in-out infinite;
@@ -71,12 +83,10 @@ const ProductListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  max-width: 1420px;
-  margin: 0 auto;
-  padding: 20px; /* Atur sesuai kebutuhan Anda */
+  width: auto;
+  height: auto;
+  margin: auto;
   @media (max-width: 768px) {
-    position: relative;
-    top: -220px;
   }
 `;
 
@@ -92,18 +102,6 @@ const LoadMoreButton = styled.button`
 
   &:hover {
     background-color: #0056b3;
-  }
-`;
-
-const CardGridContainers = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  margin: 0;
-  gap: 15px;
-  @media (max-width: 768px) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
   }
 `;
 
@@ -207,46 +205,56 @@ const ProductList = () => {
     : [];
   return (
     <>
-    <div style={{ margin: '0 30px', display: 'flex', flexDirection: 'column', width: 'auto'}}>
-    <h2>Produk Terlaris</h2>
+      <div
+      className="prdtlrs"
+        style={{
+          margin: "0 20px",
+          display: "flex",
+          flexDirection: "column",
+          width: "auto",
+        }}
+      >
+        <h2 className="titleTer">Produk Terlaris</h2>
 
-      <ProductListContainer>
-        {isLoading ? (
-          <div style={loadingContainerStyle}>
-            <FadeLoader color="#007bff" loading={isLoading} size={50} />
-          </div>
-        ) : error ? (
-          <p>An error occurred</p>
-        ) : (
-          <>
-          <CardGridContainers>
-              {filteredAndSortedData.slice(0, displayedCards).map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onAddToCart={handleAddToCart}
-                />
-              ))}
-            </CardGridContainers>
-            {/* Tampilkan tombol "Muat Lebih Banyak" jika jumlah kartu yang ditampilkan belum mencapai total */}
-            {displayedCards < filteredAndSortedData.length && (
-              <div
-                style={{
-                  textAlign: "center",
-                  display: "flex",
-                  maxWidth: "1420px",
-                  margin: "auto",
-                }}
-              >
-                <button className="muat" onClick={handleLoadMore}>
-                  Muat Lebih Banyak
-                </button>
-              </div>
-            )}
-          </>
-        )}
-      </ProductListContainer>
-    </div>
+        <ProductListContainer>
+          {isLoading ? (
+            <div style={loadingContainerStyle}>
+              <FadeLoader color="#007bff" loading={isLoading} size={50} />
+            </div>
+          ) : error ? (
+            <p>An error occurred</p>
+          ) : (
+            <>
+              <CardGridContainers>
+                {filteredAndSortedData
+                  .slice(0, displayedCards)
+                  .map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onAddToCart={handleAddToCart}
+                    />
+                  ))}
+              </CardGridContainers>
+              {/* Tampilkan tombol "Muat Lebih Banyak" jika jumlah kartu yang ditampilkan belum mencapai total */}
+              {displayedCards < filteredAndSortedData.length && (
+                <div
+                  style={{
+                    textAlign: "center",
+                    display: "flex",
+                    maxWidth: "1420px",
+                    margin: "auto",
+                  }}
+                >
+                  <button className="muat" onClick={handleLoadMore}>
+                    Muat Lebih Banyak
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </ProductListContainer>
+      </div>
     </>
   );
 };
