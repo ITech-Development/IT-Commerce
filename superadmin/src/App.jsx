@@ -16,9 +16,9 @@ import { initialState, reducer } from "./reducer/UseReducer";
 
 export const UserContext = createContext();
 
-const isLoggedIn = localStorage.getItem('access_token'); // Simulasikan status login (true jika user sudah login)
 
 const Routing = () => {
+  const isLoggedIn = localStorage.getItem('access_token'); // Simulasikan status login (true jika user sudah login)
   return (
     <Routes>
       {!isLoggedIn ? (
@@ -29,10 +29,10 @@ const Routing = () => {
       ) : (
         <>
           <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/products" element={<Products />} />
           <Route path="/users" element={<Users />} />
           <Route path="/transactions" element={<Transactions />} />
-          <Route path="/" element={<Dashboard />} />
         </>
       )}
     </Routes>

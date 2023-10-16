@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import TableComponent from "../tableOrderList";
+import TableComponent from "../table";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
@@ -25,13 +25,9 @@ const MainContent = () => {
 
   return (
     <main style={{ display: "flex", margin: "auto", flexDirection: "column" }}>
-      <h2>Order List</h2>
+      <h2>Transaction List</h2>
       
-      <p>Welcome to the Order List!</p>
 
-      <Link to="/">
-        <button>Dashboard</button>
-      </Link>
       <TableComponent data={checkoutData}/>
     </main>
   );

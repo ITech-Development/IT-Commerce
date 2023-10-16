@@ -12,6 +12,7 @@ const TransactionList = ({ data }) => {
           <h2>User: {checkout.checkout?.users?.fullName}</h2>
           <p>Total Price: {checkout.checkout.totalPrice}</p>
           <p>Shipping Address: {checkout.checkout.shippingAddress}</p>
+          <p>Shipping Address: {checkout.checkout.paymentStatus}</p>
           <p>Shipping Method: {checkout.checkout.shippingMethod}</p>
           <p>Order Date: {checkout.checkout.createdAt}</p>
           <h3>Products:</h3>

@@ -25,12 +25,13 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     totalPrice: DataTypes.DECIMAL,
     paymentStatus: DataTypes.STRING,
+    paymentMethod: DataTypes.STRING,
     shippingAddress: DataTypes.STRING,
     voucherCode: DataTypes.STRING,
     setPPN: DataTypes.STRING,
     shippingMethod: DataTypes.STRING,
     deliveryStatus: DataTypes.STRING,
-    midtransCode: DataTypes.STRING
+    midtransCode: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Checkout',

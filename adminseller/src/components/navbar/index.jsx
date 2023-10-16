@@ -28,11 +28,6 @@ export default function Navigation() {
       <>
         {accessToken && (
           < li >
-            <button>Pesan</button>
-          </li >
-        )}
-        {accessToken && (
-          < li >
             <button onClick={handleLogout}>Logout</button>
           </li >
         )}
