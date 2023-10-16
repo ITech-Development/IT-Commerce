@@ -36,6 +36,8 @@ import CategoryDetail from './pages/CategoryDetail'
 
 const Routing = () => {
   return (
+    <>
+    
     <Routes>
       <Route exact path="/" element={<Homepage />} />
       <Route path="/productlist" element={<ProductList />} />
@@ -66,6 +68,7 @@ const Routing = () => {
       <Route path="/my-order" element={<MyOrder />} />
       <Route path="/my-order/:id" element={<DetailsOrder />} />
     </Routes>
+    </>
   );
 };
 

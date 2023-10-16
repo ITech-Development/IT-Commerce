@@ -3,7 +3,7 @@
   gap: 60px;
   padding: 30px 0;
   margin: auto;
-  width: 1350px;
+  width: auto;
   justify-content: space-between;
 }
 .imgcorouselBrand {

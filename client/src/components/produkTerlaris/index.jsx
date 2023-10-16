@@ -35,8 +35,8 @@ const Card = styled.div`
   overflow: hidden;
   transition: transform 0.2s ease;
   max-height: 330px;
-  max-width: 300px; /* Atur lebar maksimum sesuai kebutuhan Anda */
-  width: 100%; /* Gunakan lebar 100% agar sesuai dengan wadahnya */
+  max-width: 320px; /* Atur lebar maksimum sesuai kebutuhan Anda */
+  width: auto; /* Gunakan lebar 100% agar sesuai dengan wadahnya */
 
   &:hover {
     animation: ${shadowAnimation} 1s ease-in-out infinite;
@@ -98,7 +98,8 @@ const LoadMoreButton = styled.button`
 const CardGridContainers = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 20px;
+  margin: 0;
+  gap: 15px;
   @media (max-width: 768px) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -206,6 +207,9 @@ const ProductList = () => {
     : [];
   return (
     <>
+    <div style={{ margin: '0 30px', display: 'flex', flexDirection: 'column', width: 'auto'}}>
+    <h2>Produk Terlaris</h2>
+
       <ProductListContainer>
         {isLoading ? (
           <div style={loadingContainerStyle}>
@@ -242,6 +246,7 @@ const ProductList = () => {
           </>
         )}
       </ProductListContainer>
+    </div>
     </>
   );
 };

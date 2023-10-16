@@ -7,12 +7,10 @@
   padding: 20px;
   border-radius: 10px;
   border: #cfc9c9 1px solid;
-  /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); */
   flex: 1;
   margin: auto;
-  /* width: 60%; */
 }
-
+ 
 .category-section {
   display: flex;
   flex-direction: column;

@@ -4,7 +4,7 @@ import "./Carousel.css";
 
 function index() {
   return (
-    <div>
+    <div style={{margin: '0 30px'}}>
     <div className="carouselbrand">
       <a href="https://itechpersadanusantara.com/" target="blank">
         <img className="imgcorouselBrand"

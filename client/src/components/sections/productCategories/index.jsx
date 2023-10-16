@@ -102,13 +102,15 @@ function ProductCategoryCard({ to, title, imageUrl }) {
 
 function ProductCategories() {
   return (
+    <div style={{margin: '0 30px'}}>
+
     <div
       className="prdt"
       style={{
         display: "flex",
         justifyContent: "space-between",
         margin: "auto",
-        maxWidth: "1420px",
+        width: 'auto'
       }}
     >
       <div className="category-container">
@@ -146,6 +148,7 @@ function ProductCategories() {
           ))}
         </div>
       </div>
+    </div>
     </div>
   );
 }

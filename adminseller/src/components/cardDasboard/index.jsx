@@ -149,7 +149,7 @@ const CardSection = () => {
         imageUrl={Coin}
         title="Coin"
         count={0}
-        to="/points"
+        // to="/points"
       />
     </CardContainer>
   );

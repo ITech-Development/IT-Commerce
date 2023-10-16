@@ -19,7 +19,6 @@ const divStyle = {
 };
 
 const mediaQueryStyle = {
-  /* Add your styles for devices with a maximum width of 768px here */
   width: "97%", // Adjust the width as needed for smaller screens
   maxHeight: "100px", // Set a maximum height for the images
   margin: "145px 70px 0 5px",

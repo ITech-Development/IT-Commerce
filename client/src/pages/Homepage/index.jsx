@@ -102,7 +102,6 @@ function Index() {
         <HeroSection />
         <CorouselBrands />
         <ProductCategories />
-        <h1 className="productlaris">Produk Terlaris</h1>
         <ProdukTerlaris />
         <Footer />
       </div>
