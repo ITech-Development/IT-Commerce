@@ -44,10 +44,9 @@ const mainStyles = {
   flexDirection: "column",
   alignItems: "center",
   margin: "auto",
-  paddingTop: "80px",
+  paddingTop: '80px',
   borderRadius: "8px",
   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  // backgroundColor: "#f7f7f7",
   width: 'auto'
 };
 

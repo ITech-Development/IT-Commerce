@@ -64,7 +64,7 @@ const SearchInput = styled.input`
   font-size: 16px;
   border: 2px solid #007bff;
   border-radius: 5px;
-  margin : 30px 30px 20px 0;
+  margin: 30px 30px 20px 0;
   :focus {
     outline: none;
     border-color: #0056b3;
@@ -122,7 +122,7 @@ const CheckoutList = ({ data }) => {
                 <ProductImage src={product.image} alt={product.name} />
                 <div>
                   <h4>{product.name}</h4>
-                  <p style={{ maxWidth: "650px", fontSize: "16px" }}>
+                  <p>
                     Description:{" "}
                     {product.description.split(" ").slice(0, 18).join(" ")}
                     ...
