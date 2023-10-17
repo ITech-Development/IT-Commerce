@@ -7,9 +7,7 @@ import Products from "./pages/products";
 import Users from "./pages/users";
 import Transactions from "./pages/transactions";
 import NotFound from "./pages/notFound";
-import Dashboard from "./pages/dashboard";
-import Home from "./pages/homepage";
-// import { useDispatch } from "react-redux";
+import Dashboard from "./pages/dashboard/";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./components/navbar";
 import { initialState, reducer } from "./reducer/UseReducer";
@@ -40,11 +38,6 @@ const Routing = () => {
 };
 
 function App() {
-  // const dispatchRedux = useDispatch();
-
-  // useEffect(() => {
-  //   dispatchRedux(loadUser(null));
-  // }, [dispatchRedux]);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 

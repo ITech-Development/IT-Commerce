@@ -1,17 +1,15 @@
-// Dashboard.js
+// NotFound.js
 import React from 'react';
-import Header from '../../components/navbar/products/header';
-import MainContent from '../../components/navbar/products/mainContent';
 
-const Dashboard = () => {
+const index = () => {
   return (
     <div>
-      <Header />
-      <div style={{ display: 'flex' }}>
-        <MainContent />
-      </div>
+      <br />
+      <br />
+      <br />
+      <h1>WELLCOME TO THE JUNGLE!</h1>
     </div>
   );
 };
 
-export default Dashboard;
+export default index;

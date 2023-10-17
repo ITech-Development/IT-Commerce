@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
 
 function CheckoutProducts() {
-  const [checkoutData, setCheckoutData] = useState({});
+  const [transactions, setTransactions] = useState({});
 
   useEffect(() => {
     // Fetch the data from your backend API here
@@ -12,18 +12,17 @@ function CheckoutProducts() {
       }
     })
       .then((response) => response.json())
-      .then((data) => setCheckoutData(data))
+      .then((data) => setTransactions(data))
       .catch((error) => console.error('Error fetching data: ', error));
   }, []);
 
   return (
     <div>
-      <h1>Checkout Products</h1>
-      {Object.keys(checkoutData).map((checkoutId) => (
-        <div key={checkoutId}>
+      {Object.keys(transactions).map((transactionId) => (
+        <div key={transactionId}>
           <hr />
-          <h2>Checkout ID: {checkoutId}</h2>
-          {checkoutData[checkoutId].map((productInfo, index) => (
+          <h2>Transaction ID: {transactionId}</h2>
+          {transactions[transactionId].map((productInfo, index) => (
             <div key={index}>
               <img src={productInfo.product.image} alt="" width='100' />
               <h3>Produk: {productInfo.product.name}</h3>
@@ -33,10 +32,7 @@ function CheckoutProducts() {
               {/* Render other product and checkout details */}
             </div>
           ))}
-          <h2>Qty: </h2>
-          <div>
-            {checkoutData[checkoutId].length}
-          </div>
+          <h4>Qty: {transactions[transactionId].length}</h4>
         </div>
       ))}
       <hr />

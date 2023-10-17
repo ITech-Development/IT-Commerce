@@ -158,6 +158,7 @@ export default function Navigation() {
                     <Link
                       style={{ display: "flex", marginLeft: "11.2px" }}
                       onClick={handleLogout}
+                      to='/login'
                     >
                       Keluar
                     </Link>
@@ -194,4 +195,5 @@ export default function Navigation() {
       </nav>
     </>
   );
+
 }

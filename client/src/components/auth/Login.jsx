@@ -19,8 +19,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate()
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -35,10 +33,13 @@ const Login = () => {
     };
 
     console.log(1);
-    login(userData).then((res)=> {
+    login(userData).then((res) => {
       console.log(res.data);
       localStorage.setItem("access_token", res.data.access_token);
       navigate('/')
+    }).catch((error)=>{
+      console.log(error);
+      alert('Perhatikan lagi email dan password nya!')
     })
 
 

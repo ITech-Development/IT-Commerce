@@ -9,6 +9,7 @@ export const usersApi = createApi({
       return headers
     }
   }),
+  tagTypes: ['Post', 'Get'],
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (user) => ({
@@ -19,6 +20,7 @@ export const usersApi = createApi({
           "Content-type": "application/json; charset=UTF-8",
         }
       }),
+      invalidatesTags: ['Post']
     }),
     register: builder.mutation({
       query: (user) => ({
@@ -31,7 +33,8 @@ export const usersApi = createApi({
       }),
     }),
     getMe: builder.query({
-      query: () => "users/me"
+      query: () => "users/me",
+      providesTags: ['Post']
     }),
     editMe: builder.mutation({
       query: (updatedUserData) => ({
