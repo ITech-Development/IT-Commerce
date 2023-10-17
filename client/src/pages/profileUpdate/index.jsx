@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useGetMeQuery, useEditMeMutation } from "../../features/user/apiUser"; // Import the hooks
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 const ProfileForm = () => {
   // Use the useGetMeQuery hook to fetch the user's profile data
@@ -10,7 +10,7 @@ const ProfileForm = () => {
   // Use the useEditMeMutation hook to update the user's profile data
   const [editMe, { isLoading: isEditing }] = useEditMeMutation();
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // Create state variables to track form input values
   const [fullName, setFullName] = useState("");
@@ -61,19 +61,40 @@ const ProfileForm = () => {
 
   return (
     <FormContainer>
-      <Heading>Update Your Profile</Heading>
+      <Heading>
+        <img
+          style={{ width: "100px" }}
+          src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+          alt=""
+        />
+      </Heading>
       <form onSubmit={handleSubmit}>
-        <Label>Full Name</Label>
-        <Input name="fullName" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+        <Label>Nama Lengkap</Label>
+        <Input
+          name="fullName"
+          type="text"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+        />
 
         <Label>Email</Label>
         <Input name="email" type="email" value={userData?.email} readOnly />
 
-        <Label>Phone</Label>
-        <Input name="phoneNumber" type="tel" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+        <Label>No.Hp</Label>
+        <Input
+          name="phoneNumber"
+          type="tel"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
 
-        <Label>Address</Label>
-        <TextArea name="address" rows={4} value={address} onChange={(e) => setAddress(e.target.value)} />
+        <Label>Alamat</Label>
+        <TextArea
+          name="address"
+          rows={4}
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
 
         <Button type="submit" disabled={isEditing}>
           {isEditing ? "Updating..." : "Update Profile"}
@@ -83,20 +104,21 @@ const ProfileForm = () => {
   );
 };
 
-
 export default ProfileForm;
-
 
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 400px;
-  margin: 90px auto;
-  padding: 20px 70px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  // max-width: 400px;
+  width: 100%;
+  position: fixed;
+  margin: auto;
+  padding: 70px 0 0 0;
+  // background-color: #f4f4f4;
+  // border-radius: 8px;
+  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const Heading = styled.h1`
