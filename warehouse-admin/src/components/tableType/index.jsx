@@ -15,7 +15,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./tablePro.css"; // You can use your own CSS here
 
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
+const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const TypeTable = () => {
   const [types, setTypes] = useState([]);

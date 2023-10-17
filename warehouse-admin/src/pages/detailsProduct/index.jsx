@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
+const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const ProductDetailPage = () => {
   const [product, setProduct] = useState(null);

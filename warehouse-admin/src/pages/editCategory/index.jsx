@@ -7,15 +7,21 @@ const EditCategoryPage = () => {
   const { id } = useParams(); // Assuming you're using React Router to capture the id
   const [category, setCategory] = useState({
     name: "",
+    image: null
     // Add more attributes if needed
   });
+
+  const handleImageChange = (e) => {
+    const imageFile = e.target.files[0];
+    setCategory({ ...category, image: imageFile });
+  };
 
   useEffect(() => {
     // Fetch the category details from the API using id
     const fetchCategory = async () => {
       try {
         const response = await axios.get(
-          `https://indoteknikserver-732012365989.herokuapp.com/product-categories/${id}`
+          `http://localhost:3100/product-categories/${id}`
         );
         setCategory(response.data);
       } catch (error) {
@@ -34,11 +40,17 @@ const EditCategoryPage = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `https://indoteknikserver-732012365989.herokuapp.com/product-categories/${id}`,
-        category
+        `http://localhost:3100/product-categories/${id}`,
+        category, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Use multipart/form-data for file uploads
+          access_token: localStorage.getItem('access_token'),
+          // Tambahkan header lainnya sesuai kebutuhan
+        },
+      }
       );
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         // Successful response handling
         window.location.href = "/dashboard-categories";
         console.log("Category updated successfully.");
@@ -65,6 +77,19 @@ const EditCategoryPage = () => {
             onChange={handleChange}
             required
           />
+          <br />
+        </div>
+        <div className="form-group">
+          {/* Tambahkan input form lainnya sesuai atribut yang ada pada produk */}
+          <label htmlFor="image">Gambar:</label>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+          {category.image && <img src={category.image} alt="Category" width="200px" />}
           <br />
         </div>
         {/* Add more form inputs for other attributes if needed */}

@@ -15,7 +15,7 @@ const EditTypePage = () => {
     const fetchType = async () => {
       try {
         const response = await axios.get(
-          `https://indoteknikserver-732012365989.herokuapp.com/product-types/${id}`
+          `http://localhost:3100/product-types/${id}`
         );
         setType(response.data);
       } catch (error) {
@@ -34,7 +34,7 @@ const EditTypePage = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `https://indoteknikserver-732012365989.herokuapp.com/product-types/${id}`,
+        `http://localhost:3100/product-types/${id}`,
         type
       );
 

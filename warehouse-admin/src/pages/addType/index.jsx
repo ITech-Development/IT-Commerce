@@ -18,7 +18,7 @@ const AddTypePage = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://indoteknikserver-732012365989.herokuapp.com/product-types",
+        "http://localhost:3100/product-types",
         newType
       );
 

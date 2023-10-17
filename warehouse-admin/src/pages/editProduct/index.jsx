@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
+const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const EditProductPage = () => {
   const { id } = useParams();
@@ -42,7 +42,7 @@ const EditProductPage = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('https://indoteknikserver-732012365989.herokuapp.com/product-categories');
+      const response = await axios.get('http://localhost:3100/product-categories');
       setCategoryOptions(response.data);
     } catch (error) {
       console.error('Terjadi kesalahan saat mengambil data kategori:', error);
@@ -51,7 +51,7 @@ const EditProductPage = () => {
 
   const fetchTypes = async () => {
     try {
-      const response = await axios.get('https://indoteknikserver-732012365989.herokuapp.com/product-types');
+      const response = await axios.get('http://localhost:3100/product-types');
       setTypeOptions(response.data);
     } catch (error) {
       console.error('Terjadi kesalahan saat mengambil data kategori:', error);
@@ -60,7 +60,7 @@ const EditProductPage = () => {
 
   const fetchProductOwners = async () => {
     try {
-      const response = await axios.get('https://indoteknikserver-732012365989.herokuapp.com/product-owners');
+      const response = await axios.get('http://localhost:3100/product-owners');
       setProductOwnerOptions(response.data);
     } catch (error) {
       console.error('Terjadi kesalahan saat mengambil data kategori:', error);
@@ -69,7 +69,7 @@ const EditProductPage = () => {
 
   const fetchProductData = async () => {
     try {
-      const response = await axios.get(`https://indoteknikserver-732012365989.herokuapp.com/products/${id}`);
+      const response = await axios.get(`http://localhost:3100/products/${id}`);
       setProduct(response.data);
     } catch (error) {
       console.error('Terjadi kesalahan saat mengambil data produk:', error);
@@ -84,7 +84,7 @@ const EditProductPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`https://indoteknikserver-732012365989.herokuapp.com/products/${id}`, product, {
+      const response = await axios.put(`http://localhost:3100/products/${id}`, product, {
         headers: {
           "Content-Type": "multipart/form-data", // Use multipart/form-data for file uploads
           access_token: localStorage.getItem('access_token'),

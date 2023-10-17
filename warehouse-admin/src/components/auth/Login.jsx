@@ -30,7 +30,7 @@ const Login = () => {
     try {
       // Call the API to perform login
       const response = await axios.post(
-        "https://indoteknikserver-732012365989.herokuapp.com/warehouse-admins/login",
+        "http://localhost:3100/warehouse-admins/login",
         userData
       );
       console.log("Login response:", response.data);
