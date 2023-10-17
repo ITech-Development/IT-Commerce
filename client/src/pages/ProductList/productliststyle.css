@@ -11,7 +11,6 @@
   text-align: center; /* Center text horizontally */
   padding: 16px;
   width: 48%; /* Set the width to 48% for a 2-column grid */
-  margin: 1%; /* Add some margin between cards */
 }
 
 .productlist-title {
@@ -57,7 +56,6 @@
   left: 5px;
 }
 
-/* Clear floats to ensure proper stacking on smaller screens */
 .clearfix::after {
   content: "";
   display: table;
@@ -68,7 +66,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
-  padding: 10px 20px;
+  padding: 10px ;
 }
 
 label {

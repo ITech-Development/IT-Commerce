@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useGetAllProductsQuery } from "../../features/productsApi";
+// import { useGetAllProductsQuery } from "../../features/productsApi";
 import { useGetProductsQuery } from "../../features/product/apiProducts";
 import Corousel from "../../components/corousel/product";
 import "./productliststyle.css";
@@ -86,12 +86,11 @@ const ProductCard = ({ product, onAddToCart }) => {
           }}
           className="star-rating"
         >
-          {/* Render star images for the star rating */}
           {[...Array(starRating)].map((_, index) => (
             <img
               key={index}
               style={{ maxWidth: "15px" }}
-              src={Star} // Replace with your star icon image
+              src={Star}
               alt="rating"
             />
           ))}
@@ -125,7 +124,6 @@ const searchInputStyle = {
   width: "auto",
   borderRadius: "4px",
   border: "1px solid #ccc",
-  // marginRight: "10px",
   margin: "0",
   flex: 1,
 };
@@ -134,8 +132,7 @@ const ProductList = () => {
   // const { data, error, isLoading } = useGetAllProductsQuery();
   const { data, error, isLoading } = useGetProductsQuery();
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedSortOption, setSelectedSortOption] = useState("name"); // Initialize the selectedSortOption state
-  // const [selectedCategories, setSelectedCategories] = useState([]); // State for selected categories
+  const [selectedSortOption, setSelectedSortOption] = useState("name")
 
   const handleAddToCart = async (product) => {
     const accessToken = localStorage.getItem("access_token");
@@ -160,32 +157,13 @@ const ProductList = () => {
   };
 
   const handleSortOptionChange = (event) => {
-    setSelectedSortOption(event.target.value); // Update the selectedSortOption state
+    setSelectedSortOption(event.target.value);
   };
-
-  // Filter and sort the data based on searchQuery and selectedSortOption
-  // const handleCategoryCheckboxChange = (event) => {
-  //   const category = event.target.value;
-  //   if (event.target.checked) {
-  //     // If the checkbox is checked, add the category to the selectedCategories
-  //     setSelectedCategories([...selectedCategories, category]);
-  //   } else {
-  //     // If the checkbox is unchecked, remove the category from the selectedCategories
-  //     setSelectedCategories(selectedCategories.filter((c) => c !== category));
-  //   }
-  // };
   const filteredAndSortedData = data
     ? data
         .filter((product) =>
           product.name.toLowerCase().includes(searchQuery.toLowerCase())
         )
-        // .filter((product) => {
-        //   // Filter products by selected categories
-        //   if (selectedCategories.length === 0) {
-        //     return true; // If no categories are selected, show all products
-        //   }
-        //   return selectedCategories.includes(product.category);
-        // })
         .sort((a, b) => {
           switch (selectedSortOption) {
             case "price":
@@ -224,7 +202,7 @@ const ProductList = () => {
                 style={{
                   padding: "10px",
                   maxHeight: "450px",
-                  maxWidthwidth: "1350px",
+                  width: 'auto',
                   marginTop: "20px",
                 }}
               >
@@ -237,34 +215,24 @@ const ProductList = () => {
                       <label>
                         <input
                           type="radio"
-                          // checked={selectedCategories.includes(
-                          //   "Delivery Valve"
-                          // )}
-                          // onChange={handleCategoryCheckboxChange}
                         />
                         <p className="filterCategories">Delivery Valve</p>
                       </label>
                       <label>
                         <input
                           type="radio"
-                          // checked={selectedCategories.includes("Element")}
-                          // onChange={handleCategoryCheckboxChange}
                         />
                         <p className="filterCategories">Element</p>
                       </label>
                       <label>
                         <input
                           type="radio"
-                          // checked={selectedCategories.includes("Head Rotor")}
-                          // onChange={handleCategoryCheckboxChange}
                         />
                         <p className="filterCategories">Head Rotor</p>
                       </label>
                       <label>
                         <input
                           type="radio"
-                          // checked={selectedCategories.includes("Nozzle")}
-                          // onChange={handleCategoryCheckboxChange}
                         />
                         <p className="filterCategories">Nozzle</p>
                       </label>

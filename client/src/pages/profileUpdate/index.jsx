@@ -111,14 +111,19 @@ const FormContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  // max-width: 400px;
   width: 100%;
   position: fixed;
   margin: auto;
   padding: 70px 0 0 0;
-  // background-color: #f4f4f4;
-  // border-radius: 8px;
-  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  @media (max-width: 768px) {
+    display: flex;
+    position: relative;
+    margin: 0 ,
+    padding-bottom: 30px;
+    width: 95%;
+    height: auto;
+    
+  }
 `;
 
 const Heading = styled.h1`
@@ -173,5 +178,8 @@ const Button = styled.button`
 
   &:hover {
     background-color: #0056b3;
+  }
+  @media (max-width: 768px) {
+    margin-bottom: 30px;
   }
 `;
