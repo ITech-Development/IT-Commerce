@@ -29,30 +29,35 @@ const shadowAnimation = keyframes`
 `;
 
 const CardGridContainers = styled.div`
+display: grid;
+grid-template-columns: repeat(7, 1fr);
+gap: 10px;
+@media (max-width: 768px) {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 15px;
+  grid-template-columns: repeat(2, 1fr);
+  // gap: 10px;
   margin: 0;
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
+}
 `;
 
 const Card = styled.div`
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.2s ease;
-  max-height: 330px;
-  max-width: 360px;
-  width: auto;
+border: 1px solid #ccc;
+// padding: 10px 10px 19px 10px;
+border-radius: 5px;
+margin: 5px 0px;
+// max-height: 282px;
+height: auto;
+width: auto;
+box-shadow: none;
+&:hover {
+  animation: ${shadowAnimation} 1s ease-in-out infinite;
+}
 
-  &:hover {
-    animation: ${shadowAnimation} 1s ease-in-out infinite;
-  }
+@media (max-width: 768px) {
+  margin: 0;
+  padding: 0;
+
+}
 `;
 
 const CardImage = styled.img`
@@ -156,7 +161,7 @@ const ProductList = () => {
   const { data, error, isLoading } = useGetProductsQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
-  const [displayedCards, setDisplayedCards] = useState(7);
+  const [displayedCards, setDisplayedCards] = useState(28);
 
   const handleAddToCart = async (product) => {
     const accessToken = localStorage.getItem("access_token");
@@ -179,7 +184,7 @@ const ProductList = () => {
     setSearchQuery(event.target.value);
   };
   const handleLoadMore = () => {
-    setDisplayedCards((prevDisplayedCards) => prevDisplayedCards + 7);
+    setDisplayedCards((prevDisplayedCards) => prevDisplayedCards + 28);
   };
 
   const handleSortOptionChange = (event) => {
