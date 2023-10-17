@@ -89,8 +89,14 @@ function CartsIndoRiau({ cartsIndoRiau }) {
                                     />
                                 </Link>
                                 <div>
-                                    <h3>{e.product.name}</h3>
-                                    <p>{e.product.description}</p>
+                                    <h3>{e.product.name.split(" ")
+                              .slice(0, 15)
+                              .join(" ")}
+                            ...</h3>
+                                    <p>{e.product.description.split(" ")
+                              .slice(0, 15)
+                              .join(" ")}
+                            ...</p>
                                     <button onClick={() => handlerRemove(e.id)}>
                                         <FontAwesomeIcon icon={faTrash} /> Hapus
                                     </button>
@@ -167,8 +173,7 @@ export default CartsIndoRiau
 
 const StoreHeader = styled.div`
   max-width: 900px;
-  // background: #ddefef;
-  // padding: 10px 76% 10px 5px;
+
 `;
 
 const StoreImage = styled.img`
@@ -189,23 +194,6 @@ const linkStyle = {
     color: "white",
     textDecoration: "none",
 };
-
-const ContinueShoppingButton = styled.button`
-  display: flex;
-  align-items: center;
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: none; /* Set text-decoration to none to remove the underline */
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
 
 const ContinueShoppingContainer = styled.div`
   display: flex;

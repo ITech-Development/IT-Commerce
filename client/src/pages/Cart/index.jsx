@@ -35,7 +35,6 @@ const Cart = () => {
           </div>
         </div>
       ) : (
-        // ... Kode yang ada jika ada item dalam keranjang belanja
         <>
           {cartsIndoRiau?.length > 0 && (
             <CartsIndoRiau cartsIndoRiau={cartsIndoRiau} />
