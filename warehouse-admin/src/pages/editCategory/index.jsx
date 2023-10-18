@@ -82,8 +82,9 @@ const EditCategoryPage = () => {
         </div>
         <div className="form-group">
           {/* Tambahkan input form lainnya sesuai atribut yang ada pada produk */}
-          <label htmlFor="image">Gambar:</label>
+          <label  htmlFor="image">Banner</label>
           <input
+          style={{marginLeft: '64px'}}
             type="file"
             id="image"
             name="image"
@@ -91,14 +92,13 @@ const EditCategoryPage = () => {
             onChange={handleImageChange}
           />
           {category.image && <img src={category.image} alt="Category" width="200px" />}
-          <br />
         </div>
         {/* Add more form inputs for other attributes if needed */}
         <div className="button-group">
-          <button type="submit">Update Category</button>
+          <button type="submit">Simpan Perubahan</button>
           {/* Add navigation or other buttons as needed */}
           <Link to="/dashboard-categories">
-            <button>Cancel</button>
+            <button>Batal</button>
           </Link>
         </div>
       </form>

@@ -53,10 +53,10 @@ const EditTypePage = () => {
 
   return (
     <div className="edit-category-container">
-      <h1>Edit Type</h1>
+      <h1>Edit Tipe</h1>
       <form className="edit-category-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Type Name:</label>
+          <label style={{width: '20%', display: 'flex', alignItems: 'center', paddingTop: '8px'}} htmlFor="name">Nama Tipe</label>
           <input
             type="text"
             id="name"
@@ -69,11 +69,11 @@ const EditTypePage = () => {
         </div>
         {/* Add more form inputs for other attributes if needed */}
         <div className="button-group">
-          <button type="submit">Update Type</button>
+          <button type="submit">Simpan Perubahan</button>
           {/* Add navigation or other buttons as needed */}
           <Link to="/dashboard-types">
             <button>
-            Back
+            Batal
             </button>
             </Link>
         </div>

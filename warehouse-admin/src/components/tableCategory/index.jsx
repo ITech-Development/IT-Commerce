@@ -70,8 +70,7 @@ const CategoryTable = () => {
     <div
       style={{
         display: "flex",
-        margin: "auto",
-        maxWidth: "1420px",
+        width: "auto",
         flexDirection: "column",
       }}
     >
@@ -85,14 +84,14 @@ const CategoryTable = () => {
           size="small"
         />
       </div>
-      <TableContainer component={Paper} style={{ width: "1420px" }}>
+      <TableContainer component={Paper} style={{ width: "auto", margin: "auto" }}>
         <Table className="bordered-table">
           <TableHead>
             <TableRow>
               <TableCell
                 style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
               >
-                ID
+                Banner
               </TableCell>
               <TableCell
                 style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
@@ -110,7 +109,13 @@ const CategoryTable = () => {
           <TableBody>
             {filteredCategories.map((category) => (
               <TableRow key={category.id}>
-                <TableCell>{category.id}</TableCell>
+                <TableCell>
+                  <img
+                    style={{ width: "500px", height: "100px" }}
+                    src={category.image}
+                    alt=""
+                  />
+                </TableCell>
                 <TableCell>{category.name}</TableCell>
                 <TableCell className="action-column">
                   <div

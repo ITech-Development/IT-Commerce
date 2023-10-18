@@ -37,10 +37,10 @@ const AddTypePage = () => {
 
   return (
     <div className="add-category-container">
-      <h1>Add New Type</h1>
+      <h1>Tambah Tipe Baru</h1>
       <form className="add-category-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Type Name:</label>
+          <label style={{width: '20%', display: 'flex', alignItems :'center', paddingTop: '8px'}} htmlFor="name">Nama Tipe </label>
           <input
             type="text"
             id="name"
@@ -56,7 +56,7 @@ const AddTypePage = () => {
           <button type="submit">Tambah Tipe</button>
           {/* Add navigation or other buttons as needed */}
           <Link to="/dashboard-types">
-            <button>Back</button>
+            <button>Batal</button>
           </Link>
         </div>
       </form>

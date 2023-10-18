@@ -26,9 +26,7 @@ const CategoryDetail = () => {
 
     return (
         <div>
-            <br />
-            <br />
-            <br />
+            <img src={category.image} alt={category.name} width='1200' />
             <h2>Kategori Produk: {category.name}</h2>
 
             {hasProducts ? (
