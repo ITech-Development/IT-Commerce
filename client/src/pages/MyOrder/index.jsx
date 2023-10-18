@@ -4,6 +4,7 @@ import './CheckoutProductsPage.css';
 
 function CheckoutProductsPage() {
   const [checkoutProducts, setCheckoutProducts] = useState({});
+  const [activeTab, setActiveTab] = useState('Semua'); // Default active tab is 'Semua'
 
   useEffect(() => {
     fetch('http://localhost:3100/checkout-products',
@@ -17,15 +18,33 @@ function CheckoutProductsPage() {
       .catch(error => console.error(error));
   }, []);
 
+  // Filter the checkoutProducts based on the activeTab
+  const filteredCheckoutProducts = Object.keys(checkoutProducts).reduce((result, checkoutId) => {
+    const checkout = checkoutProducts[checkoutId][0]?.checkout;
+    if (activeTab === 'Semua' || checkout?.deliveryStatus === activeTab) {
+      result[checkoutId] = checkoutProducts[checkoutId];
+    }
+    return result;
+  }, {});
+
   return (
     <div>
       <h1>Checkout Products</h1>
-      {Object.keys(checkoutProducts).length === 0 ? (
-        <p>Anda belum pernah belanja di sini</p>
+
+      <div className="tabs">
+        <button onClick={() => setActiveTab('Semua')} className={activeTab === 'Semua' ? 'active' : ''}>Semua</button>
+        <button onClick={() => setActiveTab('Sedang dikemas')} className={activeTab === 'Sedang dikemas' ? 'active' : ''}>Sedang dikemas</button>
+        <button onClick={() => setActiveTab('Dikirim')} className={activeTab === 'Dikirim' ? 'active' : ''}>Dikirim</button>
+        <button onClick={() => setActiveTab('Pesanan diterima')} className={activeTab === 'Pesanan diterima' ? 'active' : ''}>Selesai</button>
+      </div>
+
+      
+      {Object.keys(filteredCheckoutProducts).length === 0 ? (
+        <p>Tidak ada proses</p>
       ) : (
-        Object.keys(checkoutProducts).map(checkoutId => (
+        Object.keys(filteredCheckoutProducts).map(checkoutId => (
           <div key={checkoutId} className="checkout-table">
-            <h2>{checkoutProducts[checkoutId][0]?.product?.product_owners?.name}</h2>
+            <h2>{filteredCheckoutProducts[checkoutId][0]?.product?.product_owners?.name}</h2>
             <div className="table-responsive">
               <table className="table">
                 <thead>
@@ -43,7 +62,7 @@ function CheckoutProductsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {checkoutProducts[checkoutId].map((productInfo, index) => (
+                  {filteredCheckoutProducts[checkoutId].map((productInfo, index) => (
                     <tr key={index}>
                       <td>
                         <Link to={`/my-order/${productInfo.checkout.id}`}>
