@@ -11,12 +11,15 @@ import {
   useRemoveItemFromCartMutation
 } from "../../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../../features/user/apiUser";
+import PaymentModal from '../PaymentModal';
 
 function Index() {
   const { data: carts } = useGetCartsIndoRiauQuery()
   const { data: profile } = useGetMeQuery()
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
   const [clearItemFromCart] = useClearProductCartMutation()
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [token, setToken] = useState("");
   const [province, setProvince] = useState([]);
@@ -82,6 +85,11 @@ function Index() {
     });
     clearItemFromCart()
     setToken(response.data.token);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -91,7 +99,7 @@ function Index() {
 
         onSuccess: function (result) {
           /* You may add your own implementation here */
-          alert("payment success!"); 
+          alert("payment success!");
           console.log(result);
         },
         onPending: function (result) {
@@ -293,7 +301,7 @@ function Index() {
 
   return (
     <div>
-      <div id="snap-container"></div>
+      
       <div className="alamat">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Alamat Pengiriman</h2>
@@ -584,7 +592,8 @@ function Index() {
                 </button>
               )}
             </div>
-
+            {/* Tampilkan modal jika isModalOpen adalah true */}
+            <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
           </div>
         </div>
       </div>
