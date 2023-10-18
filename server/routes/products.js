@@ -41,13 +41,13 @@ router.use(multer({
 
 router.use((error, req, res, next) => {
     if (error instanceof multer.MulterError) {
-      // Kesalahan dari multer (misalnya, ukuran berkas terlalu besar)
-      res.status(400).json({ error: 'File size is too large' });
+        // Kesalahan dari multer (misalnya, ukuran berkas terlalu besar)
+        res.status(400).json({ error: 'File size is too large' });
     } else {
-      // Kesalahan lain
-      res.status(500).json({ error: 'An error occurred while uploading the file' });
+        // Kesalahan lain
+        res.status(500).json({ error: 'An error occurred while uploading the file' });
     }
-  });
+});
 
 router.get('/', ProductController.getAllProducts);
 router.get('/nozzle', ProductController.getNozzelCategory);

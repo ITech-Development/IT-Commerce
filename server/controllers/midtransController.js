@@ -17,12 +17,14 @@ class MidtransController {
         isProduction: false,
         serverKey: midtransKey,
       });
+      console.log(snap, 'log snap');
       let order_id = "ITECH-ORDERID-" +
         Math.floor(1000000 + Math.random() * 9000000)
       let parameter = {
         transaction_details: {
           order_id,
           gross_amount: +req.query.total,
+
         },
         credit_card: {
           secure: true,
@@ -56,6 +58,7 @@ class MidtransController {
         midtransCode: order_id,
         setPPN: '-',
         shippingMethod: `Kurir: ${checkoutCourier}`,
+        // paymentMethod: `${payment_type}, ${bank}`,
         transaction: t
       });
 

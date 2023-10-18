@@ -39,10 +39,11 @@ const MainContent = () => {
   return (
     <main>
       <h2>Main Content</h2>
-      <p>Welcome to the dashboard!</p>
+      {/* <p>Welcome to the dashboard!</p> */}
+      {/* <p>Daftar Produk</p> */}
       {/* <button onClick={handleAddButtonClick}>Add</button> */}
 
-      {/* <TableComponent /> */}
+      <TableComponent />
 
     </main>
   );

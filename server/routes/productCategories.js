@@ -1,155 +1,57 @@
 const express = require('express')
 const ProductCategoryController = require('../controllers/productCategoryController')
-const { authentication } = require('../middlewares/auth')
+const { authenticationWarehouseAdmin, authorizationWarehouseAdmin } = require('../middlewares/auth')
+const bodyParser = require('body-parser');
 const router = express.Router()
+const multer = require('multer');
+const fileStorage = multer.diskStorage(
+    {
+        destination: (req, file, cb) => {
+            cb(null, 'images')
+        },
+        filename: (req, file, cb) => {
+            cb(null, new Date().getTime() + '-' + file.originalname)
+        }
+    }
+); // Tentukan folder tujuan untuk menyimpan file yang diunggah
 
-// router.use(authentication)
+const fileFilter = (req, file, cb) => {
+    if (
+        file.mimetype === 'image/png' ||
+        file.mimetype === 'image/jpeg' ||
+        file.mimetype === 'image/jpg'
+    ) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     ProductCategory:
- *       type: object
- *       required:
- *         - name
- *         - image
- *       properties:
- *         id:
- *           type: integer
- *           description: The auto-generated id of the productcategory
- *         name:
- *           type: string
- *           description: The productcategory name
- *         image:
- *           type: string
- *           description: The productcategory image
- *       example:
- *         id: 1
- *         name: example name
- *         image: examle image
- */
+const maxSize = 5 * 1024 * 1024 // 5 MB, sesuaikan dengan batas yang Anda inginkan
 
-/**
- * @swagger
- * /product-categories:
- *   get:
- *     summary: Returns the list of all the product categories
- *     tags: [Product Categories]
- *     responses:
- *       200:
- *         description: The list of the product categories
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/ProductCategory'
- */
+router.use(bodyParser.json());
+router.use(multer({
+    storage: fileStorage,
+    fileFilter: fileFilter,
+    limits: {
+        fileSize: maxSize // Batas ukuran berkas
+    }
+}).single('image'))
+
+router.use((error, req, res, next) => {
+    if (error instanceof multer.MulterError) {
+        // Kesalahan dari multer (misalnya, ukuran berkas terlalu besar)
+        res.status(400).json({ error: 'File size is too large' });
+    } else {
+        // Kesalahan lain
+        res.status(500).json({ error: 'An error occurred while uploading the file' });
+    }
+});
+
 router.get('/', ProductCategoryController.getAllProductCategories)
-
-/**
- * @swagger
- * /product-categories:
- *   post:
- *     summary: Create a new productcategory
- *     tags: [Product Categories]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/ProductCategory'
- *     responses:
- *       200:
- *         description: The productcategory was successfully created
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ProductCategory'
- *       500:
- *         description: Error on the internal server
- */
-router.post('/', ProductCategoryController.addProductCategory)
-
-/**
- * @swagger
- * /product-categories/{id}:
- *   get:
- *     summary: Get the productcategory by id
- *     tags: [Product Categories]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: The productcategory id
- *     responses:
- *       200:
- *         description: The productcategory description by id
- *         contens:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ProductCategory'
- *       404:
- *         description: The productcategory was not found
- */
+router.post('/', authenticationWarehouseAdmin, authorizationWarehouseAdmin, ProductCategoryController.addProductCategory)
 router.get('/:id', ProductCategoryController.detailsProductCategory)
-
-/**
- * @swagger
- * /product-categories/{id}:
- *   delete:
- *     summary: Remove the productcategory by id
- *     tags: [Product Categories]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: The productcategory id
- * 
- *     responses:
- *       200:
- *         description: Productcategory successfully deleted
- *       404:
- *         description: Products category not found
- */
 router.delete('/:id', ProductCategoryController.deleteProductCategory)
-
-/**
- * @swagger
- * /product-categories/{id}:
- *  put:
- *    summary: Update the productcategory by the id
- *    tags: [Product Categories]
- *    parameters:
- *      - in: path
- *        name: id
- *        schema:
- *          type: string
- *        required: true
- *        description: The productcategory id
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/ProductCategory'
- *    responses:
- *      200:
- *        description: The product was updated
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/ProductCategory'
- *      404:
- *        description: The productcategory was not found
- *      500:
- *        description: Error on the internal server
- */
-router.put('/:id', ProductCategoryController.editProductCategory)
+router.put('/:id', authenticationWarehouseAdmin, authorizationWarehouseAdmin, ProductCategoryController.editProductCategory)
 
 module.exports = router

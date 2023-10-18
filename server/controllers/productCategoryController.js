@@ -1,14 +1,40 @@
 const { ProductCategory, ProductType, Product } = require('../models')
+const { validationResult } = require('express-validator')
+const cloudinary = require('../helpers/cloudinary')
 
 class ProductCategoryController {
 
     static async addProductCategory(req, res, next) {
         try {
+            const errors = validationResult(req)
+
+            if (!errors.isEmpty()) {
+                const err = new Error('Input values ​​dont match')
+                err.errorStatus = 400
+                err.data = errors.array()
+                throw err
+            }
+
+            if (!req.file) {
+                const err = new Error('Image must be uploaded')
+                err.errorStatus = 422
+                throw err
+            }
+
+            const folderName = 'product_category_images';
+
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: folderName
+            })
+
             const newCategory = await ProductCategory.create({
                 name: req.body.name,
-                image: req.body.image
+                image: result.secure_url,
             })
-            res.status(201).json(newCategory)
+            res.status(201).json({
+                message: 'Product Category added successfully!',
+                category: newCategory
+            })
         } catch (error) {
             next(error)
         }
@@ -76,20 +102,39 @@ class ProductCategoryController {
     static async editProductCategory(req, res, next) {
         try {
             const productCategoryId = req.params.id
-            const {
-                name,
-                image
-            } = req.body
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                const err = new Error('Input values ​​dont match');
+                err.errorStatus = 400;
+                err.data = errors.array();
+                throw err;
+            }
 
-            await ProductCategory.update({
-                name,
-                image
-            }, {
-                where: {
-                    id: productCategoryId
-                }
-            })
-            res.status(201).json({ message: 'Edit successful' })
+            const existingProductCat = await ProductCategory.findByPk(productCategoryId);
+            if (!existingProductCat) {
+                const err = new Error('Product Category not found');
+                err.errorStatus = 404;
+                throw err;
+            }
+            const folderName = 'product_category_images';
+
+            if (req.file) {
+                const result = await cloudinary.uploader.upload(req.file.path, {
+                    folder: folderName
+                });
+
+                // Update path gambar jika ada file yang diunggah
+                existingProductCat.image = result.secure_url;
+            }
+
+            existingProductCat.name = req.body.name
+
+            await existingProductCat.save();
+            
+            res.status(200).json({
+                message: 'Edit product category successfully',
+                category: existingProductCat
+            });
         } catch (error) {
             next(error)
         }

@@ -7,18 +7,16 @@ import Products from "./pages/products";
 import Users from "./pages/users";
 import Transactions from "./pages/transactions";
 import NotFound from "./pages/notFound";
-import Dashboard from "./pages/dashboard";
-import Home from "./pages/homepage";
-// import { useDispatch } from "react-redux";
+import Dashboard from "./pages/dashboard/";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./components/navbar";
 import { initialState, reducer } from "./reducer/UseReducer";
 
 export const UserContext = createContext();
 
-const isLoggedIn = localStorage.getItem('access_token'); // Simulasikan status login (true jika user sudah login)
 
 const Routing = () => {
+  const isLoggedIn = localStorage.getItem('access_token'); // Simulasikan status login (true jika user sudah login)
   return (
     <Routes>
       {!isLoggedIn ? (
@@ -29,10 +27,10 @@ const Routing = () => {
       ) : (
         <>
           <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/products" element={<Products />} />
           <Route path="/users" element={<Users />} />
           <Route path="/transactions" element={<Transactions />} />
-          <Route path="/" element={<Dashboard />} />
         </>
       )}
     </Routes>
@@ -40,11 +38,6 @@ const Routing = () => {
 };
 
 function App() {
-  // const dispatchRedux = useDispatch();
-
-  // useEffect(() => {
-  //   dispatchRedux(loadUser(null));
-  // }, [dispatchRedux]);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 

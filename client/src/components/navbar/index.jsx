@@ -149,6 +149,7 @@ export default function Toolbar(props) {
                     <Link
                       style={{ display: "flex", marginLeft: "11.2px" }}
                       onClick={handleLogout}
+                      to='/login'
                     >
                       Keluar
                     </Link>

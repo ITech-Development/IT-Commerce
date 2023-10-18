@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -8,14 +7,13 @@ import { UserContext } from "../../App";
 
 const Login = () => {
   const { dispatch } = useContext(UserContext);
-
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
 
+    e.preventDefault();
     // Perform login logic here
     if (!email || !password) {
       alert("Please enter your email and password.");

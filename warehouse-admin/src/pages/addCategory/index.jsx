@@ -6,8 +6,14 @@ import { Link } from "react-router-dom";
 const AddCategoryPage = () => {
   const [newCategory, setNewCategory] = useState({
     name: "",
+    image: null,
     // Add more attributes if needed
   });
+
+  const handleImageChange = (e) => {
+    const imageFile = e.target.files[0];
+    setNewCategory({ ...newCategory, image: imageFile });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,6 +26,12 @@ const AddCategoryPage = () => {
       const response = await axios.post(
         "https://indoteknikserver-732012365989.herokuapp.com/product-categories",
         newCategory,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            access_token: localStorage.getItem('access_token')
+          }
+        }
       );
 
       if (response.status === 201) {
@@ -48,6 +60,17 @@ const AddCategoryPage = () => {
             name="name"
             value={newCategory.name}
             onChange={handleChange}
+            required
+          />
+          <br />
+        </div>
+        <div className="form-group">
+          <label htmlFor="image">Gambar:</label>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            onChange={handleImageChange}
             required
           />
           <br />

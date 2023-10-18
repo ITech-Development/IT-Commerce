@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Itech from "../../../assets/Itech.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FaShoppingCart } from "react-icons/fa"; // Menggunakan react-icons/fa5 untuk ikon dari Font Awesome 5
+// import { FaShoppingCart } from "react-icons/fa"
 
 import {
   useRemoveItemFromCartMutation,
@@ -43,15 +43,15 @@ function CartsItech({ cartsItech }) {
   };
   const calculateTotalItech = () => {
     const subtotal = calculateSubtotalItech();
-    const ppn = subtotal * 0.11;
-    const total = subtotal + ppn;
+    // const ppn = subtotal * 0.11;
+    const total = subtotal;
     return total.toFixed(2);
   };
-  const calculatePPNItech = () => {
-    const subtotal = calculateSubtotalItech();
-    const ppn = subtotal * 0.11;
-    return ppn.toFixed(2);
-  };
+  // const calculatePPNItech = () => {
+  //   const subtotal = calculateSubtotalItech();
+  //   const ppn = subtotal * 0.11;
+  //   return ppn.toFixed(2);
+  // };
 
   return (
     <div
@@ -113,10 +113,10 @@ function CartsItech({ cartsItech }) {
           <p></p>
           <div className="cart-checkout">
             <div className="subtotal">
-              <span>Subtotal :</span>
+              <span>Total :</span>
               <span className="amount">Rp.{calculateSubtotalItech()}</span>
             </div>
-            <div
+            {/* <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -126,7 +126,7 @@ function CartsItech({ cartsItech }) {
             >
               <span>PPN 11% :</span>
               <span className="amount"> Rp. {calculatePPNItech()}</span>
-            </div>
+            </div> */}
             <div className="subtotal" style={{ paddingBottom: "10px" }}>
               <span>Total :</span>
               <span style={{ fontWeight: "700" }} className="amount">
@@ -138,10 +138,10 @@ function CartsItech({ cartsItech }) {
                 {!isCheckoutDisabled ? "Checkout" : "Stok produk kosong"}
               </Link>
             </button>
-            <ContinueShoppingButton>
+            {/* <ContinueShoppingButton>
               <ContinueShoppingIcon as={FaShoppingCart} />
               <Link to="/productlist">Beli Lagi</Link>
-            </ContinueShoppingButton>
+            </ContinueShoppingButton> */}
           </div>
         </div>
       </div>
@@ -201,26 +201,26 @@ const linkStyle = {
   textDecoration: "none",
 };
 
-const ContinueShoppingButton = styled.button`
-  display: flex;
-  align-items: center;
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: none; /* Set text-decoration to none to remove the underline */
+// const ContinueShoppingButton = styled.button`
+//   display: flex;
+//   align-items: center;
+//   padding: 8px 16px;
+//   background-color: #007bff;
+//   color: white;
+//   border: none;
+//   border-radius: 4px;
+//   cursor: pointer;
+//   font-size: 14px;
+//   text-decoration: none; /* Set text-decoration to none to remove the underline */
 
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
+//   &:hover {
+//     background-color: #0056b3;
+//   }
+// `;
 
-const ContinueShoppingIcon = styled(FaShoppingCart)`
-  margin-right: 8px;
-  font-size: 18px;
-`;
+// const ContinueShoppingIcon = styled(FaShoppingCart)`
+//   margin-right: 8px;
+//   font-size: 18px;
+// `;
 
 export default CartsItech;
