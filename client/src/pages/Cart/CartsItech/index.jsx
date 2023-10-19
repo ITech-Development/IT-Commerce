@@ -122,36 +122,17 @@ function CartsItech({ cartsItech }) {
         <div className="cart-summary">
           <p></p>
           <div className="cart-checkout">
-            {/* <div className="subtotal">
-              <span>Total :</span>
-              <span className="amount">Rp.{calculateSubtotalItech()}</span>
-            </div> */}
-            {/* <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                fontStyle: "italic",
-                padding: "8px 0",
-              }}
-            >
-              <span>PPN 11% :</span>
-              <span className="amount"> Rp. {calculatePPNItech()}</span>
-            </div> */}
             <div className="subtotal" style={{ paddingBottom: "10px" }}>
               <span className="subtot">Total :</span>
               <span style={{ fontWeight: "700" }} className="amount">
               {formatPrice(calculateTotalItech())}
               </span>
             </div>
-            <button style={checkoutButtonStyle} disabled={isCheckoutDisabled}>
+            <button className='checkoutButtonStyle' disabled={isCheckoutDisabled}>
               <Link to="/check-TransITech" style={linkStyle}>
                 {!isCheckoutDisabled ? "Checkout" : "Stok produk kosong"}
               </Link>
             </button>
-            {/* <ContinueShoppingButton>
-              <ContinueShoppingIcon as={FaShoppingCart} />
-              <Link to="/productlist">Beli Lagi</Link>
-            </ContinueShoppingButton> */}
           </div>
         </div>
       </div>
@@ -202,16 +183,17 @@ const Title = styled.div`
     // margin-right: 30px;
   }
 `;
-const checkoutButtonStyle = {
-  backgroundColor: "blue",
-  color: "white",
-  padding: "10px 20px",
-  border: "none",
-  borderRadius: "4px",
-  cursor: "pointer",
-  textDecoration: "none",
-  marginBottom: '50px'
-};
+// const checkoutButtonStyle = styled.button {
+//   backgroundColor: "blue",
+//   color: "white",
+//   padding: "10px 20px",
+//   border: "none",
+//   borderRadius: "4px",
+//   cursor: "pointer",
+//   textDecoration: "none",
+//   marginBottom: '50px'
+  
+// };
 
 const linkStyle = {
   color: "white",

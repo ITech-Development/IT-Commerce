@@ -1,4 +1,14 @@
-/* Stil CSS untuk perangkat dengan lebar layar kurang dari atau sama dengan 768px */
+
+.checkoutButtonStyle {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-bottom: 80px;
+}/* Stil CSS untuk perangkat dengan lebar layar kurang dari atau sama dengan 768px */
 @media (max-width: 768px) {
     .logoJuvindo {
         width: 100%;
@@ -74,5 +84,15 @@
     }
     .amount {
         font-size: 14px;
+    }
+    .checkoutButtonStyle {
+        background-color: blue;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        margin-bottom: 80px;
     }
 }

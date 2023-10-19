@@ -158,7 +158,7 @@ function CartsJuvindo({ cartsJuvindo }) {
                 {formatPrice(calculateTotalJuvindo())}
               </span>
             </div>
-            <button style={checkoutButtonStyle} disabled={isCheckoutDisabled}>
+            <button className="checkoutButtonStyle" disabled={isCheckoutDisabled}>
               <Link to="/check-TransJuvindo" style={linkStyle}>
                 {!isCheckoutDisabled ? "Checkout" : "Stok produk kosong"}
               </Link>
@@ -217,16 +217,16 @@ const Title = styled.div`
     // margin-right: 30px;
   }
 `;
-const checkoutButtonStyle = {
-  backgroundColor: "blue",
-  color: "white",
-  padding: "10px 20px",
-  border: "none",
-  borderRadius: "4px",
-  cursor: "pointer",
-  textDecoration: "none",
-  marginBottom: '50px'
-};
+// const checkoutButtonStyle = {
+//   backgroundColor: "blue",
+//   color: "white",
+//   padding: "10px 20px",
+//   border: "none",
+//   borderRadius: "4px",
+//   cursor: "pointer",
+//   textDecoration: "none",
+//   marginBottom: '50px'
+// };
 
 const linkStyle = {
   color: "white",

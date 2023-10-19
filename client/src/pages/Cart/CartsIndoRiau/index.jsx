@@ -140,7 +140,7 @@ function CartsIndoRiau({ cartsIndoRiau }) {
               </span>
             </div>
             <button
-              style={checkoutButtonStyle}
+              className="checkoutButtonStyle"
               disabled={isCheckoutDisabled} // Disable the button if any product is out of stock
             >
               <Link to="/check-TransIR" style={linkStyle}>
@@ -201,16 +201,16 @@ const Title = styled.div`
     // margin-right: 30px;
   }
 `;
-const checkoutButtonStyle = {
-  backgroundColor: "blue",
-  color: "white",
-  padding: "10px 20px",
-  border: "none",
-  borderRadius: "4px",
-  cursor: "pointer",
-  textDecoration: "none",
-  marginBottom: '50px'
-};
+// const checkoutButtonStyle = {
+//   backgroundColor: "blue",
+//   color: "white",
+//   padding: "10px 20px",
+//   border: "none",
+//   borderRadius: "4px",
+//   cursor: "pointer",
+//   textDecoration: "none",
+//   marginBottom: '50px'
+// };
 
 const linkStyle = {
   color: "white",
