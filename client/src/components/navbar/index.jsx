@@ -6,6 +6,7 @@ import CartIcon from "./iconCart.png";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { useGetCountCartsQuery } from "../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../features/user/apiUser";
+import { Sidebar } from "../sidebar/index.";
 
 export default function Navigation() {
   const { data: totalCart } = useGetCountCartsQuery()
@@ -17,11 +18,16 @@ export default function Navigation() {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownHovered, setIsDropdownHovered] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to control sidebar visibility
 
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleSidebarToggle = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   const handleLogout = () => {
@@ -188,10 +194,11 @@ export default function Navigation() {
           <ul className={isDropdownOpen ? "expanded" : ""}>
             <RenderMenu />
           </ul>
-          <button className="hamburger" onClick={toggleDropdown}>
+          <button className="hamburger" onClick={handleSidebarToggle}>
             <i className="fas fa-bars" style={{ fontSize: '10px' }}></i>
           </button>
         </div>
+        {isSidebarOpen && <Sidebar closeSidebar={handleSidebarToggle} />}
       </nav>
     </>
   );
