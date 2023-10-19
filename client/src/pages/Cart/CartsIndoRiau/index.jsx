@@ -10,6 +10,7 @@ import {
   useIncrementCartItemMutation,
   useDecrementCartItemMutation,
 } from "../../../features/cart/apiCarts";
+import "./irCart.css";
 
 function CartsIndoRiau({ cartsIndoRiau }) {
   const isCheckoutDisabled = cartsIndoRiau.some(
@@ -64,19 +65,20 @@ function CartsIndoRiau({ cartsIndoRiau }) {
       style={{ position: "relative", top: "50px" }}
     >
       <StoreHeader>
-        <StoreImage
+        <img
           style={{ maxWidth: "16%" }}
           src={IndoRiau}
           alt="Store Logo"
+          className="logoJuvindo"
         />
         {/* <StoreTitle>ITech</StoreTitle> */}
       </StoreHeader>
-      <div>
+      <div className="contain">
         <div className="titles">
-          <h3 className="product-title">Produk</h3>
-          <h3 className="price">Harga</h3>
-          <h3 className="quantity">Kuantitas</h3>
-          <h3 className="total">Total Harga</h3>
+          <H3 className="product-title">Produk</H3>
+          <H3 className="price">Harga</H3>
+          <H3 className="quantity">Kuantitas</H3>
+          <H3 className="total">Total Harga</H3>
         </div>
         <div class="cart-items">
           {cartsIndoRiau?.map((e) => (
@@ -117,7 +119,7 @@ function CartsIndoRiau({ cartsIndoRiau }) {
           <p></p>
           <div className="cart-checkout">
             <div className="subtotal">
-              <span>Subtotal :</span>
+              <span className="subtot">Subtotal :</span>
               <span className="amount">Rp.{calculateSubtotalIndoRiau()}</span>
             </div>
             <div
@@ -132,7 +134,7 @@ function CartsIndoRiau({ cartsIndoRiau }) {
               <span className="amount"> Rp. {calculatePPNIndoRiau()}</span>
             </div>
             <div className="subtotal" style={{ paddingBottom: "10px" }}>
-              <span>Total :</span>
+              <span className="subtot">Total :</span>
               <span style={{ fontWeight: "700" }} className="amount">
                 {calculateTotalIndoRiau()}
               </span>
@@ -165,60 +167,52 @@ const ProductImage = styled.img`
 
 const ProductImageContainer = styled.div`
   margin-right: 20px;
+  @media (max-width: 768px) {
+    width: 180px;
+  }
+`;
+
+const H3 = styled.div`
+  font-weight: 500;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const StoreHeader = styled.div`
   max-width: 900px;
   margin-top: 30px;
-  // background: #ddefef;
-  // padding: 10px 76% 10px 5px;
-`;
-
-const StoreImage = styled.img`
-  width: 280px;
-
 `;
 
 const SectionLeft = styled.div`
- padding-left: 20px
+  padding-left: 20px @media (max-width: 768px) {
+    padding: 0;
+    margin: 0;
+  }
 `;
 
 const Title = styled.div`
   font-size: 16px;
   width: 90%;
   font-weight: 400;
+  @media (max-width: 768px) {
+    font-size: 14px;
+    width: 100%;
+    // margin-right: 30px;
+  }
 `;
-
 const checkoutButtonStyle = {
-    backgroundColor: "blue",
-    color: "white",
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    textDecoration: "none",
-  };
-  
-  const linkStyle = {
-    color: "white",
-    textDecoration: "none",
-  };
+  backgroundColor: "blue",
+  color: "white",
+  padding: "10px 20px",
+  border: "none",
+  borderRadius: "4px",
+  cursor: "pointer",
+  textDecoration: "none",
+  marginBottom: '50px'
+};
 
-// const ContinueShoppingContainer = styled.div`
-//   display: flex;
-//   align-items: center;
-//   margin-top: 10px;
-//   font-size: 14px;
-//   color: #555;
-//   cursor: pointer;
-//   text-decoration: none; /* Set text-decoration to none to remove the underline */
-
-//   &:hover {
-//     color: #007bff;
-//   }
-// `;
-
-// const ContinueShoppingIcon = styled(FaShoppingCart)`
-//   margin-right: 8px;
-//   font-size: 18px;
-// `;
+const linkStyle = {
+  color: "white",
+  textDecoration: "none",
+};

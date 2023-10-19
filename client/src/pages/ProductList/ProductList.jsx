@@ -218,17 +218,17 @@ const ProductList = () => {
                 display: "flex",
                 flexDirection: "row",
                 // marginLeft: "20px",
-                margin: 'auto',
-                width: 'auto'
+                margin: "auto",
+                width: "auto",
               }}
             >
               <div
                 style={{
-                 width: 'auto',
-                 maxWidth: '1200px',
-                 display: 'flex',
-                 margin: '0',
-                 justifyContent: 'space-between'
+                  width: "auto",
+                  maxWidth: "1200px",
+                  display: "flex",
+                  margin: "0",
+                  justifyContent: "space-between",
                 }}
               >
                 <div style={{ width: "280px", paddingTop: "30px" }}>
@@ -284,7 +284,9 @@ const ProductList = () => {
                           checked={selectedSortOption === "price"}
                           onChange={handleSortOptionChange}
                         />
-                        <p className="filterCategoriess">Harga Terendah - Tertinggi</p>
+                        <p className="filterCategoriess">
+                          Harga Terendah - Tertinggi
+                        </p>
                       </label>
                     </div>
                   </div>{" "}
@@ -299,7 +301,9 @@ const ProductList = () => {
                           checked={selectedSortOption === "stock"}
                           onChange={handleSortOptionChange}
                         />
-                        <p className="filterCategoriess">Stok Paling Sedikit - Terbanyak</p>
+                        <p className="filterCategoriess">
+                          Stok Paling Sedikit - Terbanyak
+                        </p>
                       </label>
                     </div>
                   </div>

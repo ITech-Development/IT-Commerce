@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Juvindo from "../../../assets/JUVINDO.png";
 import styled from "styled-components";
+import "./juvCart.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-// import { FaShoppingCart } from "react-icons/fa"; // Menggunakan react-icons/fa5 untuk ikon dari Font Awesome 5
 import {
   useRemoveItemFromCartMutation,
   useIncrementCartItemMutation,
@@ -52,31 +52,41 @@ function CartsJuvindo({ cartsJuvindo }) {
     return ppn.toFixed(2);
   };
 
+  function formatPrice(price) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  // Contoh penggunaan
+  const productPrice = 1500000; // Misalnya, harga produk dalam bentuk integer
+  const formattedPrice = formatPrice(productPrice);
+  console.log(`Rp. ${formattedPrice}`); // Output: "Rp. 1.500.000"
+
   return (
     <div
       className="cart-container"
       style={{ position: "relative", top: "50px" }}
     >
       <StoreHeader>
-        <StoreImage
+        <img
           style={{ maxWidth: "16%" }}
           src={Juvindo}
           alt="Store Logo"
+          className="logoJuvindo"
         />
         {/* <StoreTitle>ITech</StoreTitle> */}
       </StoreHeader>
-      <div>
+      <div className="contain">
         <div className="titles">
-          <h3 className="product-title">Produk</h3>
-          <h3 className="price">Harga</h3>
-          <h3 className="quantity">Kuantitas</h3>
-          <h3 className="total">Total Harga</h3>
+          <H3 className="product-title">Produk</H3>
+          <H3 className="price">Harga</H3>
+          <H3 className="quantity">Kuantitas</H3>
+          <H3 className="total">Total Harga</H3>
         </div>
         <div class="cart-items">
           {cartsJuvindo?.map((e) => (
             <div class="cart-item">
               <div class="cart-product">
-              <ProductImageContainer>
+                <ProductImageContainer>
                   <Link to={`/products/${e.product.id}`}>
                     <ProductImage src={e.product.image} alt={e.product.name} />
                   </Link>
@@ -102,7 +112,7 @@ function CartsJuvindo({ cartsJuvindo }) {
                 <button onClick={() => handlerInc(e.id)}>+</button>
               </div>
               <div className="cart-product-total-price">
-                Rp.{e.quantity * e.product.unitPrice}
+                Rp. {formatPrice(e.quantity * e.product.unitPrice)}
               </div>
             </div>
           ))}
@@ -111,8 +121,10 @@ function CartsJuvindo({ cartsJuvindo }) {
           <p></p>
           <div className="cart-checkout">
             <div className="subtotal">
-              <span>Subtotal :</span>
-              <span className="amount">Rp.{calculateSubtotalJuvindo()}</span>
+              <span className="subtot">Subtotal :</span>
+              <span className="amount">
+                Rp. {formatPrice(calculateSubtotalJuvindo())}
+              </span>
             </div>
             <div
               style={{
@@ -121,11 +133,15 @@ function CartsJuvindo({ cartsJuvindo }) {
                 fontStyle: "italic",
                 padding: "8px 0",
               }}
+              className="ppn"
             >
               <span>PPN 11% :</span>
-              <span className="amount"> Rp. {calculatePPNJuvindo()}</span>
+              <span className="amount">
+                {" "}
+                Rp. {formatPrice(calculatePPNJuvindo())}
+              </span>
             </div>
-            <div
+            {/* <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -133,13 +149,13 @@ function CartsJuvindo({ cartsJuvindo }) {
                 padding: "8px 0",
               }}
             >
-              {/* <span>Weight :</span>
-              <span className="amount">{calculateTotalWeight()} grams</span> */}
-            </div>
+              <span>Weight :</span>
+              <span className="amount">{calculateTotalWeight()} grams</span>
+            </div> */}
             <div className="subtotal" style={{ paddingBottom: "10px" }}>
-              <span>Total :</span>
+              <span className="subtot">Total : </span>
               <span style={{ fontWeight: "700" }} className="amount">
-                {calculateTotalJuvindo()}
+                {formatPrice(calculateTotalJuvindo())}
               </span>
             </div>
             <button style={checkoutButtonStyle} disabled={isCheckoutDisabled}>
@@ -167,60 +183,52 @@ const ProductImage = styled.img`
 
 const ProductImageContainer = styled.div`
   margin-right: 20px;
+  @media (max-width: 768px) {
+    width: 180px;
+  }
+`;
+
+const H3 = styled.div`
+  font-weight: 500;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const StoreHeader = styled.div`
   max-width: 900px;
   margin-top: 30px;
-  // background: #ddefef;
-  // padding: 10px 76% 10px 5px;
-`;
-
-const StoreImage = styled.img`
-  width: 280px;
-
 `;
 
 const SectionLeft = styled.div`
- padding-left: 20px
+  padding-left: 20px @media (max-width: 768px) {
+    padding: 0;
+    margin: 0;
+  }
 `;
 
 const Title = styled.div`
   font-size: 16px;
   width: 90%;
   font-weight: 400;
+  @media (max-width: 768px) {
+    font-size: 14px;
+    width: 100%;
+    // margin-right: 30px;
+  }
 `;
 const checkoutButtonStyle = {
-    backgroundColor: "blue",
-    color: "white",
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    textDecoration: "none",
-  };
-  
-  const linkStyle = {
-    color: "white",
-    textDecoration: "none",
-  };
-  
+  backgroundColor: "blue",
+  color: "white",
+  padding: "10px 20px",
+  border: "none",
+  borderRadius: "4px",
+  cursor: "pointer",
+  textDecoration: "none",
+  marginBottom: '50px'
+};
 
-// const ContinueShoppingContainer = styled.div`
-//   display: flex;
-//   align-items: center;
-//   margin-top: 10px;
-//   font-size: 14px;
-//   color: #555;
-//   cursor: pointer;
-//   text-decoration: none; /* Set text-decoration to none to remove the underline */
-
-//   &:hover {
-//     color: #007bff;
-//   }
-// `;
-
-// const ContinueShoppingIcon = styled(FaShoppingCart)`
-//   margin-right: 8px;
-//   font-size: 18px;
-// `;
+const linkStyle = {
+  color: "white",
+  textDecoration: "none",
+};
