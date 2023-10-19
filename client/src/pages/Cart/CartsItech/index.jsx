@@ -150,8 +150,8 @@ function CartsItech({ cartsItech }) {
 }
 
 const ProductImage = styled.img`
-  max-width: 180px;
-  max-height: 100px;
+  width: 240px;
+  height: 100px;
 `;
 
 const ProductImageContainer = styled.div`
@@ -175,9 +175,9 @@ const SectionLeft = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 17px;
+  font-size: 16px;
   width: 90%;
-  font-weight: 500;
+  font-weight: 400;
 `;
 
 // const Description = styled.div`

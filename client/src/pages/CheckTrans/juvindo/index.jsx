@@ -418,7 +418,9 @@ function Index() {
             style={{
               display: "flex",
               justifyContent: "space-arround",
+              
               marginBottom: "30px",
+              padding: '0'
             }}
           >
             <label key={vouchers[3]?.id}>

@@ -184,9 +184,9 @@ const SectionLeft = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 17px;
+  font-size: 16px;
   width: 90%;
-  font-weight: 500;
+  font-weight: 400;
 `;
 
 const checkoutButtonStyle = {

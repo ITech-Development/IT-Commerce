@@ -83,7 +83,7 @@ function CartsJuvindo({ cartsJuvindo }) {
                 </ProductImageContainer>
                 <SectionLeft>
                   <Title>
-                    {e.product.name.split(" ").slice(0, 15).join(" ")}
+                    {e.product.name.split(" ").slice(0, 14).join(" ")}
                     ...
                   </Title>
                   {/* <Description>
@@ -186,9 +186,9 @@ const SectionLeft = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 17px;
+  font-size: 16px;
   width: 90%;
-  font-weight: 500;
+  font-weight: 400;
 `;
 const checkoutButtonStyle = {
     backgroundColor: "blue",
