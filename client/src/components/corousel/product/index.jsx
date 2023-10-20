@@ -27,19 +27,19 @@ const mediaQueryStyle = {
 
 const slideImages = [
   {
-    url: "https://res.cloudinary.com/dcbryptkx/image/upload/v1691222836/P_1_qzbgyu.png",
+    url: "https://res.cloudinary.com/dcbryptkx/image/upload/v1697688072/IndoTeknikMarketplace/product/banner/Banner%20Product/Product_1_yjs1se.png",
     caption: "Slide 1",
   },
   {
-    url: "https://res.cloudinary.com/dcbryptkx/image/upload/v1691222836/P_3_a9wrgl.png",
+    url: "https://res.cloudinary.com/dcbryptkx/image/upload/v1697688070/IndoTeknikMarketplace/product/banner/Banner%20Product/Product_2_edetou.png",
     caption: "Slide 2",
   },
   {
-    url: "https://res.cloudinary.com/dcbryptkx/image/upload/v1691222836/P_2_ct9rpa.png",
+    url: "https://res.cloudinary.com/dcbryptkx/image/upload/v1697688070/IndoTeknikMarketplace/product/banner/Banner%20Product/Product_3_dlrfof.png",
     caption: "Slide 3",
   },
   {
-    url: "https://res.cloudinary.com/dcbryptkx/image/upload/v1691222833/P_4_maiebt.png",
+    url: "https://res.cloudinary.com/dcbryptkx/image/upload/v1697688072/IndoTeknikMarketplace/product/banner/Banner%20Product/Product_4_jcrygz.png",
     caption: "Slide 4",
   },
 ];

@@ -206,12 +206,6 @@ const ProductDetailPage = () => {
               </strong>{" "}
               cm
             </SpecificationItem>
-            {/* <SpecificationItem>
-              Product Owner: <strong>{product.product_owners?.name}</strong>
-            </SpecificationItem>
-            <SpecificationItem>
-              Author: <strong>{product.authors?.fullName}</strong>
-            </SpecificationItem> */}
           </Specifications>
           <div className="buyDetail" style={{ marginTop: "30px" }}>
             <BuyNowButton onClick={handleBuyNow}>Beli Sekarang</BuyNowButton>

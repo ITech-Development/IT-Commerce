@@ -12,55 +12,61 @@ const categoryData = [
     to: "/nozzle",
     title: "Nozzle",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Nozzle_nisnl0.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509167/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Nozzle_dl1ncg.png",
   },
   {
     to: "/delivery-valve",
     title: "Delivery Valve",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Del_Valve_jqedrn.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509163/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/D_Valve_zm6neh.png",
   },
   {
     to: "/element",
     title: "Element",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Element_iyzgy6.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509166/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Element_aodlth.png",
   },
   {
     to: "/ve-pump",
     title: "VE Pump",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Nozzle_nisnl0.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509166/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/VE_Pump_jjstdn.png",
   },
   {
     to: "/ve-pump-parts",
     title: "VE Pump Parts",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Del_Valve_jqedrn.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509168/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/VE_Parts_ucovbd.png",
   },
   {
     to: "/injector",
     title: "Injector",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Element_iyzgy6.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509166/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Injector_vdvsq3.png",
   },
   {
     to: "/scv",
     title: "Scv",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Nozzle_nisnl0.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509168/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/SCV_hxgo3d.png",
   },
   {
     to: "/turboparts",
     title: "Turbo & Parts",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Del_Valve_jqedrn.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509169/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Turbo_Parts_hybhex.png",
   },
   {
     to: "/head-rotor",
     title: "Head Rotor",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Element_iyzgy6.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509168/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Rotor_Head_d97dbp.png",
+  },
+  {
+    to: "/sensor",
+    title: "Sensor",
+    imageUrl:
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697622637/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Sensor_Common_Rail_en1sev.png",
   },
 ];
 
@@ -78,27 +84,6 @@ const voucherData = [
     description: "Deskripsi Voucher 3",
   },
 ];
-
-// function ProductCategoryCard({ to, title, imageUrl }) {
-//   const cardAnimation = useSpring({
-//     from: { transform: "scale(1)" },
-//     to: async (next) => {
-//       while (true) {
-//         await next({ transform: "scale(1.05)" });
-//         await next({ transform: "scale(1)" });
-//       }
-//     },
-//   });
-
-//   return (
-//     <animated.div className="category-card" style={cardAnimation}>
-//       <Link to={to} target="blank">
-//         <img src={imageUrl} alt={title} className="category-image" />
-//         <p className="titleCategory">{title}</p>
-//       </Link>
-//     </animated.div>
-//   );
-// }
 
 function ProductCategoryCard({ to, title, imageUrl }) {
   return (
@@ -120,15 +105,16 @@ function ProductCategories() {
         display: "flex",
         justifyContent: "space-between",
         margin: "auto",
-        width: 'auto'
+        width: 'auto',
+        height: 'auto'
       }}
     >
       <div className="category-container">
         <div className="category-section">
-          <h1>
+          <h2>
             Pilihan <br />
             Kategori Terlaris
-          </h1>
+          </h2>
           <Link to="/category-list">
             <div className="allmas">
               <img className="seeAll" src={SeeAll} alt="" />

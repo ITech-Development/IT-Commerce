@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import HeroSection from "../../components/sections/hero";
 import Footer from "../../components/footer";
 import ProductCategories from "../../components/sections/productCategories";
-import ClaimVoucher from "../../assets/ClaimVouc.png";
+import ClaimVoucher from "../../assets/PopUpp.png";
 import CorouselBrands from "../../components/sections/corouselBrands";
 import "./stl.css";
 import ChatbotIcon from "../../assets/chatbot.png";
@@ -16,6 +16,7 @@ import Help from "../../assets/help.png";
 import Message from "../../assets/message.png";
 import Mascotmes from "../../assets/mascotmes.gif";
 import EmojiPicker from "./emoji";
+import Hero2 from '../../components/sections/hero2'
 
 function Index() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -102,6 +103,7 @@ function Index() {
         <HeroSection />
         <CorouselBrands />
         <ProductCategories />
+        <Hero2/>
         <ProdukTerlaris />
         <Footer />
       </div>

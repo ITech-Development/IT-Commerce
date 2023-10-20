@@ -4,7 +4,7 @@
   /* flex-wrap: wrap; */
   justify-content: space-between;
   gap: 20px;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
   border: #cfc9c9 1px solid;
   flex: 1;
@@ -15,9 +15,9 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
-
+  height: auto;
   /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); */
   flex: 1;
 }
@@ -28,10 +28,15 @@
   padding: 20px;
   border-radius: 10px;
   border: #cfc9c9 1px solid;
-  max-width: 420px;
-  max-height: 192px;
+  max-width: 450px;
+  max-height: 125px;
   flex: 1;
   margin-left: 20px;
+}
+
+.sech3 {
+  padding: 0;
+  margin: 0;
 }
 
 .category-section h1 {
@@ -52,7 +57,7 @@
 .card-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  /* gap: 10px; */
+  gap: 5px;
 }
 
 .vchp {
@@ -148,10 +153,9 @@
   color: black;
 }
 @media (max-width: 768px) {
-  /* .allmas {
-    position: relative;
-    top: 10px;
-  } */
+  .allmas {
+    padding-left: 3px;
+  }
   .seeAll {
     display: inline-block;
     width: 45px;
@@ -200,13 +204,13 @@
     padding: 0;
     border: none;
     position: relative;
-    top: -30px;
-    padding-left: 30px;
+    top: -25px;
+    padding-left: 20px;
   }
   .secRight h3 {
     font-size: 10px;
     max-width: 190px;
-    line-height: 16px;
+    line-height: 40px;
   }
   .secRight p {
     font-size: 10px;
@@ -221,8 +225,8 @@
     width: 100%;
   }
 
-  .category-section h1 {
-    font-size: 14px;
+  .category-section h2 {
+    font-size: 13px;
     max-width: 120px;
   }
 
@@ -261,8 +265,8 @@
     width: 45px;
     height: 10px;
     position: relative;
-    top: -113px;
-    left: 75px;
+    top: -103px;
+    left: 65px;
     font-size: 10px;
     grid-template-columns: repeat(
       3,

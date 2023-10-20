@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useGetAllProductsQuery } from "../../features/productsApi";
+// import { useGetAllProductsQuery } from "../../features/productsApi";
 import { useGetProductsQuery } from "../../features/product/apiProducts";
 import Corousel from "../../components/corousel/product";
 import "./productliststyle.css";

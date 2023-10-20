@@ -36,37 +36,6 @@ const MethodDeliverySelect = styled.select`
   /* Tambahkan gaya sesuai keinginan Anda */
 `;
 
-// const ShippingOption = styled.div`
-//   margin: 10px 0;
-// `;
-
-// const PaymentDetails = styled.div`
-//   flex: 1;
-//   padding: 20px;
-//   background-color: #fff;
-//   border: 1px solid #ccc;
-//   border-radius: 8px;
-// `;
-
-// const TotalAmount = styled.div`
-//   display: flex;
-//   align-items: center;
-// `;
-
-// const Amount = styled.span`
-//   font-weight: 700;
-//   margin-left: 10px;
-// `;
-
-// const PayButton = styled.button`
-//   background-color: #007bff;
-//   color: #fff;
-//   border: none;
-//   padding: 10px 20px;
-//   border-radius: 5px;
-//   cursor: pointer;
-// `;
-
 function Index() {
   const { data: carts } = useGetCartsItechQuery();
   const { data: profile } = useGetMeQuery();
@@ -341,7 +310,6 @@ function Index() {
 
   return (
     <div>
-      <div id="snap-container"></div>
       <div className="alamat">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Alamat Pengiriman</h2>
