@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import CartIcon from "../navbar/iconCart.png";
 
 
-export function Sidebar({ closeSidebar, totalCart }) {
+export function Sidebar({ closeSidebar}) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const handleLogout = () => {
@@ -12,8 +12,7 @@ export function Sidebar({ closeSidebar, totalCart }) {
         // Add any other actions you want to perform on logout
     };
 
-    const token = localStorage.getItem("access_token");
-    const showCart = token ? true : false;
+
 
     return (
         <div className="sidebar">
@@ -24,35 +23,6 @@ export function Sidebar({ closeSidebar, totalCart }) {
                 <li>
                     <Link to="/services">Layanan</Link>
                 </li>
-                {showCart && (
-                    <li>
-                        <Link to="/cart">
-                            {/* <FontAwesomeIcon icon='' className="cart-icon" /> */}
-                            <img
-                                style={{ position: "relative", top: "6px" }}
-                                src={CartIcon}
-                                alt=""
-                            />
-                            <span
-                                style={{
-                                    position: "relative",
-                                    // backgroundColor: "#2EEDF5",
-                                    border: "1px solid #2EEDF5",
-                                    borderRadius: "50px",
-                                    padding: "4px 7.3px",
-                                    fontWeight: "700",
-                                    textDecoration: "none",
-                                    color: "black",
-                                    top: "-25px",
-                                    right: "8px",
-                                    fontSize: "10px",
-                                }}
-                            >
-                                {totalCart === 0 ? '0' : totalCart}
-                            </span>
-                        </Link>
-                    </li>
-                )}
                 <hr />
                 <li
                     style={{

@@ -243,7 +243,7 @@ export default function Navigation() {
             <i className="fas fa-bars" style={{ fontSize: '10px', paddingLeft: "10px" }}></i>
           </button>
         </div>
-        {isSidebarOpen && <Sidebar closeSidebar={handleSidebarToggle} totalCart={totalCart} />}
+        {isSidebarOpen && <Sidebar closeSidebar={handleSidebarToggle} />}
       </nav>
     </>
   );
