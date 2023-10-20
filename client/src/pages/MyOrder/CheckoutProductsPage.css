@@ -1,8 +1,6 @@
-/* Styles for the Checkout Products Page */
 .checkout-container {
   width: auto;
   margin: 0 30px;
-  /* padding: 20px; */
   padding-top: 80px;
 }
 
@@ -71,8 +69,6 @@ tr:nth-child(even) {
 /* Styles for the tabs */
 .tabs {
   display: flex;
-  /* justify-content: center; */
-  /* margin-top: 20px; */
   position: fixed;
 }
 
@@ -93,4 +89,61 @@ tr:nth-child(even) {
 
 .tabs button:hover {
   background-color: #0056b3;
+}
+
+@media screen and (max-width: 769px) {
+  .checkout-container {
+    margin: 0 15px;
+    padding: 0;
+    padding-top: 70px; /* Add 40px space to the top */
+  }
+
+  .checkout-table {
+    margin: 0; /* Reset the margin to make the tables close to each other */
+    padding-top: 0; /* Reset the padding-top */
+  }
+
+  .tabs button {
+    font-size: 10px;
+  }
+
+  .checkout-table {
+    padding-top: 15px;
+  }
+
+  .titleCheck {
+    font-size: 14px;
+  }
+
+  .thead {
+    display: none;
+  }
+
+  .product-info img {
+    width: 50px;
+  }
+
+  .table-responsive {
+    border: none;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+  }
+
+  .tabs {
+    display: flex;
+    position: fixed;
+  }
+  .address {
+    display: none;
+  }
+  .timeorder {
+    display: none;
+  }
+  .contentTable{
+    margin: 0;
+    padding: 0;
+    width: auto;
+  }
 }

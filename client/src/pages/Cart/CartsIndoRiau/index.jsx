@@ -59,6 +59,16 @@ function CartsIndoRiau({ cartsIndoRiau }) {
     return ppn.toFixed(2);
   };
 
+  function formatPrice(price) {
+    const priceString = price.toString();
+    const parts = priceString.split('.');
+    const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const decimalPart = parts[1] ? `.${parts[1]}` : ''; // Check if there's a decimal part
+
+    return `Rp. ${integerPart}${decimalPart}`;
+}
+
+
   return (
     <div
       className="cart-container"
@@ -103,14 +113,14 @@ function CartsIndoRiau({ cartsIndoRiau }) {
                   </button>
                 </SectionLeft>
               </div>
-              <div className="cart-product-price">Rp.{e.product.unitPrice}</div>
+              <div className="cart-product-price">{formatPrice(e.product.unitPrice)}</div>
               <div className="cart-product-quantity">
                 <button onClick={() => handlerDec(e.id)}>-</button>
                 <div className="count">{e.quantity}</div>
                 <button onClick={() => handlerInc(e.id)}>+</button>
               </div>
               <div className="cart-product-total-price">
-                Rp.{e.quantity * e.product.unitPrice}
+                {formatPrice(e.quantity * e.product.unitPrice)}
               </div>
             </div>
           ))}
@@ -120,7 +130,7 @@ function CartsIndoRiau({ cartsIndoRiau }) {
           <div className="cart-checkout">
             <div className="subtotal">
               <span className="subtot">Subtotal :</span>
-              <span className="amount">Rp.{calculateSubtotalIndoRiau()}</span>
+              <span className="amount">{formatPrice(calculateSubtotalIndoRiau())}</span>
             </div>
             <div
               style={{
@@ -131,12 +141,12 @@ function CartsIndoRiau({ cartsIndoRiau }) {
               }}
             >
               <span>PPN 11% :</span>
-              <span className="amount"> Rp. {calculatePPNIndoRiau()}</span>
+              <span className="amount"> {formatPrice(calculatePPNIndoRiau())}</span>
             </div>
             <div className="subtotal" style={{ paddingBottom: "10px" }}>
               <span className="subtot">Total :</span>
               <span style={{ fontWeight: "700" }} className="amount">
-                {calculateTotalIndoRiau()}
+              {formatPrice(calculateTotalIndoRiau())}
               </span>
             </div>
             <button

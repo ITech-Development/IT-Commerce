@@ -23,6 +23,11 @@
   cursor: pointer;
 }
 
+.logo-indo-teknik img {
+  height: 40px;
+  cursor: pointer;
+}
+
 .navigation-menu {
   display: flex;
   align-items: center;
@@ -55,7 +60,29 @@
   cursor: pointer;
 }
 
+.profile-mobile {
+  display: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
 .hamburger i {
+  font-size: 1.8rem;
+}
+
+.profile-mobile i {
+  font-size: 1.8rem;
+}
+
+.cart-mobile {
+  display: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cart-mobile i {
   font-size: 1.8rem;
 }
 
@@ -189,6 +216,13 @@
   .hamburger {
     display: block;
   }
+  .profile-mobile {
+    display: block;
+  }
+
+  .cart-mobile {
+    display: block;
+  }
 
   .navigation-menu.expanded ul {
     display: flex;
@@ -211,9 +245,31 @@
     padding: 1rem;
   }
 
+  .logo-indo-teknik img {
+    height: 30px;
+    cursor: pointer;
+  }
+
   .hamburger i:before {
-    content: '\f0c9'; /* Unicode for the hamburger icon */
-    font-family: FontAwesome; /* Assuming you're using Font Awesome for icons */
+    content: '\f0c9';
+    /* Unicode for the hamburger icon */
+    font-family: FontAwesome;
+    /* Assuming you're using Font Awesome for icons */
+    font-size: 1.8rem;
+  }
+  .profile-mobile i:before {
+    content: '\f0c9';
+    /* Unicode for the hamburger icon */
+    font-family: FontAwesome;
+    /* Assuming you're using Font Awesome for icons */
+    font-size: 1.8rem;
+  }
+
+  .cart-mobile i:before {
+    content: '\f0c9';
+    /* Unicode for the hamburger icon */
+    font-family: FontAwesome;
+    /* Assuming you're using Font Awesome for icons */
     font-size: 1.8rem;
   }
 
@@ -229,4 +285,49 @@
   cursor: pointer;
   position: relative;
   top: 12px;
+}
+
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: auto;
+  right: 0;
+  width: 250px;
+  /* Adjust the width as needed */
+  height: 100%;
+  background-color: #fff;
+  z-index: 101;
+  /* Higher z-index than the navigation */
+  overflow-y: auto;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 70px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 1rem 0;
+}
+
+.sidebar a {
+  color: black;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.close-sidebar {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 1.2rem;
 }

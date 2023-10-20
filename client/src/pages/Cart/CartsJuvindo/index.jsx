@@ -52,14 +52,15 @@ function CartsJuvindo({ cartsJuvindo }) {
     return ppn.toFixed(2);
   };
 
+ 
   function formatPrice(price) {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  }
+    const priceString = price.toString();
+    const parts = priceString.split('.');
+    const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const decimalPart = parts[1] ? `.${parts[1]}` : ''; // Check if there's a decimal part
 
-  // Contoh penggunaan
-  const productPrice = 1500000; // Misalnya, harga produk dalam bentuk integer
-  const formattedPrice = formatPrice(productPrice);
-  console.log(`Rp. ${formattedPrice}`); // Output: "Rp. 1.500.000"
+    return `Rp. ${integerPart}${decimalPart}`;
+}
 
   return (
     <div
@@ -105,14 +106,14 @@ function CartsJuvindo({ cartsJuvindo }) {
                   </button>
                 </SectionLeft>
               </div>
-              <div className="cart-product-price">Rp.{e.product.unitPrice}</div>
+              <div className="cart-product-price">{formatPrice(e.product.unitPrice)}</div>
               <div className="cart-product-quantity">
                 <button onClick={() => handlerDec(e.id)}>-</button>
                 <div className="count">{e.quantity}</div>
                 <button onClick={() => handlerInc(e.id)}>+</button>
               </div>
               <div className="cart-product-total-price">
-                Rp. {formatPrice(e.quantity * e.product.unitPrice)}
+                {formatPrice(e.quantity * e.product.unitPrice)}
               </div>
             </div>
           ))}
@@ -123,7 +124,7 @@ function CartsJuvindo({ cartsJuvindo }) {
             <div className="subtotal">
               <span className="subtot">Subtotal :</span>
               <span className="amount">
-                Rp. {formatPrice(calculateSubtotalJuvindo())}
+                {formatPrice(calculateSubtotalJuvindo())}
               </span>
             </div>
             <div
@@ -138,7 +139,7 @@ function CartsJuvindo({ cartsJuvindo }) {
               <span>PPN 11% :</span>
               <span className="amount">
                 {" "}
-                Rp. {formatPrice(calculatePPNJuvindo())}
+                {formatPrice(calculatePPNJuvindo())}
               </span>
             </div>
             {/* <div

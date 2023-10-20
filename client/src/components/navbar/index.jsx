@@ -6,6 +6,7 @@ import CartIcon from "./iconCart.png";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { useGetCountCartsQuery } from "../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../features/user/apiUser";
+import { Sidebar } from "../sidebar/index.";
 
 export default function Toolbar(props) {
   const { data: totalCart } = useGetCountCartsQuery();
@@ -17,17 +18,26 @@ export default function Toolbar(props) {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownHovered, setIsDropdownHovered] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to control sidebar visibility
 
   const dropdownRef = useRef(null);
+
+  // const toggleDropdown = () => {
+  //   setIsDropdownOpen(!isDropdownOpen);
+  // };
+
+  const handleSidebarToggle = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     setIsDropdownOpen(false);
   };
 
+  const token = localStorage.getItem("access_token");
+  const showCart = token ? true : false;
   const RenderMenu = () => {
-    const token = localStorage.getItem("access_token");
-    const showCart = token ? true : false;
 
     return (
       <>
@@ -40,7 +50,7 @@ export default function Toolbar(props) {
             <Link to="/cart">
               {/* <FontAwesomeIcon icon='' className="cart-icon" /> */}
               <img
-                style={{ position: "relative", top: "6px" }}
+                style={{ paddingTop: '6px'}}
                 src={CartIcon}
                 alt=""
               />
@@ -172,14 +182,60 @@ export default function Toolbar(props) {
   return (
     <>
       <nav className="navigation">
-        <Link to="/">
-          <img style={{}} src={Logo} alt="" />
-        </Link>
+        <div className="logo-indo-teknik">
+          <Link to="/">
+            <img style={{}} src={Logo} alt="" />
+          </Link>
+        </div>
         <div className="navigation-menu">
           <ul className={isDropdownOpen ? "expanded" : ""}>
             <RenderMenu />
           </ul>
+          <div className="cart-mobile">
+            {showCart && (
+              <Link to="/cart">
+                <img
+                  src={CartIcon}
+                  alt=""
+                />
+                <span
+                  style={{
+                    position: "relative",
+                    border: "1px solid #2EEDF5",
+                    borderRadius: "50px",
+                    padding: "3px 6.3px",
+                    fontWeight: "700",
+                    textDecoration: "none",
+                    color: "black",
+                    top: "-30px",
+                    right: "8px",
+                    fontSize: "7px",
+                  }}
+                >
+                  {totalCart === 0 ? '0' : totalCart}
+                </span>
+              </Link>
+            )}
+          </div>
+          <div className="profile-mobile">
+            <Link to="/profile-update">
+              <img
+                style={{
+                  height: "28px",
+                  color: "blue",
+                  cursor: "pointer",
+                  paddingLeft: "5px"
+                }}
+                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                alt=""
+              />
+            </Link>
+          </div>
+          <button className="hamburger" onClick={handleSidebarToggle}>
+            <i className="fas fa-bars" style={{ fontSize: '10px', paddingLeft: "10px" }}></i>
+          </button>
         </div>
+        {isSidebarOpen && <Sidebar closeSidebar={handleSidebarToggle} />}
       </nav>
     </>
   );

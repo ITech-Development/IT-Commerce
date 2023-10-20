@@ -55,13 +55,11 @@ function CartsItech({ cartsItech }) {
   // };
 
   function formatPrice(price) {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  }
-
-  // Contoh penggunaan
-  const productPrice = 1500000; // Misalnya, harga produk dalam bentuk integer
-  const formattedPrice = formatPrice(productPrice);
-  console.log(`Rp. ${formattedPrice}`); // Output: "Rp. 1.500.000"
+    const priceString = price.toString();
+    const parts = priceString.split('.');
+    const decimalPart = parts[1] === '00' ? '' : `.${parts[1]}`;
+    return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".") + decimalPart;
+}
 
   return (
     <div
