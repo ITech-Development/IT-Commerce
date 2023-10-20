@@ -4,9 +4,9 @@ import MainContent from '../../components/mainContentCategory';
 
 const Category = () => {
   return (
-    <div>
+    <div style={{display: 'flex', margin: 'auto',}}>
       <Header />
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', marginTop: '80px' }}>
         <MainContent />
       </div>
     </div>

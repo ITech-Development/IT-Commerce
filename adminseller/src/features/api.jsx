@@ -1,4 +1,4 @@
-export const url = "http://localhost:3100/";
+export const url = "https://indoteknikserver-732012365989.herokuapp.com";
 
 export const setHeaders = () => {
   const headers = {

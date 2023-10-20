@@ -4,11 +4,11 @@ import axios from 'axios';
 function ProductListByCategory({ categoryId }) {
   const [products, setProducts] = useState([]);
 
-  const API_URL = "http://localhost:3100"; 
+  const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; 
 
   useEffect(() => {
     // Fetch products by category using Axios
-    axios.get(`http://localhost:3100/products?categoryId=${categoryId}`)
+    axios.get(`https://indoteknikserver-732012365989.herokuapp.com/products?categoryId=${categoryId}`)
       .then(response => setProducts(response.data))
       .catch(error => console.error('Error fetching products:', error));
   }, [categoryId]);

@@ -3,7 +3,7 @@ import './App.css';
 import io from 'socket.io-client'
 import Chat from './Chat';
 
-const socket = io.connect('http://localhost:3100')
+const socket = io.connect('https://indoteknikserver-732012365989.herokuapp.com')
 
 function App() {
   const [username, setUsername] = useState('')

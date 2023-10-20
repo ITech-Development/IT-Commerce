@@ -1,26 +1,26 @@
 // MainContent.js
-import React, { useState } from 'react';
-import TableComponent from '../table';
-import { Link } from 'react-router-dom'
+import React from 'react';
+// import TableComponent from '../table';
+// import { Link } from 'react-router-dom'
 
 const MainContent = () => {
   // const [showAddForm, setShowAddForm] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    age: '',
-    email: '',
-  });
+  // const [formData, setFormData] = useState({
+  //   name: '',
+  //   age: '',
+  //   email: '',
+  // });
 
   // const handleAddButtonClick = () => {
   //   setShowAddForm(true);
   // };
 
-  const handleFormChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // const handleFormChange = (e) => {
+  //   setFormData({
+  //     ...formData,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
 
   // const handleFormSubmit = (e) => {
   //   e.preventDefault();

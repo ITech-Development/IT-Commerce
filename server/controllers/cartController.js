@@ -9,7 +9,6 @@ class CartController {
             model: User,
             as: "user",
           },
-
         ],
       });
       res.status(200).json(carts);
@@ -28,10 +27,10 @@ class CartController {
             as: "user",
           },
         ],
-      })
-      res.status(200).json(cart)
+      });
+      res.status(200).json(cart);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 

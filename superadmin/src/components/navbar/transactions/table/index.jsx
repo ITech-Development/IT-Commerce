@@ -6,7 +6,7 @@ function CheckoutProducts() {
   useEffect(() => {
     // Fetch the data from your backend API here
     // Replace the URL with your API endpoint
-    fetch('http://localhost:3100/super-admins/transactions', {
+    fetch('https://indoteknikserver-732012365989.herokuapp.com/super-admins/transactions', {
       headers: {
         access_token: localStorage.getItem('access_token')
       }

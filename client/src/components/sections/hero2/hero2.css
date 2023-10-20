@@ -1,0 +1,30 @@
+.hero-container {
+  margin: 0 30px;
+  display: flex;
+  flex-direction: row;
+}
+
+.imgHero2 {
+  width: 50%;
+  height: auto;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .hero-container{
+    margin: 0;
+    padding-top: 10px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .imgHero2 {
+    padding: 0;
+    margin: 5px 10px;
+    position: relative;
+    top: -90px;
+    width: auto;
+  }
+}
