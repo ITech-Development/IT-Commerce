@@ -109,7 +109,7 @@ function CheckoutProductsPage() {
                             </div>
                           </Link>
                         </td>
-                        <td>{productInfo.product.name}</td>
+                        <td className="name">{productInfo.product.name}</td>
                         <td>{productInfo.quantity}</td>
                         <td>{formatPrice(productInfo.checkout.totalPrice)}</td>
                         <td className="address">{productInfo.checkout.shippingAddress}</td>

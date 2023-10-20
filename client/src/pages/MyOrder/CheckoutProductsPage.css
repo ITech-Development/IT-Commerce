@@ -108,19 +108,30 @@ tr:nth-child(even) {
   }
 
   .checkout-table {
-    padding-top: 15px;
+    padding-top: 5px;
+    margin-top: 45px;
   }
 
   .titleCheck {
     font-size: 14px;
   }
 
+  .name {
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 6em;
+
+  }
+  
+
   .thead {
     display: none;
   }
 
   .product-info img {
-    width: 50px;
+    width: 40px;
   }
 
   .table-responsive {
