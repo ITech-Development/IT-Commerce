@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./editStyleCategories.css"; // Make sure to have the appropriate CSS file
 import { Link, useParams } from "react-router-dom";
+import "./editStyleCategories.css";
 
 const EditCategoryPage = () => {
   const { id } = useParams(); // Assuming you're using React Router to capture the id
@@ -21,7 +21,7 @@ const EditCategoryPage = () => {
     const fetchCategory = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3100/product-categories/${id}`
+          `https://indoteknikserver-732012365989.herokuapp.com/product-categories/${id}`
         );
         setCategory(response.data);
       } catch (error) {
@@ -40,7 +40,7 @@ const EditCategoryPage = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:3100/product-categories/${id}`,
+        `https://indoteknikserver-732012365989.herokuapp.com/product-categories/${id}`,
         category, {
         headers: {
           "Content-Type": "multipart/form-data", // Use multipart/form-data for file uploads
@@ -65,11 +65,12 @@ const EditCategoryPage = () => {
 
   return (
     <div className="edit-category-container">
-      <h1>Edit Category</h1>
+      <h1>Edit Kategori</h1>
       <form className="edit-category-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Category Name:</label>
+          <label style={{paddingTop: '10px', paddingRight: '10px'}}>Nama Kategori</label>
           <input
+            style={{width: '80%'}}
             type="text"
             id="name"
             name="name"
@@ -81,8 +82,9 @@ const EditCategoryPage = () => {
         </div>
         <div className="form-group">
           {/* Tambahkan input form lainnya sesuai atribut yang ada pada produk */}
-          <label htmlFor="image">Gambar:</label>
+          <label  htmlFor="image">Banner</label>
           <input
+          style={{marginLeft: '64px'}}
             type="file"
             id="image"
             name="image"
@@ -90,14 +92,13 @@ const EditCategoryPage = () => {
             onChange={handleImageChange}
           />
           {category.image && <img src={category.image} alt="Category" width="200px" />}
-          <br />
         </div>
         {/* Add more form inputs for other attributes if needed */}
         <div className="button-group">
-          <button type="submit">Update Category</button>
+          <button type="submit">Simpan Perubahan</button>
           {/* Add navigation or other buttons as needed */}
           <Link to="/dashboard-categories">
-            <button>Cancel</button>
+            <button>Batal</button>
           </Link>
         </div>
       </form>

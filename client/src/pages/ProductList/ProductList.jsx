@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useGetAllProductsQuery } from "../../features/productsApi";
+// import { useGetAllProductsQuery } from "../../features/productsApi";
 import { useGetProductsQuery } from "../../features/product/apiProducts";
 import Corousel from "../../components/corousel/product";
 import "./productliststyle.css";
@@ -115,38 +115,33 @@ const searchContainerStyle = {
   display: "flex",
   alignItems: "center",
   marginBottom: "20px",
-  width: "97.2%",
+  width: "100%",
+  marginLeft: "20px",
 };
 
 const searchInputStyle = {
-  padding: "8px",
+  padding: "8px 8px 8px 15px",
   height: "30px",
+  width: "auto",
   borderRadius: "4px",
   border: "1px solid #ccc",
-  marginRight: "10px",
+  // marginRight: "10px",
+  margin: "0",
   flex: 1,
-};
-
-const sortSelectStyle = {
-  padding: "8px",
-  height: "48px",
-  fontWeight: "500",
-  borderRadius: "4px",
-  border: "1px solid #ccc",
-  minWidth: "200px",
 };
 
 const ProductList = () => {
   // const { data, error, isLoading } = useGetAllProductsQuery();
   const { data, error, isLoading } = useGetProductsQuery();
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortOption, setSortOption] = useState("name");
+  const [selectedSortOption, setSelectedSortOption] = useState("name"); // Initialize the selectedSortOption state
+  // const [selectedCategories, setSelectedCategories] = useState([]); // State for selected categories
 
   const handleAddToCart = async (product) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       const url =
-        "http://localhost:3100/product-carts";
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts";
       try {
         const response = await axios.post(url, product, {
           headers: { access_token: accessToken },
@@ -159,31 +154,51 @@ const ProductList = () => {
       alert("login dulu dong");
     }
   };
+
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
   const handleSortOptionChange = (event) => {
-    setSortOption(event.target.value);
+    setSelectedSortOption(event.target.value); // Update the selectedSortOption state
   };
 
+  // Filter and sort the data based on searchQuery and selectedSortOption
+  // const handleCategoryCheckboxChange = (event) => {
+  //   const category = event.target.value;
+  //   if (event.target.checked) {
+  //     // If the checkbox is checked, add the category to the selectedCategories
+  //     setSelectedCategories([...selectedCategories, category]);
+  //   } else {
+  //     // If the checkbox is unchecked, remove the category from the selectedCategories
+  //     setSelectedCategories(selectedCategories.filter((c) => c !== category));
+  //   }
+  // };
   const filteredAndSortedData = data
     ? data
-      .filter((product) =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      .sort((a, b) => {
-        switch (sortOption) {
-          case "price":
-            return a.unitPrice - b.unitPrice;
-          case "stock":
-            return a.stock - b.stock;
-          default:
-            // Sort by name by default
-            return a.name.localeCompare(b.name);
-        }
-      })
+        .filter((product) =>
+          product.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        // .filter((product) => {
+        //   // Filter products by selected categories
+        //   if (selectedCategories.length === 0) {
+        //     return true; // If no categories are selected, show all products
+        //   }
+        //   return selectedCategories.includes(product.category);
+        // })
+        .sort((a, b) => {
+          switch (selectedSortOption) {
+            case "price":
+              return a.unitPrice - b.unitPrice;
+            case "stock":
+              return a.stock - b.stock;
+            default:
+              // Sort by name by default
+              return a.name.localeCompare(b.name);
+          }
+        })
     : [];
+
   return (
     <>
       <Corousel />
@@ -197,35 +212,123 @@ const ProductList = () => {
         ) : (
           <>
             <h2 className="productlist-title">Produk Rekomendasi</h2>
-            <div style={searchContainerStyle}>
-              <input
-                className="dropSearch"
-                type="text"
-                value={searchQuery}
-                onChange={handleSearchInputChange}
-                style={searchInputStyle}
-                placeholder="Cari Produk Berdasarkan Nama..."
-              />
-              <select
-                className="dropPil"
-                value={sortOption}
-                onChange={handleSortOptionChange}
-                style={sortSelectStyle}
-              >
-                <option value="name">Berdasarkan Nama</option>
-                <option value="price">Harga Terendah - Tertinggi</option>
-                <option value="stock">Stok Paling Sedikit - Terbanyak</option>
-              </select>
-            </div>
 
-            <div className="CardGridContainer">
-              {filteredAndSortedData.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onAddToCart={handleAddToCart}
-                />
-              ))}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                // marginLeft: "20px",
+                margin: "auto",
+                width: "auto",
+              }}
+            >
+              <div
+                style={{
+                  width: "auto",
+                  maxWidth: "1200px",
+                  display: "flex",
+                  margin: "0",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div style={{ width: "280px", paddingTop: "30px" }}>
+                  <h2>Filter</h2>
+                  <hr />
+                  <div>
+                    <h3>Kategori</h3>
+                    <div className="containPrice">
+                      <label>
+                        <input
+                          type="radio"
+                          // checked={selectedCategories.includes(
+                          //   "Delivery Valve"
+                          // )}
+                          // onChange={handleCategoryCheckboxChange}
+                        />
+                        <p className="filterCategories">Delivery Valve</p>
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          // checked={selectedCategories.includes("Element")}
+                          // onChange={handleCategoryCheckboxChange}
+                        />
+                        <p className="filterCategories">Element</p>
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          // checked={selectedCategories.includes("Head Rotor")}
+                          // onChange={handleCategoryCheckboxChange}
+                        />
+                        <p className="filterCategories">Head Rotor</p>
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          // checked={selectedCategories.includes("Nozzle")}
+                          // onChange={handleCategoryCheckboxChange}
+                        />
+                        <p className="filterCategories">Nozzle</p>
+                      </label>
+                    </div>
+                  </div>{" "}
+                  <hr />
+                  <div>
+                    <h3>Harga</h3>
+                    <div className="containPrices">
+                      <label>
+                        <input
+                          type="radio"
+                          value="price"
+                          checked={selectedSortOption === "price"}
+                          onChange={handleSortOptionChange}
+                        />
+                        <p className="filterCategoriess">
+                          Harga Terendah - Tertinggi
+                        </p>
+                      </label>
+                    </div>
+                  </div>{" "}
+                  <hr />
+                  <div>
+                    <h3>Stok</h3>
+                    <div className="containPrices">
+                      <label>
+                        <input
+                          type="radio"
+                          value="stock"
+                          checked={selectedSortOption === "stock"}
+                          onChange={handleSortOptionChange}
+                        />
+                        <p className="filterCategoriess">
+                          Stok Paling Sedikit - Terbanyak
+                        </p>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="productsLIST">
+                <div style={searchContainerStyle}>
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                    style={searchInputStyle}
+                    placeholder="Produk apa yang anda cari ?.."
+                  />
+                </div>
+                <div className="CardGridContainer">
+                  {filteredAndSortedData.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onAddToCart={handleAddToCart}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           </>
         )}

@@ -4,7 +4,7 @@ export const adminSellersApi = createApi({
   reducerPath: 'adminSellersApi',
   // baseQuery: fetchBaseQuery({ baseUrl: 'https://indoteknikserver-732012365989.herokuapp.com/' }),
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3100/', prepareHeaders: (headers, { getState }) => {
+    baseUrl: 'https://indoteknikserver-732012365989.herokuapp.com/', prepareHeaders: (headers, { getState }) => {
       headers.set('access_token', localStorage.access_token)
       return headers
     }

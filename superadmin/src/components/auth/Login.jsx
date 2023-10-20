@@ -28,7 +28,7 @@ const Login = () => {
     try {
       // Call the API to perform login
       const response = await axios.post(
-        "http://localhost:3100/super-admins/login",
+        "https://indoteknikserver-732012365989.herokuapp.com/super-admins/login",
         userData
       );
       console.log("Login response:", response.data);

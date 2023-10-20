@@ -5,10 +5,10 @@ import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import Star from "../../assets/star.png";
 import "./indexDetail.css";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { useAddToCartMutation } from "../../features/cart/apiCarts";
 
-const API_URL = "http://localhost:3100"; // Define your API URL here
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
 
 const ProductDetailPage = () => {
@@ -17,8 +17,8 @@ const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [relatedProducts, setRelatedProducts] = useState([]);
-  
-  const [addToCart] = useAddToCartMutation()
+
+  const [addToCart] = useAddToCartMutation();
   const [zoom, setZoom] = useState(1);
 
   const handleImageMouseMove = (e) => {
@@ -69,7 +69,7 @@ const ProductDetailPage = () => {
       });
   }, [id]);
 
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   const handleAddToCart = () => {
     addToCart({ product })
@@ -78,7 +78,7 @@ const ProductDetailPage = () => {
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
   };
 
   const handleBuyNow = () => {
@@ -138,18 +138,39 @@ const ProductDetailPage = () => {
         </div>
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
-          <Price>
-            Rp. {product.unitPrice.toLocaleString("id-ID")}
-          </Price>
+          <RatingContainer>
+            <StarRatingContainer 
+              className="star-rating"
+            >
+              {/* Render star images for the star rating */}
+              {[...Array(starRating)].map((_, index) => (
+                <StarImage
+                  key={index}
+                  style={{ maxWidth: "20px" }}
+                  src={Star} // Replace with your star icon image
+                  alt="rating"
+                />
+              ))}
+              <RatingText
+              >
+                5.0
+              </RatingText>
+            </StarRatingContainer >
+            <VerticalLine />
+            <SoldText>
+        <SalesCount>10RB+</SalesCount> Terjual
+      </SoldText>
+          </RatingContainer>
+          <Price>Rp. {product.unitPrice.toLocaleString("id-ID")}</Price>
           <Stock>
-            Stok Tersisa {" "}
+            Stok Tersisa{" "}
             <strong>: {product.stock.toLocaleString("id-ID")}</strong>
           </Stock>
           <hr />
           <Specifications>
             <SpecificationItem>
               Kategori
-              <strong style={{ paddingLeft: "50px" }}>
+              <strong className="category" style={{ paddingLeft: "50px" }}>
                 {" "}
                 {product.categories?.name}
               </strong>
@@ -185,12 +206,6 @@ const ProductDetailPage = () => {
               </strong>{" "}
               cm
             </SpecificationItem>
-            {/* <SpecificationItem>
-              Product Owner: <strong>{product.product_owners?.name}</strong>
-            </SpecificationItem>
-            <SpecificationItem>
-              Author: <strong>{product.authors?.fullName}</strong>
-            </SpecificationItem> */}
           </Specifications>
           <div className="buyDetail" style={{ marginTop: "30px" }}>
             <BuyNowButton onClick={handleBuyNow}>Beli Sekarang</BuyNowButton>
@@ -234,43 +249,45 @@ const ProductDetailPage = () => {
                       alt={relatedProduct.name}
                     />
                   </Link>
-                  <RelatedProductName>
-                    {relatedProduct.name.split(" ").slice(0, 5).join(" ")}...
-                  </RelatedProductName>
-                  <RelatedProductPrice>
-                    Rp. {relatedProduct.unitPrice.toLocaleString("id-ID")}
-                  </RelatedProductPrice>
-                  <div
-                    style={{
-                      width: "90px",
-                      margin: "0",
-                      padding: "0",
-                      position: "relative",
-                      left: "-30px",
-                      top: "4px",
-                    }}
-                    className="star-rating"
-                  >
-                    {/* Render star images for the star rating */}
-                    {[...Array(starRating)].map((_, index) => (
-                      <img
-                        key={index}
-                        style={{ maxWidth: "15px" }}
-                        src={Star} // Replace with your star icon image
-                        alt="rating"
-                      />
-                    ))}
-                    <p
+                  <Pembungkus>
+                    <RelatedProductName>
+                      {relatedProduct.name.split(" ").slice(0, 5).join(" ")}...
+                    </RelatedProductName>
+                    <RelatedProductPrice>
+                      Rp. {relatedProduct.unitPrice.toLocaleString("id-ID")}
+                    </RelatedProductPrice>
+                    <div
                       style={{
+                        width: "90px",
+                        margin: "0",
+                        padding: "0",
                         position: "relative",
-                        top: "1px",
-                        left: "5px",
-                        fontSize: "12px",
+                        left: "-30px",
+                        top: "4px",
                       }}
+                      className="star-rating"
                     >
-                      5.0
-                    </p>
-                  </div>
+                      {/* Render star images for the star rating */}
+                      {[...Array(starRating)].map((_, index) => (
+                        <img
+                          key={index}
+                          style={{ maxWidth: "15px" }}
+                          src={Star} // Replace with your star icon image
+                          alt="rating"
+                        />
+                      ))}
+                      <p
+                        style={{
+                          position: "relative",
+                          top: "1px",
+                          left: "5px",
+                          fontSize: "12px",
+                        }}
+                      >
+                        5.0
+                      </p>
+                    </div>
+                  </Pembungkus>
                 </RelatedProductCard>
               ))}
           </RelatedProductGrid>
@@ -281,6 +298,46 @@ const ProductDetailPage = () => {
     </ProductDetailContainer>
   );
 };
+
+const RatingContainer = styled.div`
+  display: flex;
+  align-items: center;
+  padding-bottom: 15px;
+  @media (max-width: 768px) {
+    padding-left: 12px;
+  }
+`;
+
+const StarRatingContainer = styled.div`
+  display: flex;
+  align-content: center;
+  margin: 0;
+`;
+
+const StarImage = styled.img`
+  max-width: 20px;
+`;
+
+const RatingText = styled.p`
+  font-size: 18px;
+  margin: 0 10px;
+`;
+
+const VerticalLine = styled.div`
+  height: 20px;
+  border-right: 1px solid #000;
+  margin: 0 15px 0 20px;
+`;
+
+const SoldText = styled.p`
+  margin: 0;
+  // color: gray;
+  `;
+  
+  const SalesCount = styled.span`
+  font-weight: bold;
+  color: gray;
+`;
 
 const shadowAnimation = keyframes`
   0% {
@@ -296,13 +353,30 @@ const shadowAnimation = keyframes`
 
 const RelatedProductCard = styled.div`
   border: 1px solid #ccc;
-  padding: 10px 10px 15px 10px;
+  // padding: 10px 10px 19px 10px;
   border-radius: 5px;
-  margin: 5px 5px;
-  max-height: 282px;
+  margin: 5px 0px;
+  // max-height: 282px;
+  height: auto;
+  width: auto;
   box-shadow: none;
   &:hover {
     animation: ${shadowAnimation} 1s ease-in-out infinite;
+  }
+
+  @media (max-width: 768px) {
+    margin: 0;
+    padding: 0;
+
+  }
+`;
+
+const Pembungkus = styled.div`
+  padding: 10px 10px 19px 10px;
+  @media (max-width: 768px) {
+    margin: 0;
+    width: auto;
+    padding: auto;
   }
 `;
 
@@ -312,13 +386,13 @@ const RelatedProductPrice = styled.h6`
 `;
 
 const RelatedProductImage = styled.img`
-  max-width: 111.8%;
+  max-width: 100%;
   height: auto;
   margin: 0;
   padding: 0;
-  position: relative;
-  top: -10px;
-  left: -10px;
+  // position: relative;
+  // top: -10px;
+  // left: -10px;
   border: none;
   border-radius: 5px 5px 0 0;
 `;
@@ -332,12 +406,13 @@ const RelatedProductName = styled.h3`
 
 const RelatedProductGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 10px;
   @media (max-width: 768px) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    // gap: 10px;
+    margin: 0;
   }
 `;
 
@@ -347,14 +422,15 @@ const ProductDetailContainer = styled.div`
   justify-content: center;
   // align-items: center;
   position: relative;
-  top: 88px;
+  top: 80px;
 `;
 
 const ProductDetailWrapper = styled.div`
-  max-width: 1225px;
+  width: 93%;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  justify-content: space-arround;
   margin: auto;
   padding: 20px;
   border: 1px solid #ccc;
@@ -367,41 +443,43 @@ const ProductDetailWrapper = styled.div`
     padding: 0;
     border: none;
     box-shadow: none;
-    max-width: auto;
+    width: 100%;
   }
 `;
 
 const ProductImage = styled.img`
-  max-width: 280px;
-  margin-right: 20px;
+  max-width: 360px;
   border-radius: 5px;
   border: none;
 
   @media (max-width: 768px) {
-    max-width: 100%; /* Membuat gambar sesuai dengan lebar layar pada perangkat kecil */
+    max-width: 100%;
     margin-right: 0;
-    margin-bottom: 20px; /* Memberikan jarak antara gambar dan informasi produk */
   }
 `;
 
 const ProductImageSub = styled.img`
-  max-width: 60px;
+  max-width: 80px;
   border-radius: 5px;
   border: none;
 
   @media (max-width: 768px) {
-    max-width: 88px;
-    margin-bottom: 10px; /* Memberikan jarak antara gambar kecil */
+    width: 100%;
+    height: auto;
+    display: none;
+    margin: auto;
+    justify-content: space-arround;
+    align-items: center;
   }
 `;
 
 const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 80px;
-
+  padding-left: 40px;
   @media (max-width: 768px) {
-    margin-left: 0; /* Menghapus margin kiri pada perangkat kecil */
+    margin-top: 20px;
+    padding: 0;
   }
 `;
 
@@ -431,7 +509,7 @@ const Price = styled.p`
     padding-left: 15px;
     font-weight: 600;
     // left: -19px;
-    font-size: 20px;
+    font-size: 30px;
     color: blue;
     margin: 0;
   }
@@ -453,6 +531,7 @@ const Specifications = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   max-width: 1350px;
+  
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
@@ -461,34 +540,36 @@ const Specifications = styled.div`
 `;
 
 const SpecificationItem = styled.div`
-  flex: 0 0 48%;
+  flex: 0 0 50%;
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 
-  @media (max-width: 768px) {
-    display: flex;
-
-    strong {
-      display: block;
-      font-weight: bold;
-    }
-    &:nth-child(1) strong,
-    &:nth-child(2) strong,
-    &:nth-child(4) strong {
-      text-align: right;
-      padding-left: 96px;
-    }
-    &:nth-child(3) strong {
-      text-align: right;
-      padding-left: 26px;
-    }
+  strong {
+    font-weight: bold;
+    margin-left: 10px; // Mengganti padding-left menjadi margin-left
   }
+
+
+  // @media (max-width: 768px) {
+  //   flex: 0 0 100%; // Menggunakan 100% lebar pada layar kecil
+  //   margin-left: 0; // Menghapus margin kiri pada layar kecil
+  //   margin-bottom: 10px;
+
+  //   strong {
+  //     margin: 0; // Menghapus margin kiri pada teks tebal
+  //     text-align: right; // Mengatur teks tebal ke kanan
+  //     padding-right: 10px; // Memberi jarak kanan pada teks tebal
+
+  //   }
+  // }
 `;
 
 const Description = styled.div`
-  max-width: 1225px;
-  width: 100%;
+  // max-width: 1225px;
+  width: auto;
   display: flex;
-  margin: 20px auto;
+  margin: 20px 30px;
   flex-direction: column;
   padding: 5px 20px;
   border: 1px solid #ccc;
@@ -496,19 +577,25 @@ const Description = styled.div`
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   @media (max-width: 768px) {
     display: flex;
-    max-width: 330px;
+    width: auto;
+    margin: 5px 0px;
+    padding: 0 10px;
+    border: none;
+    border-radius: none;
+    box-shadow: none;
   }
 `;
 
 const RelatedProducts = styled.div`
-  max-width: 1262px;
-  width: 100%;
-  margin: 20px auto;
+  // max-width: 1262px;
+  width: auto;
+  margin: 20px 30px;
   display: flex; /* Change to flex display */
   flex-direction: column;
   @media (max-width: 768px) {
     display: flex;
     max-width: 380px;
+    margin: 0 10px;
   }
 `;
 

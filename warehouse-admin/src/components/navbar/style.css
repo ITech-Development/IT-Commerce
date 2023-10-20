@@ -12,15 +12,15 @@ body {
   top: 0;
   left: 0;
   z-index: 100; /* Ensure it's on top of other elements */
-  height: 65px;
+  height: 70px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  background-color: #DEEEF7;
-  color: black;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  /* color: black; */
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 

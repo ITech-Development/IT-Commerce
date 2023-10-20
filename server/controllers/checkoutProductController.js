@@ -164,4 +164,4 @@ class CheckoutProductController {
 
 }
 
-module.exports = CheckoutProductController
+module.exports = CheckoutProductController;

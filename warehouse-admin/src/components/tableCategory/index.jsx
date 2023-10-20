@@ -13,9 +13,9 @@ import {
 import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./tablePro.css"; // You can use your own CSS here
+import "./tablePro.css"; // Anda dapat menggunakan CSS kustom Anda di sini
 
-const API_URL = "http://localhost:3100"; // Define your API URL here
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Tentukan URL API Anda di sini
 
 const CategoryTable = () => {
   const [categories, setCategories] = useState([]);
@@ -32,7 +32,7 @@ const CategoryTable = () => {
         setFilteredCategories(data);
       })
       .catch((error) => {
-        console.error(error, "There was an error.");
+        console.error(error, "Terjadi kesalahan.");
       });
   }, []);
 
@@ -62,15 +62,21 @@ const CategoryTable = () => {
         );
       })
       .catch((error) => {
-        console.error(error, "There was an error while deleting the category.");
+        console.error(error, "Terjadi kesalahan saat menghapus kategori.");
       });
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        width: "auto",
+        flexDirection: "column",
+      }}
+    >
       <div style={{ marginBottom: "20px", display: "flex", gap: "10px" }}>
         <TextField
-          label="Name"
+          label="Nama"
           value={filters.name}
           name="name"
           onChange={handleFilterChange}
@@ -78,39 +84,43 @@ const CategoryTable = () => {
           size="small"
         />
       </div>
-      <TableContainer component={Paper} style={{ width: "100%" }}>
+      <TableContainer component={Paper} style={{ width: "auto", margin: "auto" }}>
         <Table className="bordered-table">
           <TableHead>
             <TableRow>
               <TableCell
                 style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
               >
-                ID
+                Banner
               </TableCell>
               <TableCell
                 style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
               >
-                Name
+                Nama
               </TableCell>
               <TableCell
                 className="action-column"
                 style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
               >
-                Action
+                Aksi
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {filteredCategories.map((category) => (
               <TableRow key={category.id}>
-                <TableCell>{category.id}</TableCell>
                 <TableCell>
-                  <Link to={`/category/${category.id}`}>
-                    {category.name}
-                  </Link>
+                  <img
+                    style={{ width: "500px", height: "100px" }}
+                    src={category.image}
+                    alt=""
+                  />
                 </TableCell>
+                <TableCell>{category.name}</TableCell>
                 <TableCell className="action-column">
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
                     <Link to={`/edit-category/${category.id}`}>
                       <IconButton aria-label="edit">
                         <EditIcon />

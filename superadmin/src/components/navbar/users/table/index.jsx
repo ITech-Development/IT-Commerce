@@ -1,9 +1,16 @@
-// Table.js
-import React, { useEffect, useState } from 'react';
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Paper,
+} from "@mui/material";
+import axios from "axios";
 
-const API_URL = "http://localhost:3100"; // Define your API URL here
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
 const TableComponent = () => {
   const [users, setUsers] = useState(null);
@@ -12,8 +19,8 @@ const TableComponent = () => {
     axios
       .get(`${API_URL}/users/`, {
         headers: {
-          access_token: localStorage.getItem('access_token')
-        }
+          access_token: localStorage.getItem("access_token"),
+        },
       }) // Assuming your API endpoint for users is '/users/'
       .then(({ data }) => {
         setUsers(data);

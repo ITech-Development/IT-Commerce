@@ -10,8 +10,17 @@
   align-items: center; /* Center content horizontally */
   text-align: center; /* Center text horizontally */
   padding: 16px;
-  width: 48%; /* Set the width to 48% for a 2-column grid */
-  margin: 1%; /* Add some margin between cards */
+  /* width: 48%;  */
+}
+
+.productlist-container {
+  width: auto;
+  width: 1420px;
+  margin: 0 30px;
+}
+
+.productlist-title {
+  padding: 20px 0
 }
 
 .product a {
@@ -53,7 +62,10 @@
   left: 5px;
 }
 
-/* Clear floats to ensure proper stacking on smaller screens */
+.productsLIST {
+  display: flex;
+}
+
 .clearfix::after {
   content: "";
   display: table;
@@ -62,9 +74,65 @@
 
 .CardGridContainer {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
-  padding: 20px;
+  padding: 10px ;
+  width: auto;
+  /* margin: 0  0 0 10px; */
+}
+
+label {
+  display: flex;
+  padding-right: 160px;
+}
+
+input {
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.containerFilters {
+  display: flex;
+}
+
+.filterCategories {
+  width: 200px;
+  position: relative;
+  top: -13px;
+  left: -30px;
+  line-height: 10px;
+}
+
+.filterCategoriess {
+  width: 280px;
+  position: relative;
+  top: -18px;
+  left: -44px;
+  /* line-height: 10px; */
+}
+
+.containPrice {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+.containPrices {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  padding-left: 40px;
+}
+
+.productsLIST {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  width: auto;
 }
 
 /* Responsive styles for mobile devices */
@@ -93,6 +161,21 @@
 
   .star-rating {
     margin-top: 5px;
+  }
+
+  .star-rating img {
+    max-width: 12px; /* Adjust star size for mobile */
+  }
+
+  .star-rating p {
+    font-size: 10px; /* Adjust font size for mobile */
+  }
+  .dropPil {
+    display: none;
+  }
+  .dropSearch {
+    margin: 0;
+    padding: 0;
   }
 
   .star-rating img {

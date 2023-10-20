@@ -8,13 +8,13 @@ import { useGetCountCartsQuery } from "../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../features/user/apiUser";
 import { Sidebar } from "../sidebar/index.";
 
-export default function Navigation() {
-  const { data: totalCart } = useGetCountCartsQuery()
-  const { data: me } = useGetMeQuery()
-
+export default function Toolbar(props) {
+  const { data: totalCart } = useGetCountCartsQuery();
+  const { data: me } = useGetMeQuery();
+  
   useEffect(() => {
-    console.log(totalCart, 'test total cart');
-  }, [totalCart])
+    console.log(totalCart, "test total cart");
+  }, [totalCart]);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownHovered, setIsDropdownHovered] = useState(false);
@@ -33,7 +33,6 @@ export default function Navigation() {
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     setIsDropdownOpen(false);
-    // Add any other actions you want to perform on logout
   };
 
   const token = localStorage.getItem("access_token");
@@ -42,14 +41,10 @@ export default function Navigation() {
 
     return (
       <>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <li>
-            <Link to="/productlist">Produk</Link>
-          </li>
-          <li>
-            <Link to="/services">Layanan</Link>
-          </li>
-        </div>
+        <li style={{ display: "flex", alignItems: "center" }}>
+          <Link to="/productlist">Semua Produk</Link>
+        </li>
+
         {showCart && (
           <li>
             <Link to="/cart">
@@ -74,7 +69,7 @@ export default function Navigation() {
                   fontSize: "10px",
                 }}
               >
-                {totalCart === 0 ? '0' : totalCart}
+                {totalCart === 0 ? "0" : totalCart}
               </span>
             </Link>
           </li>
@@ -247,5 +242,4 @@ export default function Navigation() {
       </nav>
     </>
   );
-
 }

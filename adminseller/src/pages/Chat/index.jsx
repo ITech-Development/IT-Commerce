@@ -24,7 +24,6 @@ const ChatDash = () => {
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-    // ... your send message logic ...
     setMessageInput("");
   };
 
@@ -40,31 +39,30 @@ const ChatDash = () => {
           <h3>Username</h3>
         </div>
         <div className="chat-messages-container">
-
           <h3>Message</h3>
           <div className="clopmess">
-          <div className="chat-messages">
-            {contacts.map(
-              (
-                { name, status, img } // Tambahkan tanda kurung kurawal buka di sini
-              ) => (
-                <div
-                  className={`chat-message ${
-                    status === "Available" ? "" : "chat-right"
-                  }`}
-                  key={name}
-                >
-                  <img style={{ width: "60px" }} src={img} alt="" />
-                  <h4>{name}</h4>
-                  <p>{status}</p>
-                  <hr />
-                </div>
-              )
-            )}{" "}
-            {/* Tambahkan tanda kurung kurawal tutup di sini */}
+            <div className="chat-messages">
+              {contacts.map(
+                (
+                  { name, status, img } // Tambahkan tanda kurung kurawal buka di sini
+                ) => (
+                  <div
+                    className={`chat-message ${
+                      status === "Available" ? "" : "chat-right"
+                    }`}
+                    key={name}
+                  >
+                    <img style={{ width: "60px" }} src={img} alt="" />
+                    <h4>{name}</h4>
+                    <p>{status}</p>
+                    <hr />
+                  </div>
+                )
+              )}{" "}
+              {/* Tambahkan tanda kurung kurawal tutup di sini */}
+            </div>
           </div>
         </div>
-          </div>
       </div>
       <form className="chat-input-container" onSubmit={handleSendMessage}>
         <input
