@@ -225,23 +225,33 @@ export default function Navigation() {
               </Link>
             )}
           </div>
-          <div className="profile-mobile">
-            <Link to="/profile-update">
-              <img
-                style={{
-                  height: "32px",
-                  color: "blue",
-                  cursor: "pointer",
-                  paddingLeft: "5px"
-                }}
-                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                alt=""
-              />
-            </Link>
-          </div>
-          <button className="hamburger" onClick={handleSidebarToggle}>
-            <i className="fas fa-bars" style={{ fontSize: '10px', paddingLeft: "10px" }}></i>
-          </button>
+          {token ? (
+            <div className="profile-mobile">
+              <Link to="/profile-update">
+                <img
+                  style={{
+                    height: "32px",
+                    color: "blue",
+                    cursor: "pointer",
+                    paddingLeft: "5px"
+                  }}
+                  src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                  alt=""
+                />
+              </Link>
+            </div>
+          ) : (
+            <div className="login-mobile">
+              <Link to="/login">
+                <button className="login-button">Masuk</button>
+              </Link>
+            </div>
+          )}
+          
+            <button className="hamburger" onClick={handleSidebarToggle}>
+              <i className="fas fa-bars" style={{ fontSize: '10px', paddingLeft: "10px" }}></i>
+            </button>
+        
         </div>
         {isSidebarOpen && <Sidebar closeSidebar={handleSidebarToggle} />}
       </nav>

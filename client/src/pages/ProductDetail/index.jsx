@@ -17,7 +17,7 @@ const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [relatedProducts, setRelatedProducts] = useState([]);
-  
+
   const [addToCart] = useAddToCartMutation()
   const [zoom, setZoom] = useState(1);
 
@@ -72,13 +72,17 @@ const ProductDetailPage = () => {
   const dispatch = useDispatch()
 
   const handleAddToCart = () => {
-    addToCart({ product })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+    if (accessToken) {
+      addToCart({ product })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    } else {
+      navigate("/login");
+    }
   };
 
   const handleBuyNow = () => {
@@ -94,8 +98,8 @@ const ProductDetailPage = () => {
         navigate("/check-TransITech");
       }
     } else {
-      alert("Login terlebih dahulu agar dapat belanja");
-      // navigate("/login");
+      // alert("Login terlebih dahulu agar dapat belanja");
+      navigate("/login");
     }
   };
 

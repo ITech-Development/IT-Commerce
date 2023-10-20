@@ -60,6 +60,13 @@
   cursor: pointer;
 }
 
+.login-mobile {
+  display: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
 .profile-mobile {
   display: none;
   border: none;
@@ -68,6 +75,10 @@
 }
 
 .hamburger i {
+  font-size: 1.8rem;
+}
+
+.login-mobile i {
   font-size: 1.8rem;
 }
 
@@ -149,6 +160,11 @@
   .hamburger {
     display: block;
   }
+
+  .login-mobile {
+    display: block;
+  }
+
   .profile-mobile {
     display: block;
   }
@@ -190,19 +206,22 @@
     /* Assuming you're using Font Awesome for icons */
     font-size: 1.8rem;
   }
+
+  .login-mobile i:before {
+    content: '\f0c9';
+    font-family: FontAwesome;
+    font-size: 1.8rem;
+  }
+
   .profile-mobile i:before {
     content: '\f0c9';
-    /* Unicode for the hamburger icon */
     font-family: FontAwesome;
-    /* Assuming you're using Font Awesome for icons */
     font-size: 1.8rem;
   }
 
   .cart-mobile i:before {
     content: '\f0c9';
-    /* Unicode for the hamburger icon */
     font-family: FontAwesome;
-    /* Assuming you're using Font Awesome for icons */
     font-size: 1.8rem;
   }
 
