@@ -18,6 +18,11 @@
   position: relative;
 }
 
+.setAddress {
+  display: flex;
+  justify-content: space-between;
+}
+
 .close {
   position: absolute;
   top: 10px;
@@ -26,47 +31,112 @@
   font-size: 24px;
 }
 
-/* Gaya lainnya sesuai kebutuhan */
-
-
-
-/* Styles for the address section */
-.alamat {
-  position: relative;
-  top: 90px;
-  max-width: auto;
-  margin: 0 20px;
-  padding: 15px 30px 25px 30px;
-  border: 1px solid rgb(232, 215, 215);
-  border-radius: 10px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-  /* background-color: #f9f9f9; */
+.secRightPay {
+  
+  display: flex;
+  flex-direction: column;
+  /* margin-left: 80px; */
+  margin: 0 50px
 }
 
-/* Styles for the address container */
+/* CSS untuk mengatur jarak antara voucher */
+.voucherCheck label {
+  margin-right: 2px;
+}
+.checkVou {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 80px;
+  /* max-width: 500px; Atur lebar maksimum kontainer grid */
+}
+
+
+.edit {
+  padding-top: 15px;
+  width: 30px;
+  height: 30px;
+}
+.alamat {
+  max-width: auto;
+  margin: 90px 20px 0 20px;
+  padding: 0 30px 20px 30px;
+  border: 1px solid rgb(232, 215, 215);
+  border-radius: 10px;
+}
+
+.Produk {
+  max-width: auto;
+  margin: 15px 20px;
+  padding: 0 30px 20px 30px;
+  border: 1px solid rgb(232, 215, 215);
+  border-radius: 10px;
+}
+
 .address-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-/* Styles for address information */
 .address-info {
   display: flex;
   align-items: center;
 }
 
+
 .address-info h4 {
   margin: 0;
-  font-size: 18px;
-  font-weight: bold;
-  line-height: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 26px;
 }
 
 .address-info p {
   margin: 0;
   font-size: 16px;
   color: #666;
+}
+
+.cart-checkout {
+  line-height: 30px;
+}
+
+.subtot {
+  font-size: 16px;
+}
+
+.subtotal .amount {
+  font-size: 16px;
+}
+
+.Total {
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+}
+.ppn {
+  display: flex;
+  justify-content: space-between;
+  color: gray;
+  border: 1px solid transparent;
+  background-color: #edf5fa;
+  padding: 3px 0;
+  border-radius: 5px;
+}
+
+.title {
+  font-size: 16px;
+  width: 80%;
+}
+
+.action {
+  padding: 0 0 0 20px;
+}
+
+.imageProduct {
+  width: 100px;
+  height: auto;
 }
 
 .edit-button {
@@ -79,34 +149,70 @@
   text-decoration: underline;
 }
 
-/* Styles for the shipping method selection section */
 .calcongkir {
-  max-width: 1350px;
-  margin: auto;
-  padding: 20px;
+  width: auto;
+  margin: 0;
+  /* padding: 5px 20px 20px 20px;
   border: 1px solid rgb(244, 238, 238);
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #edf5fa; */
+  display: flex;
+  justify-content: space-between;
 }
 
-/* Styles for the select elements in the shipping method section */
+.ongPay {
+  display: flex;
+  justify-content: space-between;
+  /* padding-top: 40px; */
+  padding: 0;
+  margin: 0;
+}
+
+.imgVoucerCheck {
+  width: 150px;
+}
+
+.ShippingCost {
+  margin-top: 20px;
+}
+
 .methodDeliverySelect {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
-  background-color: #fff;
+  background-color: #ffffff;
   color: #333;
   width: 100%;
+  margin: 3px auto;
 }
 
-/* Styles for the select options in the shipping method section */
+.paybut {
+  /* padding: 0 65px; */
+  padding-top: 44px;
+  font-size: 18px;
+  display: flex;
+  justify-content: end;
+  align-content: start;
+  flex-direction: column;
+}
+
+.totBuy {
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.totalBuy {
+  display: flex;
+  align-content: center;
+}
+
 .methodDeliveryOption {
   padding: 8px;
   font-size: 16px;
 }
 
-/* Styles for the radio labels and shipping cost section */
+
 .shipping-cost-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

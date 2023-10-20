@@ -18,9 +18,9 @@
     gap: 14px; /* Mengatur jarak antar elemen dalam grid */
     position: relative;
     padding: 0 auto;
-    margin: 0 auto 0 0px; 
-    top: -26px;
-    width: 60%; /* Mengisi seluruh lebar parent container */
+    margin-right: 180px;
+    top: -18px;
+    right: 12px;
     max-width: 400px;
   }
   .imgcorouselBrand {

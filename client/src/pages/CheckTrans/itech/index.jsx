@@ -14,6 +14,7 @@ import {
 } from "../../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../../features/user/apiUser";
 import styled from "styled-components";
+import Edit from "../../../assets/edit.png";
 
 const PaymentContainer = styled.div`
   display: flex;
@@ -311,10 +312,10 @@ function Index() {
   return (
     <div>
       <div className="alamat">
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h2>Alamat Pengiriman</h2>
+        <div className="setAddress">
+          <h3>Alamat Pengiriman</h3>
           <Link to="/profile-update">
-            <button className="edit-button">Edit</button>
+            <img className="edit" src={Edit} alt="" />
           </Link>
         </div>
         <div className="address-info">
@@ -331,11 +332,8 @@ function Index() {
         </div>
       </div>
 
-      <div
-        className="alamat"
-        style={{ marginTop: "20px", marginBottom: "20px" }}
-      >
-        <h2>Produk Dipesan</h2>
+      <div className="Produk">
+        <h3>Produk Dipesan</h3>
         {/* <CartCheckTrans /> */}
         <div className="cart-container">
           {carts?.length === 0 ? (
@@ -361,23 +359,25 @@ function Index() {
                   <div class="cart-item">
                     <div class="cart-product">
                       <Link to={`/products/${e.product.id}`}>
-                        <img src={e.product.image} alt={e.product.name} />
+                        <img
+                          className="imageProduct"
+                          src={e.product.image}
+                          alt={e.product.name}
+                        />
                       </Link>
-                      <div>
-                        <h3>{e.product.name}</h3>
-                        <p>{e.product.description}</p>
+                      <div className="action">
+                        <h3 className="title">{e.product.name}</h3>
+                        {/* <p>{e.product.description}</p> */}
                         <button onClick={() => handlerRemove(e.id)}>
-                          Remove
+                          Hapus
                         </button>
                       </div>
                     </div>
                     <div class="cart-product-price">
                       Rp.{e.product.unitPrice}
                     </div>
-                    <div class="cart-product-quantity">
-                      <button disabled>-</button>
-                      <div class="count">{e.quantity}</div>
-                      <button disabled>+</button>
+                    <div class="cart-product-quantityIR">
+                      <div class="count">x {e.quantity}</div>
                     </div>
                     <div class="cart-product-total-price">
                       Rp.{e.quantity * e.product.unitPrice}
@@ -387,24 +387,17 @@ function Index() {
               </div>
               <div class="cart-summary">
                 <p></p>
-                <div class="cart-checkout" style={{ lineHeight: "30px" }}>
-                  <div class="subtotal">
-                    <span>Subtotal :</span>
+                <div class="cart-checkout">
+                <div class="subtotal">
+                    <span className="subtot">Subtotal :</span>
                     <span class="amount">Rp.{calculateSubtotal()}</span>
                   </div>
                   <div class="subtotal">
-                    <span>Voucher 3% :</span>
+                    <span className="subtot">Voucher 3% :</span>
                     <span class="amount">Rp. {calculateVoucher()}</span>
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontStyle: "italic",
-                    }}
-                  ></div>
                   <div class="subtotal">
-                    <span>Total :</span>
+                    <span className="subtot">Total :</span>
                     <span style={{ fontWeight: "700" }} class="amount">
                       {calculateTotal()}
                     </span>

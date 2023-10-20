@@ -109,15 +109,7 @@ const ProductList = () => {
     : [];
   return (
     <>
-      <div
-      className="prdtlrs"
-        style={{
-          margin: "0 20px",
-          display: "flex",
-          flexDirection: "column",
-          width: "auto",
-        }}
-      >
+      <div className="prdtlrs">
         <h2 className="titleTer">Produk Terlaris</h2>
 
         <ProductListContainer>
@@ -165,7 +157,6 @@ const ProductList = () => {
 
 export default ProductList;
 
-
 const loadingContainerStyle = {
   display: "flex",
   justifyContent: "center",
@@ -186,7 +177,7 @@ const shadowAnimation = keyframes`
 `;
 
 const CardGridContainers = styled.div`
-display: grid;
+  display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 10px;
   @media (max-width: 768px) {
@@ -197,48 +188,47 @@ display: grid;
 `;
 
 const Card = styled.div`
-border: 1px solid #ccc;
-// padding: 10px 10px 19px 10px;
-border-radius: 5px;
-margin: 5px 0px;
-// max-height: 282px;
-height: auto;
-width: auto;
-box-shadow: none;
-&:hover {
-  animation: ${shadowAnimation} 1s ease-in-out infinite;
-}
+  border: 1px solid #ccc;
+  // padding: 10px 10px 19px 10px;
+  border-radius: 5px;
+  margin: 5px 0px;
+  // max-height: 282px;
+  height: auto;
+  width: auto;
+  box-shadow: none;
+  &:hover {
+    animation: ${shadowAnimation} 1s ease-in-out infinite;
+  }
 
-@media (max-width: 768px) {
-  margin: 0;
-  padding: 0;
-
-}
+  @media (max-width: 768px) {
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 const CardImage = styled.img`
-max-width: 100%;
-height: auto;
-margin: 0;
-padding: 0;
-border: none;
-border-radius: 5px 5px 0 0;
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 5px 5px 0 0;
 `;
 
 const CardContent = styled.div`
-padding: 10px 10px 19px 10px;
-@media (max-width: 768px) {
-  margin: 0;
-  width: auto;
-  padding: auto;
-}
+  padding: 10px 10px 19px 10px;
+  @media (max-width: 768px) {
+    margin: 0;
+    width: auto;
+    padding: auto;
+  }
 `;
 
 const Title = styled.h3`
-margin: 0;
-font-size: 14px;
-font-weight: 500;
-padding-bottom: 7px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  padding-bottom: 7px;
 `;
 
 const Price = styled.p`

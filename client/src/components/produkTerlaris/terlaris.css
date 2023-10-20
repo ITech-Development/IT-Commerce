@@ -90,6 +90,13 @@
       background-color: #0056b3;
     }
   }
+
+  .prdtlrs {
+    margin: 0 30px;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+  }
   
   /* Responsive styles for mobile devices */
   @media (max-width: 768px) {
@@ -100,6 +107,7 @@
     .prdtlrs {
       position: relative;
       top: -90px;
+      margin: 0 10px;
     }
 
     .titleTer {
