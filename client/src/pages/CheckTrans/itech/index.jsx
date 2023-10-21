@@ -13,35 +13,15 @@ import {
   useRemoveItemFromCartMutation,
 } from "../../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../../features/user/apiUser";
-import styled from "styled-components";
 import Edit from "../../../assets/edit.png";
-
-const PaymentContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f3f3f3;
-  padding: 20px;
-  border-radius: 8px;
-`;
-
-const ShippingMethod = styled.div`
-  flex: 1;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-`;
-
-const MethodDeliverySelect = styled.select`
-  /* Tambahkan gaya sesuai keinginan Anda */
-`;
+import PaymentModal from "../PaymentModal";
 
 function Index() {
   const { data: carts } = useGetCartsItechQuery();
   const { data: profile } = useGetMeQuery();
   const [removeItemFromCart] = useRemoveItemFromCartMutation();
   const [clearItemFromCart] = useClearProductCartMutation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -112,7 +92,13 @@ function Index() {
     });
     clearItemFromCart();
     setToken(response.data.token);
+    setIsModalOpen(true);
   };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
 
   useEffect(() => {
     if (token) {
@@ -334,7 +320,6 @@ function Index() {
 
       <div className="Produk">
         <h3>Produk Dipesan</h3>
-        {/* <CartCheckTrans /> */}
         <div className="cart-container">
           {carts?.length === 0 ? (
             <div class="cart-empty">
@@ -396,7 +381,7 @@ function Index() {
                     <span className="subtot">Voucher 3% :</span>
                     <span class="amount">Rp. {calculateVoucher()}</span>
                   </div>
-                  <div class="subtotal">
+                  <div class="Total">
                     <span className="subtot">Total :</span>
                     <span style={{ fontWeight: "700" }} class="amount">
                       {calculateTotal()}
@@ -407,56 +392,14 @@ function Index() {
             </div>
           )}
         </div>
-
-        <div>
-          <h2>Pilih Kode Voucher</h2>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-arround",
-              marginBottom: "30px",
-            }}
-          >
-            <label key={vouchers[3]?.id}>
-              <input
-                type="radio"
-                value={vouchers[3]?.voucherCode}
-                checked={selectedVoucher === vouchers[3]?.voucherCode}
-                onChange={handleVoucherChange}
-              />
-              {/* {vouchers[3]?.voucherCode} */}
-              <img src={VCR1} alt="IT 01" width="150" />
-            </label>
-            <label key={vouchers[4]?.id}>
-              <input
-                type="radio"
-                value={vouchers[4]?.voucherCode}
-                checked={selectedVoucher === vouchers[4]?.voucherCode}
-                onChange={handleVoucherChange}
-              />
-              {/* {vouchers[4]?.voucherCode} */}
-              <img src={VCR2} alt="MS 01" width="150" />
-            </label>
-            <label key={vouchers[5]?.id}>
-              <input
-                type="radio"
-                value={vouchers[5]?.voucherCode}
-                checked={selectedVoucher === vouchers[5]?.voucherCode}
-                onChange={handleVoucherChange}
-              />
-              {/* {vouchers[5]?.voucherCode} */}
-              <img src={VCR3} alt="MS 01" width="150" />
-            </label>
-          </div>
-        </div>
-
-        <PaymentContainer>
-          <ShippingMethod>
-            <h2>Pilih Metode Pengiriman</h2>
+        <div className="ongPay full-width">
+          <div className="calcongkir">
             <div>
-              <MethodDeliverySelect
+            <h2>Pilih Metode Pengiriman</h2>
+              <select
                 value={courier}
                 onChange={handlerSetCourier}
+                className="methodDeliverySelect"
               >
                 <option className="methodDeliveryOption" value="jne">
                   jne
@@ -470,20 +413,15 @@ function Index() {
                 <option className="methodDeliveryOption" value="jnt">
                   jnt
                 </option>
-              </MethodDeliverySelect>
-              {/* <input
-                type="number"
-                value={calculateTotalWeight()}
-                readOnly
-                placeholder="Total Weight in Grams"
-              /> */}
-              <MethodDeliverySelect
+              </select>
+              <select
                 name="province"
                 id="province"
                 onChange={handleProvinceChange}
+                className="methodDeliverySelect"
               >
                 <option className="methodDeliveryOption" value="">
-                  MethodDeliverySelect Province
+                  Pilih Provinsi
                 </option>
                 {province.map((item) => (
                   <option
@@ -494,14 +432,15 @@ function Index() {
                     {item.province}
                   </option>
                 ))}
-              </MethodDeliverySelect>
-              <MethodDeliverySelect
+              </select>
+              <select
                 name="city"
                 id="city"
                 onChange={handleCityChange}
+                className="methodDeliverySelect"
               >
                 <option className="methodDeliveryOption" value="">
-                  MethodDeliverySelect City
+                Pilih Kota / Kabupaten
                 </option>
                 {Array.isArray(city) &&
                   city.map((item) => (
@@ -513,14 +452,15 @@ function Index() {
                       {item.city_name}
                     </option>
                   ))}
-              </MethodDeliverySelect>
-              <MethodDeliverySelect
+              </select>
+              <select
                 name="subdistrict"
                 id="subdistrict"
                 onChange={handlerGetCost}
+                className="methodDeliverySelect"
               >
                 <option className="methodDeliveryOption" value="">
-                  MethodDeliverySelect Subdistrict
+                Pilih Kecamatan
                 </option>
                 {Array.isArray(subdistrict) &&
                   subdistrict.map((item) => (
@@ -532,7 +472,7 @@ function Index() {
                       {item.subdistrict_name}
                     </option>
                   ))}
-              </MethodDeliverySelect>
+              </select>
               {pengiriman
                 ? pengiriman.map((el, index) => (
                     <div key={index}>
@@ -545,49 +485,78 @@ function Index() {
                         onChange={handleShippingCostChange}
                       />
                       <label htmlFor={`shippingChoice${index}`}>
-                        Shipping Cost: Rp.{el.cost[0].value}
+                      Ongkos kirim : Rp.{el.cost[0].value}
                       </label>
-                      <p>Service: {el.service}</p>
-                      <p>Description: {el.description}</p>
-                      <p>Est: {el.cost[0].etd} Days</p>
+                      <p>Layanan : {el.service}</p>
+                      <p>Deskripsi : {el.description}</p>
+                      <p>Estimasi : {el.cost[0].etd} hari</p>
                     </div>
                   ))
                 : null}
-            </div>
-          </ShippingMethod>
-          <div
-            style={{
-              padding: "20px 65px",
-              fontSize: "20px",
-              display: "flex",
-              justifyContent: "end",
-            }}
-          >
-            <div style={{ paddingTop: "5px" }}>
-              <span>Total Bayar : </span>
-              <span
-                style={{ fontWeight: "700", paddingRight: "20px" }}
-                className="amount"
-              >
-                Rp. {calculateTotalBayar()}
-              </span>
-            </div>
-            <div>
-              {totalShippingCost === 0 ? (
-                <p>
-                  <i>Silahkan pilih metode pengiriman</i>
-                </p>
-              ) : (
-                <button
-                  onClick={() => handlePaymentProcess()}
-                  style={paymentButtonStyle}
-                >
-                  Bayar Sekarang
-                </button>
-              )}
-            </div>
           </div>
-        </PaymentContainer>
+          <div className="secRightPay">
+              <div>
+                <h3>Pilih Kode Voucher</h3>
+                <span className="checkVou">
+                  <label key={vouchers[3]?.id}>
+                    <input
+                      type="radio"
+                      value={vouchers[3]?.voucherCode}
+                      checked={selectedVoucher === vouchers[3]?.voucherCode}
+                      onChange={handleVoucherChange}
+                    />
+                    <img className="imgVoucerCheck" src={VCR1} alt="IT 01" />
+                  </label>
+                  <label key={vouchers[4]?.id}>
+                    <input
+                      type="radio"
+                      value={vouchers[4]?.voucherCode}
+                      checked={selectedVoucher === vouchers[4]?.voucherCode}
+                      onChange={handleVoucherChange}
+                    />
+                    <img className="imgVoucerCheck" src={VCR2} alt="MS 01" />
+                  </label>
+                  <label key={vouchers[5]?.id}>
+                    <input
+                      type="radio"
+                      value={vouchers[5]?.voucherCode}
+                      checked={selectedVoucher === vouchers[5]?.voucherCode}
+                      onChange={handleVoucherChange}
+                    />
+                    <img className="imgVoucerCheck" src={VCR3} alt="MS 01" />
+                  </label>
+                </span>
+              </div>
+              <div className="paybut">
+                <div>
+                  <span>Total Bayar : </span>
+                  <span
+                    style={{ fontWeight: "700", paddingRight: "20px" }}
+                    className="amount"
+                  >
+                    Rp. {calculateTotalBayar()}
+                  </span>
+                </div>
+                <div>
+                  {totalShippingCost === 0 ? (
+                    <p>
+                      <i>Silahkan pilih metode pengiriman</i>
+                    </p>
+                  ) : (
+                    <button
+                      onClick={() => handlePaymentProcess()}
+                      style={paymentButtonStyle}
+                    >
+                      Bayar Sekarang
+                    </button>
+                  )}
+                </div>
+                {/* Tampilkan modal jika isModalOpen adalah true */}
+                <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
+              </div>
+            </div>
+        </div>
+        </div>
       </div>
     </div>
   );

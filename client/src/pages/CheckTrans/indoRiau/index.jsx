@@ -296,7 +296,7 @@ function Index() {
     border: "none",
     borderRadius: "4px",
     cursor: "pointer",
-    marginTop: '10px',
+    marginTop: "10px",
   };
 
   return (
@@ -493,79 +493,75 @@ function Index() {
                         onChange={handleShippingCostChange}
                       />
                       <label htmlFor={`shippingChoice${index}`}>
-                      Ongkos kirim : Rp.{el.cost[0].value}
+                        Ongkos kirim : Rp.{el.cost[0].value}
                       </label>
-                      <p>Service: {el.service}</p>
-                      <p>Description: {el.description}</p>
-                      <p>Est: {el.cost[0].etd} Days</p>
+                      <p>Layanan : {el.service}</p>
+                      <p>Deskripsi : {el.description}</p>
+                      <p>Estimasi : {el.cost[0].etd} hari</p>
                     </div>
                   ))
                 : null}
             </div>
             <div className="secRightPay">
-
-            <div>
-          <h3>Pilih Kode Voucher</h3>
-          <span className="checkVou"> 
-
-            <label key={vouchers[3]?.id}>
-              <input
-                type="radio"
-                value={vouchers[3]?.voucherCode}
-                checked={selectedVoucher === vouchers[3]?.voucherCode}
-                onChange={handleVoucherChange}
-              />
-              <img className="imgVoucerCheck" src={VCR1} alt="IT 01" />
-            </label>
-            <label key={vouchers[4]?.id}>
-              <input
-                type="radio"
-                value={vouchers[4]?.voucherCode}
-                checked={selectedVoucher === vouchers[4]?.voucherCode}
-                onChange={handleVoucherChange}
-              />
-              <img className="imgVoucerCheck" src={VCR2} alt="MS 01" />
-            </label>
-            <label key={vouchers[5]?.id}>
-              <input
-                type="radio"
-                value={vouchers[5]?.voucherCode}
-                checked={selectedVoucher === vouchers[5]?.voucherCode}
-                onChange={handleVoucherChange}
-              />
-              <img className="imgVoucerCheck" src={VCR3} alt="MS 01" />
-            </label>
-          </span>
-        </div>
-            <div
-            className="paybut"
-            >
               <div>
-                <span>Total Bayar : </span>
-                <span
-                  style={{ fontWeight: "700", paddingRight: "20px" }}
-                  className="amount"
-                >
-                  Rp. {calculateTotalBayar()}
+                <h3>Pilih Kode Voucher</h3>
+                <span className="checkVou">
+                  <label key={vouchers[3]?.id}>
+                    <input
+                      type="radio"
+                      value={vouchers[3]?.voucherCode}
+                      checked={selectedVoucher === vouchers[3]?.voucherCode}
+                      onChange={handleVoucherChange}
+                    />
+                    <img className="imgVoucerCheck" src={VCR1} alt="IT 01" />
+                  </label>
+                  <label key={vouchers[4]?.id}>
+                    <input
+                      type="radio"
+                      value={vouchers[4]?.voucherCode}
+                      checked={selectedVoucher === vouchers[4]?.voucherCode}
+                      onChange={handleVoucherChange}
+                    />
+                    <img className="imgVoucerCheck" src={VCR2} alt="MS 01" />
+                  </label>
+                  <label key={vouchers[5]?.id}>
+                    <input
+                      type="radio"
+                      value={vouchers[5]?.voucherCode}
+                      checked={selectedVoucher === vouchers[5]?.voucherCode}
+                      onChange={handleVoucherChange}
+                    />
+                    <img className="imgVoucerCheck" src={VCR3} alt="MS 01" />
+                  </label>
                 </span>
               </div>
-              <div>
-                {totalShippingCost === 0 ? (
-                  <p>
-                    <i>Silahkan pilih metode pengiriman</i>
-                  </p>
-                ) : (
-                  <button
-                    onClick={() => handlePaymentProcess()}
-                    style={paymentButtonStyle}
+              <div className="paybut">
+                <div>
+                  <span>Total Bayar : </span>
+                  <span
+                    style={{ fontWeight: "700", paddingRight: "20px" }}
+                    className="amount"
                   >
-                    Bayar Sekarang
-                  </button>
-                )}
+                    Rp. {calculateTotalBayar()}
+                  </span>
+                </div>
+                <div>
+                  {totalShippingCost === 0 ? (
+                    <p>
+                      <i>Silahkan pilih metode pengiriman</i>
+                    </p>
+                  ) : (
+                    <button
+                      onClick={() => handlePaymentProcess()}
+                      style={paymentButtonStyle}
+                    >
+                      Bayar Sekarang
+                    </button>
+                  )}
+                </div>
+                {/* Tampilkan modal jika isModalOpen adalah true */}
+                <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
               </div>
-              {/* Tampilkan modal jika isModalOpen adalah true */}
-              <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
-            </div>
             </div>
           </div>
         </div>
