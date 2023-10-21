@@ -85,11 +85,11 @@ function CheckoutProductsPage() {
                     <th></th>
                     <th>Produk</th>
                     <th>Kuantitas</th>
+                    <th>Ppn</th>
                     <th>Total Bayar</th>
                     <th>Alamat Pengiriman</th>
                     <th>Metode Pengiriman</th>
                     <th>Status Pengiriman</th>
-                    <th>PPN</th>
                     <th>Tanggal Belanja</th>
                     <th>Status Pembayaran</th>
                   </tr>
@@ -111,11 +111,11 @@ function CheckoutProductsPage() {
                         </td>
                         <td className="name">{productInfo.product.name}</td>
                         <td>{productInfo.quantity}</td>
+                        <td>{productInfo.checkout.setPPN}</td>
                         <td>{formatPrice(productInfo.checkout.totalPrice)}</td>
                         <td className="address">{productInfo.checkout.shippingAddress}</td>
                         <td>{productInfo.checkout.shippingMethod}</td>
                         <td>{productInfo.checkout.deliveryStatus}</td>
-                        <td>{productInfo.checkout.setPPN}</td>
                         <td className="timeorder">{productInfo.createdAt}</td>
                         <td>{productInfo.checkout.paymentStatus}</td>
                       </tr>
