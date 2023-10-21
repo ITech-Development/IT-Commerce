@@ -11,7 +11,7 @@ import { Sidebar } from "../sidebar/index.";
 export default function Toolbar(props) {
   const { data: totalCart } = useGetCountCartsQuery();
   const { data: me } = useGetMeQuery();
-  
+
   useEffect(() => {
     console.log(totalCart, "test total cart");
   }, [totalCart]);
@@ -38,7 +38,6 @@ export default function Toolbar(props) {
   const token = localStorage.getItem("access_token");
   const showCart = token ? true : false;
   const RenderMenu = () => {
-
     return (
       <>
         <li style={{ display: "flex", alignItems: "center" }}>
@@ -49,11 +48,7 @@ export default function Toolbar(props) {
           <li>
             <Link to="/cart">
               {/* <FontAwesomeIcon icon='' className="cart-icon" /> */}
-              <img
-                style={{ paddingTop: '6px'}}
-                src={CartIcon}
-                alt=""
-              />
+              <img style={{ paddingTop: "6px" }} src={CartIcon} alt="" />
               <span
                 style={{
                   position: "relative",
@@ -159,7 +154,7 @@ export default function Toolbar(props) {
                     <Link
                       style={{ display: "flex", marginLeft: "11.2px" }}
                       onClick={handleLogout}
-                      to='/login'
+                      to="/login"
                     >
                       Keluar
                     </Link>
@@ -194,10 +189,7 @@ export default function Toolbar(props) {
           <div className="cart-mobile">
             {showCart && (
               <Link to="/cart">
-                <img
-                  src={CartIcon}
-                  alt=""
-                />
+                <img src={CartIcon} alt="" />
                 <span
                   style={{
                     position: "relative",
@@ -212,27 +204,39 @@ export default function Toolbar(props) {
                     fontSize: "7px",
                   }}
                 >
-                  {totalCart === 0 ? '0' : totalCart}
+                  {totalCart === 0 ? "0" : totalCart}
                 </span>
               </Link>
             )}
           </div>
-          <div className="profile-mobile">
-            <Link to="/profile-update">
-              <img
-                style={{
-                  height: "28px",
-                  color: "blue",
-                  cursor: "pointer",
-                  paddingLeft: "5px"
-                }}
-                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                alt=""
-              />
-            </Link>
-          </div>
+          {token ? (
+            <div className="profile-mobile">
+              <Link to="/profile-update">
+                <img
+                  style={{
+                    height: "32px",
+                    color: "blue",
+                    cursor: "pointer",
+                    paddingLeft: "5px",
+                  }}
+                  src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                  alt=""
+                />
+              </Link>
+            </div>
+          ) : (
+            <div className="login-mobile">
+              <Link to="/login">
+                <button className="login-button">Masuk</button>
+              </Link>
+            </div>
+          )}
+
           <button className="hamburger" onClick={handleSidebarToggle}>
-            <i className="fas fa-bars" style={{ fontSize: '10px', paddingLeft: "10px" }}></i>
+            <i
+              className="fas fa-bars"
+              style={{ fontSize: "10px", paddingLeft: "10px" }}
+            ></i>
           </button>
         </div>
         {isSidebarOpen && <Sidebar closeSidebar={handleSidebarToggle} />}

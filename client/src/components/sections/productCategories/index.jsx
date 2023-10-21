@@ -6,6 +6,7 @@ import vc01 from "../../../assets/TK01.png";
 import vc02 from "../../../assets/MS01.png";
 import vc03 from "../../../assets/IT01.png";
 import SeeAll from "../../../assets/seeAll.png";
+import styled from "styled-components";
 
 const categoryData = [
   {
@@ -116,6 +117,9 @@ function ProductCategories() {
             Kategori Terlaris
           </h2>
           <Link to="/category-list">
+            <Buttons>Lihat Semua</Buttons>
+          </Link>
+          <Link to="/category-list">
             <div className="allmas">
               <img className="seeAll" src={SeeAll} alt="" />
               <p className="seeAlltext">lihat semua</p>
@@ -150,3 +154,14 @@ function ProductCategories() {
 }
 
 export default ProductCategories;
+
+const Buttons = styled.button`
+background-color: #3498db;
+color: #fff;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s;
+`

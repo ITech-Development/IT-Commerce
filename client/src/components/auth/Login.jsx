@@ -1,23 +1,20 @@
 /* eslint-disable */
-// import React, { useContext, useState } from "react";
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-// import axios from "axios";
 import { FiMail, FiLock } from "react-icons/fi";
-// import { UserContext } from "../../App.jsx";
-import Background from "./Fuel.png";
+import Background from "./Fuels.png";
 import "./style.css"; // Import your CSS styles
-import { useLoginMutation } from '../../features/user/apiUser.js'
+import { useLoginMutation } from "../../features/user/apiUser.js";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   // const { dispatch } = useContext(UserContext);
-  const [login] = useLoginMutation()
+  const [login] = useLoginMutation();
 
   // const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,35 +30,18 @@ const Login = () => {
     };
 
     console.log(1);
-    login(userData).then((res) => {
-      console.log(res.data);
-      localStorage.setItem("access_token", res.data.access_token);
-      navigate('/')
-    }).catch((error)=>{
-      console.log(error);
-      alert('Perhatikan lagi email dan password nya!')
-    })
-
+    login(userData)
+      .then((res) => {
+        console.log(res.data);
+        localStorage.setItem("access_token", res.data.access_token);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Perhatikan lagi email dan password nya!");
+      });
 
     console.log(2);
-    // try {
-    //   const response = await axios.post(
-    //     "https://indoteknikserver-732012365989.herokuapp.com/users/login",
-    //     userData
-    //   );
-    //   console.log("Login response:", response.data);
-
-    //   localStorage.setItem("access_token", response.data.access_token);
-
-    //   setEmail("");
-    //   setPassword("");
-
-    //   dispatch({ type: "USER", payload: true });
-    //   navigate("/");
-    // } catch (error) {
-    //   console.error("Login error:", error);
-    //   alert("Login failed. Please try again.");
-    // }
   };
 
   return (
@@ -74,7 +54,8 @@ const Login = () => {
         <form onSubmit={handleSubmit} className="form">
           <div>
             <label className="label" htmlFor="email">
-              <FiMail className="icon" /> Email:
+              {/* <FiMail className="icon" />  */}
+              Email:
             </label>
             <input
               type="email"
@@ -86,7 +67,8 @@ const Login = () => {
           </div>
           <div>
             <label className="label" htmlFor="password">
-              <FiLock className="icon" /> Kata Sandi:
+              {/* <FiLock className="icon" />  */}
+              Kata Sandi:
             </label>
             <input
               type="password"
@@ -101,7 +83,7 @@ const Login = () => {
           </button>
         </form>
         <p className="p">
-          {/* Don't have an account? <Link to="/register">Register</Link> */}
+          <Link to="/register">Belum Punya akun ? Daftar Akun</Link>
         </p>
       </div>
     </div>

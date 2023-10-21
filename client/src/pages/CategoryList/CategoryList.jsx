@@ -1,30 +1,39 @@
-import React from 'react';
-import { useGetProductCategoriesQuery } from '../../features/product/apiProducts'
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useGetProductCategoriesQuery } from "../../features/product/apiProducts";
+import { Link } from "react-router-dom";
+import "./catList.css";
+import AllProduct from '../../components/produkTerlaris';
 
 const CategoryList = () => {
   const { data, error, isLoading } = useGetProductCategoriesQuery();
 
   if (isLoading) {
-    // Tampilkan pesan atau indikator ketika sedang memuat
     return <div>Loading...</div>;
   }
 
   if (error) {
-    // Tampilkan pesan atau komponen yang sesuai ketika terjadi error
     return <div>Error: {error.message}</div>;
   }
 
   return (
-    <div>
-      <h2>Kategori Produk</h2>
-      <ul>
-        {data?.map((category, index) => (
-          <li key={index}>
+      <div className="categotyListed">
+    <div className="category-list-container">
+
+      <img
+        className="hero-image"
+        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1697853515/IndoTeknikMarketplace/product/banner/Banner%20Page%20All%20Kategori/Banner_All_Kategori_jcse02.png"
+        alt=""
+      />
+      <h2 className="category-title">Kategori Produk</h2>
+      <div className="category-grid">
+        {data.slice(0, 10).map((category) => (
+          <div className="category-item" key={category.id}>
             <Link to={`/category-list/${category.id}`}>{category.name}</Link>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
+      </div>
+      <AllProduct className="productCat" />
     </div>
   );
 };

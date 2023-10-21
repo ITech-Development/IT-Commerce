@@ -94,8 +94,8 @@ const ProductDetailPage = () => {
         navigate("/check-TransITech");
       }
     } else {
-      alert("Login terlebih dahulu agar dapat belanja");
-      // navigate("/login");
+      // alert("Login terlebih dahulu agar dapat belanja");
+      navigate("/login");
     }
   };
 
