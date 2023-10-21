@@ -291,6 +291,7 @@ function Index() {
     color: "white",
     padding: "10px 20px",
     border: "none",
+    marginTop: '10px',
     borderRadius: "4px",
     cursor: "pointer",
   };
@@ -306,20 +307,20 @@ function Index() {
         </div>
         <div className="address-info">
           <h4>Nama Lengkap</h4>
-          <p style={{ paddingLeft: "40px" }}>: {profile?.fullName}</p>
+          <p className="contentAl" style={{ paddingLeft: "40px" }}>: {profile?.fullName}</p>
         </div>
         <div className="address-info">
           <h4>Nomor Handphone</h4>
-          <p style={{ paddingLeft: "5px" }}>: {profile?.phoneNumber}</p>
+          <p className="contentAl" style={{ paddingLeft: "8px" }}>: {profile?.phoneNumber}</p>
         </div>
         <div className="address-info">
           <h4>Detail Alamat</h4>
-          <p style={{ paddingLeft: "55px" }}>: {profile?.address}</p>
+          <p className="contentAl" style={{ paddingLeft: "50px" }}>: {profile?.address}</p>
         </div>
       </div>
 
       <div className="Produk">
-        <h3>Produk Dipesan</h3>
+        <h3 className="judulcheck">Produk Dipesan</h3>
         <div className="cart-container">
           {carts?.length === 0 ? (
             <div class="cart-empty">
@@ -353,7 +354,7 @@ function Index() {
                       <div className="action">
                         <h3 className="title">{e.product.name}</h3>
                         {/* <p>{e.product.description}</p> */}
-                        <button onClick={() => handlerRemove(e.id)}>
+                        <button className="butRemove" onClick={() => handlerRemove(e.id)}>
                           Hapus
                         </button>
                       </div>
@@ -395,7 +396,7 @@ function Index() {
         <div className="ongPay full-width">
           <div className="calcongkir">
             <div>
-            <h2>Pilih Metode Pengiriman</h2>
+            <h2 className="pilihShip">Pilih Metode Pengiriman</h2>
               <select
                 value={courier}
                 onChange={handlerSetCourier}
@@ -420,7 +421,7 @@ function Index() {
                 onChange={handleProvinceChange}
                 className="methodDeliverySelect"
               >
-                <option className="methodDeliveryOption" value="">
+                <option className="methodDeliveryOptionProvince" value="">
                   Pilih Provinsi
                 </option>
                 {province.map((item) => (
