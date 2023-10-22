@@ -106,7 +106,7 @@ const Register = () => {
           </div>
           <div>
             <label className="label" htmlFor="phoneNumber">
-              Nomor Handphone :{" "}
+              Nomor Handphone:{" "}
             </label>
             <input
               type="tel"

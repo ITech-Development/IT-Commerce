@@ -63,7 +63,7 @@ function CartsItech({ cartsItech }) {
 
   return (
     <div
-      className="cart-container"
+      className="cart-containers"
       style={{ position: "relative", top: "50px" }}
     >
       <StoreHeader>

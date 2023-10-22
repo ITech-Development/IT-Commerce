@@ -1,7 +1,7 @@
 /* catList.css */
 
 .category-list-container {
-    margin: 70px 30px 30px 30px;
+    margin: 45px 30px 30px 30px;
 }
   
 .hero-image {
@@ -60,7 +60,7 @@
 /* Styles for screens with a width less than or equal to 768px */
 @media (max-width: 768px) {
     .categotyListed {
-        margin-top: 70px;
+        margin-top: 50px;
     }
     .category-list-container {
       padding: 0;
@@ -72,8 +72,8 @@
     }
   
     .category-title {
-      font-size: 18px;
-      margin: 8px 0 13px 0;
+      font-size: 14px;
+      margin: 3px 0 13px 0;
     }
   
     .category-grid {

@@ -123,6 +123,7 @@ function CheckoutProductsPage() {
                 </tbody>
               </table>
             </div>
+            <button className="pesditer">Pesanan Diterima</button>
           </div>
         ))
       )}

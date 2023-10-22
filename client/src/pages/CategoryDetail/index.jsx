@@ -59,7 +59,7 @@ const CategoryDetail = () => {
 
     <div className="category-list-container">
       <img className="hero-image " src={category.image} alt={category.name} />
-      <h2 className="category-title">Produk {category.name}</h2>
+      <h2 className="category-title">{category.name}</h2>
       <ProductListContainer>
          {/* Filter Search */}
          <Filter>

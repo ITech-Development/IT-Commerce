@@ -40,17 +40,17 @@ function CartsJuvindo({ cartsJuvindo }) {
       return total + productPrice * quantity;
     }, 0);
   };
-  const calculateTotalJuvindo = () => {
-    const subtotal = calculateSubtotalJuvindo();
-    const ppn = subtotal * 0.11;
-    const total = subtotal + ppn;
-    return total.toFixed(2);
-  };
-  const calculatePPNJuvindo = () => {
-    const subtotal = calculateSubtotalJuvindo();
-    const ppn = subtotal * 0.11;
-    return ppn.toFixed(2);
-  };
+  // const calculateTotalJuvindo = () => {
+  //   const subtotal = calculateSubtotalJuvindo();
+  //   const ppn = subtotal * 0.11;
+  //   const total = subtotal + ppn;
+  //   return total.toFixed(2);
+  // };
+  // const calculatePPNJuvindo = () => {
+  //   const subtotal = calculateSubtotalJuvindo();
+  //   const ppn = subtotal * 0.11;
+  //   return ppn.toFixed(2);
+  // };
 
  
   function formatPrice(price) {
@@ -64,7 +64,7 @@ function CartsJuvindo({ cartsJuvindo }) {
 
   return (
     <div
-      className="cart-container"
+      className="cart-containers"
       style={{ position: "relative", top: "50px" }}
     >
       <StoreHeader>
@@ -122,12 +122,12 @@ function CartsJuvindo({ cartsJuvindo }) {
           <p></p>
           <div className="cart-checkout">
             <div className="subtotal">
-              <span className="subtot">Subtotal :</span>
+              <span className="subtot"  style={{ paddingBottom: "10px" }}>Total :</span>
               <span className="amount">
                 {formatPrice(calculateSubtotalJuvindo())}
               </span>
             </div>
-            <div
+            {/* <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -141,7 +141,7 @@ function CartsJuvindo({ cartsJuvindo }) {
                 {" "}
                 {formatPrice(calculatePPNJuvindo())}
               </span>
-            </div>
+            </div> */}
             {/* <div
               style={{
                 display: "flex",
@@ -153,12 +153,12 @@ function CartsJuvindo({ cartsJuvindo }) {
               <span>Weight :</span>
               <span className="amount">{calculateTotalWeight()} grams</span>
             </div> */}
-            <div className="subtotal" style={{ paddingBottom: "10px" }}>
+            {/* <div className="subtotal" style={{ paddingBottom: "10px" }}>
               <span className="subtot">Total : </span>
               <span style={{ fontWeight: "700" }} className="amount">
                 {formatPrice(calculateTotalJuvindo())}
               </span>
-            </div>
+            </div> */}
             <button className="checkoutButtonStyle" disabled={isCheckoutDisabled}>
               <Link to="/check-TransJuvindo" style={linkStyle}>
                 {!isCheckoutDisabled ? "Checkout" : "Stok produk kosong"}

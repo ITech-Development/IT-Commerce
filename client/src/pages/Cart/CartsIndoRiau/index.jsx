@@ -47,17 +47,17 @@ function CartsIndoRiau({ cartsIndoRiau }) {
       return total + productPrice * quantity;
     }, 0);
   };
-  const calculateTotalIndoRiau = () => {
-    const subtotal = calculateSubtotalIndoRiau();
-    const ppn = subtotal * 0.11;
-    const total = subtotal + ppn;
-    return total.toFixed(2);
-  };
-  const calculatePPNIndoRiau = () => {
-    const subtotal = calculateSubtotalIndoRiau();
-    const ppn = subtotal * 0.11;
-    return ppn.toFixed(2);
-  };
+  // const calculateTotalIndoRiau = () => {
+  //   const subtotal = calculateSubtotalIndoRiau();
+  //   // const ppn = subtotal * 0.11;
+  //   const total = subtotal;
+  //   return total.toFixed(0);
+  // };
+  // const calculatePPNIndoRiau = () => {
+  //   const subtotal = calculateSubtotalIndoRiau();
+  //   const ppn = subtotal * 0.11;
+  //   return ppn.toFixed(2);
+  // };
 
   function formatPrice(price) {
     const priceString = price.toString();
@@ -71,7 +71,7 @@ function CartsIndoRiau({ cartsIndoRiau }) {
 
   return (
     <div
-      className="cart-container"
+      className="cart-containers"
       style={{ position: "relative", top: "50px" }}
     >
       <StoreHeader>
@@ -129,10 +129,10 @@ function CartsIndoRiau({ cartsIndoRiau }) {
           <p></p>
           <div className="cart-checkout">
             <div className="subtotal">
-              <span className="subtot">Subtotal :</span>
+              <span className="subtot"  style={{ paddingBottom: "10px" }}>Total :</span>
               <span className="amount">{formatPrice(calculateSubtotalIndoRiau())}</span>
             </div>
-            <div
+            {/* <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -142,13 +142,13 @@ function CartsIndoRiau({ cartsIndoRiau }) {
             >
               <span>PPN 11% :</span>
               <span className="amount"> {formatPrice(calculatePPNIndoRiau())}</span>
-            </div>
-            <div className="subtotal" style={{ paddingBottom: "10px" }}>
+            </div> */}
+            {/* <div className="subtotal" style={{ paddingBottom: "10px" }}>
               <span className="subtot">Total :</span>
               <span style={{ fontWeight: "700" }} className="amount">
               {formatPrice(calculateTotalIndoRiau())}
               </span>
-            </div>
+            </div> */}
             <button
               className="checkoutButtonStyle"
               disabled={isCheckoutDisabled} // Disable the button if any product is out of stock

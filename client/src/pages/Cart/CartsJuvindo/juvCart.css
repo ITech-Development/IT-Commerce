@@ -14,9 +14,9 @@
         width: 100%;
         display: none;
     }
-    .cart-container {
+    .cart-containers {
         margin: 0;
-        padding: 0 20px;
+        padding: 0 10px;
     }
     .titles {
         display: none; /* Menyembunyikan elemen pada layar 768px atau lebih kecil */

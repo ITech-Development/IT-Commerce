@@ -22,6 +22,7 @@
         display: none; /* Menyembunyikan elemen pada layar 768px atau lebih kecil */
     }
     .cart-summary {
+        border-top: none; /* Menghapus garis pembatas pada elemen terakhir */
         margin: 0;
         padding: 0;
     }

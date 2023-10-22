@@ -1,62 +1,60 @@
-import React from "react";
-import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTiktok,
-  faFacebookF,
-  faInstagram,
-  faLinkedinIn,
-} from "@fortawesome/free-brands-svg-icons";
+import React from 'react';
+import './footer.css'
+import Logo from '../../assets/Logoss.png'
 
-const FooterContainer = styled.footer`
-  background-color: #A1F9FF;
-  color: #000000;
-  padding: 20px;
-  text-align: center;
-  margin-top: 30px;
-`;
-
-const FooterText = styled.p`
-  margin: 0;
-`;
-
-const SocialIconsContainer = styled.div`
-  margin-top: 10px;
-`;
-
-const SocialIcon = styled.a`
-  display: inline-block;
-  margin: 0 5px;
-  font-size: 24px;
-  color: #000000;
-  transition: color 0.2s;
-
-  &:hover {
-    color: #ffcc00;
-  }
-`;
-const Footer = () => {
+function Footer() {
   return (
-    <FooterContainer>
-      <FooterText>
-        &copy; 2023 PT. ITech Persada Nusantara. All rights reserved.
-      </FooterText>
-      <SocialIconsContainer>
-        <SocialIcon href="#" target="_blank">
-        <FontAwesomeIcon icon={faTiktok}/>
-      </SocialIcon>
-        <SocialIcon href="#" target="_blank">
-          <FontAwesomeIcon icon={faFacebookF} />
-        </SocialIcon>
-        <SocialIcon href="https://www.instagram.com/indoteknik/?hl=en" target="_blank">
-          <FontAwesomeIcon icon={faInstagram} />
-        </SocialIcon>
-        <SocialIcon href="#" target="_blank">
-          <FontAwesomeIcon icon={faLinkedinIn} />
-        </SocialIcon>
-      </SocialIconsContainer>
-    </FooterContainer>
+    <footer className="footer">
+      <div className="top">
+        <div className="pages">
+          <ul>
+            <img className='logossss' src={Logo} alt="" />
+          </ul>
+
+          <ul>
+            <h3>Karir</h3>
+            <li><a style={{color: '#342e2e'}} href="/">Apply Online</a></li>
+            <li><a style={{color: '#342e2e'}} href="/">Available Positions</a></li>
+          </ul>
+
+          <ul>
+            <h3>Tentang kami</h3>
+            <li><a style={{color: '#342e2e'}} href="/">Meet Our Team</a></li>
+            <li><a style={{color: '#342e2e'}} href="/">Our Responsibilities</a></li>
+            <li><a style={{color: '#342e2e'}} href="/">Our Codes</a></li>
+            <li><a style={{color: '#342e2e'}} href="/">Our Values</a></li>
+          </ul>
+        </div>
+        <div className="newsletter">
+          <h3>Hubungi kami!</h3>
+          <form>
+            <input
+              type="email"
+              name="newsletter_email"
+              id="newsletter_email"
+              placeholder="Email"
+            />
+            <input type="button" value="Submit" />
+          </form>
+        </div>
+      </div>
+      <div className="social">
+        <i className="fab fa-linkedin"></i>
+        <i className="fab fa-github"></i>
+        <i className="fab fa-facebook"></i>
+        <i className="fab fa-instagram"></i>
+        <i className="fab fa-twitter"></i>
+        <i className="fab fa-youtube"></i>
+      </div>
+      <div className="info">
+        <div className="legal">
+          <a href="/">Terms & Conditions</a>
+          <a href="/">Privacy Policy</a>
+        </div>
+        <div className="copyright">2021 Copyright &copy; Sean B</div>
+      </div>
+    </footer>
   );
-};
+}
 
 export default Footer;

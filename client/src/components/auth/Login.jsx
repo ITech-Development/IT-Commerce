@@ -83,7 +83,7 @@ const Login = () => {
           </button>
         </form>
         <p className="p">
-          <Link to="/register">Belum Punya akun ? Daftar Akun</Link>
+          Belum punya akun? <Link to="/register">Daftar akun</Link>
         </p>
       </div>
     </div>

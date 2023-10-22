@@ -12,6 +12,23 @@
   margin: 70px 0 25px 0;
 
 }
+.pesditer {
+  background-color: #007BFF; /* Warna latar belakang tombol */
+  color: #fff; /* Warna teks tombol */
+  padding: 10px 20px; /* Padding tombol */
+  border: none; /* Hapus garis batas tombol */
+  border-radius: 5px; /* Sudut tombol yang dibulatkan */
+  cursor: pointer; /* Ubah kursor saat dihover */
+  transition: background-color 0.3s; /* Efek transisi saat dihover */
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.pesditer:hover {
+  background-color: #0056b3; /* Ganti warna saat dihover */
+}
+
 
 .table-responsive {
   overflow-x: auto;
