@@ -216,13 +216,20 @@
 @media screen and (max-width: 768px) {
   .navigation {
     display: flex;
-    padding: 0 15px;
+    padding: 0 10px;
     margin: 0;
+    height: 50px;
   }
 
   .navigation-menu ul {
     display: none;
   }
+  .logosss {
+    width: 120px;
+    height: auto;
+    display: flex;
+    align-items: center;
+  }  
 
   .hamburger {
     display: block;
@@ -230,6 +237,12 @@
 
   .login-mobile {
     display: block;
+  }
+  .login-button {
+    font-size: 10px;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
   }
 
   .profile-mobile {
@@ -271,7 +284,11 @@
     /* Unicode for the hamburger icon */
     font-family: FontAwesome;
     /* Assuming you're using Font Awesome for icons */
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+
+    display: flex;
+    align-items: center;
+    align-content: center;
   }
 
   .login-mobile i:before {
@@ -299,11 +316,11 @@
 
 .cart-icon {
   width: 30px;
-  height: 30px;
+  height: 20px;
   margin-right: 10px;
   cursor: pointer;
   position: relative;
-  top: 12px;
+  top: 15px;
 }
 
 /* Sidebar styles */

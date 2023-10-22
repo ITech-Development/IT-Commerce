@@ -179,7 +179,7 @@ export default function Toolbar(props) {
       <nav className="navigation">
         <div className="logo-indo-teknik">
           <Link to="/">
-            <img style={{}} src={Logo} alt="" />
+            <img className="logosss" style={{}} src={Logo} alt="" />
           </Link>
         </div>
         <div className="navigation-menu">
@@ -189,7 +189,7 @@ export default function Toolbar(props) {
           <div className="cart-mobile">
             {showCart && (
               <Link to="/cart">
-                <img src={CartIcon} alt="" />
+                <img className="cartIcons" src={CartIcon} alt="" />
                 <span
                   style={{
                     position: "relative",

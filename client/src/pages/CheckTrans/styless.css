@@ -102,7 +102,15 @@
 }
 
 .subtot {
-  font-size: 16px;
+  font-size: 18px;
+}
+
+.subtotVou {
+  font-size: 18px;
+}
+
+.amountSub {
+  font-size: 18px;
 }
 
 .subtotal .amount {
@@ -110,7 +118,7 @@
 }
 
 .Total {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   display: flex;
   justify-content: space-between;
@@ -176,6 +184,11 @@
   margin-top: 20px;
 }
 
+.subtotalVou {
+  display: flex;
+  justify-content: space-between  ;
+}
+
 .methodDeliverySelect {
   padding: 10px;
   border: 1px solid #ccc;
@@ -189,7 +202,7 @@
 
 .paybut {
   /* padding: 0 65px; */
-  padding-top: 44px;
+  padding-top: 30px;
   font-size: 18px;
   display: flex;
   justify-content: end;
@@ -311,8 +324,12 @@
 
 @media screen and (max-width: 768px) {
   .ongPay {
-    margin-bottom: 30px;
+    margin: 20px 0 30px 0;
     padding: 0;
+  }
+  .secRightPay {
+    padding: 0;
+    margin: 0;
   }
   .calcongkir{
     display: flex;
@@ -325,6 +342,54 @@
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
     margin: 50px 10px 0 10px;
     padding: 15px 15px;
+  }
+  .kodeVouc {
+    font-size: 12px;
+  }
+  .totBay {
+    font-size: 12px;
+  }
+  .amountbay {
+    font-size: 12px;
+  }
+.address-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+  
+.address-info p {
+  margin: 0;
+  font-size: 10px;
+  color: #666;
+}
+
+  .paybut {
+    margin-top: -8px;
+  }
+  .contentVouc {
+    font-size: 10px;
+    margin-top: -5px;
+    width: 300px;
+  }
+  .imgVoucerCheck {
+    width: 90px;
+  }
+  .checkVou {
+    display: grid;
+  grid-template-columns: repeat(3, 60px);
+  gap: 40px;
+  }
+  .ongkir {
+    font-size: 10px;
+    width: 100%;
+    margin: 8px 3px;
+  }
+  .serong {
+    font-size: 10px;
+  }
+  .befBut {
+    font-size: 12px;
   }
   .setAddress {
     font-size: 12px;
@@ -366,6 +431,7 @@
   }
   .total {
     display: none;
+
   }
   .cart-product {
     display: flex;
@@ -376,6 +442,12 @@
   }
   .imageProduct {
     height: auto;
+  }
+  .amountSub {
+    font-size: 12px;
+  }
+  .amountTot {
+    font-size: 12px;
   }
   .butRemove {
     font-size: 10px;
@@ -394,12 +466,18 @@
     margin-bottom: 20px;
 
   }
+  .subtotVou {
+    font-size: 12px;
+  }
   .cart-container {
     padding: 0;
     margin-top: -25px;
   }
   .subtot, .subtotal {
-    font-size: 11px;
+    font-size: 12px;
+  }
+  .subtotalVou {
+    line-height: 15px;
   }
 
   .pilihShip {
@@ -416,6 +494,10 @@
 
   .methodDeliveryOptionProvince  {
     font-size: 12px;
+  }
+
+  .hpus {
+    padding: 5px 0;
   }
 
 }

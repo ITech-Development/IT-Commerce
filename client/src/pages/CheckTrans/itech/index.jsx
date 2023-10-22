@@ -306,16 +306,16 @@ function Index() {
           </Link>
         </div>
         <div className="address-info">
-          <h4>Nama Lengkap</h4>
-          <p className="contentAl" style={{ paddingLeft: "40px" }}>: {profile?.fullName}</p>
+          <h4>Nama Lengkap :</h4>
+          <p className="contentAl" style={{ paddingLeft: "40px" }}>{profile?.fullName}</p>
         </div>
         <div className="address-info">
-          <h4>Nomor Handphone</h4>
-          <p className="contentAl" style={{ paddingLeft: "8px" }}>: {profile?.phoneNumber}</p>
+          <h4 className="hpus">Nomor Handphone :</h4>
+          <p className="contentAl" style={{ paddingLeft: "8px" }}>{profile?.phoneNumber}</p>
         </div>
         <div className="address-info">
-          <h4>Detail Alamat</h4>
-          <p className="contentAl" style={{ paddingLeft: "50px" }}>: {profile?.address}</p>
+          <h4>Detail Alamat :</h4>
+          <p className="contentAl" style={{ paddingLeft: "50px" }}>{profile?.address}</p>
         </div>
       </div>
 
@@ -376,15 +376,15 @@ function Index() {
                 <div class="cart-checkout">
                 <div class="subtotal">
                     <span className="subtot">Subtotal :</span>
-                    <span class="amount">Rp.{calculateSubtotal()}</span>
+                    <span class="amountSub">Rp.{calculateSubtotal()}</span>
                   </div>
-                  <div class="subtotal">
-                    <span className="subtot">Voucher 3% :</span>
-                    <span class="amount">Rp. {calculateVoucher()}</span>
+                  <div class="subtotalVou">
+                    <span className="subtotVou">Voucher 3% :</span>
+                    <span class="amountSub">Rp. {calculateVoucher()}</span>
                   </div>
                   <div class="Total">
                     <span className="subtot">Total :</span>
-                    <span style={{ fontWeight: "700" }} class="amount">
+                    <span style={{ fontWeight: "700" }} class="amountTot">
                       {calculateTotal()}
                     </span>
                   </div>
@@ -396,7 +396,7 @@ function Index() {
         <div className="ongPay full-width">
           <div className="calcongkir">
             <div>
-            <h2 className="pilihShip">Pilih Metode Pengiriman</h2>
+            <h3 className="pilihShip">Pilih Metode Pengiriman</h3>
               <select
                 value={courier}
                 onChange={handlerSetCourier}
@@ -485,19 +485,20 @@ function Index() {
                         checked={selectedShippingCost === el.cost[0].value}
                         onChange={handleShippingCostChange}
                       />
-                      <label htmlFor={`shippingChoice${index}`}>
+                      <label  className="ongkir" htmlFor={`shippingChoice${index}`}>
                       Ongkos kirim : Rp.{el.cost[0].value}
                       </label>
-                      <p>Layanan : {el.service}</p>
-                      <p>Deskripsi : {el.description}</p>
-                      <p>Estimasi : {el.cost[0].etd} hari</p>
+                      <p className="serong">Layanan : {el.service}</p>
+                      <p className="serong">Deskripsi : {el.description}</p>
+                      <p className="serong">Estimasi : {el.cost[0].etd} hari</p>
                     </div>
                   ))
                 : null}
           </div>
           <div className="secRightPay">
               <div>
-                <h3>Pilih Kode Voucher</h3>
+                <h3 className="kodeVouc">Pilih Kode Voucher</h3>
+                <p className="contentVouc">Silahkan pilih kode voucher dibawah untuk mendapatkan potongan belanja 3%!</p>
                 <span className="checkVou">
                   <label key={vouchers[3]?.id}>
                     <input
@@ -530,17 +531,17 @@ function Index() {
               </div>
               <div className="paybut">
                 <div>
-                  <span>Total Bayar : </span>
+                  <span className="totBay">Total Bayar : </span>
                   <span
                     style={{ fontWeight: "700", paddingRight: "20px" }}
-                    className="amount"
+                    className="amountbay"
                   >
                     Rp. {calculateTotalBayar()}
                   </span>
                 </div>
                 <div>
                   {totalShippingCost === 0 ? (
-                    <p>
+                    <p className="befBut">
                       <i>Silahkan pilih metode pengiriman</i>
                     </p>
                   ) : (
