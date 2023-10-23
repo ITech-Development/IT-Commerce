@@ -70,7 +70,7 @@ const Login = () => {
         <img className="imglogin img1" src={Background} alt="" />
       </div>
       <div className="divLogin">
-        <h2 className="h2">Login</h2>
+        <h2 className="h2">Masuk</h2>
         <form onSubmit={handleSubmit} className="form">
           <div>
             <label className="label" htmlFor="email">
@@ -86,7 +86,7 @@ const Login = () => {
           </div>
           <div>
             <label className="label" htmlFor="password">
-              <FiLock className="icon" /> Password:
+              <FiLock className="icon" /> Kata Sandi:
             </label>
             <input
               type="password"
@@ -97,7 +97,7 @@ const Login = () => {
             />
           </div>
           <button className="button" type="submit">
-            Login
+            Masuk
           </button>
         </form>
         <p className="p">

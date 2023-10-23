@@ -5,7 +5,7 @@ import "./velve.css";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-const API_URL = "http://localhost:3100";
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
 
 const linkStyle = {
   color: "white",

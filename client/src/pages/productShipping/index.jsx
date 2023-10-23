@@ -25,7 +25,7 @@ export default function Home() {
     try {
       // Send data to the backend using POST method or as needed.
       // Replace the URL and method with the appropriate ones for your backend.
-      const response = await fetch("http://localhost:3100/checkouts/", {
+      const response = await fetch("https://indoteknikserver-732012365989.herokuapp.com/checkouts/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

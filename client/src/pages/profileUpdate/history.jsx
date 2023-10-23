@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-const API_URL = "http://localhost:3100"; // Define your API URL here
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
 const TableComponent = () => {
   const [product, setProduct] = useState(null);

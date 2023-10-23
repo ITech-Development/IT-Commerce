@@ -24,7 +24,7 @@ import jsPDF from "jspdf";
 import { saveAs } from "file-saver";
 import "./tablePro.css";
 import styled from "styled-components";
-const API_URL = "http://localhost:3100";
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
 
 const NoUnderlineLink = styled(Link)`
   text-decoration: none;
@@ -303,7 +303,7 @@ const TableComponent = () => {
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Kategori
+                  Stok
                 </TableCell>
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
@@ -313,22 +313,22 @@ const TableComponent = () => {
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Deskripsi
+                  Kategori
                 </TableCell>
-                <TableCell
+                {/* <TableCell
+                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
+                >
+                  Deskripsi
+                </TableCell> */}
+                {/* <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
                   Minimum Beli
-                </TableCell>
+                </TableCell> */}
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
                   Harga
-                </TableCell>
-                <TableCell
-                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
-                >
-                  Stok
                 </TableCell>
                 {/* <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
@@ -345,11 +345,11 @@ const TableComponent = () => {
                 >
                   Tinggi
                 </TableCell> */}
-                <TableCell
+                {/* <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
                   Berat
-                </TableCell>
+                </TableCell> */}
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
@@ -390,9 +390,10 @@ const TableComponent = () => {
                       </BoldText>{" "}...
                     </NoUnderlineLink>{" "}
                   </TableCell>
-                  <TableCell>{row.categories?.name}</TableCell>
+                  <TableCell>{row.stock.toLocaleString('id-ID')} unit</TableCell>
                   <TableCell>{row.types?.name}</TableCell>
-                  <TableCell
+                  <TableCell>{row.categories?.name}</TableCell>
+                  {/* <TableCell
                     style={{
                       maxHeight: "60px", // Set your desired maximum height
                       overflow: "hidden",
@@ -401,14 +402,13 @@ const TableComponent = () => {
                     }}
                   >
                     {row.description.split(" ").slice(0, 6).join(" ")}...
-                  </TableCell>
-                  <TableCell>{row.minimumOrder.toLocaleString('id-ID')}</TableCell>
+                  </TableCell> */}
+                  {/* <TableCell>{row.minimumOrder.toLocaleString('id-ID')}</TableCell> */}
                   <TableCell> Rp.{row.unitPrice.toLocaleString('id-ID')}</TableCell>
-                  <TableCell>{row.stock.toLocaleString('id-ID')} unit</TableCell>
                   {/* <TableCell>{row.length} cm</TableCell>
                   <TableCell>{row.width.toLocaleString('id-ID')} cm</TableCell>
                   <TableCell>{row.height.toLocaleString('id-ID')} cm</TableCell> */}
-                  <TableCell>{row.weight.toLocaleString('id-ID')} gram</TableCell>
+                  {/* <TableCell>{row.weight.toLocaleString('id-ID')} gram</TableCell> */}
                   <TableCell>{row.product_owners?.name}</TableCell>
                   <TableCell>{row.authors?.fullName}</TableCell>
                   <TableCell className="action-column">

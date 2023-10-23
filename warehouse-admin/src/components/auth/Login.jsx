@@ -1,17 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import "./style.css";
 import { UserContext } from "../../App";
 
 const Login = () => {
   const { dispatch } = useContext(UserContext);
-  const accessToken = localStorage.getItem('access_token')
+  // const accessToken = localStorage.getItem('access_token')
 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +36,7 @@ const Login = () => {
     try {
       // Call the API to perform login
       const response = await axios.post(
-        "http://localhost:3100/warehouse-admins/login",
+        "https://indoteknikserver-732012365989.herokuapp.com/warehouse-admins/login",
         userData
       );
       console.log("Login response:", response.data);
@@ -55,7 +61,7 @@ const Login = () => {
       <h1 className="h1">Warehouse Admin</h1>
       <h2 className="h2">Login</h2>
       <form onSubmit={handleSubmit} className="form">
-        <div>
+        <div style={{ width: "98%" }}>
           <label className="label" htmlFor="email">
             Email :{" "}
           </label>
@@ -69,15 +75,41 @@ const Login = () => {
         </div>
         <div>
           <label className="label" htmlFor="password">
-            Password :{" "}
+            Password:
           </label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="inputPass"
-          />
+          <div
+            className="password-input-container"
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              width: "109%",
+            }}
+          >
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="inputPass"
+            />
+            <button
+              style={{
+                position: "relative",
+                left: "-50px",
+                background: "none",
+                color: "grey",
+                top: "-7px",
+              }}
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="showPasswordButton"
+            >
+              <FontAwesomeIcon
+                icon={showPassword ? faEye : faEyeSlash}
+                className="eye-icon"
+              />
+            </button>
+          </div>
         </div>
         <button className="button" type="submit">
           Login

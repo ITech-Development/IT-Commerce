@@ -10,15 +10,37 @@ import VCR3 from "../../../assets/TK01.png";
 import {
   useClearProductCartMutation,
   useGetCartsItechQuery,
-  useRemoveItemFromCartMutation
+  useRemoveItemFromCartMutation,
 } from "../../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../../features/user/apiUser";
+import styled from "styled-components";
+
+const PaymentContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f3f3f3;
+  padding: 20px;
+  border-radius: 8px;
+`;
+
+const ShippingMethod = styled.div`
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+`;
+
+const MethodDeliverySelect = styled.select`
+  /* Tambahkan gaya sesuai keinginan Anda */
+`;
 
 function Index() {
-  const { data: carts } = useGetCartsItechQuery()
-  const { data: profile } = useGetMeQuery()
-  const [removeItemFromCart] = useRemoveItemFromCartMutation()
-  const [clearItemFromCart] = useClearProductCartMutation()
+  const { data: carts } = useGetCartsItechQuery();
+  const { data: profile } = useGetMeQuery();
+  const [removeItemFromCart] = useRemoveItemFromCartMutation();
+  const [clearItemFromCart] = useClearProductCartMutation();
 
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -43,7 +65,9 @@ function Index() {
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
-        const response = await axios.get("http://localhost:3100/admin-sellers");
+        const response = await axios.get(
+          "https://indoteknikserver-732012365989.herokuapp.com/admin-sellers"
+        );
         setVouchers(response.data);
       } catch (error) {
         console.log("Error fetching vouchers:", error);
@@ -61,7 +85,6 @@ function Index() {
   }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
-
     const bayar = calculateTotalBayar();
     const config = {
       "Content-Type": "application/json",
@@ -70,7 +93,7 @@ function Index() {
 
     let params = { total: bayar };
     const response = await axios({
-      url: `http://localhost:3100/midtrans/itech`,
+      url: `https://indoteknikserver-732012365989.herokuapp.com/midtrans/itech`,
       params,
       data: {
         carts,
@@ -86,7 +109,7 @@ function Index() {
       headers: config,
       method: "post",
     });
-    clearItemFromCart()
+    clearItemFromCart();
     setToken(response.data.token);
   };
 
@@ -135,7 +158,7 @@ function Index() {
   });
 
   const handlerRemove = (id) => {
-    removeItemFromCart(id)
+    removeItemFromCart(id);
   };
 
   const calculateSubtotal = () => {
@@ -153,18 +176,16 @@ function Index() {
     if (!selectedVoucher) {
       return 0;
     }
-    const subtotal = calculateSubtotal(); // Panggil fungsi calculateSubtotal untuk mendapatkan nilai subtotal
+    const subtotal = calculateSubtotal();
     const voucherPercentage = 3;
     const discountAmount = (subtotal * voucherPercentage) / 100;
     return discountAmount;
   };
 
-
-
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     const voucherDiscount = calculateVoucher();
-    const total = subtotal - voucherDiscount 
+    const total = subtotal - voucherDiscount;
     return total;
   };
 
@@ -179,7 +200,7 @@ function Index() {
     const fetchProvinceData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3100/users/province",
+          "https://indoteknikserver-732012365989.herokuapp.com/users/province",
           {
             headers: { access_token: localStorage.getItem("access_token") },
           }
@@ -200,7 +221,7 @@ function Index() {
     setCheckoutProvince(found.province);
     try {
       const response = await axios.get(
-        `http://localhost:3100/users/city/${checkoutProvinceId}`,
+        `https://indoteknikserver-732012365989.herokuapp.com/users/city/${checkoutProvinceId}`,
         {
           headers: { access_token: localStorage.getItem("access_token") },
         }
@@ -217,7 +238,7 @@ function Index() {
     setCheckoutCity(found.city_name);
     try {
       const response = await axios.get(
-        `http://localhost:3100/users/subdistrict/${selectedCityId}`,
+        `https://indoteknikserver-732012365989.herokuapp.com/users/subdistrict/${selectedCityId}`,
         {
           headers: { access_token: localStorage.getItem("access_token") },
         }
@@ -237,7 +258,7 @@ function Index() {
     setCheckoutSubdistrict(found.subdistrict_name);
     const totalWeight = calculateTotalWeight(); // Calculate total weight dynamically
     let query = { destination: selectedCityId, courier, weight: totalWeight };
-    let url = `http://localhost:3100/users/cost`;
+    let url = `https://indoteknikserver-732012365989.herokuapp.com/users/cost`;
     let { data } = await axios({
       url,
       params: query,
@@ -270,7 +291,6 @@ function Index() {
     // const value = event.target.value
     setSelectedShippingCost(value);
     setTotalShippingCost(value);
-
   };
 
   const handlerSetCourier = async (event) => {
@@ -280,17 +300,16 @@ function Index() {
   };
 
   const paymentButtonStyle = {
-    backgroundColor: 'blue',
-    color: 'white',
-    padding: '10px 20px',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
+    backgroundColor: "blue",
+    color: "white",
+    padding: "10px 20px",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
   };
 
   return (
     <div>
-      <div id="snap-container"></div>
       <div className="alamat">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Alamat Pengiriman</h2>
@@ -342,10 +361,7 @@ function Index() {
                   <div class="cart-item">
                     <div class="cart-product">
                       <Link to={`/products/${e.product.id}`}>
-                        <img
-                          src={e.product.image}
-                          alt={e.product.name}
-                        />
+                        <img src={e.product.image} alt={e.product.name} />
                       </Link>
                       <div>
                         <h3>{e.product.name}</h3>
@@ -386,8 +402,7 @@ function Index() {
                       justifyContent: "space-between",
                       fontStyle: "italic",
                     }}
-                  >
-                  </div>
+                  ></div>
                   <div class="subtotal">
                     <span>Total :</span>
                     <span style={{ fontWeight: "700" }} class="amount">
@@ -442,18 +457,13 @@ function Index() {
           </div>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div
-            className="calcongkir"
-            style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
-          >
+        <PaymentContainer>
+          <ShippingMethod>
             <h2>Pilih Metode Pengiriman</h2>
             <div>
-
-              <select
+              <MethodDeliverySelect
                 value={courier}
                 onChange={handlerSetCourier}
-                className="methodDeliverySelect"
               >
                 <option className="methodDeliveryOption" value="jne">
                   jne
@@ -467,21 +477,20 @@ function Index() {
                 <option className="methodDeliveryOption" value="jnt">
                   jnt
                 </option>
-              </select>
+              </MethodDeliverySelect>
               {/* <input
                 type="number"
                 value={calculateTotalWeight()}
                 readOnly
                 placeholder="Total Weight in Grams"
               /> */}
-              <select
+              <MethodDeliverySelect
                 name="province"
                 id="province"
                 onChange={handleProvinceChange}
-                className="methodDeliverySelect"
               >
                 <option className="methodDeliveryOption" value="">
-                  Select Province
+                  MethodDeliverySelect Province
                 </option>
                 {province.map((item) => (
                   <option
@@ -492,15 +501,14 @@ function Index() {
                     {item.province}
                   </option>
                 ))}
-              </select>
-              <select
+              </MethodDeliverySelect>
+              <MethodDeliverySelect
                 name="city"
                 id="city"
                 onChange={handleCityChange}
-                className="methodDeliverySelect"
               >
                 <option className="methodDeliveryOption" value="">
-                  Select City
+                  MethodDeliverySelect City
                 </option>
                 {Array.isArray(city) &&
                   city.map((item) => (
@@ -512,15 +520,14 @@ function Index() {
                       {item.city_name}
                     </option>
                   ))}
-              </select>
-              <select
+              </MethodDeliverySelect>
+              <MethodDeliverySelect
                 name="subdistrict"
                 id="subdistrict"
                 onChange={handlerGetCost}
-                className="methodDeliverySelect"
               >
                 <option className="methodDeliveryOption" value="">
-                  Select Subdistrict
+                  MethodDeliverySelect Subdistrict
                 </option>
                 {Array.isArray(subdistrict) &&
                   subdistrict.map((item) => (
@@ -532,42 +539,49 @@ function Index() {
                       {item.subdistrict_name}
                     </option>
                   ))}
-              </select>
+              </MethodDeliverySelect>
               {pengiriman
                 ? pengiriman.map((el, index) => (
-                  <div key={index}>
-                    <input
-                      type="radio"
-                      id={`shippingChoice${index}`}
-                      name="shipping"
-                      value={el.cost[0].value}
-                      checked={selectedShippingCost === el.cost[0].value}
-                      onChange={handleShippingCostChange}
-                    />
-                    <label htmlFor={`shippingChoice${index}`}>
-                      Shipping Cost: Rp.{el.cost[0].value}
-                    </label>
-                    <p>Service: {el.service}</p>
-                    <p>Description: {el.description}</p>
-                    <p>Est: {el.cost[0].etd} Days</p>
-                  </div>
-                ))
+                    <div key={index}>
+                      <input
+                        type="radio"
+                        id={`shippingChoice${index}`}
+                        name="shipping"
+                        value={el.cost[0].value}
+                        checked={selectedShippingCost === el.cost[0].value}
+                        onChange={handleShippingCostChange}
+                      />
+                      <label htmlFor={`shippingChoice${index}`}>
+                        Shipping Cost: Rp.{el.cost[0].value}
+                      </label>
+                      <p>Service: {el.service}</p>
+                      <p>Description: {el.description}</p>
+                      <p>Est: {el.cost[0].etd} Days</p>
+                    </div>
+                  ))
                 : null}
             </div>
-          </div>
+          </ShippingMethod>
           <div
-            style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end' }}
+            style={{
+              padding: "20px 65px",
+              fontSize: "20px",
+              display: "flex",
+              justifyContent: "end",
+            }}
           >
-            <div style={{ paddingTop: '5px' }}>
-
-              <span >Total Bayar : </span>
-              <span style={{ fontWeight: "700", paddingRight: '20px' }} className="amount">
+            <div style={{ paddingTop: "5px" }}>
+              <span>Total Bayar : </span>
+              <span
+                style={{ fontWeight: "700", paddingRight: "20px" }}
+                className="amount"
+              >
                 Rp. {calculateTotalBayar()}
               </span>
             </div>
             <div>
               {totalShippingCost === 0 ? (
-                <p >
+                <p>
                   <i>Silahkan pilih metode pengiriman</i>
                 </p>
               ) : (
@@ -579,11 +593,9 @@ function Index() {
                 </button>
               )}
             </div>
-
           </div>
-        </div>
+        </PaymentContainer>
       </div>
-
     </div>
   );
 }

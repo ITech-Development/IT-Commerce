@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 import axios from 'axios';
 
-const API_URL = "http://localhost:3100/products"; // Ganti dengan URL API produk Anda
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Ganti dengan URL API produk Anda
 
 const Products = () => {
   const [products, setProducts] = useState(null);

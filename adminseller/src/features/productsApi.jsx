@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // Define a service using a base URL and expected endpoints
 export const productsApi = createApi({
   reducerPath: "productsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3100" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://indoteknikserver-732012365989.herokuapp.com" }),
   endpoints: (builder) => ({
     getAllProducts: builder.query({
       query: () => `products`,

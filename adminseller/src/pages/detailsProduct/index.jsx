@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
-const API_URL = "http://localhost:3100"; // Define your API URL here
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
 const ProductDetailPage = () => {
   const [product, setProduct] = useState(null);
@@ -95,7 +95,7 @@ const ProductDetailContainer = styled.div`
 `;
 
 const ProductDetailWrapper = styled.div`
-  max-width: 1420px;
+  max-width: 1350px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -145,8 +145,8 @@ const SpecificationItem = styled.div`
 `;
 
 const Description = styled.div`
-  max-width: 1420px;
-  width: 100%;
+max-width: 1350px;
+width: 100%;
   display: flex;
   margin: 20px auto;
   flex-direction: column;

@@ -4,7 +4,7 @@
   flex-direction: row; /* Stack items vertically by default */
   justify-content: space-between;
   align-items: center;
-  max-width: 1620px;
+  max-width: 1350px;
   margin: auto;
 }
 

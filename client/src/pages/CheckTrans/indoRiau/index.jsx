@@ -42,7 +42,7 @@ function Index() {
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
-        const response = await axios.get("http://localhost:3100/admin-sellers");
+        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers");
         setVouchers(response.data);
       } catch (error) {
         console.log("Error fetching vouchers:", error);
@@ -66,7 +66,7 @@ function Index() {
 
     let params = { total: bayar };
     const response = await axios({
-      url: `http://localhost:3100/midtrans/indo-riau`,
+      url: `https://indoteknikserver-732012365989.herokuapp.com/midtrans/indo-riau`,
       params,
       data: {
         carts,
@@ -190,7 +190,7 @@ function Index() {
     const fetchProvinceData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3100/users/province",
+          "https://indoteknikserver-732012365989.herokuapp.com/users/province",
           {
             headers: { access_token: localStorage.getItem("access_token") },
           }
@@ -211,7 +211,7 @@ function Index() {
     setCheckoutProvince(found.province);
     try {
       const response = await axios.get(
-        `http://localhost:3100/users/city/${checkoutProvinceId}`,
+        `https://indoteknikserver-732012365989.herokuapp.com/users/city/${checkoutProvinceId}`,
         {
           headers: { access_token: localStorage.getItem("access_token") },
         }
@@ -228,7 +228,7 @@ function Index() {
     setCheckoutCity(found.city_name);
     try {
       const response = await axios.get(
-        `http://localhost:3100/users/subdistrict/${selectedCityId}`,
+        `https://indoteknikserver-732012365989.herokuapp.com/users/subdistrict/${selectedCityId}`,
         {
           headers: { access_token: localStorage.getItem("access_token") },
         }
@@ -248,7 +248,7 @@ function Index() {
     setCheckoutSubdistrict(found.subdistrict_name);
     const totalWeight = calculateTotalWeight(); // Calculate total weight dynamically
     let query = { destination: selectedCityId, courier, weight: totalWeight };
-    let url = `http://localhost:3100/users/cost`;
+    let url = `https://indoteknikserver-732012365989.herokuapp.com/users/cost`;
     let { data } = await axios({
       url,
       params: query,

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../assets/IT01.png";
 import VCR2 from "../../assets/MS01.png";
 import VCR3 from "../../assets/TK01.png";
-const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
+// const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
 function Index() {
   let [carts, setCarts] = useState([]);
@@ -79,23 +79,6 @@ function Index() {
 
   useEffect(() => {
     if (token) {
-      // snap.pay(token, {
-      //   onSuccess: (result) => {
-      //     console.log('test embed');
-      //   },
-      //   onPending: (result) => {
-      //     localStorage.setItem('Pembayaran', JSON.stringify(result))
-      //     setToken('')
-      //   },
-      //   onError: (error) => {
-      //     console.log(error);
-      //     setToken('')
-      //   },
-      //   onClose: () => {
-      //     console.log('Anda belum menyelesaikan pembayaran');
-      //     setToken('')
-      //   }
-      // })
       // eslint-disable-next-line no-undef
       snap.pay(token, {
         onSuccess: function (result) {
@@ -103,12 +86,6 @@ function Index() {
           console.log("snap payyyyyyyyyyy");
         },
       });
-      // snap.pay(token, {
-      //   onSuccess: function (result) {
-      //     // return changeStatus();
-      //     console.log('snap payyyyyyyyyyy');
-      //   },
-      // })
     }
   }, [token]);
 
@@ -192,29 +169,6 @@ function Index() {
     return discountAmount;
   };
 
-  // const calculatePPN = () => {
-  //   let subtotal = calculateVoucher()
-  //   if (subtotal === 0) {
-  //      subtotal = calculateSubtotal()
-  //     const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
-  //     return ppn
-  //   }
-  //   subtotal = calculateVoucher()
-  //   const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
-  //   return ppn
-  // }
-
-  // const calculatePPN = () => {
-
-  // }
-
-  // const calculateTotal = () => {
-  //   const subtotal = calculateSubtotal()
-  //   const ppn = subtotal * 0.11 // menghitung nilai ppn (11% dari subtotal)
-  //   const subtotalPpn = subtotal + ppn // menghitung total(subtotal + ppn)
-  //   return subtotalPpn
-  // }
-
   const calculatePPN = () => {
     const subtotal = calculateSubtotal();
     const voucherDiscount = calculateVoucher();
@@ -232,14 +186,6 @@ function Index() {
     return total;
   };
 
-  // const calculateTotalBayar = () => {
-  //   const total = parseFloat(calculateTotal()); // Convert total to a number
-  //   const result = (total + parseFloat(totalShippingCost)).toLocaleString("en-US", {
-  //     minimumFractionDigits: 2,
-  //     maximumFractionDigits: 2
-  //   });
-  //   return result;
-  // };
   const calculateTotalBayar = () => {
     const total = calculateTotal();
     const result = total + totalShippingCost;
@@ -280,8 +226,6 @@ function Index() {
 
   const handleProvinceChange = async (event) => {
     const selectedProvinceId = event.target.value;
-    // Fetch cities data based on the selected province
-    // console.log(selectedProvinceId, 'TEST');
     try {
       const response = await axios.get(
         `https://indoteknikserver-732012365989.herokuapp.com/users/city/${selectedProvinceId}`,
@@ -334,7 +278,6 @@ function Index() {
     });
     setPengiriman(data);
 
-    // Assuming that the first shipping cost is selected by default, you can update this logic as needed.
     if (data && data.length > 0) {
       setSelectedShippingCost(data[0].cost[0].value);
       setTotalShippingCost(data[0].cost[0].value);
