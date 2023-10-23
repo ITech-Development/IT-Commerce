@@ -12,6 +12,7 @@ import logoFilterMobile from '../../assets/filter.png'
 import FilterMobile from "./FilterMobile";
 
 const ProductCard = ({ product, onAddToCart }) => {
+  
   const starRating = 1;
   return (
     <Card>
