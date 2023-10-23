@@ -7,11 +7,39 @@
   max-height: 330px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center content horizontally */
-  text-align: center; /* Center text horizontally */
+  align-items: center;
+  /* Center content horizontally */
+  text-align: center;
+  /* Center text horizontally */
   padding: 16px;
-  width: 48%; /* Set the width to 48% for a 2-column grid */
-  margin: 1%; /* Add some margin between cards */
+  /* width: 48%;  */
+}
+
+.filter{
+  display: block;
+}
+
+.imageFilter {
+  display: none;
+}
+
+.filterDropdown {
+  width: 100%;
+  /* Full width of the container */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+.productlist-container {
+  width: auto;
+  width: 1420px;
+  margin: 0 30px;
+}
+
+.productlist-title {
+  padding: 20px 0
 }
 
 .product a {
@@ -22,8 +50,10 @@
 .product img {
   width: 100%;
   height: auto;
-  max-height: 120px; /* Adjust image height as needed */
-  object-fit: contain; /* Ensure image fits container */
+  max-height: 120px;
+  /* Adjust image height as needed */
+  object-fit: contain;
+  /* Ensure image fits container */
 }
 
 .price {
@@ -35,14 +65,17 @@
 
 .star-rating {
   display: flex;
-  align-items: center; /* Center stars vertically */
+  align-items: center;
+  /* Center stars vertically */
   margin-top: 5px;
-  justify-content: center; /* Center stars horizontally */
+  justify-content: center;
+  /* Center stars horizontally */
 }
 
 .star-rating img {
   max-width: 15px;
-  margin: 0 2px; /* Add spacing between stars */
+  margin: 0 2px;
+  /* Add spacing between stars */
 }
 
 .star-rating p {
@@ -53,7 +86,10 @@
   left: 5px;
 }
 
-/* Clear floats to ensure proper stacking on smaller screens */
+.productsLIST {
+  display: flex;
+}
+
 .clearfix::after {
   content: "";
   display: table;
@@ -62,9 +98,66 @@
 
 .CardGridContainer {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
-  padding: 20px;
+  padding: 10px;
+  width: 80%;
+  /* margin: 0  0 0 10px; */
+}
+
+label {
+  display: flex;
+  padding-right: 160px;
+}
+
+input {
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.containerFilters {
+  display: flex;
+}
+
+.filterCategories {
+  width: 200px;
+  position: relative;
+  top: -13px;
+  left: -30px;
+  line-height: 10px;
+}
+
+.filterCategoriess {
+  width: 280px;
+  position: relative;
+  top: -18px;
+  left: -44px;
+  /* line-height: 10px; */
+}
+
+.containPrice {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+.containPrices {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  padding-left: 40px;
+}
+
+.productsLIST {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  width: auto;
 }
 
 /* Responsive styles for mobile devices */
@@ -72,39 +165,79 @@
   .CardGridContainer {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .filter{
+    display: none;
+  }
+
+  .imageFilter {
+    display: block;
+  }
+
   .productlist {
-    display: grid; /* Mengubah tampilan container menjadi grid */
-    grid-template-columns: repeat(2, 1fr); /* Menampilkan 2 card per baris */
-    grid-gap: 16px; /* Menambahkan jarak antara card */
+    display: grid;
+    /* Mengubah tampilan container menjadi grid */
+    grid-template-columns: repeat(2, 1fr);
+    /* Menampilkan 2 card per baris */
+    grid-gap: 16px;
+    /* Menambahkan jarak antara card */
   }
 
   .product {
-    width: 100%; /* Set the width to 100% for full-width stacking */
-    margin: 0; /* Remove margin for full-width stacking */
+    width: 100%;
+    /* Set the width to 100% for full-width stacking */
+    max-height: 200px;
+    margin: 0;
+    /* Remove margin for full-width stacking */
   }
 
   .product img {
-    max-height: initial; /* Remove max height for mobile */
+    max-height: initial;
+    /* Remove max height for mobile */
   }
 
   .price {
-    font-size: 10px; /* Adjust font size for mobile */
+    font-size: 12px;
+    /* Adjust font size for mobile */
   }
 
   .star-rating {
-    margin-top: 5px;
+    margin-top: 3px;
   }
 
   .star-rating img {
-    max-width: 12px; /* Adjust star size for mobile */
+    max-width: 10px;
+    /* Adjust star size for mobile */
   }
 
   .star-rating p {
-    font-size: 10px; /* Adjust font size for mobile */
+    font-size: 10px;
+    /* Adjust font size for mobile */
   }
+
   .dropPil {
     display: none;
   }
+
+  .dropSearch {
+    margin: 0;
+    padding: 0;
+  }
+
+  .star-rating img {
+    max-width: 12px;
+    /* Adjust star size for mobile */
+  }
+
+  .star-rating p {
+    font-size: 10px;
+    /* Adjust font size for mobile */
+  }
+
+  .dropPil {
+    display: none;
+  }
+
   .dropSearch {
     margin: 0;
     padding: 0;
