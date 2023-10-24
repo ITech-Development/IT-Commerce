@@ -1,7 +1,7 @@
 /* catList.css */
 
 .category-list-container {
-    margin: 45px 30px 30px 30px;
+    margin: 45px 10px 30px 10px;
 }
   
 .hero-image {
@@ -29,7 +29,7 @@
     padding: 10px;
     border-radius: 5px;
     text-align: center;
-    margin: 5px 0;
+    margin: 10px 0 0 0;
   }
   
   .category-item a {
