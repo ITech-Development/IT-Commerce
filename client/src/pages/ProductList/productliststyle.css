@@ -16,7 +16,11 @@
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .filter {
+=======
+.filter{
+>>>>>>> 4c31b21058845a472c8dacc3785f81d65aa547f4
   display: block;
 }
 
@@ -34,7 +38,11 @@
 
 
 =======
+<<<<<<< HEAD
 >>>>>>> bceb2102719162db2073e2fe2eb9fc2fc94fd5c0
+=======
+>>>>>>> bcfcd7d408063ae514f0f057a667833e22a2fb87
+>>>>>>> 4c31b21058845a472c8dacc3785f81d65aa547f4
 .productlist-container {
   width: auto;
   width: 1420px;
@@ -109,7 +117,11 @@
 =======
   padding: 10px ;
   width: auto;
+<<<<<<< HEAD
 >>>>>>> bceb2102719162db2073e2fe2eb9fc2fc94fd5c0
+=======
+>>>>>>> bcfcd7d408063ae514f0f057a667833e22a2fb87
+>>>>>>> 4c31b21058845a472c8dacc3785f81d65aa547f4
   /* margin: 0  0 0 10px; */
 }
 
@@ -154,7 +166,11 @@ input {
 <<<<<<< HEAD
 
 =======
+<<<<<<< HEAD
 >>>>>>> bceb2102719162db2073e2fe2eb9fc2fc94fd5c0
+=======
+>>>>>>> bcfcd7d408063ae514f0f057a667833e22a2fb87
+>>>>>>> 4c31b21058845a472c8dacc3785f81d65aa547f4
 .containPrices {
   display: flex;
   justify-content: space-around;

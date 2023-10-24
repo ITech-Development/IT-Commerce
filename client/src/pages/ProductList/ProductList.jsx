@@ -663,4 +663,8 @@ const ProductList = () => {
 };
 
 export default ProductList;
+<<<<<<< HEAD
 >>>>>>> bceb2102719162db2073e2fe2eb9fc2fc94fd5c0
+=======
+>>>>>>> bcfcd7d408063ae514f0f057a667833e22a2fb87
+>>>>>>> 4c31b21058845a472c8dacc3785f81d65aa547f4
