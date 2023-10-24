@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import './filterMobile.css'
 
-function FilterMobile({ 
-    selectedCategories, 
-    handleCategoryDropdownChange, 
-    categories, 
-    selectedSortOption, 
-    handleSortOptionChange }) {
+function FilterMobile({
+    selectedCategories,
+    handleCategoryDropdownChange,
+    categories,
+    selectedSortOption,
+    handleSortOptionChange,
+    minPrice,
+    handleMinPriceChange,
+    maxPrice,
+    handleMaxPriceChange,
+    closeFilter
+}) {
+
+
+
     return (
-        <div style={{ width: "280px", paddingTop: "30px" }} className="filterMobile">
+        <div className='filterMobile'>
             <h2>Filter</h2>
             <hr />
             <div style={{ display: "grid", gap: "10px" }}>
@@ -32,11 +42,20 @@ function FilterMobile({
             <hr />
             <div className="price-filter">
                 <label>Harga:</label>
-                <select value={selectedSortOption} onChange={handleSortOptionChange} className="filterDropdown">
-                    <option value="">Semua</option>
-                    <option value="price">Minimum</option>
-                    <option value="-price">Maksimum</option>
-                </select>
+                <input
+                    type="number"
+                    placeholder="Minimum"
+                    value={minPrice}
+                    onChange={handleMinPriceChange}
+                    min={1}
+                />
+                <input
+                    type="number"
+                    placeholder="Maksimum"
+                    value={maxPrice}
+                    onChange={handleMaxPriceChange}
+                    min={1}
+                />
             </div>{" "}
             <hr />
             <div className="stock-filter">
@@ -47,6 +66,9 @@ function FilterMobile({
                     <option value="-stock">Maksimum</option>
                 </select>
             </div>
+            <button className="close-sidebar" onClick={closeFilter}>
+                <i className="fas fa-times"></i>
+            </button>
         </div>
     )
 }

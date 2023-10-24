@@ -12,7 +12,7 @@ import logoFilterMobile from '../../assets/filter.png'
 import FilterMobile from "./FilterMobile";
 
 const ProductCard = ({ product, onAddToCart }) => {
-  
+
   const starRating = 1;
   return (
     <Card>
@@ -287,14 +287,14 @@ const ProductList = () => {
                     style={searchInputStyle}
                     placeholder="Produk apa yang anda cari ?.."
                   />
-                </div>
-                <div>
                   <img
                     src={logoFilterMobile}
                     alt="logoFilterMobile"
                     width='20px'
                     className="imageFilter"
                     onClick={toggleFilter} />
+                </div>
+                <div>
                 </div>
                 <div className="CardGridContainer">
                   {filteredAndSortedData.map((product) => (
@@ -310,12 +310,16 @@ const ProductList = () => {
                 )}
               </div>
               {showFilterM && <FilterMobile
+                closeFilter={toggleFilter}
                 selectedCategories={selectedCategories}
                 handleCategoryDropdownChange={handleCategoryDropdownChange}
                 categories={categories}
                 selectedSortOption={selectedSortOption}
                 handleSortOptionChange={handleSortOptionChange}
-
+                minPrice={minPrice}
+                handleMinPriceChange={handleMinPriceChange}
+                maxPrice={maxPrice}
+                handleMaxPriceChange={handleMaxPriceChange}
               />}
             </div>
           </>
