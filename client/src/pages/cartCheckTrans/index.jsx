@@ -24,7 +24,7 @@ const Cart = () => {
       }
     }
 
-    const response = await axios.post('http://localhost:3100/users/midtrans', data, config)
+    const response = await axios.post('https://indoteknikserver-732012365989.herokuapp.com/users/midtrans', data, config)
     console.log(response.data, 'dari fe');
     setToken(response.data.token);
   }
@@ -72,7 +72,7 @@ const Cart = () => {
   const handlerInc = (id) => {
     const accessToken = localStorage.getItem("access_token")
     if (accessToken) {
-      let url = 'http://localhost:3100/product-carts/increment/' + id
+      let url = 'https://indoteknikserver-732012365989.herokuapp.com/product-carts/increment/' + id
       axios({ url, method: 'patch', headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data);
@@ -85,7 +85,7 @@ const Cart = () => {
   const handlerDec = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = 'http://localhost:3100/product-carts/decrement/' + id
+      let url = 'https://indoteknikserver-732012365989.herokuapp.com/product-carts/decrement/' + id
       axios({ url, method: 'patch', headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, 'ASdasdas');
@@ -97,7 +97,7 @@ const Cart = () => {
   const handlerRemove = (id) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = 'http://localhost:3100/product-carts/remove/' + id
+      let url = 'https://indoteknikserver-732012365989.herokuapp.com/product-carts/remove/' + id
       axios({ url, method: 'delete', headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, 'remooove');
@@ -109,7 +109,7 @@ const Cart = () => {
   const handlerClear = () => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = 'http://localhost:3100/product-carts/clear/'
+      let url = 'https://indoteknikserver-732012365989.herokuapp.com/product-carts/clear/'
       axios({ url, method: 'delete', headers: { access_token: accessToken } })
         .then(({ data }) => {
           console.log(data, 'remooove all');
@@ -145,7 +145,7 @@ const Cart = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      let url = 'http://localhost:3100/product-carts'
+      let url = 'https://indoteknikserver-732012365989.herokuapp.com/product-carts'
       axios({ url, headers: { access_token: accessToken } })
         .then(async ({ data }) => {
           setCarts(data)
@@ -165,10 +165,10 @@ const Cart = () => {
           <div class="cart-empty">
             <p>Your cart is empty</p>
             <div class="start-shopping">
-              <a href="/productlist">
+              <Link to="/productlist">
                 <span>&lt;</span>
                 <span>Start Shopping</span>
-              </a>
+                </Link>
             </div>
           </div>
         ) : (

@@ -1,9 +1,15 @@
 const { compare } = require("../helpers/bcryptjs");
 const { createToken } = require("../helpers/jwt");
-const { User, Profile, Checkout, CheckoutProduct, Product } = require("../models/index");
+const {
+  User,
+  Profile,
+  Checkout,
+  CheckoutProduct,
+  Product,
+} = require("../models/index");
 const { OAuth2Client } = require("google-auth-library");
 const bcryptjs = require("bcryptjs");
-const helpers = require('../helpers/index')
+const helpers = require("../helpers/index");
 const salt = bcryptjs.genSaltSync(10);
 const midtransClient = require("midtrans-client");
 const axios = require("axios");
@@ -23,11 +29,11 @@ class UserController {
   static async getMeById(req, res, next) {
     try {
       const profile = await User.findOne({
-        where: { id: req.user.id }
-      })
-      res.status(200).json(profile)
+        where: { id: req.user.id },
+      });
+      res.status(200).json(profile);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
@@ -39,7 +45,7 @@ class UserController {
       const user = await User.findByPk(req.user.id);
 
       if (!user) {
-        return res.status(404).json({ error: 'User not found' });
+        return res.status(404).json({ error: "User not found" });
       }
 
       // Update informasi pengguna dengan nilai-nilai baru
@@ -51,9 +57,11 @@ class UserController {
       // Simpan perubahan informasi pengguna ke database
       await user.save();
 
-      res.status(200).json({ message: 'User information updated successfully' });
+      res
+        .status(200)
+        .json({ message: "User information updated successfully" });
     } catch (error) {
-      console.log(error, 'roar');
+      console.log(error, "roar");
       next(error);
     }
   }
@@ -72,17 +80,17 @@ class UserController {
 
       const user = await User.findOne({
         where: {
-          id: req.params.id
-        }
-      })
+          id: req.params.id,
+        },
+      });
 
       if (user) {
-        res.status(200).json(user)
+        res.status(200).json(user);
       } else {
-        throw { name: 'NotFoundError' }
+        throw { name: "NotFoundError" };
       }
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
@@ -121,7 +129,7 @@ class UserController {
 
       await Profile.create({
         userId: user.id,
-      })
+      });
 
       res.status(201).json({ user });
     } catch (error) {
@@ -227,7 +235,6 @@ class UserController {
     }
   }
 
-
   static async googleLogin(req, res, next) {
     try {
       const { google_token } = req.headers;
@@ -273,12 +280,10 @@ class UserController {
         });
       res.status(200).json(province);
     } catch (error) {
-      console.log(error, 'dari get province');
+      console.log(error, "dari get province");
       next(error);
     }
   }
-
-
 
   static async getCity(req, res, next) {
     try {
@@ -327,9 +332,9 @@ class UserController {
       let weight = +req.query.weight;
       const obj = {
         origin: "351",
-        originType: 'city',
+        originType: "city",
         destination,
-        destinationType: 'subdistrict',
+        destinationType: "subdistrict",
         weight,
         courier,
       };
@@ -349,7 +354,7 @@ class UserController {
     const t = await sequelize.transaction();
     // console.log(req.user.id);
     try {
-      let temp = []
+      let temp = [];
       const user = await User.findByPk(req.user.id);
       let snap = new midtransClient.Snap({
         // Set to true if you want Production Environment (accept real transaction).
@@ -381,8 +386,8 @@ class UserController {
       const createCheckout = await Checkout.create({
         userId: req.user.id,
         midtransCode: midtransToken.token,
-        transaction: t
-      })
+        transaction: t,
+      });
       req.body.carts.forEach(async (el) => {
         temp.push({
           // id: await helpers.getId(),
@@ -391,32 +396,37 @@ class UserController {
           quantity: el.quantity,
           createdAt: new Date(),
           updateAt: new Date(),
-        })
+        });
         let dec = await Product.findOne({ where: { id: el.id } });
-        console.log(dec.stock, 'dec quantityyyyyyy');
-        console.log(el.quantity, 'el quantityyyyyyy');
+        console.log(dec.stock, "dec quantityyyyyyy");
+        console.log(el.quantity, "el quantityyyyyyy");
         if (dec && dec.stock > el.quantity) {
           await dec.decrement("stock", { by: el.quantity, transaction: t });
         } else {
-          console.log('erorrrrrrrrrrrrrr');
-          throw ({ message: 'Data yang anda minta tidak atau terlalu banyak dari stok produk' })
+          console.log("erorrrrrrrrrrrrrr");
+          throw {
+            message:
+              "Data yang anda minta tidak atau terlalu banyak dari stok produk",
+          };
         }
-      })
+      });
       await CheckoutProduct.create({
         checkoutId: createCheckout.id,
         productId: 10,
         quantity: 1,
-        transaction: t
-      })
+        transaction: t,
+      });
       // console.log(temp, 'cartsmidtransssssssssssss');
-      let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t })
-      console.log(bulkCreate, 'bulkkkkkkkkkkkkkkkkkkkkkk');
-      await t.commit()
-      res.status(201).json({ token: midtransToken.token })
+      let bulkCreate = await CheckoutProduct.bulkCreate(temp, {
+        transaction: t,
+      });
+      console.log(bulkCreate, "bulkkkkkkkkkkkkkkkkkkkkkk");
+      await t.commit();
+      res.status(201).json({ token: midtransToken.token });
     } catch (error) {
-      console.log(error, 'testerror');
-      await t.rollback()
-      res.status(500).json(error)
+      console.log(error, "testerror");
+      await t.rollback();
+      res.status(500).json(error);
     }
     // try {
     //   const user = await User.findByPk(req.user.id);
@@ -455,10 +465,7 @@ class UserController {
 
   static async pay(req, res, next) {
     try {
-
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 }
 

@@ -13,6 +13,8 @@ import {
   useRemoveItemFromCartMutation
 } from "../../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../../features/user/apiUser";
+import Edit from "../../../assets/edit.png";
+import PaymentModal from "../PaymentModal";
 
 function Index() {
   const { data: carts } = useGetCartsJuvindoQuery()
@@ -33,6 +35,7 @@ function Index() {
   const [totalShippingCost, setTotalShippingCost] = useState(0);
   const [selectedVoucher, setSelectedVoucher] = useState(null);
   const [vouchers, setVouchers] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [checkoutProvince, setCheckoutProvince] = useState();
   const [checkoutCity, setCheckoutCity] = useState();
@@ -43,7 +46,7 @@ function Index() {
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
-        const response = await axios.get("http://localhost:3100/admin-sellers");
+        const response = await axios.get("https://indoteknikserver-732012365989.herokuapp.com/admin-sellers");
         setVouchers(response.data);
       } catch (error) {
         console.log("Error fetching vouchers:", error);
@@ -71,7 +74,7 @@ function Index() {
 
     let params = { total: bayar };
     const response = await axios({
-      url: `http://localhost:3100/midtrans/juvindo`,
+      url: `https://indoteknikserver-732012365989.herokuapp.com/midtrans/juvindo`,
       params,
       data: {
         carts,
@@ -90,7 +93,14 @@ function Index() {
     });
     clearItemFromCart()
     setToken(response.data.token);
+    setIsModalOpen(true);
+
   };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
 
   useEffect(() => {
     if (token) {
@@ -189,7 +199,7 @@ function Index() {
     const fetchProvinceData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3100/users/province",
+          "https://indoteknikserver-732012365989.herokuapp.com/users/province",
           {
             headers: { access_token: localStorage.getItem("access_token") },
           }
@@ -210,7 +220,7 @@ function Index() {
     setCheckoutProvince(found.province);
     try {
       const response = await axios.get(
-        `http://localhost:3100/users/city/${checkoutProvinceId}`,
+        `https://indoteknikserver-732012365989.herokuapp.com/users/city/${checkoutProvinceId}`,
         {
           headers: { access_token: localStorage.getItem("access_token") },
         }
@@ -227,7 +237,7 @@ function Index() {
     setCheckoutCity(found.city_name);
     try {
       const response = await axios.get(
-        `http://localhost:3100/users/subdistrict/${selectedCityId}`,
+        `https://indoteknikserver-732012365989.herokuapp.com/users/subdistrict/${selectedCityId}`,
         {
           headers: { access_token: localStorage.getItem("access_token") },
         }
@@ -247,7 +257,7 @@ function Index() {
     setCheckoutSubdistrict(found.subdistrict_name);
     const totalWeight = calculateTotalWeight(); // Calculate total weight dynamically
     let query = { destination: selectedCityId, courier, weight: totalWeight };
-    let url = `http://localhost:3100/users/cost`;
+    let url = `https://indoteknikserver-732012365989.herokuapp.com/users/cost`;
     let { data } = await axios({
       url,
       params: query,
@@ -300,34 +310,29 @@ function Index() {
 
   return (
     <div>
-      <div id="snap-container"></div>
       <div className="alamat">
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h2>Alamat Pengiriman</h2>
+      <div className="setAddress">
+          <h3>Alamat Pengiriman</h3>
           <Link to="/profile-update">
-            <button className="edit-button">Edit</button>
+            <img className="edit" src={Edit} alt="" />
           </Link>
         </div>
         <div className="address-info">
-          <h4>Nama Lengkap</h4>
-          <p style={{ paddingLeft: "40px" }}>: {profile?.fullName}</p>
+          <h4>Nama Lengkap :</h4>
+          <p style={{ paddingLeft: "38px" }}>{profile?.fullName}</p>
         </div>
         <div className="address-info">
-          <h4>Nomor Handphone</h4>
-          <p style={{ paddingLeft: "5px" }}>: {profile?.phoneNumber}</p>
+          <h4 className="hpus">Nomor Handphone :</h4>
+          <p style={{ paddingLeft: "5px" }}>{profile?.phoneNumber}</p>
         </div>
         <div className="address-info">
-          <h4>Detail Alamat</h4>
-          <p style={{ paddingLeft: "55px" }}>: {profile?.address}</p>
+          <h4>Detail Alamat :</h4>
+          <p style={{ paddingLeft: "50px" }}>{profile?.address}</p>
         </div>
       </div>
 
-      <div
-        className="alamat"
-        style={{ marginTop: "20px", marginBottom: "20px" }}
-      >
-        <h2>Produk Dipesan</h2>
-        {/* <CartCheckTrans /> */}
+      <div className="Produk">
+        <h3 className="judulcheck">Produk Dipesan</h3>
         <div className="cart-container">
           {carts?.length === 0 ? (
             <div class="cart-empty">
@@ -353,25 +358,24 @@ function Index() {
                     <div class="cart-product">
                       <Link to={`/products/${e.product.id}`}>
                         <img
+                          className="imageProduct"
                           src={e.product.image}
                           alt={e.product.name}
                         />
                       </Link>
-                      <div>
-                        <h3>{e.product.name}</h3>
-                        <p>{e.product.description}</p>
-                        <button onClick={() => handlerRemove(e.id)}>
-                          Remove
+                      <div className="action">
+                      <h3 className="title">{e.product.name}</h3>
+                        {/* <p>{e.product.description}</p> */}
+                        <button className="butRemove" onClick={() => handlerRemove(e.id)}>
+                          Hapus
                         </button>
                       </div>
                     </div>
                     <div class="cart-product-price">
                       Rp.{e.product.unitPrice}
                     </div>
-                    <div class="cart-product-quantity">
-                      <button disabled>-</button>
-                      <div class="count">{e.quantity}</div>
-                      <button disabled>+</button>
+                    <div class="cart-product-quantityIR">
+                      <div class="count">x {e.quantity}</div>
                     </div>
                     <div class="cart-product-total-price">
                       Rp.{e.quantity * e.product.unitPrice}
@@ -381,28 +385,22 @@ function Index() {
               </div>
               <div class="cart-summary">
                 <p></p>
-                <div class="cart-checkout" style={{ lineHeight: "30px" }}>
+                <div class="cart-checkout">
                   <div class="subtotal">
-                    <span>Subtotal :</span>
-                    <span class="amount">Rp.{calculateSubtotal()}</span>
+                    <span className="subtot">Subtotal :</span>
+                    <span class="amountSub">Rp.{calculateSubtotal()}</span>
                   </div>
-                  <div class="subtotal">
-                    <span>Voucher 3% :</span>
-                    <span class="amount">Rp. {calculateVoucher()}</span>
+                  <div class="subtotalVou">
+                    <span className="subtotVou">Voucher 3% :</span>
+                    <span class="amountSub">Rp. {calculateVoucher()}</span>
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontStyle: "italic",
-                    }}
-                  >
-                    <span>PPN 11% :</span>
-                    <span className="amount"> Rp. {calculatePPN()}</span>
+                  <div className="ppn">
+                    <span className="subtot">PPN 11% :</span>
+                    <span className="amountSub"> Rp. {calculatePPN()}</span>
                   </div>
-                  <div class="subtotal">
-                    <span>Total :</span>
-                    <span style={{ fontWeight: "700" }} class="amount">
+                  <div class="Total">
+                    <span className="subtot">Total :</span>
+                    <span style={{ fontWeight: "700" }} class="amountTot">
                       {calculateTotal()}
                     </span>
                   </div>
@@ -411,57 +409,11 @@ function Index() {
             </div>
           )}
         </div>
-
-        <div>
-          <h2>Pilih Kode Voucher</h2>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-arround",
-              marginBottom: "30px",
-            }}
-          >
-            <label key={vouchers[3]?.id}>
-              <input
-                type="radio"
-                value={vouchers[3]?.voucherCode}
-                checked={selectedVoucher === vouchers[3]?.voucherCode}
-                onChange={handleVoucherChange}
-              />
-              {/* {vouchers[3]?.voucherCode} */}
-              <img src={VCR1} alt="IT 01" width="150" />
-            </label>
-            <label key={vouchers[4]?.id}>
-              <input
-                type="radio"
-                value={vouchers[4]?.voucherCode}
-                checked={selectedVoucher === vouchers[4]?.voucherCode}
-                onChange={handleVoucherChange}
-              />
-              {/* {vouchers[4]?.voucherCode} */}
-              <img src={VCR2} alt="MS 01" width="150" />
-            </label>
-            <label key={vouchers[5]?.id}>
-              <input
-                type="radio"
-                value={vouchers[5]?.voucherCode}
-                checked={selectedVoucher === vouchers[5]?.voucherCode}
-                onChange={handleVoucherChange}
-              />
-              {/* {vouchers[5]?.voucherCode} */}
-              <img src={VCR3} alt="MS 01" width="150" />
-            </label>
-          </div>
-        </div>
-
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div
-            className="calcongkir"
-            style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
-          >
-            <h2>Pilih Metode Pengiriman</h2>
+        <div className="ongPay full-width">
+        <div className="calcongkir">
+          <div>
+            <h3 className="pilihShip">Pilih Metode Pengiriman</h3>
             <div>
-
               <select
                 value={courier}
                 onChange={handlerSetCourier}
@@ -480,12 +432,6 @@ function Index() {
                   jnt
                 </option>
               </select>
-              {/* <input
-                type="number"
-                value={calculateTotalWeight()}
-                readOnly
-                placeholder="Total Weight in Grams"
-              /> */}
               <select
                 name="province"
                 id="province"
@@ -493,7 +439,7 @@ function Index() {
                 className="methodDeliverySelect"
               >
                 <option className="methodDeliveryOption" value="">
-                  Select Province
+                  Pilih Provinsi
                 </option>
                 {province.map((item) => (
                   <option
@@ -512,7 +458,7 @@ function Index() {
                 className="methodDeliverySelect"
               >
                 <option className="methodDeliveryOption" value="">
-                  Select City
+                Pilih Kota / Kabupaten
                 </option>
                 {Array.isArray(city) &&
                   city.map((item) => (
@@ -532,7 +478,7 @@ function Index() {
                 className="methodDeliverySelect"
               >
                 <option className="methodDeliveryOption" value="">
-                  Select Subdistrict
+                Pilih Kecamatan
                 </option>
                 {Array.isArray(subdistrict) &&
                   subdistrict.map((item) => (
@@ -547,8 +493,8 @@ function Index() {
               </select>
               {pengiriman
                 ? pengiriman.map((el, index) => (
-                  <div key={index}>
-                    <input
+                  <div className="ShippingCost" key={index}>
+                  <input
                       type="radio"
                       id={`shippingChoice${index}`}
                       name="shipping"
@@ -557,42 +503,79 @@ function Index() {
                       onChange={handleShippingCostChange}
                     />
                     <label htmlFor={`shippingChoice${index}`}>
-                      Shipping Cost: Rp.{el.cost[0].value}
+                      Ongkos kirim : Rp.{el.cost[0].value}
                     </label>
-                    <p>Service: {el.service}</p>
-                    <p>Description: {el.description}</p>
-                    <p>Est: {el.cost[0].etd} Days</p>
+                    <p>Layanan : {el.service}</p>
+                    <p>Deskripsi : {el.description}</p>
+                    <p>Estimasi : {el.cost[0].etd} hari</p>
                   </div>
                 ))
                 : null}
             </div>
           </div>
-          <div
-            style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end' }}
-          >
-            <div style={{ paddingTop: '5px' }}>
-
-              <span >Total Bayar : </span>
-              <span style={{ fontWeight: "700", paddingRight: '20px' }} className="amount">
-                Rp. {calculateTotalBayar()}
-              </span>
+          <div className="secRightPay">
+              <div>
+                <h3 className="kodeVouc">Pilih Kode Voucher</h3>
+                <p className="contentVouc">Silahkan pilih kode voucher dibawah untuk mendapatkan potongan belanja 3%!</p>
+                <span className="checkVou">
+                  <label key={vouchers[3]?.id}>
+                    <input
+                      type="radio"
+                      value={vouchers[3]?.voucherCode}
+                      checked={selectedVoucher === vouchers[3]?.voucherCode}
+                      onChange={handleVoucherChange}
+                    />
+                    <img className="imgVoucerCheck" src={VCR1} alt="IT 01" />
+                  </label>
+                  <label key={vouchers[4]?.id}>
+                    <input
+                      type="radio"
+                      value={vouchers[4]?.voucherCode}
+                      checked={selectedVoucher === vouchers[4]?.voucherCode}
+                      onChange={handleVoucherChange}
+                    />
+                    <img className="imgVoucerCheck" src={VCR2} alt="MS 01" />
+                  </label>
+                  <label key={vouchers[5]?.id}>
+                    <input
+                      type="radio"
+                      value={vouchers[5]?.voucherCode}
+                      checked={selectedVoucher === vouchers[5]?.voucherCode}
+                      onChange={handleVoucherChange}
+                    />
+                    <img className="imgVoucerCheck" src={VCR3} alt="MS 01" />
+                  </label>
+                </span>
+              </div>
+              <div className="paybut">
+                <div>
+                  <span className="totBay">Total Bayar : </span>
+                  <span
+                    style={{ fontWeight: "700", paddingRight: "20px" }}
+                    className="amountbay"
+                  >
+                    Rp. {calculateTotalBayar()}
+                  </span>
+                </div>
+                <div>
+                  {totalShippingCost === 0 ? (
+                    <p className="befBut">
+                      <i>Silahkan pilih metode pengiriman</i>
+                    </p>
+                  ) : (
+                    <button
+                      onClick={() => handlePaymentProcess()}
+                      style={paymentButtonStyle}
+                    >
+                      Bayar Sekarang
+                    </button>
+                  )}
+                </div>
+                {/* Tampilkan modal jika isModalOpen adalah true */}
+                <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
+              </div>
             </div>
-            <div>
-              {totalShippingCost === 0 ? (
-                <p >
-                  <i>Silahkan pilih metode pengiriman</i>
-                </p>
-              ) : (
-                <button
-                  onClick={() => handlePaymentProcess()}
-                  style={paymentButtonStyle}
-                >
-                  Bayar Sekarang
-                </button>
-              )}
-            </div>
-
-          </div>
+        </div>
         </div>
       </div>
 

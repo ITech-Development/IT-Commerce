@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
-const API_URL = "http://localhost:3100"; // Define your API URL here
+const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
 const ProductDetailPage = () => {
   const [product, setProduct] = useState(null);
@@ -32,55 +32,71 @@ const ProductDetailPage = () => {
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>
-            Harga: <strong>Rp. {product.unitPrice}</strong>
+            Harga{" "}
+            <strong style={{paddingLeft: '43px'}}>: Rp. {product.unitPrice.toLocaleString("id-ID")}</strong>
           </Price>
+
           <Stock>
-            Stok Tersisa: <strong>{product.stock}</strong>
+            Stok Tersisa<strong> : {product.stock} </strong> unit
           </Stock>
           <hr />
           <Specifications>
             <SpecificationItem>
-              Kategori: <strong>{product.categories?.name}</strong>
+              Kategori <strong style={{paddingLeft: '50px'}}>: {product.categories?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Tipe: <strong>{product.types?.name}</strong>
+              Merek  <strong>: {product.types?.name}</strong>
+            </SpecificationItem>
+            {/* <SpecificationItem>
+              Kondisi: <strong>{product.condition}</strong>
+            </SpecificationItem> */}
+            <SpecificationItem>
+              Minimum Order{" "}
+              <strong>: {product.minimumOrder.toLocaleString("id-ID")}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Minimum Order: <strong>{product.minimumOrder}</strong>
+              Stok <strong style={{paddingLeft: '11px'}}> : {product.stock.toLocaleString("id-ID")}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Stok: <strong>{product.stock}</strong>
+              Berat {" "}
+              <strong style={{paddingLeft: '73px'}}>: {product.weight.toLocaleString("id-ID")}</strong> gram
             </SpecificationItem>
             <SpecificationItem>
-              Berat: <strong>{product.weight} cm</strong>
+              Tinggi{" "}
+              <strong> : {product.height.toLocaleString("id-ID")}</strong> cm
             </SpecificationItem>
             <SpecificationItem>
-              Tinggi: <strong>{product.height} cm</strong>
+              Lebar<strong style={{paddingLeft: '71px'}}> : {product.width.toLocaleString("id-ID")}</strong> {" "} cm
             </SpecificationItem>
-            <SpecificationItem>
-              Lebar: <strong>{product.width} cm</strong>
-            </SpecificationItem>
-            <SpecificationItem>
-              Panjang: <strong>{product.length} cm</strong>
-            </SpecificationItem>
-            <SpecificationItem>
+            {/* <SpecificationItem>
               Product Owner: <strong>{product.product_owners?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Author: <strong>{product.authors?.fullName}</strong>
-            </SpecificationItem>
+              Author: <strong>{product.authors?.name}</strong>
+            </SpecificationItem> */}
           </Specifications>
           <div style={{ marginTop: "30px" }}>
             <Link to="/">
-              <button>Back</button>
+              <button>Kembali</button>
             </Link>
           </div>
         </ProductInfo>
       </ProductDetailWrapper>
 
       <Description>
-        <h3>Deskripsi</h3>
-        <p>{product.description}</p>
+        <h3>Deskripsi Produk</h3>
+        <p
+          style={{
+            fontSize: "0.9rem",
+            lineHeight: "25px",
+            whiteSpace: "normal",
+            position: 'relative',
+            top: '-10px'
+          }}
+          dangerouslySetInnerHTML={{
+            __html: product.description.replace(/\n/g, "<br>"),
+          }}
+        />
       </Description>
     </ProductDetailContainer>
   );
@@ -92,11 +108,13 @@ const ProductDetailContainer = styled.div`
   justify-content: center;
   // align-items: center;
   position: relative;
+  min-width: 1350px;
   top: 80px;
 `;
 
 const ProductDetailWrapper = styled.div`
-  max-width: 1420px;
+  max-width: 1350px;
+  min-width: 1350px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -120,8 +138,9 @@ const ProductInfo = styled.div`
 `;
 
 const ProductName = styled.h2`
-  margin-top: 10px
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+  max-width: 700px;
+  font-size: 21px;
 `;
 
 const Price = styled.p`
@@ -146,7 +165,7 @@ const SpecificationItem = styled.div`
 `;
 
 const Description = styled.div`
-  max-width: 1420px;
+  max-width: 1350px;
   width: 100%;
   display: flex;
   margin: 20px auto;

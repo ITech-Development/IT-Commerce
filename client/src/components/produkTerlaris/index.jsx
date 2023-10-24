@@ -9,103 +9,6 @@ import Star from "../../assets/star.png";
 import { FadeLoader } from "react-spinners";
 import styled, { keyframes } from "styled-components";
 
-const loadingContainerStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  minHeight: "200px",
-};
-
-const shadowAnimation = keyframes`
-  0% {
-    box-shadow: none;
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  }
-  100% {
-    box-shadow: none;
-  }
-`;
-
-const Card = styled.div`
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.2s ease;
-  max-height: 330px;
-  max-width: 300px; /* Atur lebar maksimum sesuai kebutuhan Anda */
-  width: 100%; /* Gunakan lebar 100% agar sesuai dengan wadahnya */
-
-  &:hover {
-    animation: ${shadowAnimation} 1s ease-in-out infinite;
-  }
-`;
-
-const CardImage = styled.img`
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-`;
-
-const CardContent = styled.div`
-  padding: 16px;
-`;
-
-const Title = styled.h3`
-  margin: 0;
-  font-size: 14px;
-  font-weight: 500;
-  padding-bottom: 7px;
-`;
-
-const Price = styled.p`
-  margin: 0;
-  font-size: 16px;
-  font-weight: 700;
-  padding-top: 2px;
-`;
-
-const ProductListContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 1420px;
-  margin: 0 auto;
-  padding: 20px; /* Atur sesuai kebutuhan Anda */
-  @media (max-width: 768px) {
-    position: relative;
-    top: -220px;
-  }
-`;
-
-const LoadMoreButton = styled.button`
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
-const CardGridContainers = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 20px;
-  @media (max-width: 768px) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-`;
-
 const ProductCard = ({ product, onAddToCart }) => {
   const starRating = 1;
   return (
@@ -157,13 +60,13 @@ const ProductList = () => {
   const { data, error, isLoading } = useGetProductsQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
-  const [displayedCards, setDisplayedCards] = useState(7);
+  const [displayedCards, setDisplayedCards] = useState(28);
 
   const handleAddToCart = async (product) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       const url =
-        "http://localhost:3100/product-carts";
+        "https://indoteknikserver-732012365989.herokuapp.com/product-carts";
       try {
         const response = await axios.post(url, product, {
           headers: { access_token: accessToken },
@@ -180,7 +83,7 @@ const ProductList = () => {
     setSearchQuery(event.target.value);
   };
   const handleLoadMore = () => {
-    setDisplayedCards((prevDisplayedCards) => prevDisplayedCards + 7);
+    setDisplayedCards((prevDisplayedCards) => prevDisplayedCards + 28);
   };
 
   const handleSortOptionChange = (event) => {
@@ -206,44 +109,157 @@ const ProductList = () => {
     : [];
   return (
     <>
-      <ProductListContainer>
-        {isLoading ? (
-          <div style={loadingContainerStyle}>
-            <FadeLoader color="#007bff" loading={isLoading} size={50} />
-          </div>
-        ) : error ? (
-          <p>An error occurred</p>
-        ) : (
-          <>
-          <CardGridContainers>
-              {filteredAndSortedData.slice(0, displayedCards).map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onAddToCart={handleAddToCart}
-                />
-              ))}
-            </CardGridContainers>
-            {/* Tampilkan tombol "Muat Lebih Banyak" jika jumlah kartu yang ditampilkan belum mencapai total */}
-            {displayedCards < filteredAndSortedData.length && (
-              <div
-                style={{
-                  textAlign: "center",
-                  display: "flex",
-                  maxWidth: "1420px",
-                  margin: "auto",
-                }}
-              >
-                <button className="muat" onClick={handleLoadMore}>
-                  Muat Lebih Banyak
-                </button>
-              </div>
-            )}
-          </>
-        )}
-      </ProductListContainer>
+      <div className="prdtlrs">
+        <h2 className="titleTer">Produk Terlaris</h2>
+
+        <ProductListContainer>
+          {isLoading ? (
+            <div style={loadingContainerStyle}>
+              <FadeLoader color="#007bff" loading={isLoading} size={50} />
+            </div>
+          ) : error ? (
+            <p>An error occurred</p>
+          ) : (
+            <>
+              <CardGridContainers>
+                {filteredAndSortedData
+                  .slice(0, displayedCards)
+                  .map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onAddToCart={handleAddToCart}
+                    />
+                  ))}
+              </CardGridContainers>
+              {/* Tampilkan tombol "Muat Lebih Banyak" jika jumlah kartu yang ditampilkan belum mencapai total */}
+              {displayedCards < filteredAndSortedData.length && (
+                <div
+                  style={{
+                    textAlign: "center",
+                    display: "flex",
+                    maxWidth: "1420px",
+                    margin: "auto",
+                  }}
+                >
+                  <button className="muat" onClick={handleLoadMore}>
+                    Muat Lebih Banyak
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </ProductListContainer>
+      </div>
     </>
   );
 };
 
 export default ProductList;
+
+const loadingContainerStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  minHeight: "200px",
+};
+
+const shadowAnimation = keyframes`
+  0% {
+    box-shadow: none;
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+  100% {
+    box-shadow: none;
+  }
+`;
+
+const CardGridContainers = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0;
+  }
+`;
+
+const Card = styled.div`
+  border: 1px solid #ccc;
+  // padding: 10px 10px 19px 10px;
+  border-radius: 5px;
+  margin: 5px 0px;
+  // max-height: 282px;
+  height: auto;
+  width: auto;
+  box-shadow: none;
+  &:hover {
+    animation: ${shadowAnimation} 1s ease-in-out infinite;
+  }
+
+  @media (max-width: 768px) {
+    margin: 0;
+    padding: 0;
+  }
+`;
+
+const CardImage = styled.img`
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 5px 5px 0 0;
+`;
+
+const CardContent = styled.div`
+  padding: 10px 10px 19px 10px;
+  @media (max-width: 768px) {
+    margin: 0;
+    width: auto;
+    padding: auto;
+  }
+`;
+
+const Title = styled.h3`
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  padding-bottom: 7px;
+`;
+
+const Price = styled.p`
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  padding-top: 2px;
+`;
+
+const ProductListContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: auto;
+  height: auto;
+  margin: auto;
+  @media (max-width: 768px) {
+  }
+`;
+
+const LoadMoreButton = styled.button`
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;

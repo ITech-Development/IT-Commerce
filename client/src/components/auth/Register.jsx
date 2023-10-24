@@ -66,11 +66,11 @@ const Register = () => {
         <img className="imgregis img2" src={Regis} alt="" />
       </div>
       <div className="divRegis">
-        <h2 className="h2">Register</h2>
+        <h2 className="h2">Daftar Akun</h2>
         <form onSubmit={handleSubmit} className="form">
           <div>
             <label className="label" htmlFor="fullName">
-              Full Name :{" "}
+              Nama Lengkap :{" "}
             </label>
             <input
               type="text"
@@ -94,7 +94,7 @@ const Register = () => {
           </div>
           <div>
             <label className="label" htmlFor="password">
-              Password :{" "}
+              Kata Sandi :{" "}
             </label>
             <input
               type="password"
@@ -106,7 +106,7 @@ const Register = () => {
           </div>
           <div>
             <label className="label" htmlFor="phoneNumber">
-              Phone Number :{" "}
+              Nomor Handphone:{" "}
             </label>
             <input
               type="tel"
@@ -118,7 +118,7 @@ const Register = () => {
           </div>
           <div>
             <label className="label" htmlFor="address">
-              Address :{" "}
+              Alamat :{" "}
             </label>
             <input
               type="text"
@@ -129,11 +129,11 @@ const Register = () => {
             />
           </div>
           <button className="button" type="submit">
-            Register
+            Daftar
           </button>
         </form>
         <p className="p">
-          Already have an account? <Link to="/login">Login</Link>
+          Sudah punya akun? <Link to="/login">Masuk</Link>
         </p>
       </div>
     </div>

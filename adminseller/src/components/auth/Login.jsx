@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./style.css";
 import { UserContext } from "../../App.js";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Login = () => {
   const { dispatch } = useContext(UserContext);
@@ -10,6 +12,11 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
 
   const handleSubmit = async (e) => {
     
@@ -29,7 +36,7 @@ const Login = () => {
     try {
       // Call the API to perform login
       const response = await axios.post(
-        "http://localhost:3100/admin-sellers/login",
+        "https://indoteknikserver-732012365989.herokuapp.com/admin-sellers/login",
         userData
       );
       console.log("Login response:", response.data);
@@ -69,15 +76,42 @@ const Login = () => {
         </div>
         <div>
           <label className="label" htmlFor="password">
-            Password :{" "}
+            Password:
           </label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="inputPass"
-          />
+          <div
+            className="password-input-container"
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              width: "105%",
+            }}
+          >
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="inputPass"
+            />
+            <button
+              style={{
+                position: "relative",
+                left: "-50px",
+                background: "none",
+                color: "grey",
+                top: "-7px",
+                border: 'none'
+              }}
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="showPasswordButton"
+            >
+              <FontAwesomeIcon
+                icon={showPassword ? faEye : faEyeSlash}
+                className="eye-icon"
+              />
+            </button>
+          </div>
         </div>
         <button className="button" type="submit">
           Login

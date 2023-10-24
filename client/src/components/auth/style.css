@@ -1,13 +1,11 @@
-/* Styling for the container */
 .containerlogin {
-  margin: -10px auto 0 280px;
+  margin: -20px auto 0 185px;
   position: fixed;
 }
 .containerregis {
-  margin: -10px auto 0 400px;
+  margin: 10px auto 0 300px;
   position: fixed;
 }
-
 
 .imgStack {
   position: relative;
@@ -58,27 +56,27 @@
 
 /* Styling for the login form container */
 .divLogin {
-  background-color: #deeef7;
+  background-color: #deeef78f;
   max-width: 395px;
   padding: 10px 35px 20px 35px;
-  border: 1px solid #ece9e9;
+  border: 1px solid transparent;
   border-radius: 5px;
   animation: fadeIn 1s ease-out forwards;
   position: relative;
   top: -600px;
-  right: -388px;
+  margin-left: auto;
 }
 
 .divRegis {
-  background-color: #deeef7;
+  background-color: #deeef78f;
   max-width: 305px;
   padding: 8px 25px 18px 25px;
-  border: 1px solid #ece9e9;
+  border: 1px solid transparent;
   border-radius: 5px;
   animation: fadeIn 1s ease-out forwards;
   position: relative;
-  top: -670px;
-  right: -12px;
+  top: -697px;
+  margin-right: auto;
 }
 
 /* Add media query for responsiveness */
@@ -101,7 +99,7 @@
   }
 
   .img2 {
-    display: none; /* Hide the image on mobile screens */
+    display: none;
   }
 }
 
@@ -115,21 +113,27 @@
   }
 
   .divLogin {
-    top: 80px;
+    top: 50px;
     right: 300px;
     left: 0;
     position: relative;
     max-width: 100%;
-    padding: 20px;
+    padding: 0;
     margin: 0 auto;
+    background-color: transparent;
+  }
+
+  .divRegis {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
   }
 
   .img1 {
-    display: none; /* Hide the image on mobile screens */
+    display: none; 
   }
 }
 
-/* Styling for the login form */
 .form {
   display: flex;
   flex-direction: column;
@@ -151,7 +155,10 @@
 }
 
 .inputEmailRegis,
-.inputPassRegis, .inputFull, .inputPhone, .inputAddress {
+.inputPassRegis,
+.inputFull,
+.inputPhone,
+.inputAddress {
   padding: 7px;
   margin-bottom: 15px;
   border: 1px solid #ccc;

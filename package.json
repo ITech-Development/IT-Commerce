@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "react-modal": "^3.16.1"
+    "flowbite-react": "^0.6.4"
   }
 }

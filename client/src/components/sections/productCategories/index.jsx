@@ -1,66 +1,73 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSpring, animated } from "react-spring";
+// import { useSpring, animated } from "react-spring";
 import "./ProductCategories.css"; // Import your CSS file
 import vc01 from "../../../assets/TK01.png";
 import vc02 from "../../../assets/MS01.png";
 import vc03 from "../../../assets/IT01.png";
 import SeeAll from "../../../assets/seeAll.png";
+import styled from "styled-components";
 
 const categoryData = [
   {
     to: "/nozzle",
     title: "Nozzle",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Nozzle_nisnl0.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509167/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Nozzle_dl1ncg.png",
   },
   {
     to: "/delivery-valve",
     title: "Delivery Valve",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Del_Valve_jqedrn.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509163/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/D_Valve_zm6neh.png",
   },
   {
     to: "/element",
     title: "Element",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Element_iyzgy6.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509166/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Element_aodlth.png",
   },
   {
     to: "/ve-pump",
     title: "VE Pump",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Nozzle_nisnl0.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509166/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/VE_Pump_jjstdn.png",
   },
   {
     to: "/ve-pump-parts",
     title: "VE Pump Parts",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Del_Valve_jqedrn.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509168/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/VE_Parts_ucovbd.png",
   },
   {
     to: "/injector",
     title: "Injector",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Element_iyzgy6.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509166/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Injector_vdvsq3.png",
   },
   {
     to: "/scv",
     title: "Scv",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Nozzle_nisnl0.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509168/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/SCV_hxgo3d.png",
   },
   {
     to: "/turboparts",
     title: "Turbo & Parts",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Del_Valve_jqedrn.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509169/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Turbo_Parts_hybhex.png",
   },
   {
     to: "/head-rotor",
     title: "Head Rotor",
     imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1694586958/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru/Element_iyzgy6.png",
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509168/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Rotor_Head_d97dbp.png",
+  },
+  {
+    to: "/sensor",
+    title: "Sensor",
+    imageUrl:
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697622637/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Sensor_Common_Rail_en1sev.png",
   },
 ];
 
@@ -80,51 +87,43 @@ const voucherData = [
 ];
 
 function ProductCategoryCard({ to, title, imageUrl }) {
-  const cardAnimation = useSpring({
-    from: { transform: "scale(1)" },
-    to: async (next) => {
-      while (true) {
-        await next({ transform: "scale(1.05)" });
-        await next({ transform: "scale(1)" });
-      }
-    },
-  });
-
   return (
-    <animated.div className="category-card" style={cardAnimation}>
+    <div className="category-card">
       <Link to={to} target="blank">
         <img src={imageUrl} alt={title} className="category-image" />
         <p className="titleCategory">{title}</p>
       </Link>
-    </animated.div>
+    </div>
   );
 }
 
 function ProductCategories() {
   return (
+    <div style={{margin: '0 30px'}}>
     <div
       className="prdt"
       style={{
         display: "flex",
         justifyContent: "space-between",
         margin: "auto",
-        maxWidth: "1420px",
+        width: 'auto',
+        height: 'auto'
       }}
     >
       <div className="category-container">
         <div className="category-section">
-          <h1>
+          <h2>
             Pilihan <br />
             Kategori Terlaris
-          </h1>
-          <Link to="/productlist">
+          </h2>
+          <Link to="/category-list">
+            <Buttons>Lihat Semua</Buttons>
+          </Link>
+          <Link to="/category-list">
             <div className="allmas">
               <img className="seeAll" src={SeeAll} alt="" />
               <p className="seeAlltext">lihat semua</p>
             </div>
-          </Link>
-          <Link to="/category-list">
-            <button className="view-all-button">Lihat Semua Produk Kategori</button>
           </Link>
         </div>
         <div className="category-sectionCategories">
@@ -150,7 +149,19 @@ function ProductCategories() {
         </div>
       </div>
     </div>
+    </div>
   );
 }
 
 export default ProductCategories;
+
+const Buttons = styled.button`
+background-color: #3498db;
+color: #fff;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s;
+`

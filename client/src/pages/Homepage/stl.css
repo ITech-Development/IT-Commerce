@@ -1,6 +1,8 @@
+/* Tampilan Default */
 .herohome {
   margin-top: 45px;
 }
+
 .stlimg {
   max-width: 80%;
   width: 35%;
@@ -19,12 +21,338 @@
   font-size: 28px;
 }
 
+.peopleBot {
+  padding-top: 8px;
+  width: 105px;
+  height: 40px;
+}
+.peoplesBot {
+  padding-top: 8px;
+  width: 145px;
+  height: 55px;
+}
+.qna {
+  background: white;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: left;
+  margin: 0 10px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.headBot {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5px;
+}
+
+.hand {
+  width: 45px;
+  height: 30px;
+  position: relative;
+  right: 220px;
+  top: 21px;
+}
+
+.butSec {
+  width: 25px;
+  height: 20px;
+}
+
+/* .boxbot {
+  background-image: linear-gradient(#0090fe, white);
+} */
+
+.ParBut {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
+.boxbot {
+  background-image: linear-gradient(blue, white);
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: auto;
+}
+
+.content {
+  margin-bottom: auto; /* Konten akan tetap di atas tombol */
+  /* padding: 10px; */
+}
+
+.conbut {
+  background-color: white;
+  padding-top: 16px;
+  margin-top: auto; /* Tombol akan tetap di bawah konten */
+  border: 1px solid transparent;
+  border-radius: 15px;
+}
+
+.chilBut {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  margin: auto;
+  cursor: pointer;
+  line-height: 3px;
+}
+
+/* Style hover untuk .chilBut */
+.chilBut:hover {
+  color: blue;
+}
+
+.messageConcep {
+  background-color: white;
+  /* padding: 0px 8px; */
+  border: 1px solid transparent;
+  border-radius: 15px 15px 0 0;
+  margin-top: 10px;
+  max-height: auto;
+}
+
+.giftMascot {
+  /* padding: 10px 5px; */
+  width: 55px;
+  height: 30px;
+}
+
+/* .helpConcep {
+  line-height: 10px;
+} */
+
+.dropSearch {
+  width: 96%;
+  height: 2rem;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.select-button {
+  display: flex;
+  flex-direction: column; /* Menyusun tombol dan ikon secara vertikal */
+  align-items: flex-start; /* Posisi teks di sebelah kiri */
+  text-align: left;
+}
+
+.buttons {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px; /* Jarak antara tombol */
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Menyusun teks ke kiri dan ikon ke kanan */
+  border: 1px solid transparent;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.buttons i {
+  margin-left: 10px; /* Jarak antara teks dan ikon */
+  /* width: 100%; */
+}
+
+.buttons:hover {
+  background-color: #e0e0e0; /* Warna latar saat tombol dihover */
+  color: blue;
+}
+
+/* Contoh gaya ikon panah (menggunakan Font Awesome) */
+.fa-caret-right {
+  font-size: 12px;
+}
+
+.helpContent {
+  background-color: white;
+  margin-top: 10px;
+}
+
+.subHEadChatbot {
+  text-align: center;
+  color: white;
+  max-width: 80%;
+  font-weight: 500;
+}
+
+.clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+  }
+}
+/* CSS untuk komponen ChatApp */
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 40vh;
+}
+
+.conversation {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.messages {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.messages--sent {
+  justify-content: flex-end;
+}
+
+.message {
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f1f0f0;
+  max-width: 70%;
+}
+
+/* Gaya pesan yang dikirim (sent) */
+.message {
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+/* Gaya pesan yang diterima (received) */
+.messages--received .message {
+  background-color: #f1f0f0;
+  color: #333;
+}
+
+.text-bar {
+  height: 50px;
+  border-top: 1px solid #ccc;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.text-bar__field {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  height: 100%;
+  padding: 0 20px;
+  border: none;
+  font-size: 14px;
+}
+
+.text-bar__thumb {
+  width: 50px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.anim-wiggle {
+  animation: wiggle 0.2s ease infinite;
+}
+.anim-wiggle-2 {
+  animation: wiggle2 0.2s ease infinite;
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotateZ(5deg);
+  }
+  50% {
+    transform: rotateZ(-5deg);
+  }
+  100% {
+    transform: rotateZ(5deg);
+  }
+}
+@keyframes wiggle2 {
+  0% {
+    transform: rotateZ(10deg);
+  }
+  50% {
+    transform: rotateZ(-10deg);
+  }
+  100% {
+    transform: rotateZ(10deg);
+  }
+}
+.thumb {
+  width: 25px;
+  height: 25px;
+  display: block;
+}
+
+/* Tampilan di Layar Lebar (lebih besar dari 769px) */
+@media screen and (min-width: 769px) {
+  .productlaris {
+    position: relative;
+    top: 0;
+    padding-left: 0;
+    font-size: 28px;
+  }
+
+  .foot {
+    position: relative;
+    top: 0;
+  }
+
+  .ohya {
+    margin-top: 0;
+  }
+  .stlimg {
+    width: 35%;
+    max-height: none;
+  }
+  .herohome {
+    margin-top: 45px;
+  }
+}
+
+.selected-emoji {
+  cursor: pointer;
+}
+
+/* Tampilan di Layar Kecil (kurang dari atau sama dengan 769px) */
 @media screen and (max-width: 769px) {
   .productlaris {
     position: relative;
     top: -210px;
     padding-left: 20px;
-    /* left: 20px; */
     font-size: 16px !important;
   }
 
@@ -37,11 +365,21 @@
     margin-top: 143px;
   }
   .stlimg {
-    width: 100%; /* Lebar gambar menjadi 100% dari lebar modal */
-    max-height: 120vh; /* Batasi tinggi gambar agar tidak melewati tinggi layar */
+    width: 100%;
+    max-height: 120vh;
     margin: 0;
   }
   .herohome {
     margin-top: 48px;
   }
+}
+
+/* Style khusus untuk perangkat Android */
+@media screen and (max-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
+  /* Tambahkan style khusus untuk Android di sini */
+}
+
+/* Style khusus untuk perangkat iOS */
+@media screen and (max-width: 768px) and (-webkit-min-device-pixel-ratio: 2) and (device-aspect-ratio: 40/71) {
+  /* Tambahkan style khusus untuk iOS di sini */
 }

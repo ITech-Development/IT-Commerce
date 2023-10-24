@@ -1,0 +1,125 @@
+/* CSS untuk Footer */
+.footer {
+    background-color: #cdf5fd5f;
+    color: #342e2e;
+    padding: 0 30px;
+    margin-top: 30px;
+    border-radius: 25px;
+  }
+  
+  .top {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .top ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .top h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .top ul li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .top a {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s;
+  }
+  
+  .top a:hover {
+    color: #f00; /* Ganti warna saat dihover */
+  }
+  
+  .pages {
+    display: flex;
+    flex-wrap: wrap;
+    color: #342e2e;
+
+  }
+
+  .list {
+    color: #342e2e;
+
+  }
+  
+  .pages ul {
+    margin-right: 2rem;
+  }
+
+  .logossss {
+    width: 150px;
+    height: auto;
+    padding-top: 10px;
+  }
+  
+  .newsletter {
+    max-width: 300px;
+  }
+  
+  .newsletter form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .newsletter input[type="email"] {
+    width: 70%;
+    padding: 0.5rem;
+    margin-right: 1rem;
+    border: none;
+  }
+  
+  .newsletter input[type="button"] {
+    background-color: #f00;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 30px;
+    cursor: pointer;
+  }
+  
+  .social {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: end;
+  }
+  
+  .social i {
+    margin-right: 1rem;
+    
+  }
+  
+  .info {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    /* margin-top: 2rem; */
+    max-width: 1200px;
+    padding: 10px 0 30px 0;
+    /* margin: 0 auto; */
+    margin-left: -200px;
+  }
+  
+  .legal a {
+    text-decoration: none;
+    color: #fff;
+    margin-right: 1rem;
+    transition: color 0.3s;
+  }
+  
+  .legal a:hover {
+    color: #f00;
+  }
+  
+  .copyright {
+    font-size: 0.8rem;
+  }
+  
