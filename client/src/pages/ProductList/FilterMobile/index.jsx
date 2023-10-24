@@ -57,6 +57,7 @@ function FilterMobile({
                     min={1}
                 />
             </div>{" "}
+            
             <hr />
             <div className="stock-filter">
                 <label>Stok:</label>
