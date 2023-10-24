@@ -1,0 +1,13 @@
+@media (max-width: 768px) {
+    .filterMobile {
+        /* Add CSS styles to position the filter on the left for small screens */
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: white;
+        overflow-y: scroll;
+        padding-bottom: 10%;
+    }
+    
+}
