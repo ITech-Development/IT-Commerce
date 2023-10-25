@@ -2,6 +2,60 @@ const { CheckoutProduct, Checkout, Product, ProductOwner, sequelize, User } = re
 
 class CheckoutProductController {
 
+    // static async getAllCheckoutProducts(req, res, next) {
+    //     try {
+    //         // Find checkouts associated with the user
+    //         const checkouts = await Checkout.findAll({
+    //             where: { userId: req.user.id },
+    //         });
+
+    //         const checkoutProductsMap = {};
+
+    //         // Iterate through checkouts
+    //         for (const checkout of checkouts) {
+    //             const checkoutId = checkout.id;
+
+    //             // Retrieve checkout products and include associated product data
+    //             const checkoutProducts = await CheckoutProduct.findAll({
+    //                 where: {
+    //                     checkoutId: checkoutId
+    //                 },
+    //                 include: [
+    //                     {
+    //                         model: Product,   // Include Product model
+    //                         as: 'products',    // Define alias for the association,
+    //                         include: [
+    //                             {
+    //                                 model: ProductOwner,
+    //                                 as: 'product_owners'
+    //                             }
+    //                         ]
+    //                     },
+    //                     {
+    //                         model: Checkout,
+    //                         as: 'checkouts'
+    //                     }
+    //                 ],
+    //                 order: [['createdAt', 'ASC']]
+    //             });
+
+    //             if (checkoutProducts.length > 0) {
+    //                 // Store checkout products with quantity in the map
+    //                 checkoutProductsMap[checkoutId] = checkoutProducts.map(cp => ({
+    //                     product: cp.products,
+    //                     checkout: cp.checkouts,
+    //                     quantity: cp.quantity,
+    //                     createdAt: cp.createdAt
+    //                 }));
+    //             }
+    //         }
+
+    //         res.status(200).json(checkoutProductsMap);
+    //     } catch (error) {
+    //         next(error);
+    //     }
+    // }
+
     static async getAllCheckoutProducts(req, res, next) {
         try {
             // Find checkouts associated with the user
@@ -39,9 +93,12 @@ class CheckoutProductController {
                     order: [['createdAt', 'ASC']]
                 });
 
-                if (checkoutProducts.length > 0) {
+                // Filter checkout products by paymentStatus
+                const paidCheckoutProducts = checkoutProducts.filter(cp => cp.checkouts.paymentStatus === 'pay');
+
+                if (paidCheckoutProducts.length > 0) {
                     // Store checkout products with quantity in the map
-                    checkoutProductsMap[checkoutId] = checkoutProducts.map(cp => ({
+                    checkoutProductsMap[checkoutId] = paidCheckoutProducts.map(cp => ({
                         product: cp.products,
                         checkout: cp.checkouts,
                         quantity: cp.quantity,
@@ -55,6 +112,7 @@ class CheckoutProductController {
             next(error);
         }
     }
+
 
     static async addCheckoutProduct(req, res, next) {
         const t = await sequelize.transaction();

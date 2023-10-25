@@ -14,8 +14,6 @@ function FilterMobile({
     closeFilter
 }) {
 
-
-
     return (
         <div className='filterMobile'>
             <h2>Filter</h2>

@@ -1,4 +1,4 @@
-const { Checkout, User } = require('../models')
+const { Checkout, User, CheckoutProduct, Product } = require('../models')
 
 class CheckoutController {
 
@@ -9,6 +9,16 @@ class CheckoutController {
                     {
                         model: User,
                         as: 'users'
+                    },
+                    {
+                        model: CheckoutProduct,
+                        as: 'checkouts',
+                        include: [
+                            {
+                                model: Product,
+                                as: 'products'
+                            }
+                        ]
                     }
                 ]
             })
