@@ -5,52 +5,61 @@
   margin: auto;
   width: auto;
   justify-content: space-between;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .imgcorouselBrand {
   width: 100px;
   height: auto;
+  display: flex;
+  align-items: center;
 }
 .split-image {
-  overflow: hidden;
-  position: relative;
-  animation: split 3s linear infinite;
-  transform: translateX(0);
-  width: 100%;
-  float: left;
+  overflow: hidden; /* Mengatur overflow ke hidden */
+  animation: marquee 20s linear infinite; /* Animasi marquee selama 10 detik (sesuaikan sesuai kebutuhan) */
+  display: inline-block;
+  transform: translateX(200%);
 }
 
-@keyframes split {
-  0%, 100% {
-    transform: translateX(0);
+@keyframes marquee {
+  0% {
+    transform: translateX(1300%); /* Geser elemen ke kanan sejauh 100% */
   }
-  25% {
-    transform: translateX(-20%);
-  }
-  50% {
-    transform: translateX(0%);
-  }
-  75% {
-    transform: translateX(20%);
+  100% {
+    transform: translateX(-1000%); /* Geser elemen ke kiri sejauh 100% */
   }
 }
-
 
 @media screen and (max-width: 767px) {
   .carouselbrand {
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* Membuat 4 kolom dengan lebar yang sama */
+    grid-template-columns: repeat(14, 2fr); /* Membuat 4 kolom dengan lebar yang sama */
     gap: 14px; /* Mengatur jarak antar elemen dalam grid */
     position: relative;
     padding: 0 auto;
-    margin-right: 180px;
+    /* margin-right: 180px; */
     top: -18px;
-    right: 12px;
-    max-width: 400px;
+    /* right: 12px; */
+    width: 100%;
   }
   .imgcorouselBrand {
     width: auto;
     height: 15px;
-    max-width: 700px;
   }
+  .split-image {
+  overflow: hidden; /* Mengatur overflow ke hidden */
+  animation: marquee 30s linear infinite; /* Animasi marquee selama 10 detik (sesuaikan sesuai kebutuhan) */
+  display: inline-block;
+  transform: translateX(300%);
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(800%); /* Geser elemen ke kanan sejauh 100% */
+  }
+  100% {
+    transform: translateX(-1000%); /* Geser elemen ke kiri sejauh 100% */
+  }
+}
   
 }

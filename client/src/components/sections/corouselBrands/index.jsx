@@ -72,8 +72,6 @@ function index() {
             />
           </div>
         </a>
-      </div>
-      <div className="carouselbrand">
         <a href="https://www.delphiautoparts.com/" target="blank">
           <div className="split-image">
             <img
@@ -140,8 +138,9 @@ function index() {
             />
           </div>
         </a>
+        
       </div>
-    </div>
+      </div>
   );
 }
 
