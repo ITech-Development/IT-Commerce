@@ -7,42 +7,12 @@
   max-height: 330px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  /* Center content horizontally */
-  text-align: center;
-  /* Center text horizontally */
+  align-items: center; /* Center content horizontally */
+  text-align: center; /* Center text horizontally */
   padding: 16px;
   /* width: 48%;  */
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-.filter {
-=======
-.filter{
->>>>>>> 4c31b21058845a472c8dacc3785f81d65aa547f4
-  display: block;
-}
-
-.imageFilter {
-  display: none;
-}
-
-.filterDropdown {
-  width: 100%;
-  /* Full width of the container */
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-
-=======
-<<<<<<< HEAD
->>>>>>> bceb2102719162db2073e2fe2eb9fc2fc94fd5c0
-=======
->>>>>>> bcfcd7d408063ae514f0f057a667833e22a2fb87
->>>>>>> 4c31b21058845a472c8dacc3785f81d65aa547f4
 .productlist-container {
   width: auto;
   width: 1420px;
@@ -61,10 +31,8 @@
 .product img {
   width: 100%;
   height: auto;
-  max-height: 120px;
-  /* Adjust image height as needed */
-  object-fit: contain;
-  /* Ensure image fits container */
+  max-height: 120px; /* Adjust image height as needed */
+  object-fit: contain; /* Ensure image fits container */
 }
 
 .price {
@@ -76,17 +44,14 @@
 
 .star-rating {
   display: flex;
-  align-items: center;
-  /* Center stars vertically */
+  align-items: center; /* Center stars vertically */
   margin-top: 5px;
-  justify-content: center;
-  /* Center stars horizontally */
+  justify-content: center; /* Center stars horizontally */
 }
 
 .star-rating img {
   max-width: 15px;
-  margin: 0 2px;
-  /* Add spacing between stars */
+  margin: 0 2px; /* Add spacing between stars */
 }
 
 .star-rating p {
@@ -111,17 +76,8 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
-<<<<<<< HEAD
-  padding: 10px;
-  width: 80%;
-=======
   padding: 10px ;
   width: auto;
-<<<<<<< HEAD
->>>>>>> bceb2102719162db2073e2fe2eb9fc2fc94fd5c0
-=======
->>>>>>> bcfcd7d408063ae514f0f057a667833e22a2fb87
->>>>>>> 4c31b21058845a472c8dacc3785f81d65aa547f4
   /* margin: 0  0 0 10px; */
 }
 
@@ -163,14 +119,6 @@ input {
   align-items: center;
   align-content: center;
 }
-<<<<<<< HEAD
-
-=======
-<<<<<<< HEAD
->>>>>>> bceb2102719162db2073e2fe2eb9fc2fc94fd5c0
-=======
->>>>>>> bcfcd7d408063ae514f0f057a667833e22a2fb87
->>>>>>> 4c31b21058845a472c8dacc3785f81d65aa547f4
 .containPrices {
   display: flex;
   justify-content: space-around;
@@ -191,95 +139,40 @@ input {
 @media (max-width: 768px) {
   .CardGridContainer {
     grid-template-columns: repeat(2, 1fr);
-    display: grid;
-    gap: 20px;
   }
-
-  
-
-  .productsLIST{
-    position: relative;
-    padding-right: 77%;
-    top: -20px;
-  }
-
-  .productlist-title {
-    padding-right: 77%;
-  }
-
-  .filter {
-    display: none;
-  }
-
-  .imageFilter {
-    display: block;
-    margin-left: 20px;
-  }
-
   .productlist {
-    display: grid;
-    /* Mengubah tampilan container menjadi grid */
-    grid-template-columns: repeat(2, 1fr);
-    /* Menampilkan 2 card per baris */
-    grid-gap: 16px;
-    /* Menambahkan jarak antara card */
+    display: grid; /* Mengubah tampilan container menjadi grid */
+    grid-template-columns: repeat(2, 1fr); /* Menampilkan 2 card per baris */
+    grid-gap: 16px; /* Menambahkan jarak antara card */
   }
 
   .product {
-    width: 100%;
-    /* Set the width to 100% for full-width stacking */
-    max-height: 200px;
-    margin: 0;
-    /* Remove margin for full-width stacking */
+    width: 100%; /* Set the width to 100% for full-width stacking */
+    margin: 0; /* Remove margin for full-width stacking */
   }
 
   .product img {
-    max-height: initial;
-    /* Remove max height for mobile */
+    max-height: initial; /* Remove max height for mobile */
   }
 
   .price {
-    font-size: 12px;
-    /* Adjust font size for mobile */
+    font-size: 10px; /* Adjust font size for mobile */
   }
 
   .star-rating {
-    margin-top: 3px;
+    margin-top: 5px;
   }
 
   .star-rating img {
-    max-width: 10px;
-    /* Adjust star size for mobile */
+    max-width: 12px; /* Adjust star size for mobile */
   }
 
   .star-rating p {
-    font-size: 10px;
-    /* Adjust font size for mobile */
+    font-size: 10px; /* Adjust font size for mobile */
   }
-
   .dropPil {
     display: none;
   }
-
-  .dropSearch {
-    margin: 0;
-    padding: 0;
-  }
-
-  .star-rating img {
-    max-width: 12px;
-    /* Adjust star size for mobile */
-  }
-
-  .star-rating p {
-    font-size: 10px;
-    /* Adjust font size for mobile */
-  }
-
-  .dropPil {
-    display: none;
-  }
-
   .dropSearch {
     margin: 0;
     padding: 0;

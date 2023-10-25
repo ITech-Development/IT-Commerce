@@ -22,10 +22,10 @@ function CheckoutProductsPage() {
 
   function formatPrice(price) {
     const priceString = price.toString();
-    const parts = priceString.split('.');
-    const decimalPart = parts[1] === '00' ? '' : `.${parts[1]}`;
+    const parts = priceString.split(".");
+    const decimalPart = parts[1] === "00" ? "" : `.${parts[1]}`;
     return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".") + decimalPart;
-}
+  }
 
   const filteredCheckoutProducts = Object.keys(checkoutProducts).reduce(
     (result, checkoutId) => {
@@ -113,17 +113,23 @@ function CheckoutProductsPage() {
                         <td>{productInfo.quantity}</td>
                         <td>{productInfo.checkout.setPPN}</td>
                         <td>{formatPrice(productInfo.checkout.totalPrice)}</td>
-                        <td className="address">{productInfo.checkout.shippingAddress}</td>
+                        <td className="address">
+                          {productInfo.checkout.shippingAddress}
+                        </td>
                         <td>{productInfo.checkout.shippingMethod}</td>
                         <td>{productInfo.checkout.deliveryStatus}</td>
                         <td className="timeorder">{productInfo.createdAt}</td>
                         <td>{productInfo.checkout.paymentStatus}</td>
+                        <td>
+                          <Link to={`/my-order/${productInfo.checkout.id}`} className="no-underline-link">
+                            <button className="pesditer">Detail Pesanan</button>
+                          </Link>
+                        </td>
                       </tr>
                     ))}
                 </tbody>
               </table>
             </div>
-            <button className="pesditer">Pesanan Diterima</button>
           </div>
         ))
       )}

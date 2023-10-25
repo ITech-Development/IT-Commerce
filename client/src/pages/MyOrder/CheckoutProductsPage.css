@@ -7,6 +7,10 @@
 .pesanUser {
   padding-bottom: 40px;
 }
+.no-underline-link {
+  text-decoration: none;
+}
+
 
 .checkout-table {
   margin: 70px 0 25px 0;

@@ -8,8 +8,32 @@
 }
 .imgcorouselBrand {
   width: 100px;
-  height: 40px;
+  height: auto;
 }
+.split-image {
+  overflow: hidden;
+  position: relative;
+  animation: split 3s linear infinite;
+  transform: translateX(0);
+  width: 100%;
+  float: left;
+}
+
+@keyframes split {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-20%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  75% {
+    transform: translateX(20%);
+  }
+}
+
 
 @media screen and (max-width: 767px) {
   .carouselbrand {

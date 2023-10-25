@@ -16,7 +16,7 @@ import Help from "../../assets/help.png";
 import Message from "../../assets/message.png";
 import Mascotmes from "../../assets/mascotmes.gif";
 import EmojiPicker from "./emoji";
-import Hero2 from '../../components/sections/hero2'
+import Hero2 from "../../components/sections/hero2";
 
 function Index() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -76,14 +76,6 @@ function Index() {
     }
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (inputText.trim() !== "") {
-  //     setMessages([...messages, { text: inputText, type: "sent" }]);
-  //     setInputText("");
-  //   }
-  // };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputText.trim() !== "") {
@@ -103,12 +95,11 @@ function Index() {
         <HeroSection />
         <CorouselBrands />
         <ProductCategories />
-        <Hero2/>
+        <Hero2 />
         <ProdukTerlaris />
         <Footer />
       </div>
 
-      {/* Modal sebelumnya */}
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
@@ -118,7 +109,7 @@ function Index() {
             backgroundColor: "rgba(0, 0, 0, 0.75)",
           },
           content: {
-            maxWidth: "37%",
+            maxWidth: "40%",
             margin: "auto",
             position: "relative",
             top: "100px",
@@ -127,12 +118,19 @@ function Index() {
           },
         }}
       >
+        <button style={{
+      position: "absolute",
+      top: "10px", // Sesuaikan dengan posisi vertikal yang diinginkan
+      right: "10px", // Sesuaikan dengan posisi horizontal yang diinginkan
+    }} className="close-modal" onClick={closeModal}>
+          <i className="fas fa-times"></i>
+        </button>
         <Link to="/productlist">
           <img
             src={ClaimVoucher}
             alt="Product"
             style={{
-              width: "90%",
+              width: "100%",
             }}
           />
         </Link>
