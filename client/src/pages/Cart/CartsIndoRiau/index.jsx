@@ -7,6 +7,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FaShoppingCart } from "react-icons/fa"; // Menggunakan react-icons/fa5 untuk ikon dari Font Awesome 5
 import {
     useRemoveItemFromCartMutation,
+    
     useIncrementCartItemMutation,
     useDecrementCartItemMutation,
 } from "../../../features/cart/apiCarts";
