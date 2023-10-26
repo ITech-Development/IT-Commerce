@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
+import defaultImage from "../../../assets/adminProf.png";
 import {
   useClearProductCartMutation,
   useGetCartsItechQuery,
@@ -12,6 +13,8 @@ import {
 } from "../../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../../features/user/apiUser";
 import PaymentModal from '../PaymentModal';
+
+const validVoucherCodes = ["TK01", "IT01", "MS01"];
 
 function Index() {
   const { data: carts } = useGetCartsItechQuery()
@@ -39,6 +42,10 @@ function Index() {
   const [checkoutCourier, setCheckoutCourier] = useState("jne");
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
 
+  const [voucherCode, setVoucherCode] = useState(""); // State for the voucher code input
+  const [isVoucherValid, setIsVoucherValid] = useState(false); // Flag to track voucher code validity
+
+
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
@@ -58,6 +65,7 @@ function Index() {
 
   const handlePaymentProcess = async (data) => {
     const bayar = calculateTotalBayar();
+  
     const config = {
       "Content-Type": "application/json",
       access_token: localStorage.getItem("access_token"),
@@ -77,6 +85,7 @@ function Index() {
         selectedVoucher,
         checkoutPengiriman,
         bayar,
+
       },
       headers: config,
       method: "post",
@@ -125,7 +134,7 @@ function Index() {
     scriptTag.src = midtransUrl;
 
     const midtransClientKey = "Mid-client-O4jQIpz7nFgHIY3h";
-    scriptTag.setAttribute("data-client-key-itech", midtransClientKey);
+    scriptTag.setAttribute("data-client-key-indo-itech", midtransClientKey);
 
     document.body.appendChild(scriptTag);
 
@@ -154,7 +163,7 @@ function Index() {
       return 0;
     }
     const subtotal = calculateSubtotal(); // Panggil fungsi calculateSubtotal untuk mendapatkan nilai subtotal
-    const voucherPercentage = 3;
+    const voucherPercentage = 6;
     const discountAmount = (subtotal * voucherPercentage) / 100;
     return discountAmount;
   };
@@ -167,7 +176,6 @@ function Index() {
     const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
     return ppnAmount;
   };
-
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
@@ -288,6 +296,33 @@ function Index() {
     setCourier(courier);
   };
 
+  const getVoucherImage = (code) => {
+    // You can return the image URL based on the voucher code
+    // For example, return the appropriate image URL for each valid voucher code
+    if (code === "TK01") {
+      return VCR1;
+    } else if (code === "IT01") {
+      return VCR2;
+    } else if (code === "MS01") {
+      return VCR3;
+    }
+    // Return a default image or handle other cases as needed
+    return defaultImage;
+  };
+
+
+  const applyVoucher = () => {
+
+    if (validVoucherCodes.includes(voucherCode)) {
+      setSelectedVoucher(voucherCode); // Apply the valid voucher
+      setIsVoucherValid(true); // Set the flag to true
+    } else {
+      // Display an error message or handle invalid voucher code here
+      setIsVoucherValid(false); // Set the flag to false
+    }
+  };
+
+
   const paymentButtonStyle = {
     backgroundColor: 'blue',
     color: 'white',
@@ -386,7 +421,7 @@ function Index() {
                     <span class="amount">Rp.{calculateSubtotal()}</span>
                   </div>
                   <div class="subtotal">
-                    <span>Voucher 3% :</span>
+                    <span>Voucher 6% :</span>
                     <span class="amount">Rp. {calculateVoucher()}</span>
                   </div>
                   <div
@@ -397,7 +432,7 @@ function Index() {
                     }}
                   >
                     <span>PPN 11% :</span>
-                    <span className="amount"> Rp. -</span>
+                    <span className="amount"> Rp. {calculatePPN()}</span>
                   </div>
                   <div class="subtotal">
                     <span>Total :</span>
@@ -413,45 +448,18 @@ function Index() {
 
         <div>
           <h2>Pilih Kode Voucher</h2>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-arround",
-              marginBottom: "30px",
-            }}
-          >
-            <label key={vouchers[3]?.id}>
-              <input
-                type="radio"
-                value={vouchers[3]?.voucherCode}
-                checked={selectedVoucher === vouchers[3]?.voucherCode}
-                onChange={handleVoucherChange}
-              />
-              {/* {vouchers[3]?.voucherCode} */}
-              <img src={VCR1} alt="IT 01" width="150" />
-            </label>
-            <label key={vouchers[4]?.id}>
-              <input
-                type="radio"
-                value={vouchers[4]?.voucherCode}
-                checked={selectedVoucher === vouchers[4]?.voucherCode}
-                onChange={handleVoucherChange}
-              />
-              {/* {vouchers[4]?.voucherCode} */}
-              <img src={VCR2} alt="MS 01" width="150" />
-            </label>
-            <label key={vouchers[5]?.id}>
-              <input
-                type="radio"
-                value={vouchers[5]?.voucherCode}
-                checked={selectedVoucher === vouchers[5]?.voucherCode}
-                onChange={handleVoucherChange}
-              />
-              {/* {vouchers[5]?.voucherCode} */}
-              <img src={VCR3} alt="MS 01" width="150" />
-            </label>
+          <div>
+            <input
+              type="text"
+              placeholder="Masukkan kode voucher"
+              value={voucherCode}
+              onChange={(e) => setVoucherCode(e.target.value)}
+            />
+            <button onClick={applyVoucher}>Apply</button>
           </div>
         </div>
+
+
 
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div

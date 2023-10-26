@@ -177,7 +177,6 @@ function Index() {
     return ppnAmount;
   };
 
-
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     const voucherDiscount = calculateVoucher();
