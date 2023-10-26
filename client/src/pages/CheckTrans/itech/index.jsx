@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
+import defaultImage from "../../../assets/adminProf.png";
 import {
   useClearProductCartMutation,
   useGetCartsItechQuery,
@@ -13,6 +14,8 @@ import {
 import { useGetMeQuery } from "../../../features/user/apiUser";
 import Edit from "../../../assets/edit.png";
 import PaymentModal from "../PaymentModal";
+
+const validVoucherCodes = ["TK01", "IT01", "MS01"];
 
 function Index() {
   const { data: carts } = useGetCartsItechQuery();
@@ -38,6 +41,10 @@ function Index() {
   const [checkoutCourier, setCheckoutCourier] = useState("jne");
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
 
+  const [voucherCode, setVoucherCode] = useState(""); // State for the voucher code input
+  const [isVoucherValid, setIsVoucherValid] = useState(false); // Flag to track voucher code validity
+
+
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
@@ -59,6 +66,7 @@ function Index() {
 
   const handlePaymentProcess = async (data) => {
     const bayar = calculateTotalBayar();
+  
     const config = {
       "Content-Type": "application/json",
       access_token: localStorage.getItem("access_token"),
@@ -78,6 +86,7 @@ function Index() {
         selectedVoucher,
         checkoutPengiriman,
         bayar,
+
       },
       headers: config,
       method: "post",
@@ -127,7 +136,7 @@ function Index() {
     scriptTag.src = midtransUrl;
 
     const midtransClientKey = "Mid-client-O4jQIpz7nFgHIY3h";
-    scriptTag.setAttribute("data-client-key-itech", midtransClientKey);
+    scriptTag.setAttribute("data-client-key-indo-itech", midtransClientKey);
 
     document.body.appendChild(scriptTag);
 
@@ -277,6 +286,33 @@ function Index() {
     setCheckoutCourier(courier);
     setCourier(courier);
   };
+
+  const getVoucherImage = (code) => {
+    // You can return the image URL based on the voucher code
+    // For example, return the appropriate image URL for each valid voucher code
+    if (code === "TK01") {
+      return VCR1;
+    } else if (code === "IT01") {
+      return VCR2;
+    } else if (code === "MS01") {
+      return VCR3;
+    }
+    // Return a default image or handle other cases as needed
+    return defaultImage;
+  };
+
+
+  const applyVoucher = () => {
+
+    if (validVoucherCodes.includes(voucherCode)) {
+      setSelectedVoucher(voucherCode); // Apply the valid voucher
+      setIsVoucherValid(true); // Set the flag to true
+    } else {
+      // Display an error message or handle invalid voucher code here
+      setIsVoucherValid(false); // Set the flag to false
+    }
+  };
+
 
   const paymentButtonStyle = {
     backgroundColor: "blue",

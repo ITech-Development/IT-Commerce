@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import VCR1 from "../../../assets/IT01.png";
-import VCR2 from "../../../assets/MS01.png";
-import VCR3 from "../../../assets/TK01.png";
 import {
   useClearProductCartMutation,
   useGetCartsIndoRiauQuery,
@@ -13,6 +10,8 @@ import {
 import { useGetMeQuery } from "../../../features/user/apiUser";
 import PaymentModal from "../PaymentModal";
 import Edit from "../../../assets/edit.png";
+
+const validVoucherCodes = ["TK01", "IT01", "MS01"];
 
 function Index() {
   const { data: carts } = useGetCartsIndoRiauQuery();
@@ -40,6 +39,10 @@ function Index() {
   const [checkoutCourier, setCheckoutCourier] = useState("jne");
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
 
+  const [voucherCode, setVoucherCode] = useState(""); // State for the voucher code input
+  const [isVoucherValid, setIsVoucherValid] = useState(false); // Flag to track voucher code validity
+
+
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
@@ -54,9 +57,9 @@ function Index() {
     fetchVouchers();
   }, []);
 
-  const handleVoucherChange = (event) => {
-    setSelectedVoucher(event.target.value);
-  };
+  // const handleVoucherChange = (event) => {
+  //   setSelectedVoucher(event.target.value);
+  // };
 
   const handlePaymentProcess = async (data) => {
     const bayar = calculateTotalBayar();
@@ -158,7 +161,7 @@ function Index() {
       return 0;
     }
     const subtotal = calculateSubtotal(); // Panggil fungsi calculateSubtotal untuk mendapatkan nilai subtotal
-    const voucherPercentage = 3;
+    const voucherPercentage = 6;
     const discountAmount = (subtotal * voucherPercentage) / 100;
     return discountAmount;
   };
@@ -288,6 +291,19 @@ function Index() {
     setCheckoutCourier(courier);
     setCourier(courier);
   };
+
+
+  const applyVoucher = () => {
+
+    if (validVoucherCodes.includes(voucherCode)) {
+      setSelectedVoucher(voucherCode); // Apply the valid voucher
+      setIsVoucherValid(true); // Set the flag to true
+    } else {
+      // Display an error message or handle invalid voucher code here
+      setIsVoucherValid(false); // Set the flag to false
+    }
+  };
+
 
   const paymentButtonStyle = {
     backgroundColor: "blue",
@@ -506,35 +522,14 @@ function Index() {
               <div>
                 <h3 className="kodeVouc">Pilih Kode Voucher</h3>
                 <p className="contentVouc">Silahkan pilih kode voucher dibawah untuk mendapatkan potongan belanja 3%!</p>
-                <span className="checkVou">
-                  <label key={vouchers[3]?.id}>
-                    <input
-                      type="radio"
-                      value={vouchers[3]?.voucherCode}
-                      checked={selectedVoucher === vouchers[3]?.voucherCode}
-                      onChange={handleVoucherChange}
-                    />
-                    <img className="imgVoucerCheck" src={VCR1} alt="IT 01" />
-                  </label>
-                  <label key={vouchers[4]?.id}>
-                    <input
-                      type="radio"
-                      value={vouchers[4]?.voucherCode}
-                      checked={selectedVoucher === vouchers[4]?.voucherCode}
-                      onChange={handleVoucherChange}
-                    />
-                    <img className="imgVoucerCheck" src={VCR2} alt="MS 01" />
-                  </label>
-                  <label key={vouchers[5]?.id}>
-                    <input
-                      type="radio"
-                      value={vouchers[5]?.voucherCode}
-                      checked={selectedVoucher === vouchers[5]?.voucherCode}
-                      onChange={handleVoucherChange}
-                    />
-                    <img className="imgVoucerCheck" src={VCR3} alt="MS 01" />
-                  </label>
-                </span>
+                  <input
+              type="text"
+              placeholder="Masukkan kode voucher"
+              value={voucherCode}
+              onChange={(e) => setVoucherCode(e.target.value)}
+            />
+            <button onClick={applyVoucher}>Apply</button>
+
               </div>
               <div className="paybut">
                 <div>

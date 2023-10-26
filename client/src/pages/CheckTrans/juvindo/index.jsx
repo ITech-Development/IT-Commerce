@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
+import defaultImage from "../../../assets/adminProf.png";
 import {
   useClearProductCartMutation,
   useGetCartsJuvindoQuery,
@@ -13,6 +14,8 @@ import {
 import { useGetMeQuery } from "../../../features/user/apiUser";
 import Edit from "../../../assets/edit.png";
 import PaymentModal from "../PaymentModal";
+
+const validVoucherCodes = ["TK01", "IT01", "MS01"];
 
 function Index() {
   const { data: carts } = useGetCartsJuvindoQuery()
@@ -37,6 +40,10 @@ function Index() {
   const [checkoutSubdistrict, setCheckoutSubdistrict] = useState();
   const [checkoutCourier, setCheckoutCourier] = useState("jne");
   const [checkoutPengiriman, setCheckoutPengiriman] = useState();
+
+  const [voucherCode, setVoucherCode] = useState(""); // State for the voucher code input
+  const [isVoucherValid, setIsVoucherValid] = useState(false); // Flag to track voucher code validity
+
 
   useEffect(() => {
     const fetchVouchers = async () => {
@@ -126,7 +133,7 @@ function Index() {
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
-    const midtransClientKey = "SB-Mid-client-_MWorWyIPYpYXjUo";
+    const midtransClientKey = "Mid-client-R2krmA7ZU84Yd2Ug";
     scriptTag.setAttribute("data-client-key-juvindo", midtransClientKey);
 
     document.body.appendChild(scriptTag);
@@ -156,7 +163,7 @@ function Index() {
       return 0;
     }
     const subtotal = calculateSubtotal(); // Panggil fungsi calculateSubtotal untuk mendapatkan nilai subtotal
-    const voucherPercentage = 3;
+    const voucherPercentage = 6;
     const discountAmount = (subtotal * voucherPercentage) / 100;
     return discountAmount;
   };
@@ -169,7 +176,6 @@ function Index() {
     const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
     return ppnAmount;
   };
-
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
@@ -289,6 +295,33 @@ function Index() {
     setCheckoutCourier(courier);
     setCourier(courier);
   };
+
+  const getVoucherImage = (code) => {
+    // You can return the image URL based on the voucher code
+    // For example, return the appropriate image URL for each valid voucher code
+    if (code === "TK01") {
+      return VCR1;
+    } else if (code === "IT01") {
+      return VCR2;
+    } else if (code === "MS01") {
+      return VCR3;
+    }
+    // Return a default image or handle other cases as needed
+    return defaultImage;
+  };
+
+
+  const applyVoucher = () => {
+
+    if (validVoucherCodes.includes(voucherCode)) {
+      setSelectedVoucher(voucherCode); // Apply the valid voucher
+      setIsVoucherValid(true); // Set the flag to true
+    } else {
+      // Display an error message or handle invalid voucher code here
+      setIsVoucherValid(false); // Set the flag to false
+    }
+  };
+
 
   const paymentButtonStyle = {
     backgroundColor: 'blue',
