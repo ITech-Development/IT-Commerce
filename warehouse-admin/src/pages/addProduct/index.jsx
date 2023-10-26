@@ -389,7 +389,7 @@ const AddProductPage = () => {
             </div>
             <div style={{ margin: "30px 22px 0 0px", width: "49%" }}>
               <input
-                type="number"
+                type="text"
                 id="minimumOrder"
                 name="minimumOrder"
                 value={newProduct.minimumOrder}
@@ -407,12 +407,13 @@ const AddProductPage = () => {
             </div>
             <div style={{ margin: "30px 0px 0 164px", width: "49%" }}>
               <input
-                type="number"
+                type="text"
                 id="unitPrice"
                 name="unitPrice"
                 value={newProduct.unitPrice}
                 onChange={handleChange}
-                min="0"
+                pattern="[0-9]*"
+                inputMode="numeric"
                 required
               />
             </div>
@@ -437,7 +438,7 @@ const AddProductPage = () => {
             </div>
             <div style={{ margin: "25px 0px 0 173px", width: "49%" }}>
               <input
-                type="number"
+                type="text"
                 id="stock"
                 name="stock"
                 value={newProduct.stock}

@@ -43,6 +43,9 @@ export default function Toolbar(props) {
         <li style={{ display: "flex", alignItems: "center" }}>
           <Link to="/productlist">Semua Produk</Link>
         </li>
+        <li style={{ display: "flex", alignItems: "center" }}>
+          <Link to="/aboutUs">Tentang Kami</Link>
+        </li>
 
         {showCart && (
           <li>

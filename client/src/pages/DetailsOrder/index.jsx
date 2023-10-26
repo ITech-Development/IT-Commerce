@@ -5,12 +5,95 @@ import "./CheckoutProductsPage.css";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import Logo from "../../assets/Logoss.png";
+import { useGetMeQuery } from "../../features/user/apiUser";
 
 function CheckoutProductsPage() {
   const [checkoutProducts, setCheckoutProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const invoiceRef = useRef(null);
+  const { data: me } = useGetMeQuery();
+  const [deliveryStatus, setDeliveryStatus] = useState("");
+
+  const handleDeliveryStatusChange = () => {
+    // Set the delivery status directly since there's only one option
+    setDeliveryStatus("Pesanan diterima");
+
+    // Send the HTTP request immediately after changing the status
+    fetch(
+      `https://indoteknikserver-732012365989.herokuapp.com/checkouts/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          access_token: localStorage.getItem("access_token"),
+        },
+        body: JSON.stringify({ deliveryStatus: "Pesanan diterima" }),
+      }
+    ).then((response) => {
+      if (response.status === 201) {
+        console.log("ok, berhasil");
+      } else {
+        alert("error");
+      }
+    });
+  };
+
+  function calculateTotalPcs(products) {
+    if (!Array.isArray(products)) {
+      return 0; // Return 0 jika input bukanlah sebuah array
+    }
+
+    // Hitung total Pcs dengan menjumlahkan jumlah masing-masing produk
+    const totalPcs = products.reduce((total, product) => {
+      return total + product.quantity;
+    }, 0);
+
+    return totalPcs;
+  }
+
+  function calculateTotalPrice(products) {
+    if (!Array.isArray(products)) {
+      return 0; // Return 0 if the input is not an array
+    }
+
+    // Calculate the total price by summing the price of each product
+    const totalPrice = products.reduce((total, product) => {
+      const productPrice = product.quantity * product.product.unitPrice;
+      return total + productPrice;
+    }, 0);
+
+    return totalPrice;
+  }
+
+  function calculateTotalWeight(products) {
+    if (!Array.isArray(products)) {
+      return 0; // Return 0 jika input bukanlah sebuah array
+    }
+
+    // Hitung total berat (gr) dengan menjumlahkan berat masing-masing produk
+    const totalWeight = products.reduce((total, product) => {
+      return total + product.product.weight;
+    }, 0);
+
+    return totalWeight;
+  }
+
+  function calculateTotalDiscount(products) {
+    if (!Array.isArray(products)) {
+      return 0; // Return 0 if the input is not an array
+    }
+
+    // Calculate the total discount by summing the discount of each product
+    const totalDiscount = products.reduce((total, product) => {
+      // Calculate the discount for each product (3% of the product's unit price)
+      const productDiscount =
+        0.03 * product.product.unitPrice * product.quantity;
+      return total + productDiscount;
+    }, 0);
+
+    return totalDiscount;
+  }
 
   useEffect(() => {
     async function fetchCheckoutProducts() {
@@ -32,20 +115,38 @@ function CheckoutProductsPage() {
 
     fetchCheckoutProducts();
   }, [id]);
+
   function downloadInvoiceAsPDF() {
     if (invoiceRef.current) {
       html2canvas(invoiceRef.current).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4"); // Menggunakan "a4" untuk menentukan ukuran kertas
+        const pdf = new jsPDF("p", "mm");
         const pdfWidth = 210;
-        const pdfHeight = 297; // Tinggi A4 dalam mm
+        const pdfHeight = pdf.internal.pageSize.height;
         const position = 0;
         pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
         pdf.save("invoice.pdf");
       });
     }
   }
-  
+
+//   function downloadInvoiceAsPDF() {
+//     if (invoiceRef.current) {
+//       // Buat objek jspdf dalam potrait mode
+//       const pdf = new jsPDF("p", "mm");
+
+//       // Tambahkan gambar latar belakang
+//       const img = new Image();
+//       img.src = Logo; // Ganti dengan gambar latar belakang yang diinginkan
+//       pdf.addImage(img, "JPEG", 0, 0, 210, 297); // Sesuaikan ukuran gambar dan posisinya
+
+//       // Simpan data invoice dalam dokumen PDF
+//       pdf.fromHTML(invoiceRef.current, 15, 15); // Sesuaikan posisi
+
+//       // Simpan PDF dengan nama "invoice.pdf"
+//       pdf.save("invoice.pdf");
+//     }
+//   }
 
   if (loading) {
     return <p className="dataInvoice">Loading...</p>;
@@ -68,12 +169,16 @@ function CheckoutProductsPage() {
       <div className="sec2Invoice">
         <div>
           <h5>DITERBITKAN ATAS NAMA</h5>
-          <p className="dataInvoice">Penjual : Product Owner</p>
+          <p className="dataInvoice">
+            Penjual : {checkoutProducts[0].product.product_owners.name}
+          </p>
         </div>
         <div>
           <h5>UNTUK</h5>
-          <p className="dataInvoice">Pembeli : </p>
-          <p className="dataInvoice">Tanggal Pembelian : </p>
+          <p className="dataInvoice">Pembeli : {me?.fullName}</p>
+          <p className="dataInvoice">
+            Tanggal Pembelian : {checkoutProducts[0].createdAt}
+          </p>
           <p className="dataInvoice">
             Alamat Pengiriman : {checkoutProducts[0].checkout.shippingAddress}
           </p>
@@ -97,11 +202,14 @@ function CheckoutProductsPage() {
                   {checkoutProduct.product.name}
                   <br />
                 </p>
-                <p>Berat: </p>
+                <p>Berat: {checkoutProduct.product.weight}</p>
               </td>
               <td>{checkoutProduct.quantity}</td>
-              <td>Rp. {checkoutProduct.price}</td>
-              <td>Rp. {checkoutProduct.totalPrice}</td>
+              <td>Rp. {checkoutProduct.product.unitPrice}</td>
+              <td>
+                Rp.{" "}
+                {checkoutProduct.quantity * checkoutProduct.product.unitPrice}
+              </td>
               {/* <td>{checkoutProduct.createdAt}</td> */}
             </tr>
           ))}
@@ -111,38 +219,60 @@ function CheckoutProductsPage() {
         <p className="dataInvoice1"></p>
         <div className="sec3Right">
           <div className="contentSec31">
-            <p className="dataInvoice1Total">TOTAL HARGA (2 Pcs)</p>
-            <p className="dataInvoice1">Rp. harga</p>
+            <p className="dataInvoice1Total">
+              TOTAL HARGA ({calculateTotalPcs(checkoutProducts)} Pcs)
+            </p>
+            <p className="dataInvoice1">
+              Rp. {calculateTotalPrice(checkoutProducts)}
+            </p>
           </div>
           <div className="contentSec3">
-            <p className="dataInvoice1">Total Ongkos Kirim (10 gr)</p>
-            <p className="dataInvoice1">Rp. Harga</p>
+            <p className="dataInvoice1">
+              Total Ongkos Kirim ({calculateTotalWeight(checkoutProducts)} gr)
+            </p>
+            <p className="dataInvoice1">
+              Rp. {checkoutProducts[0].checkout.shippingCost}
+            </p>
           </div>
           <div className="contentSec3">
             <p className="dataInvoice1">Diskon Ongkos Kirim</p>
-            <p className="dataInvoice1">Rp. harga</p>
+            <p className="dataInvoice1">Rp. - </p>
           </div>
           <div className="contentSec3">
             <p className="dataInvoice1">Total Diskon Barang</p>
-            <p className="dataInvoice1">Rp. harga</p>
+            <p className="dataInvoice1">
+              Rp. {calculateTotalDiscount(checkoutProducts)}
+            </p>
           </div>
           <div className="contentSec3">
             <p className="dataInvoice1">Biaya Asuransi Pengiriman</p>
-            <p className="dataInvoice1">Rp. harga</p>
+            <p className="dataInvoice1">Rp. -</p>
+          </div>
+          <div className="contentSec3">
+            <p className="dataInvoice1">PPN</p>
+            <p className="dataInvoice1">
+              Rp. {checkoutProducts[0].checkout.setPPN}
+            </p>
           </div>
           <div className="content1Sec3">
             <p className="dataInvoice1Total">TOTAL BELANJA</p>
-            <p className="dataInvoice1">Rp. harga</p>
+            <p className="dataInvoice1">
+              Rp. {checkoutProducts[0].checkout.totalPrice}
+            </p>
           </div>
           <div className="content2Sec3">
             <p className="dataInvoice1Total">TOTAL TAGIHAN</p>
-            <p className="dataInvoice1">Rp. harga</p>
+            <p className="dataInvoice1">
+              Rp. {checkoutProducts[0].checkout.totalPrice}
+            </p>
           </div>
           <div className="content3Sec3">
             <p className="dataInvoice1promo">Promo Donik</p>
             <div className="isiContentSec3">
               <p className="dataInvoice1">Diskon Belanja 3%</p>
-              <p className="dataInvoice1">Rp. harga</p>
+              <p className="dataInvoice1">
+                Rp. {calculateTotalDiscount(checkoutProducts)}
+              </p>
             </div>
           </div>
         </div>
@@ -151,13 +281,13 @@ function CheckoutProductsPage() {
         <div>
           <p className="dataInvoice1">Kurir :</p>
           <p className="dataInvoice1" style={{ color: "black" }}>
-            JNE
+            {checkoutProducts[0].checkout.shippingMethod.toUpperCase()}
           </p>
         </div>
         <div>
           <p className="dataInvoice1">Metode Pembayaran :</p>
           <p className="dataInvoice1" style={{ color: "black" }}>
-            BCA
+            {checkoutProducts[0].checkout.paymentMethod.toUpperCase()}
           </p>
         </div>
       </div>
@@ -174,13 +304,23 @@ function CheckoutProductsPage() {
             apabila kamu membutuhkan bantuan
           </p>
           <p className="dataInvoice1">
-            Terakhir diupdate: tanggal belanja dan jam
+            Terakhir diupdate: {checkoutProducts[0].createdAt}
           </p>
         </div>
       </div>
       <button className="download-button" onClick={downloadInvoiceAsPDF}>
         Download Invoice as PDF
       </button>
+
+      {checkoutProducts[0].checkout.deliveryStatus === "Dikirim" && (
+        <div>
+          <br />
+          {/* <label htmlFor="deliveryStatus">Delivery Status:</label> */}
+          <button type="button" onClick={handleDeliveryStatusChange}>
+            Pesanan diterima
+          </button>
+        </div>
+      )}
     </div>
   );
 }

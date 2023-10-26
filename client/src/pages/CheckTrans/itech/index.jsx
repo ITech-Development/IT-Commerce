@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getTotals } from "../../../features/cartSlice";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -22,9 +20,6 @@ function Index() {
   const [removeItemFromCart] = useRemoveItemFromCartMutation();
   const [clearItemFromCart] = useClearProductCartMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
   const [token, setToken] = useState("");
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
@@ -61,9 +56,6 @@ function Index() {
     setSelectedVoucher(event.target.value);
   };
 
-  useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
     const bayar = calculateTotalBayar();
@@ -129,12 +121,12 @@ function Index() {
   }, [token]);
 
   useEffect(() => {
-    const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const midtransUrl = "https://app.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
-    const midtransClientKey = "SB-Mid-client-5sjWc9AhHLstKFML";
+    const midtransClientKey = "Mid-client-O4jQIpz7nFgHIY3h";
     scriptTag.setAttribute("data-client-key-itech", midtransClientKey);
 
     document.body.appendChild(scriptTag);

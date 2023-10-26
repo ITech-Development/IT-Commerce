@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getTotals } from "../../../features/cartSlice";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -21,9 +19,6 @@ function Index() {
   const { data: profile } = useGetMeQuery()
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
   const [clearItemFromCart] = useClearProductCartMutation()
-
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
   const [token, setToken] = useState("");
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
@@ -59,12 +54,8 @@ function Index() {
     setSelectedVoucher(event.target.value);
   };
 
-  useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
-
     const bayar = calculateTotalBayar();
     const pajak = calculatePPN()
     const config = {
@@ -86,7 +77,7 @@ function Index() {
         selectedVoucher,
         checkoutPengiriman,
         bayar,
-        pajak
+        pajak,
       },
       headers: config,
       method: "post",
@@ -94,7 +85,6 @@ function Index() {
     clearItemFromCart()
     setToken(response.data.token);
     setIsModalOpen(true);
-
   };
 
   const closeModal = () => {
@@ -131,7 +121,7 @@ function Index() {
   }, [token]);
 
   useEffect(() => {
-    const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const midtransUrl = "https://app.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
@@ -179,6 +169,7 @@ function Index() {
     const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
     return ppnAmount;
   };
+
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();

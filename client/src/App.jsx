@@ -35,6 +35,7 @@ import CategoryList from "./pages/CategoryList/CategoryList";
 import CategoryDetail from "./pages/CategoryDetail";
 import SideDrawer from "./components/navbar/sidemenu/SideDrawer";
 import BackDrop from "./components/navbar/backdrop/BackDrop";
+import AboutUs from './pages/aboutUs'
 
 const Routing = () => {
   return (
@@ -61,6 +62,7 @@ const Routing = () => {
         <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
         <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
         <Route path="/nozzle" element={<ProductCategoryNozzle />} />
+        <Route path="/aboutUs" element={<AboutUs />} />
         <Route
           path="/delivery-valve"
           element={<ProductCategoryDeliveryValve />}
