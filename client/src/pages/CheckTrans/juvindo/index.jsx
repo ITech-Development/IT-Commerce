@@ -121,7 +121,7 @@ function Index() {
   }, [token]);
 
   useEffect(() => {
-    const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const midtransUrl = "https://app.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;

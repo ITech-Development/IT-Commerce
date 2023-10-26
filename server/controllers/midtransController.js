@@ -1,6 +1,7 @@
 const { User, Profile, Checkout, CheckoutProduct, Product } = require("../models/index");
 const midtransClient = require("midtrans-client");
 const midtransKey = process.env.MIDTRANS_SERVER_KEY;
+const midtransKeyItech = process.env.MIDTRANS_SERVER_KEY_ITECH;
 const midtransKeyJuvindo = process.env.MIDTRANS_SERVER_KEY_JUVINDO;
 const midtransKeyIndoRiau = process.env.MIDTRANS_SERVER_KEY_INDO_RIAU;
 let { sequelize } = require("../models/");
@@ -14,8 +15,8 @@ class MidtransController {
       let temp = []
       const user = await User.findByPk(req.user.id);
       let snap = new midtransClient.Snap({
-        isProduction: false,
-        serverKey: midtransKey,
+        isProduction: true,
+        serverKey: midtransKeyItech,
       });
 
       const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
@@ -90,7 +91,7 @@ class MidtransController {
       let temp = []
       const user = await User.findByPk(req.user.id);
       let snap = new midtransClient.Snap({
-        isProduction: false,
+        isProduction: true,
         serverKey: midtransKeyIndoRiau,
       });
 
@@ -176,7 +177,7 @@ class MidtransController {
       let temp = []
       const user = await User.findByPk(req.user.id);
       let snap = new midtransClient.Snap({
-        isProduction: false,
+        isProduction: true,
         serverKey: midtransKeyJuvindo,
       });
 
