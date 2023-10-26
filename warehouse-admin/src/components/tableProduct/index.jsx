@@ -386,8 +386,10 @@ const TableComponent = () => {
                   <TableCell>
                     <NoUnderlineLink to={`/product/${row.id}`}>
                       <BoldText>
-                        {row.name.split(" ").slice(0, 6).join(" ")} 
-                      </BoldText>{" "}...
+                      {row.name} 
+
+                        {/* {row.name.split(" ").slice(0, 25).join(" ")}  */}
+                      </BoldText>{" "}
                     </NoUnderlineLink>{" "}
                   </TableCell>
                   <TableCell>{row.stock.toLocaleString('id-ID')} unit</TableCell>

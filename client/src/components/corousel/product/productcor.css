@@ -1,4 +1,8 @@
-/* CSS for devices with a maximum width of 768px */
+.slide-container {
+  width: auto;
+  margin: 0;
+}
+
 @media (max-width: 768px) {
     .cor {
       width: 8dvh; /* Set the container to full width */

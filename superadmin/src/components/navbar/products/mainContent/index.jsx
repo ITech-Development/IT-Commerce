@@ -43,7 +43,7 @@ const MainContent = () => {
       {/* <p>Daftar Produk</p> */}
       {/* <button onClick={handleAddButtonClick}>Add</button> */}
 
-      <TableComponent />
+      {/* <TableComponent /> */}
 
     </main>
   );

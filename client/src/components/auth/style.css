@@ -18,6 +18,22 @@
   max-width: 800px;
 }
 
+.password-toggle {
+  position: relative;
+  top: -45px;
+  margin-left: 100%;
+  right: 25px;
+}
+.password-toggles {
+  position: relative;
+  top: -42px;
+  margin-left: 100%;
+  right: 25px;
+}
+.labelHp {
+  margin-top: -20px;
+}
+
 .img1 {
   display: flex;
   margin: auto;
@@ -82,7 +98,7 @@
 /* Add media query for responsiveness */
 @media (max-width: 768px) {
   .containerregis {
-    margin: 20px auto;
+    margin: -20px auto ;
     max-width: 100%;
     padding: 0 20px;
     position: static;

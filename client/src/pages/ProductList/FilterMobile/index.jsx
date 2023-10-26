@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './filterMobile.css'
 
 function FilterMobile({
@@ -13,8 +13,6 @@ function FilterMobile({
     handleMaxPriceChange,
     closeFilter
 }) {
-
-
 
     return (
         <div className='filterMobile'>
@@ -44,27 +42,26 @@ function FilterMobile({
                 <label>Harga:</label>
                 <input
                     type="number"
-                    placeholder="Minimum"
+                    placeholder="Minimal"
                     value={minPrice}
                     onChange={handleMinPriceChange}
                     min={1}
                 />
                 <input
                     type="number"
-                    placeholder="Maksimum"
+                    placeholder="Maksimal"
                     value={maxPrice}
                     onChange={handleMaxPriceChange}
                     min={1}
                 />
             </div>{" "}
-            
             <hr />
             <div className="stock-filter">
                 <label>Stok:</label>
                 <select value={selectedSortOption} onChange={handleSortOptionChange} className="filterDropdown">
                     <option value="">Semua</option>
-                    <option value="stock">Minimum</option>
-                    <option value="-stock">Maksimum</option>
+                    <option value="stock">Tersedikit ke Terbanyak</option>
+                    <option value="-stock">Terbanyak ke Tersedikit</option>
                 </select>
             </div>
             <button className="close-sidebar" onClick={closeFilter}>

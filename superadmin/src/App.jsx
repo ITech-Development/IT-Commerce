@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from "react";
 import "./App.css";
 import Login from "./components/auth/Login";
-import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import Products from "./pages/products";
 import Users from "./pages/users";

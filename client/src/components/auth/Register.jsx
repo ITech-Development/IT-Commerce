@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import "./style.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -13,6 +14,7 @@ const Register = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   // const [imageProfile, setImageProfile] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Add state for toggling password visibility
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,6 +62,10 @@ const Register = () => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="containerregis">
       <div className="imgStack">
@@ -97,15 +103,21 @@ const Register = () => {
               Kata Sandi :{" "}
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"} // Toggle between text and password
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="inputPassRegis"
             />
+            <span
+              className="password-toggles"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? <FiEyeOff /> : <FiEye />} {/* Eye icons */}
+            </span>
           </div>
           <div>
-            <label className="label" htmlFor="phoneNumber">
+            <label className="labelHp" htmlFor="phoneNumber">
               Nomor Handphone:{" "}
             </label>
             <input
