@@ -159,12 +159,21 @@ function Index() {
     return discountAmount;
   };
 
+  const calculatePPN = () => {
+    const subtotal = calculateSubtotal();
+    const voucherDiscount = calculateVoucher();
+    const afterVoucherSubtotal = subtotal - voucherDiscount;
+    const ppnPercentage = 11;
+    const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
+    return ppnAmount;
+  };
 
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     const voucherDiscount = calculateVoucher();
-    const total = subtotal - voucherDiscount
+    const ppnAmount = calculatePPN();
+    const total = subtotal - voucherDiscount + ppnAmount;
     return total;
   };
 
@@ -290,7 +299,7 @@ function Index() {
 
   return (
     <div>
-      <div id="snap-container"></div>
+
       <div className="alamat">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Alamat Pengiriman</h2>
@@ -387,6 +396,8 @@ function Index() {
                       fontStyle: "italic",
                     }}
                   >
+                    <span>PPN 11% :</span>
+                    <span className="amount"> Rp. -</span>
                   </div>
                   <div class="subtotal">
                     <span>Total :</span>

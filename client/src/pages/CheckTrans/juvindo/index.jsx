@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getTotals } from "../../../features/cartSlice";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -13,6 +11,7 @@ import {
   useRemoveItemFromCartMutation
 } from "../../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../../features/user/apiUser";
+import PaymentModal from '../PaymentModal';
 
 function Index() {
   const { data: carts } = useGetCartsJuvindoQuery()
@@ -20,8 +19,8 @@ function Index() {
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
   const [clearItemFromCart] = useClearProductCartMutation()
 
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [token, setToken] = useState("");
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
@@ -56,12 +55,8 @@ function Index() {
     setSelectedVoucher(event.target.value);
   };
 
-  useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
-
     const bayar = calculateTotalBayar();
     const pajak = calculatePPN()
     const config = {
@@ -83,13 +78,18 @@ function Index() {
         selectedVoucher,
         checkoutPengiriman,
         bayar,
-        pajak
+        pajak,
       },
       headers: config,
       method: "post",
     });
     clearItemFromCart()
     setToken(response.data.token);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -169,6 +169,7 @@ function Index() {
     const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
     return ppnAmount;
   };
+
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
@@ -300,7 +301,7 @@ function Index() {
 
   return (
     <div>
-      <div id="snap-container"></div>
+
       <div className="alamat">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Alamat Pengiriman</h2>
@@ -591,7 +592,8 @@ function Index() {
                 </button>
               )}
             </div>
-
+            {/* Tampilkan modal jika isModalOpen adalah true */}
+            <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
           </div>
         </div>
       </div>

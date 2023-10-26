@@ -23,7 +23,7 @@ function Index() {
   const [totalShippingCost, setTotalShippingCost] = useState(0);
   const [selectedVoucher, setSelectedVoucher] = useState(null);
   const [vouchers, setVouchers] = useState([]);
-  console.log(vouchers, "tandain");
+  
   const [profile, setProfile] = useState([]);
 
   useEffect(() => {

@@ -6,7 +6,8 @@ const midtransKeyIndoRiau = process.env.MIDTRANS_SERVER_KEY_INDO_RIAU;
 let { sequelize } = require("../models/");
 
 class MidtransController {
-  static async midtransItech(req, res, next) {
+
+  static async midtransTokenItech(req, res, next) {
     console.log(req.body, '<<itech');
     const t = await sequelize.transaction();
     try {
@@ -39,7 +40,6 @@ class MidtransController {
       const midtransToken = await snap.createTransaction(parameter);
 
       const {
-        pajak,
         checkoutProvince,
         checkoutCity,
         bayar,
@@ -47,10 +47,7 @@ class MidtransController {
         selectedVoucher,
         carts,
         checkoutCourier,
-        checkoutPengiriman,
-        subTotal,
         selectedShippingCost,
-        discountVouchers
       } = req.body;
 
       const createCheckout = await Checkout.create({
@@ -73,16 +70,9 @@ class MidtransController {
           createdAt: new Date(),
           updatedAt: new Date(),
         });
-
-        // let dec = await Product.findOne({ where: { id: el.productId } });
-        // if (dec && dec.stock >= el.quantity) {
-        //   await dec.decrement("stock", { by: el.quantity, transaction: t });
-        // } else {
-        //   throw new Error('Produk tidak memiliki cukup stok.');
-        // }
       }
 
-      let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t });
+      await CheckoutProduct.bulkCreate(temp, { transaction: t });
       await t.commit();
       res.status(201).json({ token: midtransToken.token });
     } catch (error) {
@@ -220,10 +210,7 @@ class MidtransController {
         selectedVoucher,
         carts,
         checkoutCourier,
-        checkoutPengiriman,
-        subTotal,
         selectedShippingCost,
-        discountVouchers
       } = req.body;
 
       const createCheckout = await Checkout.create({
@@ -247,12 +234,6 @@ class MidtransController {
           updatedAt: new Date(),
         });
 
-        // let dec = await Product.findOne({ where: { id: el.productId } });
-        // if (dec && dec.stock >= el.quantity) {
-        //   await dec.decrement("stock", { by: el.quantity, transaction: t });
-        // } else {
-        //   throw new Error('Produk tidak memiliki cukup stok.');
-        // }
       }
 
       let bulkCreate = await CheckoutProduct.bulkCreate(temp, { transaction: t });
