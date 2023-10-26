@@ -108,7 +108,7 @@ function CartsItech({ cartsItech }) {
               <div className="cart-product-quantity">
                 <button onClick={() => handlerDec(e.id)}>-</button>
                 <div className="count">{e.quantity}</div>
-                <button onClick={() => handlerInc(e.id)}>+</button>
+                <button className="plusCart" onClick={() => handlerInc(e.id)}>+</button>
               </div>
               <div className="cart-product-total-price">
                 Rp.

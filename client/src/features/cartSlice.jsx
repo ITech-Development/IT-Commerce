@@ -1,4 +1,4 @@
-import { createSlice, createApi } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axios from "axios";
 // import addToCartPost from '../features/productSlice'

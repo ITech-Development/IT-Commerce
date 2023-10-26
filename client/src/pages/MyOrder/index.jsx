@@ -121,7 +121,10 @@ function CheckoutProductsPage() {
                         <td className="timeorder">{productInfo.createdAt}</td>
                         <td>{productInfo.checkout.paymentStatus}</td>
                         <td>
-                          <Link to={`/my-order/${productInfo.checkout.id}`} className="no-underline-link">
+                          <Link
+                            to={`/my-order/${productInfo.checkout.id}`}
+                            className="no-underline-link"
+                          >
                             <button className="pesditer">Detail Pesanan</button>
                           </Link>
                         </td>

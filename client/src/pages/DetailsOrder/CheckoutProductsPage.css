@@ -102,6 +102,7 @@
 .dataInvoiceName {
   font-weight: 600;
   color: blueviolet;
+  width: 560px;
 }
 .product-table thead {
   background-color: white; /* Remove background color */

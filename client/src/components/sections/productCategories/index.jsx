@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 // import { useSpring, animated } from "react-spring";
 import "./ProductCategories.css"; // Import your CSS file
-import vc01 from "../../../assets/TK01.png";
-import vc02 from "../../../assets/MS01.png";
-import vc03 from "../../../assets/IT01.png";
+// import vc01 from "../../../assets/TK01.png";
+// import vc02 from "../../../assets/MS01.png";
+// import vc03 from "../../../assets/IT01.png";
 import SeeAll from "../../../assets/seeAll.png";
 import styled from "styled-components";
 
@@ -71,20 +71,20 @@ const categoryData = [
   },
 ];
 
-const voucherData = [
-  {
-    imageUrl: vc03,
-    description: "Deskripsi Voucher 1",
-  },
-  {
-    imageUrl: vc02,
-    description: "Deskripsi Voucher 2",
-  },
-  {
-    imageUrl: vc01,
-    description: "Deskripsi Voucher 3",
-  },
-];
+// const voucherData = [
+//   {
+//     imageUrl: vc03,
+//     description: "Deskripsi Voucher 1",
+//   },
+//   {
+//     imageUrl: vc02,
+//     description: "Deskripsi Voucher 2",
+//   },
+//   {
+//     imageUrl: vc01,
+//     description: "Deskripsi Voucher 3",
+//   },
+// ];
 
 function ProductCategoryCard({ to, title, imageUrl }) {
   return (
@@ -139,7 +139,7 @@ function ProductCategories() {
           </div>
         </div>
       </div>
-      <div className="secRight">
+      {/* <div className="secRight">
         <h3 className="sech3">Klaim Voucher Sekarang juga!</h3>
         <p>Dapatkan diskon hingga 3% dari setiap transaksi anda!</p>
         <div className="vchp">
@@ -147,7 +147,7 @@ function ProductCategories() {
             <img key={index} className="imgvc" src={voucher.imageUrl} alt="" />
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
     </div>
   );

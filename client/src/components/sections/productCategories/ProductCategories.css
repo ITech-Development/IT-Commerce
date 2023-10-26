@@ -56,8 +56,10 @@
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
+  /* grid-template-columns: repeat(5, 1fr); */
+  gap: 17px;
+  display: flex;
+  padding-top: 25px;
 }
 
 .vchp {
@@ -260,6 +262,7 @@
     display: flex;
     width: 45px;
     height: 10px;
+    padding-top: 0;
     position: relative;
     top: -103px;
     left: 65px;

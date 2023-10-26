@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./CheckoutProductsPage.css";
 import jsPDF from "jspdf";
-// import html2canvas from "html2canvas";
+import html2canvas from "html2canvas";
 import Logo from "../../assets/Logoss.png";
 
 function CheckoutProductsPage() {
@@ -32,38 +32,20 @@ function CheckoutProductsPage() {
 
     fetchCheckoutProducts();
   }, [id]);
-
-  // function downloadInvoiceAsPDF() {
-  //   if (invoiceRef.current) {
-  //     html2canvas(invoiceRef.current).then((canvas) => {
-  //       const imgData = canvas.toDataURL("image/png");
-  //       const pdf = new jsPDF("p", "mm");
-  //       const pdfWidth = 210;
-  //       const pdfHeight = pdf.internal.pageSize.height;
-  //       const position = 0;
-  //       pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
-  //       pdf.save("invoice.pdf");
-  //     });
-  //   }
-  // }
-
   function downloadInvoiceAsPDF() {
     if (invoiceRef.current) {
-      // Buat objek jspdf dalam potrait mode
-      const pdf = new jsPDF("p", "mm");
-
-      // Tambahkan gambar latar belakang
-      const img = new Image();
-      img.src = Logo; // Ganti dengan gambar latar belakang yang diinginkan
-      pdf.addImage(img, "JPEG", 0, 0, 210, 297); // Sesuaikan ukuran gambar dan posisinya
-
-      // Simpan data invoice dalam dokumen PDF
-      pdf.fromHTML(invoiceRef.current, 15, 15); // Sesuaikan posisi
-
-      // Simpan PDF dengan nama "invoice.pdf"
-      pdf.save("invoice.pdf");
+      html2canvas(invoiceRef.current).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4"); // Menggunakan "a4" untuk menentukan ukuran kertas
+        const pdfWidth = 210;
+        const pdfHeight = 297; // Tinggi A4 dalam mm
+        const position = 0;
+        pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
+        pdf.save("invoice.pdf");
+      });
     }
   }
+  
 
   if (loading) {
     return <p className="dataInvoice">Loading...</p>;
