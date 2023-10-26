@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getTotals } from "../../../features/cartSlice";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -13,6 +11,7 @@ import {
   useRemoveItemFromCartMutation
 } from "../../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../../features/user/apiUser";
+import PaymentModal from '../PaymentModal';
 
 function Index() {
   const { data: carts } = useGetCartsItechQuery()
@@ -20,8 +19,8 @@ function Index() {
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
   const [clearItemFromCart] = useClearProductCartMutation()
 
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [token, setToken] = useState("");
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
@@ -56,12 +55,8 @@ function Index() {
     setSelectedVoucher(event.target.value);
   };
 
-  useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
 
   const handlePaymentProcess = async (data) => {
-
     const bayar = calculateTotalBayar();
     const config = {
       "Content-Type": "application/json",
@@ -88,6 +83,11 @@ function Index() {
     });
     clearItemFromCart()
     setToken(response.data.token);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -164,7 +164,7 @@ function Index() {
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     const voucherDiscount = calculateVoucher();
-    const total = subtotal - voucherDiscount 
+    const total = subtotal - voucherDiscount
     return total;
   };
 
@@ -579,7 +579,8 @@ function Index() {
                 </button>
               )}
             </div>
-
+            {/* Tampilkan modal jika isModalOpen adalah true */}
+            <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
           </div>
         </div>
       </div>

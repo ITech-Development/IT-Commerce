@@ -6,7 +6,6 @@ const midtransKeyIndoRiau = process.env.MIDTRANS_SERVER_KEY_INDO_RIAU;
 let { sequelize } = require("../models/");
 
 class MidtransController {
-
   static async midtransItech(req, res, next) {
     console.log(req.body, '<<itech');
     const t = await sequelize.transaction();
@@ -17,14 +16,14 @@ class MidtransController {
         isProduction: false,
         serverKey: midtransKey,
       });
-      console.log(snap, 'log snap');
-      let order_id = "ITECH-ORDERID-" +
+
+      const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+      let order_id = `INV/${currentDate}/ITE/` +
         Math.floor(1000000 + Math.random() * 9000000)
       let parameter = {
         transaction_details: {
           order_id,
           gross_amount: +req.query.total,
-
         },
         credit_card: {
           secure: true,
@@ -40,6 +39,7 @@ class MidtransController {
       const midtransToken = await snap.createTransaction(parameter);
 
       const {
+        pajak,
         checkoutProvince,
         checkoutCity,
         bayar,
@@ -47,17 +47,21 @@ class MidtransController {
         selectedVoucher,
         carts,
         checkoutCourier,
-        checkoutPengiriman
+        checkoutPengiriman,
+        subTotal,
+        selectedShippingCost,
+        discountVouchers
       } = req.body;
 
       const createCheckout = await Checkout.create({
         userId: req.user.id,
-        shippingAddress: `${checkoutProvince}, ${checkoutCity}, ${checkoutSubdistrict}`,
+        shippingAddress: `${user.fullName}, (${user.phoneNumber}), ${user.address}, ${checkoutSubdistrict}, ${checkoutCity}, ${checkoutProvince}`,
         totalPrice: bayar,
         voucherCode: selectedVoucher,
         midtransCode: order_id,
-        setPPN: '-',
-        shippingMethod: `Kurir: ${checkoutCourier}`,
+        setPPN: `-`,
+        shippingMethod: `${checkoutCourier}`,
+        shippingCost: selectedShippingCost,
         transaction: t
       });
 
@@ -99,7 +103,9 @@ class MidtransController {
         isProduction: false,
         serverKey: midtransKeyIndoRiau,
       });
-      let order_id = "INDORIAU-ORDERID-" +
+
+      const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+      let order_id = `INV/${currentDate}/IND/` +
         Math.floor(1000000 + Math.random() * 9000000)
       let parameter = {
         transaction_details: {
@@ -128,17 +134,21 @@ class MidtransController {
         selectedVoucher,
         carts,
         checkoutCourier,
-        checkoutPengiriman
+        checkoutPengiriman,
+        subTotal,
+        selectedShippingCost,
+        discountVouchers
       } = req.body;
 
       const createCheckout = await Checkout.create({
         userId: req.user.id,
-        shippingAddress: `${checkoutProvince}, ${checkoutCity}, ${checkoutSubdistrict}`,
+        shippingAddress: `${user.fullName}, (${user.phoneNumber}), ${user.address}, ${checkoutSubdistrict}, ${checkoutCity}, ${checkoutProvince}`,
         totalPrice: bayar,
         voucherCode: selectedVoucher,
         midtransCode: order_id,
         setPPN: `${pajak}`,
         shippingMethod: `${checkoutCourier}`,
+        shippingCost: selectedShippingCost,
         transaction: t
       });
 
@@ -179,7 +189,9 @@ class MidtransController {
         isProduction: false,
         serverKey: midtransKeyJuvindo,
       });
-      let order_id = "JUVINDO-ORDERID-" +
+
+      const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+      let order_id = `INV/${currentDate}/JUV/` +
         Math.floor(1000000 + Math.random() * 9000000)
       let parameter = {
         transaction_details: {
@@ -208,17 +220,21 @@ class MidtransController {
         selectedVoucher,
         carts,
         checkoutCourier,
-        checkoutPengiriman
+        checkoutPengiriman,
+        subTotal,
+        selectedShippingCost,
+        discountVouchers
       } = req.body;
 
       const createCheckout = await Checkout.create({
         userId: req.user.id,
-        shippingAddress: `${checkoutProvince}, ${checkoutCity}, ${checkoutSubdistrict}`,
+        shippingAddress: `${user.fullName}, (${user.phoneNumber}), ${user.address}, ${checkoutSubdistrict}, ${checkoutCity}, ${checkoutProvince}`,
         totalPrice: bayar,
         voucherCode: selectedVoucher,
         midtransCode: order_id,
         setPPN: `${pajak}`,
-        shippingMethod: `Kurir: ${checkoutCourier}`,
+        shippingMethod: `${checkoutCourier}`,
+        shippingCost: selectedShippingCost,
         transaction: t
       });
 
@@ -274,7 +290,7 @@ class MidtransController {
   static async pay(req, res, next) {
     console.log(req.body, 'test pay');
     const vaNumbers = req.body.va_numbers;
-  
+
     try {
       if (req.body.transaction_status === 'settlement') {
         // Menggunakan transaksi Sequelize
@@ -284,17 +300,17 @@ class MidtransController {
             where: { midtransCode: req.body.order_id },
             transaction: t,
           });
-  
+
           if (!checkout) {
             throw new Error('Data checkout tidak ditemukan');
           }
-  
+
           // Ambil produk yang terkait
           const products = await CheckoutProduct.findAll({
             where: { checkoutId: checkout.id },
             transaction: t,
           });
-  
+
           for (const product of products) {
             const productData = await Product.findByPk(product.productId, { transaction: t });
             if (productData && productData.stock >= product.quantity) {
@@ -304,17 +320,17 @@ class MidtransController {
               throw new Error('Produk tidak memiliki cukup stok.');
             }
           }
-  
+
           // Update status pembayaran checkout
           await checkout.update(
             {
               paymentStatus: 'pay',
-              paymentMethod: `VA Number: ${vaNumbers[0].va_number}, Bank: ${vaNumbers[0].bank}, Payment Type: ${req.body.payment_type}`,
+              paymentMethod: `${vaNumbers[0].bank}`,
             },
             { transaction: t }
           );
         });
-  
+
         res.status(200).json({ message: 'Pembayaran berhasil diproses.' });
       } else {
         res.status(200).json({ message: 'Status transaksi tidak sesuai untuk pemrosesan pembayaran.' });
@@ -324,7 +340,7 @@ class MidtransController {
       res.status(500).json({ message: 'Terjadi kesalahan dalam pemrosesan pembayaran.' });
     }
   }
-  
+
 }
 
 module.exports = MidtransController;
