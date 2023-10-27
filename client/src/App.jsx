@@ -20,6 +20,7 @@ import ProfileUpdate from "./pages/profileUpdate";
 import ServiceList from "./pages/ServiceList";
 import CheckTransItech from "./pages/CheckTrans/itech";
 import CheckTransIndoRiau from "./pages/CheckTrans/indoRiau";
+import CheckTransIndoTeknik from "./pages/CheckTrans/indoTeknik";
 import CheckTransJuvindo from "./pages/CheckTrans/juvindo";
 import ProductCategoryNozzle from "./pages/ProductCategories/nozzle";
 import ProductCategoryDeliveryValve from "./pages/ProductCategories/deliveryValve";
@@ -56,6 +57,7 @@ const Routing = () => {
       <Route path="/profile-update/:id" element={<ProfileUpdate />} />
       <Route path="/check-TransITech" element={<CheckTransItech />} />
       <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
+      <Route path="/check-TransIT" element={<CheckTransIndoTeknik />} />
       <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
       <Route path="/nozzle" element={<ProductCategoryNozzle />} />
       <Route path="/delivery-valve" element={<ProductCategoryDeliveryValve />} />

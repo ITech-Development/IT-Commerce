@@ -59,7 +59,7 @@ export const cartsApi = createApi({
             providesTags: ['Post']
         }),
         getCartsIndoTeknik: builder.query({
-            query: () => 'product-carts/indo-riau', // Ganti dengan URL endpoint yang sesuai
+            query: () => 'product-carts/indo-teknik', // Ganti dengan URL endpoint yang sesuai
             providesTags: ['Post']
         }),
     })

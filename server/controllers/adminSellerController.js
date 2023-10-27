@@ -227,8 +227,6 @@ class AdminSellerController {
     }
     
 
-    
-
     // static async getOrderListByVoucherCode(req, res, next) {
     //     if (req.adminSeller.id === 4) {
     //         try {
