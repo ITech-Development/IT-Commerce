@@ -11,7 +11,7 @@ import { useGetMeQuery } from "../../../features/user/apiUser";
 import PaymentModal from "../PaymentModal";
 import Edit from "../../../assets/edit.png";
 
-const validVoucherCodes = ["TK01", "IT01", "MS01"];
+const validVoucherCodes = ["DM01", "IT01", "MS01"];
 
 function Index() {
   const { data: carts } = useGetCartsIndoRiauQuery();

@@ -71,21 +71,6 @@ const categoryData = [
   },
 ];
 
-// const voucherData = [
-//   {
-//     imageUrl: vc03,
-//     description: "Deskripsi Voucher 1",
-//   },
-//   {
-//     imageUrl: vc02,
-//     description: "Deskripsi Voucher 2",
-//   },
-//   {
-//     imageUrl: vc01,
-//     description: "Deskripsi Voucher 3",
-//   },
-// ];
-
 function ProductCategoryCard({ to, title, imageUrl }) {
   return (
     <div className="category-card">

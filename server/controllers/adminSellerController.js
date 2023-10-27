@@ -172,7 +172,7 @@ class AdminSellerController {
             } else if (req.adminSeller.id === 5) {
                 voucherCode = 'MS01';
             } else if (req.adminSeller.id === 6) {
-                voucherCode = 'TK01';
+                voucherCode = 'DM01';
             } else {
                 console.log('Check the server again');
                 return;
@@ -225,8 +225,6 @@ class AdminSellerController {
             res.status(500).json({ error: 'Internal server error' });
         }
     }
-    
-
     
 
     // static async getOrderListByVoucherCode(req, res, next) {
@@ -408,7 +406,7 @@ class AdminSellerController {
                 voucherCode = 'MS01';
                 break;
             case 6:
-                voucherCode = 'TK01';
+                voucherCode = 'DM01';
                 break;
             default:
                 console.log('Check the server again');

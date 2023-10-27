@@ -247,7 +247,7 @@ const ProductList = () => {
                       />
                     </div>{" "}
                     <hr />
-                    <div className="stock-filter">
+                    {/* <div className="stock-filter">
                       <label>Stok:</label>
                       <select
                         value={selectedSortOption}
@@ -258,7 +258,7 @@ const ProductList = () => {
                         <option value="stock">Minimum</option>
                         <option value="-stock">Maksimum</option>
                       </select>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="productsLIST">

@@ -15,6 +15,9 @@ export function Sidebar({ closeSidebar }) {
         <li>
           <Link to="/services">Layanan</Link>
         </li>
+        <li>
+          <Link to="/aboutUs">Tentang Kami</Link>
+        </li>
         <hr />
         {localStorage.getItem("access_token") && (
           <>

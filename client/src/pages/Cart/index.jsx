@@ -17,6 +17,7 @@ const Cart = () => {
   const { data: cartsJuvindo } = useGetCartsJuvindoQuery();
   const { data: cartsItech } = useGetCartsItechQuery();
   const { data: cartsIndoTeknik } = useGetCartsIndoTeknikQuery(); // Fetch "cartsIndoTeknik" data
+  console.log(cartsIndoTeknik, 'iteknik');
 
   return (
     <>

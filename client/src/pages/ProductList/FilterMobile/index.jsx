@@ -55,15 +55,15 @@ function FilterMobile({
                     min={1}
                 />
             </div>{" "}
-            <hr />
-            <div className="stock-filter">
+            {/* <hr /> */}
+            {/* <div className="stock-filter">
                 <label>Stok:</label>
                 <select value={selectedSortOption} onChange={handleSortOptionChange} className="filterDropdown">
                     <option value="">Semua</option>
                     <option value="stock">Tersedikit ke Terbanyak</option>
                     <option value="-stock">Terbanyak ke Tersedikit</option>
                 </select>
-            </div>
+            </div> */}
             <button className="close-sidebar" onClick={closeFilter}>
                 <i className="fas fa-times"></i>
             </button>

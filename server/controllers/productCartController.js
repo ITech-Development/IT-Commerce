@@ -2,7 +2,7 @@ const { ProductCart, Cart, Product, User } = require("../models");
 let { sequelize } = require("../models/");
 
 class ProductCartController {
-  
+
   static async getAllProductCarts(req, res, next) {
     try {
       let findedCart = await Cart.findOne({
@@ -49,7 +49,7 @@ class ProductCartController {
     }
   }
 
-  static async getAllProductItechs(req, res, next) {
+  static async getAllProductsItech(req, res, next) {
     try {
       let findedCart = await Cart.findOne({
         where: { userId: req.user.id },
@@ -76,7 +76,7 @@ class ProductCartController {
     }
   }
 
-  static async getAllProductIndoRiaus(req, res, next) {
+  static async getAllProductsIndoRiau(req, res, next) {
     try {
       let findedCart = await Cart.findOne({
         where: { userId: req.user.id },
@@ -102,8 +102,34 @@ class ProductCartController {
       console.log(error);
     }
   }
+  static async getAllProductsIndoTeknik(req, res, next) {
+    try {
+      let findedCart = await Cart.findOne({
+        where: { userId: req.user.id },
+      });
+      let cartId = findedCart.id;
+      const productCarts = await ProductCart.findAll({
+        where: { cartId },
+        include: [
+          {
+            model: Product,
+            as: "product",
+            where: { productOwnerId: 4 },
+          },
+          {
+            model: Cart,
+            as: "cart",
+          },
+        ],
+        order: [['createdAt', 'DESC']]
+      });
+      res.status(200).json(productCarts);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  static async getAllProductJuvindos(req, res, next) {
+  static async getAllProductsJuvindo(req, res, next) {
     try {
       let findedCart = await Cart.findOne({
         where: { userId: req.user.id },

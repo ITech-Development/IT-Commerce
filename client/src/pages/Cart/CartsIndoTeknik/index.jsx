@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import IndoRiau from "../../../assets/Indoriau.png";
+import IndoTeknik from "../../../assets/Logo.png";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -11,9 +11,9 @@ import {
     useDecrementCartItemMutation,
 } from "../../../features/cart/apiCarts";
 
-function CartsIndoRiau({ cartsIndoRiau }) {
+function CartsIndoTeknik({ cartsIndoTeknik }) {
 
-    const isCheckoutDisabled = cartsIndoRiau.some((cartItem) => cartItem.product.stock <= 0);
+    const isCheckoutDisabled = cartsIndoTeknik.some((cartItem) => cartItem.product.stock <= 0);
 
     const [removeItemFromCart] = useRemoveItemFromCartMutation()
     const [incrementCartItem] = useIncrementCartItemMutation()
@@ -38,22 +38,22 @@ function CartsIndoRiau({ cartsIndoRiau }) {
 
     };
 
-    //IndoRiau
-    const calculateSubtotalIndoRiau = () => {
-        return cartsIndoRiau.reduce((total, cartItem) => {
+    //IndoTeknik
+    const calculateSubtotalIndoTeknik = () => {
+        return cartsIndoTeknik.reduce((total, cartItem) => {
             const productPrice = cartItem.product.unitPrice;
             const quantity = cartItem.quantity;
             return total + productPrice * quantity;
         }, 0);
     };
-    const calculateTotalIndoRiau = () => {
-        const subtotal = calculateSubtotalIndoRiau();
+    const calculateTotalIndoTeknik = () => {
+        const subtotal = calculateSubtotalIndoTeknik();
         const ppn = subtotal * 0.11;
         const total = subtotal + ppn;
         return total.toFixed(2);
     };
-    const calculatePPNIndoRiau = () => {
-        const subtotal = calculateSubtotalIndoRiau();
+    const calculatePPNIndoTeknik = () => {
+        const subtotal = calculateSubtotalIndoTeknik();
         const ppn = subtotal * 0.11;
         return ppn.toFixed(2);
     };
@@ -66,7 +66,7 @@ function CartsIndoRiau({ cartsIndoRiau }) {
             <StoreHeader>
                 <StoreImage
                     style={{ maxWidth: "16%" }}
-                    src={IndoRiau}
+                    src={IndoTeknik}
                     alt="Store Logo"
                 />
                 {/* <StoreTitle>ITech</StoreTitle> */}
@@ -79,7 +79,7 @@ function CartsIndoRiau({ cartsIndoRiau }) {
                     <h3 className="total">Total Harga</h3>
                 </div>
                 <div class="cart-items">
-                    {cartsIndoRiau?.map((e) => (
+                    {cartsIndoTeknik?.map((e) => (
                         <div class="cart-item">
                             <div class="cart-product">
                                 <Link to={`/products/${e.product.id}`}>
@@ -120,7 +120,7 @@ function CartsIndoRiau({ cartsIndoRiau }) {
                         <div className="subtotal">
                             <span>Subtotal :</span>
                             <span className="amount">
-                                Rp.{calculateSubtotalIndoRiau()}
+                                Rp.{calculateSubtotalIndoTeknik()}
                             </span>
                         </div>
                         <div
@@ -134,20 +134,20 @@ function CartsIndoRiau({ cartsIndoRiau }) {
                             <span>PPN 11% :</span>
                             <span className="amount">
                                 {" "}
-                                Rp. {calculatePPNIndoRiau()}
+                                Rp. {calculatePPNIndoTeknik()}
                             </span>
                         </div>
                         <div className="subtotal" style={{ paddingBottom: "10px" }}>
                             <span>Total :</span>
                             <span style={{ fontWeight: "700" }} className="amount">
-                                {calculateTotalIndoRiau()}
+                                {calculateTotalIndoTeknik()}
                             </span>
                         </div>
                         <button
                             style={checkoutButtonStyle}
                             disabled={isCheckoutDisabled} // Disable the button if any product is out of stock
                         >
-                            <Link to="/check-TransIR" style={linkStyle}>
+                            <Link to="/check-TransIT" style={linkStyle}>
 
                                 {!isCheckoutDisabled ? 'Checkout' : 'Stok produk kosong'}
                             </Link>
@@ -163,7 +163,7 @@ function CartsIndoRiau({ cartsIndoRiau }) {
     )
 }
 
-export default CartsIndoRiau
+export default CartsIndoTeknik
 
 const StoreHeader = styled.div`
   max-width: 900px;
@@ -190,6 +190,7 @@ const linkStyle = {
     textDecoration: "none",
 };
 
+
 const ContinueShoppingContainer = styled.div`
   display: flex;
   align-items: center;
@@ -208,4 +209,3 @@ const ContinueShoppingIcon = styled(FaShoppingCart)`
   margin-right: 8px;
   font-size: 18px;
 `;
-
