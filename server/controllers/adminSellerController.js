@@ -197,7 +197,7 @@ class AdminSellerController {
                 ],
                 where: {
                     '$checkouts.voucherCode$': voucherCode,
-                    '$checkouts.paymentStatus$': 'pay'
+                    '$checkouts.paymentStatus$': 'dibayar'
                 },
                 order: [['createdAt', 'ASC']],
             });
@@ -433,7 +433,7 @@ class AdminSellerController {
                 ],
                 where: {
                     '$checkouts.voucherCode$': voucherCode,
-                    '$checkouts.paymentStatus$': 'pay'
+                    '$checkouts.paymentStatus$': 'dibayar'
                 },
                 order: [['createdAt', 'ASC']],
             });

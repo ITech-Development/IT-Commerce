@@ -94,7 +94,7 @@ class CheckoutProductController {
                 });
 
                 // Filter checkout products by paymentStatus
-                const paidCheckoutProducts = checkoutProducts.filter(cp => cp.checkouts.paymentStatus === 'pay');
+                const paidCheckoutProducts = checkoutProducts.filter(cp => cp.checkouts.paymentStatus === 'dibayar');
 
                 if (paidCheckoutProducts.length > 0) {
                     // Store checkout products with quantity in the map

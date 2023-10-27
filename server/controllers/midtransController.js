@@ -384,7 +384,7 @@ class MidtransController {
           // Update status pembayaran checkout
           await checkout.update(
             {
-              paymentStatus: 'pay',
+              paymentStatus: 'dibayar',
               paymentMethod: `${vaNumbers[0].bank}`,
             },
             { transaction: t }
