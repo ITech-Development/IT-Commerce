@@ -58,6 +58,10 @@ export const cartsApi = createApi({
             query: () => 'product-carts/itech', // Ganti dengan URL endpoint yang sesuai
             providesTags: ['Post']
         }),
+        getCartsIndoTeknik: builder.query({
+            query: () => 'product-carts/indo-riau', // Ganti dengan URL endpoint yang sesuai
+            providesTags: ['Post']
+        }),
     })
 })
 
@@ -65,6 +69,7 @@ export const {
     useGetCartsIndoRiauQuery,
     useGetCartsJuvindoQuery,
     useGetCartsItechQuery,
+    useGetCartsIndoTeknikQuery,
     useGetCountCartsQuery,
     useAddToCartMutation,
     useDecrementCartItemMutation,

@@ -3,9 +3,14 @@ import axios from "axios";
 import { useSpring, animated } from "react-spring";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import OrderIcon from '../../assets/order-delivery.png'
-import TransactionIcon from '../../assets/transaction-history.png'
-import Coin from '../../assets/coin.png'
+import OrderIcon from "../../assets/order.png";
+import TransactionIcon from "../../assets/transaction-history.png";
+import Coin from "../../assets/coin.png";
+import Packaging from './packaging.png'
+import Delivery from './delivery.png'
+import PackageReceived from './package-received.png'
+import Pending from './payment.png'
+import PaySuccess from './successful.png'
 
 const CardContent = styled(animated.div)`
   display: flex;
@@ -19,7 +24,7 @@ const CardContent = styled(animated.div)`
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
   background-color: #fff;
-  // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
   &:hover {
     transform: translateY(-5px);
@@ -61,6 +66,45 @@ const CardContainer = styled.div`
   padding: 20px 0;
 `;
 
+const SmallImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: auto;
+  justify-content: center;
+
+  img {
+    width: 24px; /* Ubah ukuran gambar kecil sesuai kebutuhan */
+    height: 24px; /* Ubah ukuran gambar kecil sesuai kebutuhan */
+    margin-right: 8px; /* Atur jarak antara gambar dan teks */
+    display: flex;
+    flex-direction: row;
+  }
+
+  p {
+    margin: 0;
+  }
+`;
+const SmallImageContainerPay = styled.div`
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: auto;
+  justify-content: center;
+
+  img {
+    width: 24px; /* Ubah ukuran gambar kecil sesuai kebutuhan */
+    height: 24px; /* Ubah ukuran gambar kecil sesuai kebutuhan */
+    margin-right: 8px; /* Atur jarak antara gambar dan teks */
+    display: flex;
+    flex-direction: row;
+  }
+
+  p {
+    margin: 0;
+  }
+`;
+
 const Card = ({ imageUrl, title, count, to }) => {
   const [visible, setVisible] = useState(false);
 
@@ -84,6 +128,34 @@ const Card = ({ imageUrl, title, count, to }) => {
           <CardTitle>{title}</CardTitle>
         </div>
       </CardContent>
+      {imageUrl === OrderIcon && (
+        <div style={{ display: "flex", justifyContent: "center", padding: '15px' }}>
+          <SmallImageContainer>
+            <img src={Packaging} alt="" />
+            <p>3</p>
+          </SmallImageContainer>
+          <SmallImageContainer>
+            <img src={Delivery} alt="" />
+            <p>50</p>
+          </SmallImageContainer>
+          <SmallImageContainer>
+            <img src={PackageReceived} alt="" />
+            <p>48</p>
+          </SmallImageContainer>
+        </div>
+      )}
+      {imageUrl === TransactionIcon && (
+        <div style={{ display: "flex", justifyContent: "center", padding: '15px 30px' }}>
+          <SmallImageContainerPay>
+            <img src={Pending} alt="" />
+            <p>3</p>
+          </SmallImageContainerPay>
+          <SmallImageContainerPay>
+            <img src={PaySuccess} alt="" />
+            <p>50</p>
+          </SmallImageContainerPay>
+        </div>
+      )}
     </Link>
   );
 };
@@ -133,14 +205,14 @@ const CardSection = () => {
     <CardContainer>
       <Card
         imageUrl={OrderIcon}
-        title="Pesanan"
+        title="Pesanan Produk"
         count={Object.keys(users).length}
         to="/order-list"
       />
 
       <Card
         imageUrl={TransactionIcon}
-        title="Transaksi"
+        title="Transaksi Pembayaran"
         count={products.length}
         to="/transaction-list"
       />

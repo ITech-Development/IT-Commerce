@@ -45,8 +45,8 @@ const mainStyles = {
   margin: "auto",
   paddingTop: '80px',
   borderRadius: "8px",
-  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  width: 'auto'
+  // boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+  width: '100%'
 };
 
 const buttonStyles = {

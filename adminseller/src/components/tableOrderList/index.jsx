@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import styled from "styled-components";
+import './orderTable.css'
 
 const Container = styled.div`
   width: auto;
@@ -13,6 +14,7 @@ const CheckoutCard = styled.div`
   margin: 20px 0;
   background-color: #fff;
   border-radius: 7px;
+  line-height: 17px;
 `;
 
 const CheckoutHeader = styled.div`
@@ -26,12 +28,15 @@ const CheckoutHeader = styled.div`
 const Title = styled.h2`
   margin: 0;
   color: #333;
+  font-size: 18px;
 `;
 
 const Subtitle = styled.h3`
   margin: 0;
   padding-top: 15px;
-  color: #777;
+  // color: #777;
+  font-size: 18px;
+
 `;
 
 const Price = styled.p`
@@ -48,20 +53,25 @@ const ProductItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0;
+  margin: 50px 30px 15px 30px;
   border-bottom: 1px solid #ddd;
   padding-bottom: 5px;
 `;
 
 const ProductImage = styled.img`
-  width: 80px;
+  width: 100px;
   border: 1px solid #ddd;
   border-radius: 5px;
+`;
+const ProductName = styled.p`
+  width: 700px;
+  font-weight: 500;
 `;
 
 const Qty = styled.p`
   font-weight: bold;
-  color: #555;
+  // color: #555;
+  padding-right: 60px;
 `;
 
 const SearchInput = styled.input`
@@ -79,7 +89,7 @@ const SearchInput = styled.input`
 
 const DeliveryButton = styled(Link)`
   display: inline-block;
-  background-color: #007BFF;
+  background-color: #007bff;
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -130,7 +140,7 @@ const CheckoutList = ({ data }) => {
               {new Date(checkout.checkout.createdAt).toLocaleString()}
             </Subtitle>
           </CheckoutHeader>
-          <Subtitle>Nama : {checkout.checkout?.users?.fullName}</Subtitle>
+          <Subtitle>Pembeli : {checkout.checkout?.users?.fullName}</Subtitle>
           <Price>
             Total Bayar : {formatCurrency(checkout.checkout.totalPrice)}
           </Price>
@@ -138,20 +148,21 @@ const CheckoutList = ({ data }) => {
           <p>Metode Pengiriman : {checkout.checkout.shippingMethod}</p>
           <p>Alamat Pengiriman : {checkout.checkout.shippingAddress}</p>
           <p>
-            Delivery Status :{" "}
+            Status Produk :{" "}
             <DeliveryButton to={`${checkout.checkout.id}`}>
-  {checkout.checkout.deliveryStatus}
-</DeliveryButton>
+              {checkout.checkout.deliveryStatus}
+            </DeliveryButton>
           </p>{" "}
           <ProductList>
+          <h3>Pesanan Produk :</h3>
             {checkout.products.map((product) => (
               <ProductItem key={product.id}>
                 <ProductImage src={product.image} alt={product.name} />
                 <div>
-                  <h4>{product.name}</h4>
-                  <p>Description: {product.description}</p>
+                  <ProductName className="OrPro">{product.name}</ProductName>
+                  {/* <p>Description: {product.description}</p> */}
                 </div>
-                <Qty>x : {1}</Qty>
+                <Qty>x {1}</Qty>
                 <Price>{formatCurrency(product.unitPrice)}</Price>
               </ProductItem>
             ))}

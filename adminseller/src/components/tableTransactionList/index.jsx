@@ -25,12 +25,15 @@ const CheckoutHeader = styled.div`
 const Title = styled.h2`
   margin: 0;
   color: #333;
+  font-size: 18px;
 `;
 
 const Subtitle = styled.h3`
   margin: 0;
   padding-top: 15px;
-  color: #777;
+  // color: #777;
+  font-size: 18px;
+
 `;
 
 const Price = styled.p`
@@ -47,9 +50,14 @@ const ProductItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0;
+  margin: 50px 30px 15px 30px;
   border-bottom: 1px solid #ddd;
   padding-bottom: 5px;
+`;
+
+const ProductName = styled.p`
+  width: 700px;
+  font-weight: 500;
 `;
 
 const ProductImage = styled.img`
@@ -70,6 +78,12 @@ const SearchInput = styled.input`
     border-color: #0056b3;
   }
 `;
+const Qty = styled.p`
+  font-weight: bold;
+  // color: #555;
+  padding-right: 60px;
+`;
+
 
 const formatCurrency = (amount) => {
   return new Intl.NumberFormat("id-ID", {
@@ -115,26 +129,26 @@ const CheckoutList = ({ data }) => {
           </Price>
           <p>Alamat Pengiriman: {checkout.checkout.shippingAddress}</p>
           {/* <p>Order Date: {checkout.checkout.createdAt}</p> */}
-          <h3>Products:</h3>
+          <h3>Pesanan Produk</h3>
           <ProductList>
             {checkout.products.map((product) => (
               <ProductItem key={product.id}>
                 <ProductImage src={product.image} alt={product.name} />
                 <div>
-                  <h4>{product.name}</h4>
-                  <p>
+                  <ProductName className="OrPro">{product.name}</ProductName>
+                  {/* <p>
                     Description:{" "}
                     {product.description.split(" ").slice(0, 18).join(" ")}
                     ...
-                  </p>
+                  </p> */}
                 </div>
-                <p>x : {product.quantity}</p>
+                <Qty>x {product.quantity}</Qty>
                 <Price>{formatCurrency(product.unitPrice)}</Price>
               </ProductItem>
             ))}
           </ProductList>
           <div style={{ display: "flex", justifyContent: 'flex-end' }}>
-            <h3>Status Bayar : </h3>
+            <h3>Status : </h3>
             <ul style={{display: 'flex', alignContent: 'center', alignItems: 'center'}}>
               {checkout.checkout.paymentStatus === null
                 ? "Belum Bayar"
