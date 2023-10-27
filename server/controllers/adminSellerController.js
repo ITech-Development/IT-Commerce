@@ -18,7 +18,6 @@ class AdminSellerController {
     // static async getTransactionListByVoucherCode(req, res, next) {
     //     if (req.adminSeller.id === 4) {
     //         try {
-    //             // Ambil semua checkout products dari database dengan filter berdasarkan voucherCode
     //             const checkoutProducts = await CheckoutProduct.findAll({
     //                 include: [
     //                     {
@@ -37,11 +36,226 @@ class AdminSellerController {
     //                     }
     //                 ],
     //                 where: {
-    //                     '$checkouts.voucherCode$': 'IT01' // Filter by voucherCode
+    //                     '$checkouts.voucherCode$': 'IT01', // Filter by voucherCode
+    //                     '$checkouts.paymentStatus$': 'pay' // Filter by paymentStatus
     //                 },
     //                 order: [['createdAt', 'ASC']],
     //             });
 
+    //             const orderList = {};
+
+    //             for (const checkoutProduct of checkoutProducts) {
+    //                 const checkoutId = checkoutProduct.checkoutId;
+
+    //                 if (!orderList[checkoutId]) {
+    //                     orderList[checkoutId] = {
+    //                         checkout: checkoutProduct.checkouts,
+    //                         products: []
+    //                     };
+    //                 }
+
+    //                 orderList[checkoutId].products.push(checkoutProduct.products);
+    //             }
+
+    //             const orderListArray = Object.values(orderList);
+
+    //             res.status(200).json(orderListArray);
+    //         } catch (error) {
+    //             console.error(error);
+    //             res.status(500).json({ error: 'Internal server error' });
+    //         }
+    //     } else if (req.adminSeller.id === 5) {
+    //         try {
+    //             const checkoutProducts = await CheckoutProduct.findAll({
+    //                 include: [
+    //                     {
+    //                         model: Checkout,
+    //                         as: 'checkouts',
+    //                         include: [
+    //                             {
+    //                                 model: User,
+    //                                 as: 'users'
+    //                             }
+    //                         ]
+    //                     },
+    //                     {
+    //                         model: Product,
+    //                         as: 'products'
+    //                     }
+    //                 ],
+    //                 where: {
+    //                     '$checkouts.voucherCode$': 'MS01', // Filter by voucherCode
+    //                     '$checkouts.paymentStatus$': 'pay' // Filter by paymentStatus
+    //                 },
+    //                 order: [['createdAt', 'ASC']],
+    //             });
+
+    //             const orderList = {};
+
+    //             for (const checkoutProduct of checkoutProducts) {
+    //                 const checkoutId = checkoutProduct.checkoutId;
+
+    //                 if (!orderList[checkoutId]) {
+    //                     orderList[checkoutId] = {
+    //                         checkout: checkoutProduct.checkouts,
+    //                         products: []
+    //                     };
+    //                 }
+
+    //                 orderList[checkoutId].products.push(checkoutProduct.products);
+    //             }
+
+    //             const orderListArray = Object.values(orderList);
+
+    //             res.status(200).json(orderListArray);
+    //         } catch (error) {
+    //             console.error(error);
+    //             res.status(500).json({ error: 'Internal server error' });
+    //         }
+    //     } else if (req.adminSeller.id === 6) {
+    //         try {
+    //             const checkoutProducts = await CheckoutProduct.findAll({
+    //                 include: [
+    //                     {
+    //                         model: Checkout,
+    //                         as: 'checkouts',
+    //                         include: [
+    //                             {
+    //                                 model: User,
+    //                                 as: 'users'
+    //                             }
+    //                         ]
+    //                     },
+    //                     {
+    //                         model: Product,
+    //                         as: 'products'
+    //                     }
+    //                 ],
+    //                 where: {
+    //                     '$checkouts.voucherCode$': 'TK01', // Filter by voucherCode
+    //                     '$checkouts.paymentStatus$': 'pay' // Filter by paymentStatus
+    //                 },
+    //                 order: [['createdAt', 'ASC']],
+    //             });
+
+    //             const orderList = {};
+
+    //             for (const checkoutProduct of checkoutProducts) {
+    //                 const checkoutId = checkoutProduct.checkoutId;
+
+    //                 if (!orderList[checkoutId]) {
+    //                     orderList[checkoutId] = {
+    //                         checkout: checkoutProduct.checkouts,
+    //                         products: []
+    //                     };
+    //                 }
+    //                 orderList[checkoutId].products.push(checkoutProduct.products);
+    //             }
+
+    //             const orderListArray = Object.values(orderList);
+
+    //             res.status(200).json(orderListArray);
+    //         } catch (error) {
+    //             console.error(error);
+    //             res.status(500).json({ error: 'Internal server error' });
+    //         }
+    //     } else {
+    //         console.log('Check the server again');
+    //     }
+    // }
+
+    static async getTransactionListByVoucherCode(req, res, next) {
+        try {
+            let voucherCode = '';
+            if (req.adminSeller.id === 4) {
+                voucherCode = 'IT01';
+            } else if (req.adminSeller.id === 5) {
+                voucherCode = 'MS01';
+            } else if (req.adminSeller.id === 6) {
+                voucherCode = 'TK01';
+            } else {
+                console.log('Check the server again');
+                return;
+            }
+    
+            const checkoutProducts = await CheckoutProduct.findAll({
+                include: [
+                    {
+                        model: Checkout,
+                        as: 'checkouts',
+                        include: [
+                            {
+                                model: User,
+                                as: 'users'
+                            }
+                        ]
+                    },
+                    {
+                        model: Product,
+                        as: 'products'
+                    }
+                ],
+                where: {
+                    '$checkouts.voucherCode$': voucherCode,
+                    '$checkouts.paymentStatus$': 'pay'
+                },
+                order: [['createdAt', 'ASC']],
+            });
+    
+            const orderList = {};
+    
+            for (const checkoutProduct of checkoutProducts) {
+                const checkoutId = checkoutProduct.checkoutId;
+    
+                if (!orderList[checkoutId]) {
+                    orderList[checkoutId] = {
+                        checkout: checkoutProduct.checkouts,
+                        products: []
+                    };
+                }
+    
+                orderList[checkoutId].products.push(checkoutProduct.products);
+            }
+    
+            const orderListArray = Object.values(orderList);
+    
+            res.status(200).json(orderListArray);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+    
+
+    
+
+    // static async getOrderListByVoucherCode(req, res, next) {
+    //     if (req.adminSeller.id === 4) {
+    //         try {
+    //             // Ambil semua checkout products dari database dengan filter berdasarkan voucherCode dan paymentStatus
+    //             const checkoutProducts = await CheckoutProduct.findAll({
+    //                 include: [
+    //                     {
+    //                         model: Checkout,
+    //                         as: 'checkouts',
+    //                         include: [
+    //                             {
+    //                                 model: User,
+    //                                 as: 'users'
+    //                             }
+    //                         ]
+    //                     },
+    //                     {
+    //                         model: Product,
+    //                         as: 'products'
+    //                     }
+    //                 ],
+    //                 where: {
+    //                     '$checkouts.voucherCode$': 'IT01', // Filter by voucherCode
+    //                     '$checkouts.paymentStatus$': 'pay'   // Filter by paymentStatus
+    //                 }
+    //             });
+
     //             // Buat objek untuk menyimpan daftar pesanan
     //             const orderList = {};
 
@@ -70,15 +284,9 @@ class AdminSellerController {
     //             console.error(error);
     //             res.status(500).json({ error: 'Internal server error' });
     //         }
-    //     } else {
-    //         console.log('check lagi servernya ya');
-    //     }
-    // }
-
-    // static async getOrderListByVoucherCode(req, res, next) {
-    //     if (req.adminSeller.id === 4) {
+    //     } else if (req.adminSeller.id === 5) {
     //         try {
-    //             // Ambil semua checkout products dari database dengan filter berdasarkan voucherCode
+    //             // Ambil semua checkout products dari database dengan filter berdasarkan voucherCode dan paymentStatus
     //             const checkoutProducts = await CheckoutProduct.findAll({
     //                 include: [
     //                     {
@@ -97,7 +305,62 @@ class AdminSellerController {
     //                     }
     //                 ],
     //                 where: {
-    //                     '$checkouts.voucherCode$': 'IT01' // Filter by voucherCode
+    //                     '$checkouts.voucherCode$': 'MS01', // Filter by voucherCode
+    //                     '$checkouts.paymentStatus$': 'pay'   // Filter by paymentStatus
+    //                 }
+    //             });
+
+    //             // Buat objek untuk menyimpan daftar pesanan
+    //             const orderList = {};
+
+    //             // Iterasi melalui setiap checkout product
+    //             for (const checkoutProduct of checkoutProducts) {
+    //                 const checkoutId = checkoutProduct.checkoutId;
+
+    //                 // Jika checkout ID belum ada dalam daftar pesanan, tambahkan
+    //                 if (!orderList[checkoutId]) {
+    //                     orderList[checkoutId] = {
+    //                         checkout: checkoutProduct.checkouts,
+    //                         products: []
+    //                     };
+    //                 }
+
+    //                 // Tambahkan produk ke dalam daftar pesanan yang sesuai dengan checkout ID
+    //                 orderList[checkoutId].products.push(checkoutProduct.products);
+    //             }
+
+    //             // Ubah objek pesanan menjadi array
+    //             const orderListArray = Object.values(orderList);
+
+    //             // Kirim daftar pesanan sebagai respons JSON
+    //             res.status(200).json(orderListArray);
+    //         } catch (error) {
+    //             console.error(error);
+    //             res.status(500).json({ error: 'Internal server error' });
+    //         }
+    //     } else if (req.adminSeller.id === 6) {
+    //         try {
+    //             // Ambil semua checkout products dari database dengan filter berdasarkan voucherCode dan paymentStatus
+    //             const checkoutProducts = await CheckoutProduct.findAll({
+    //                 include: [
+    //                     {
+    //                         model: Checkout,
+    //                         as: 'checkouts',
+    //                         include: [
+    //                             {
+    //                                 model: User,
+    //                                 as: 'users'
+    //                             }
+    //                         ]
+    //                     },
+    //                     {
+    //                         model: Product,
+    //                         as: 'products'
+    //                     }
+    //                 ],
+    //                 where: {
+    //                     '$checkouts.voucherCode$': 'TK01', // Filter by voucherCode
+    //                     '$checkouts.paymentStatus$': 'pay'   // Filter by paymentStatus
     //                 }
     //             });
 
@@ -133,123 +396,74 @@ class AdminSellerController {
     //         console.log('check lagi servernya ya');
     //     }
     // }
-    static async getTransactionListByVoucherCode(req, res, next) {
-        if (req.adminSeller.id === 4) {
-            try {
-                const checkoutProducts = await CheckoutProduct.findAll({
-                    include: [
-                        {
-                            model: Checkout,
-                            as: 'checkouts',
-                            include: [
-                                {
-                                    model: User,
-                                    as: 'users'
-                                }
-                            ]
-                        },
-                        {
-                            model: Product,
-                            as: 'products'
-                        }
-                    ],
-                    where: {
-                        '$checkouts.voucherCode$': 'IT01', // Filter by voucherCode
-                        '$checkouts.paymentStatus$': 'pay' // Filter by paymentStatus
-                    },
-                    order: [['createdAt', 'ASC']],
-                });
-
-                const orderList = {};
-
-                for (const checkoutProduct of checkoutProducts) {
-                    const checkoutId = checkoutProduct.checkoutId;
-
-                    if (!orderList[checkoutId]) {
-                        orderList[checkoutId] = {
-                            checkout: checkoutProduct.checkouts,
-                            products: []
-                        };
-                    }
-
-                    orderList[checkoutId].products.push(checkoutProduct.products);
-                }
-
-                const orderListArray = Object.values(orderList);
-
-                res.status(200).json(orderListArray);
-            } catch (error) {
-                console.error(error);
-                res.status(500).json({ error: 'Internal server error' });
-            }
-        } else {
-            console.log('Check the server again');
-        }
-    }
-
 
     static async getOrderListByVoucherCode(req, res, next) {
-        if (req.adminSeller.id === 4) {
-            try {
-                // Ambil semua checkout products dari database dengan filter berdasarkan voucherCode dan paymentStatus
-                const checkoutProducts = await CheckoutProduct.findAll({
-                    include: [
-                        {
-                            model: Checkout,
-                            as: 'checkouts',
-                            include: [
-                                {
-                                    model: User,
-                                    as: 'users'
-                                }
-                            ]
-                        },
-                        {
-                            model: Product,
-                            as: 'products'
-                        }
-                    ],
-                    where: {
-                        '$checkouts.voucherCode$': 'IT01', // Filter by voucherCode
-                        '$checkouts.paymentStatus$': 'pay'   // Filter by paymentStatus
+        let voucherCode = '';
+    
+        switch (req.adminSeller.id) {
+            case 4:
+                voucherCode = 'IT01';
+                break;
+            case 5:
+                voucherCode = 'MS01';
+                break;
+            case 6:
+                voucherCode = 'TK01';
+                break;
+            default:
+                console.log('Check the server again');
+                return;
+        }
+    
+        try {
+            const checkoutProducts = await CheckoutProduct.findAll({
+                include: [
+                    {
+                        model: Checkout,
+                        as: 'checkouts',
+                        include: [
+                            {
+                                model: User,
+                                as: 'users'
+                            }
+                        ]
+                    },
+                    {
+                        model: Product,
+                        as: 'products'
                     }
-                });
-
-                // Buat objek untuk menyimpan daftar pesanan
-                const orderList = {};
-
-                // Iterasi melalui setiap checkout product
-                for (const checkoutProduct of checkoutProducts) {
-                    const checkoutId = checkoutProduct.checkoutId;
-
-                    // Jika checkout ID belum ada dalam daftar pesanan, tambahkan
-                    if (!orderList[checkoutId]) {
-                        orderList[checkoutId] = {
-                            checkout: checkoutProduct.checkouts,
-                            products: []
-                        };
-                    }
-
-                    // Tambahkan produk ke dalam daftar pesanan yang sesuai dengan checkout ID
-                    orderList[checkoutId].products.push(checkoutProduct.products);
+                ],
+                where: {
+                    '$checkouts.voucherCode$': voucherCode,
+                    '$checkouts.paymentStatus$': 'pay'
+                },
+                order: [['createdAt', 'ASC']],
+            });
+    
+            const orderList = {};
+    
+            for (const checkoutProduct of checkoutProducts) {
+                const checkoutId = checkoutProduct.checkoutId;
+    
+                if (!orderList[checkoutId]) {
+                    orderList[checkoutId] = {
+                        checkout: checkoutProduct.checkouts,
+                        products: []
+                    };
                 }
-
-                // Ubah objek pesanan menjadi array
-                const orderListArray = Object.values(orderList);
-
-                // Kirim daftar pesanan sebagai respons JSON
-                res.status(200).json(orderListArray);
-            } catch (error) {
-                console.error(error);
-                res.status(500).json({ error: 'Internal server error' });
+    
+                orderList[checkoutId].products.push(checkoutProduct.products);
             }
-        } else {
-            console.log('check lagi servernya ya');
+    
+            const orderListArray = Object.values(orderList);
+    
+            res.status(200).json(orderListArray);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Internal server error' });
         }
     }
-
-
-
+    
 
     static async registerAdminSeller(req, res, next) {
         try {
