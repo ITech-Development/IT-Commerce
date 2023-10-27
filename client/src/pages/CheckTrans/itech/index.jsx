@@ -165,7 +165,7 @@ function Index() {
       return 0;
     }
     const subtotal = calculateSubtotal();
-    const voucherPercentage = 3;
+    const voucherPercentage = 6;
     const discountAmount = (subtotal * voucherPercentage) / 100;
     return discountAmount;
   };
@@ -413,7 +413,7 @@ function Index() {
                     <span class="amountSub">Rp.{formatPrice(calculateSubtotal())}</span>
                   </div>
                   <div class="subtotalVou">
-                    <span className="subtotVou">Voucher 3% :</span>
+                    <span className="subtotVou">Voucher 6% :</span>
                     <span class="amountSub">Rp. {formatPrice(calculateVoucher())}</span>
                   </div>
                   <div class="Total">
@@ -438,16 +438,19 @@ function Index() {
                 className="methodDeliverySelect"
               >
                 <option className="methodDeliveryOption" value="jne">
-                  jne
+                  JNE
                 </option>
                 <option className="methodDeliveryOption" value="tiki">
-                  tiki
+                  TIKI
                 </option>
                 <option className="methodDeliveryOption" value="pos">
-                  pos
+                  JNT
                 </option>
                 <option className="methodDeliveryOption" value="jnt">
-                  jnt
+                  LION PARCEL
+                </option>
+                <option className="methodDeliveryOption" value="jnt">
+                  SICEPAT
                 </option>
               </select>
               <select
@@ -533,7 +536,7 @@ function Index() {
           <div className="secRightPay">
               <div>
                 <h3 className="kodeVouc">Pilih Kode Voucher</h3>
-                <p className="contentVouc">Silahkan pilih kode voucher dibawah untuk mendapatkan potongan belanja 3%!</p>
+                <p className="contentVouc">Silahkan pilih kode voucher dibawah untuk mendapatkan potongan belanja 6%!</p>
                 <div class="voucher-container">
                   <input
                     class="voucher-input"
