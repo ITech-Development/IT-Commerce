@@ -324,6 +324,12 @@ function Index() {
     cursor: "pointer",
   };
 
+  function formatPrice(price) {
+    const priceString = price.toString();
+    const parts = priceString.split('.');
+    return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
   return (
     <div>
       <div className="alamat">
@@ -388,13 +394,13 @@ function Index() {
                       </div>
                     </div>
                     <div class="cart-product-price">
-                      Rp.{e.product.unitPrice}
+                      Rp.{(e.product.unitPrice).toLocaleString("id-ID", {})}
                     </div>
                     <div class="cart-product-quantityIR">
-                      <div class="count">x {e.quantity}</div>
+                      <div class="count">x {(e.quantity).toLocaleString("id-ID", {})}</div>
                     </div>
                     <div class="cart-product-total-price">
-                      Rp.{e.quantity * e.product.unitPrice}
+                      Rp.{(e.quantity * e.product.unitPrice).toLocaleString("id-ID", {})}
                     </div>
                   </div>
                 ))}
@@ -404,16 +410,17 @@ function Index() {
                 <div class="cart-checkout">
                 <div class="subtotal">
                     <span className="subtot">Subtotal :</span>
-                    <span class="amountSub">Rp.{calculateSubtotal()}</span>
+                    <span class="amountSub">Rp.{formatPrice(calculateSubtotal())}</span>
                   </div>
                   <div class="subtotalVou">
                     <span className="subtotVou">Voucher 3% :</span>
-                    <span class="amountSub">Rp. {calculateVoucher()}</span>
+                    <span class="amountSub">Rp. {formatPrice(calculateVoucher())}</span>
                   </div>
                   <div class="Total">
                     <span className="subtot">Total :</span>
                     <span style={{ fontWeight: "700" }} class="amountTot">
-                      {calculateTotal()}
+                      Rp. 
+                    {formatPrice(calculateTotal())}
                     </span>
                   </div>
                 </div>
@@ -514,7 +521,7 @@ function Index() {
                         onChange={handleShippingCostChange}
                       />
                       <label  className="ongkir" htmlFor={`shippingChoice${index}`}>
-                      Ongkos kirim : Rp.{el.cost[0].value}
+                      Ongkos kirim : Rp.{(el.cost[0].value).toLocaleString("id-ID", {})}
                       </label>
                       <p className="serong">Layanan : {el.service}</p>
                       <p className="serong">Deskripsi : {el.description}</p>
@@ -527,35 +534,18 @@ function Index() {
               <div>
                 <h3 className="kodeVouc">Pilih Kode Voucher</h3>
                 <p className="contentVouc">Silahkan pilih kode voucher dibawah untuk mendapatkan potongan belanja 3%!</p>
-                <span className="checkVou">
-                  <label key={vouchers[3]?.id}>
-                    <input
-                      type="radio"
-                      value={vouchers[3]?.voucherCode}
-                      checked={selectedVoucher === vouchers[3]?.voucherCode}
-                      onChange={handleVoucherChange}
-                    />
-                    <img className="imgVoucerCheck" src={VCR1} alt="IT 01" />
-                  </label>
-                  <label key={vouchers[4]?.id}>
-                    <input
-                      type="radio"
-                      value={vouchers[4]?.voucherCode}
-                      checked={selectedVoucher === vouchers[4]?.voucherCode}
-                      onChange={handleVoucherChange}
-                    />
-                    <img className="imgVoucerCheck" src={VCR2} alt="MS 01" />
-                  </label>
-                  <label key={vouchers[5]?.id}>
-                    <input
-                      type="radio"
-                      value={vouchers[5]?.voucherCode}
-                      checked={selectedVoucher === vouchers[5]?.voucherCode}
-                      onChange={handleVoucherChange}
-                    />
-                    <img className="imgVoucerCheck" src={VCR3} alt="MS 01" />
-                  </label>
-                </span>
+                <div class="voucher-container">
+                  <input
+                    class="voucher-input"
+                    type="text"
+                    placeholder="Masukkan kode voucher"
+                    value={voucherCode}
+                    onChange={(e) => setVoucherCode(e.target.value)}
+                  />
+                  <button class="apply-button" onClick={applyVoucher}>
+                    Apply
+                  </button>
+                </div>
               </div>
               <div className="paybut">
                 <div>
@@ -564,7 +554,7 @@ function Index() {
                     style={{ fontWeight: "700", paddingRight: "20px" }}
                     className="amountbay"
                   >
-                    Rp. {calculateTotalBayar()}
+                    Rp. {formatPrice(calculateTotalBayar())}
                   </span>
                 </div>
                 <div>
