@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import HeroSection from "../../components/sections/hero";
-import Footer from "../../components/footer";
+// import Footer from "../../components/footer";
 import ProductCategories from "../../components/sections/productCategories";
 import ClaimVoucher from "../../assets/PopUpp.png";
 import CorouselBrands from "../../components/sections/corouselBrands";
@@ -97,7 +97,7 @@ function Index() {
         <ProductCategories />
         <Hero2 />
         <ProdukTerlaris />
-        <Footer />
+        {/* <Footer /> */}
       </div>
 
       <Modal
