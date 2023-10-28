@@ -1,29 +1,24 @@
 /* eslint-disable */
-// import React, { useContext, useState } from "react";
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-// import axios from "axios";
 import { FiMail, FiLock } from "react-icons/fi";
-// import { UserContext } from "../../App.jsx";
 import Background from "./Fuel.png";
 import "./style.css"; // Import your CSS styles
 import { useLoginMutation } from '../../features/user/apiUser.js'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  // const { dispatch } = useContext(UserContext);
   const [login] = useLoginMutation()
-
-  // const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate()
+  const [error, setError] = useState(""); // State untuk pesan kesalahan
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
-      alert("Please enter your email and password.");
+      setError("Perhatikan lagi email dan password-nya!");
       return;
     }
 
@@ -32,36 +27,15 @@ const Login = () => {
       password,
     };
 
-    console.log(1);
     login(userData).then((res) => {
       console.log(res.data);
       localStorage.setItem("access_token", res.data.access_token);
       navigate('/')
-    }).catch((error)=>{
+    }).catch((error) => {
       console.log(error);
-      alert('Perhatikan lagi email dan password nya!')
+      setError("Perhatikan lagi email dan password-nya!");
     })
 
-
-    console.log(2);
-    // try {
-    //   const response = await axios.post(
-    //     "https://indoteknikserver-732012365989.herokuapp.com/users/login",
-    //     userData
-    //   );
-    //   console.log("Login response:", response.data);
-
-    //   localStorage.setItem("access_token", response.data.access_token);
-
-    //   setEmail("");
-    //   setPassword("");
-
-    //   dispatch({ type: "USER", payload: true });
-    //   navigate("/");
-    // } catch (error) {
-    //   console.error("Login error:", error);
-    //   alert("Login failed. Please try again.");
-    // }
   };
 
   return (
@@ -99,9 +73,10 @@ const Login = () => {
           <button className="button" type="submit">
             Login
           </button>
+          <p className="error" style={{ color: 'red' }}>{error}</p>
         </form>
         <p className="p">
-          {/* Don't have an account? <Link to="/register">Register</Link> */}
+          Don't have an account? <Link to="/register">Register</Link>
         </p>
       </div>
     </div>
