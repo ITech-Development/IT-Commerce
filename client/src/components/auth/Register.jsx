@@ -36,7 +36,7 @@ const Register = () => {
     try {
       // Call the API to register the user
       const response = await axios.post(
-        "https://indoteknikserver-732012365989.herokuapp.com/users/register",
+        "http://localhost:3100/users/register",
         userData
       );
       console.log("Registration response:", response.data);

@@ -259,13 +259,13 @@ function CheckoutProductsPage() {
                 <div>
                     <p className="dataInvoice1">Kurir :</p>
                     <p className="dataInvoice1" style={{ color: "black" }}>
-                        {checkoutProducts[0].checkout.shippingMethod.toUpperCase()}
+                        {checkoutProducts[0].checkout.shippingMethod === null ? '-' : checkoutProducts[0].checkout.shippingMethod.toUpperCase()}
                     </p>
                 </div>
                 <div>
                     <p className="dataInvoice1">Metode Pembayaran :</p>
                     <p className="dataInvoice1" style={{ color: "black" }}>
-                        {checkoutProducts[0].checkout.paymentMethod.toUpperCase()}
+                        {checkoutProducts[0].checkout.paymentMethod === null ? '-' : checkoutProducts[0].checkout.paymentMethod.toUpperCase()}
                     </p>
                 </div>
             </div>

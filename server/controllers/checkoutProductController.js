@@ -56,7 +56,10 @@ class CheckoutProductController {
     //     }
     // }
 
+
+
     static async getAllCheckoutProducts(req, res, next) {
+
         try {
             // Find checkouts associated with the user
             const checkouts = await Checkout.findAll({
@@ -111,6 +114,7 @@ class CheckoutProductController {
         } catch (error) {
             next(error);
         }
+        
     }
 
 

@@ -11,7 +11,6 @@ import Cart from "./pages/Cart"; // Correct import statement for default export
 import "react-toastify/dist/ReactToastify.css";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-import Logout from "./components/auth/Logout";
 import ProductShipping from "./pages/productShipping";
 import FirstStep from "./pages/productShipping/firstStep";
 import SecondStep from "./pages/productShipping/secondStep";
@@ -47,7 +46,6 @@ const Routing = () => {
       <Route path="/cart" element={<Cart />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/logout" element={<Logout />} />
       <Route path="/shipping" element={<ProductShipping />} />
       <Route path="/shipping" element={<FirstStep />} />
       <Route path="/shippingSecond" element={<SecondStep />} />
