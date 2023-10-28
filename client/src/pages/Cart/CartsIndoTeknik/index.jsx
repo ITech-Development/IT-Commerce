@@ -148,7 +148,6 @@ function CartsIndoTeknik({ cartsIndoTeknik }) {
                             disabled={isCheckoutDisabled} // Disable the button if any product is out of stock
                         >
                             <Link to="/check-TransIT" style={linkStyle}>
-
                                 {!isCheckoutDisabled ? 'Checkout' : 'Stok produk kosong'}
                             </Link>
                         </button>
