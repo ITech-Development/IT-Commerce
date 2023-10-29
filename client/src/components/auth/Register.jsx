@@ -12,14 +12,23 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
-  // const [imageProfile, setImageProfile] = useState('');
+  const [error, setError] = useState(""); // State untuk pesan kesalahan
+  const [errorPhoneNumber, setErorrPhoneNumber] = useState("")
+  const [alertEmail, setAlertEmail] = useState("")
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Perform validation
     if (!fullName || !email || !password || !phoneNumber || !address) {
-      alert("Please fill in all fields.");
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    if (!phoneNumber.startsWith("08")) {
+      setErorrPhoneNumber("Nomor ponsel harus di mulai dari '08'.");
       return;
     }
 
@@ -30,7 +39,6 @@ const Register = () => {
       password,
       phoneNumber,
       address,
-      // imageProfile,
     };
 
     try {
@@ -40,7 +48,7 @@ const Register = () => {
         userData
       );
       console.log("Registration response:", response.data);
-
+      setRegistrationSuccess(true);
       // Clear form fields
       setFullName("");
       setEmail("");
@@ -50,13 +58,14 @@ const Register = () => {
       // setImageProfile('');
 
       // Display success message or redirect to another page
-      alert("Registration successful!");
-
+      // alert("Registration successful!");
       // Redirect to the Home page
-      navigate("/login");
+      setTimeout(() => {
+        navigate("/login");
+      }, 4000); // Redirect after 4 seconds
     } catch (error) {
       console.error("Registration error:", error);
-      alert("Registration failed. Please try again.");
+      setAlertEmail(error.response.data.error)
     }
   };
 
@@ -67,6 +76,10 @@ const Register = () => {
       </div>
       <div className="divRegis">
         <h2 className="h2">Register</h2>
+        {registrationSuccess ? (
+          <p className="success" style={{ color: 'blue' }}>Registration successful!</p>
+        ) : null}
+
         <form onSubmit={handleSubmit} className="form">
           <div>
             <label className="label" htmlFor="fullName">
@@ -78,6 +91,7 @@ const Register = () => {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               className="inputFull"
+              required
             />
           </div>
           <div>
@@ -90,6 +104,7 @@ const Register = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="inputEmailRegis"
+              required
             />
           </div>
           <div>
@@ -102,6 +117,7 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="inputPassRegis"
+              required
             />
           </div>
           <div>
@@ -114,6 +130,7 @@ const Register = () => {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               className="inputPhone"
+              required
             />
           </div>
           <div>
@@ -126,16 +143,24 @@ const Register = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               className="inputAddress"
+              required
             />
           </div>
           <button className="button" type="submit">
             Register
           </button>
         </form>
-        <p className="p">
+
+        <p className="error" style={{ color: 'red' }}>{error}</p>
+        <p className="error" style={{ color: 'red' }}>{alertEmail}</p>
+        <p className="errorPhoneNumber" style={{ color: 'red' }}>{errorPhoneNumber}</p>
+        <p className="navigate-login" style={{ color: 'black' }}>
           Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
+
+
+
     </div>
   );
 };
