@@ -28,6 +28,12 @@ const categoryData = [
       "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509166/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Element_aodlth.png",
   },
   {
+    to: "/head-rotor",
+    title: "Head Rotor",
+    imageUrl:
+      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509168/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Rotor_Head_d97dbp.png",
+  },
+  {
     to: "/ve-pump",
     title: "VE Pump",
     imageUrl:
@@ -56,12 +62,6 @@ const categoryData = [
     title: "Turbo & Parts",
     imageUrl:
       "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509169/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Turbo_Parts_hybhex.png",
-  },
-  {
-    to: "/head-rotor",
-    title: "Head Rotor",
-    imageUrl:
-      "https://res.cloudinary.com/dcbryptkx/image/upload/v1697509168/IndoTeknikMarketplace/product/Icon/Ikon%20Kategori%20Baru%202/Rotor_Head_d97dbp.png",
   },
   {
     to: "/sensor",

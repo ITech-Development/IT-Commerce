@@ -2,60 +2,69 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../App.css";
 import "./element.css";
-import IconButton from "@mui/material/IconButton";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import styled, { keyframes } from "styled-components";
+import Star from "../../../assets/star.png";
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
 
-const linkStyle = {
-  color: "white",
-  textDecoration: "none",
-};
-
 const ProductCard = ({ product, onAddToCart }) => {
+  const starRating = 1;
   const originalPrice = product.unitPrice;
   const discountAmount = originalPrice * 0.03;
   const discountedPrice = originalPrice - discountAmount;
 
   return (
-    <div className="product-card">
-      <a
-        href={`/products/${product.id}`}
-        className="view-product-button"
-        style={linkStyle}
-      >
-        <img src={product.image} alt={product.name} />
+    <Card>
+      <a href={`/products/${product.id}`}>
+        <CardImage src={product.image} alt={product.name} />
       </a>
-      <div className="product-details">
-        <h3>{product.category}</h3>
-        <p>{product.name}</p>
-        <span className="price">Rp. {originalPrice}</span>
-        <br />
-        <div className="discount-container">
-          <div className="discount">
-            <span className="percentage">3%</span>
-          </div>
-          <del className="original-price">{discountedPrice}</del>
+      <CardContent>
+        <Title>{product.name.split(" ").slice(0, 5).join(" ")}...</Title>
+        <Price>Rp.{product.unitPrice.toLocaleString("id-ID")}</Price>
+        <div
+          style={{
+            width: "90px",
+            margin: "0",
+            padding: "5",
+            position: "relative",
+            left: "-30px",
+            top: "5px",
+          }}
+          className="star-rating"
+        >
+          {/* Render star images for the star rating */}
+          {[...Array(starRating)].map((_, index) => (
+            <img
+              key={index}
+              style={{ maxWidth: "15px" }}
+              src={Star} // Replace with your star icon image
+              alt="rating"
+            />
+          ))}
+          <p
+            style={{
+              position: "relative",
+              top: "1px",
+              left: "5px",
+              fontSize: "12px",
+            }}
+          >
+            5.0
+          </p>
         </div>
-        <p>Stock: {product.stock}</p>
-      </div>
-      <button
-        className={`add-to-cart-button ${
-          product.stock === 0 ? "out-of-stock" : ""
-        }`}
-        onClick={() => onAddToCart(product)}
-        disabled={product.stock === 0}
-      >
-        {product.stock > 0 ? (
-          <IconButton aria-label="add to cart">
-            <ShoppingCartIcon style={{ color: "white" }} />
-          </IconButton>
-        ) : (
-          "Out of Stock"
-        )}
-      </button>
-    </div>
+      </CardContent>
+    </Card>
   );
+};
+
+const searchInputStyle = {
+  padding: "10px 15px", // Mengubah padding
+  height: "auto", // Mengatur tinggi input
+  width: "100%", // Menjaga lebar 100%
+  borderRadius: "4px",
+  border: "1px solid #ccc",
+  fontSize: "14px", // Mengatur ukuran font
+  outline: "none", // Menghapus outline saat input aktif
 };
 
 const ProductList = () => {
@@ -121,75 +130,37 @@ const ProductList = () => {
     setSearchQuery(event.target.value);
   };
 
-  const handleSortOptionChange = (event) => {
-    setSortOption(event.target.value);
-  };
-
   return (
     <>
-      <img
-        style={{
-          maxHeight: "1420px",
-          display: "flex",
-          margin: "60px 0 0 0",
-          width: "100%",
-        }}
-        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694142746/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Element_smrpzd.jpg"
-        alt=""
-      />
-      <div className="productlist-container">
-        <h2 style={{ margin: "40px 0 20px 0", textAlign: "start" }}>Produk Element</h2>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "20px",
-          }}
-        >
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={handleSearchInputChange}
-            style={{
-              padding: "8px",
-              height: "30px",
-              borderRadius: "4px",
-              border: "1px solid #ccc",
-              marginRight: "10px",
-              flex: 1,
-            }}
-            placeholder="Cari Produk Berdasarkan Nama..."
-          />
-          <select
-            value={sortOption}
-            onChange={handleSortOptionChange}
-            style={{
-              padding: "8px",
-              height: "48px",
-              fontWeight: "500",
-              borderRadius: "4px",
-              border: "1px solid #ccc",
-              minWidth: "200px",
-            }}
-          >
-            <option value="name">Berdasarkan Nama</option>
-            <option value="price">Harga Terendah - Tertinggi</option>
-            <option value="stock">Stok Paling Sedikit - Terbanyak</option>
-          </select>
-        </div>
+      <div className="categotyListed">
+        <img
+          className="hero-image"
+          src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694142746/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Element_smrpzd.jpg"
+          alt=""
+        />
+        <h3 style={{ textAlign: "center" }} className="productlist-title">
+          Element
+        </h3>
 
-        <div className="products">
-          {filteredProducts.length === 0 ? (
-            <p>Dalam kategori yang anda pilih produk belum tersedia</p>
-          ) : (
-            filteredProducts.map((product) => (
+        <div className="productsLIST">
+          <SearchContainerStyle>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+              style={searchInputStyle}
+              placeholder="Produk apa yang anda cari ?.."
+            />
+          </SearchContainerStyle>
+          <div className="CardGridContainerss">
+            {filteredProducts.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
                 onAddToCart={handleAddToCart}
               />
-            ))
-          )}
+            ))}
+          </div>
         </div>
       </div>
     </>
@@ -197,3 +168,76 @@ const ProductList = () => {
 };
 
 export default ProductList;
+
+const SearchContainerStyle = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  width: auto;
+
+  @media (max-width: 768px) {
+    & {
+      position: relative;
+    }
+
+    input {
+      padding-left: 30px;
+    }
+
+    .imageFilter {
+      position: absolute;
+      left: 5px; /* Menyesuaikan posisi logo filter mobile */
+      top: 50%; /* Posisi tengah secara vertikal */
+      transform: translateY(-50%); /* Untuk mengatur vertikal ke tengah */
+      cursor: pointer;
+    }
+  }
+`;
+const shadowAnimation = keyframes`
+  0% {
+    box-shadow: none;
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+  100% {
+    box-shadow: none;
+  }
+`;
+
+const Card = styled.div`
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  max-height: 330px;
+
+  &:hover {
+    animation: ${shadowAnimation} 1s ease-in-out infinite;
+  }
+`;
+
+const CardImage = styled.img`
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+`;
+
+const CardContent = styled.div`
+  padding: 16px;
+`;
+
+const Title = styled.h3`
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  padding-bottom: 7px;
+`;
+
+const Price = styled.p`
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  padding-top: 2px;
+`;

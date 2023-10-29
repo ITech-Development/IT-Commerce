@@ -1,23 +1,24 @@
+/* eslint-disable */
 import React, { useState } from "react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
-import Background from "./Fuels.png";
-import "./style.css";
-import { useLoginMutation } from "../../features/user/apiUser.js";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { FiMail, FiLock } from "react-icons/fi";
+import Background from "./Fuel.png";
+import "./style.css"; // Import your CSS styles
+import { useLoginMutation } from '../../features/user/apiUser.js'
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [login] = useLoginMutation();
+  const [login] = useLoginMutation()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // Add state for toggling password visibility
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const [error, setError] = useState(""); // State untuk pesan kesalahan
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
-      alert("Please enter your email and password.");
+      setError("Perhatikan lagi email dan password-nya!");
       return;
     }
 
@@ -26,23 +27,15 @@ const Login = () => {
       password,
     };
 
-    console.log(1);
-    login(userData)
-      .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("access_token", res.data.access_token);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("Perhatikan lagi email dan password nya!");
-      });
+    login(userData).then((res) => {
+      console.log(res.data);
+      localStorage.setItem("access_token", res.data.access_token);
+      navigate('/')
+    }).catch((error) => {
+      console.log(error);
+      setError("Perhatikan lagi email dan password-nya!");
+    })
 
-    console.log(2);
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
   };
 
   return (
@@ -86,9 +79,10 @@ const Login = () => {
           <button className="button" type="submit">
             Masuk
           </button>
+          <p className="error" style={{ color: 'red' }}>{error}</p>
         </form>
         <p className="p">
-          Belum punya akun? <Link to="/register">Daftar akun</Link>
+          Don't have an account? <Link to="/register">Register</Link>
         </p>
       </div>
     </div>

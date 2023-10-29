@@ -137,7 +137,7 @@ const ProductList = () => {
         alt=""
       />
       <div className="productlist-container">
-        <h2 style={{ margin: "40px 0 20px 0", textAlign: "start" }}>Kategori Scv</h2>
+        <h2 style={{ margin: "40px 0 20px 0", textAlign: "start" }}>Scv</h2>
         <div
           style={{
             display: "flex",

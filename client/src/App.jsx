@@ -11,7 +11,6 @@ import Cart from "./pages/Cart"; // Correct import statement for default export
 import "react-toastify/dist/ReactToastify.css";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-import Logout from "./components/auth/Logout";
 import ProductShipping from "./pages/productShipping";
 import FirstStep from "./pages/productShipping/firstStep";
 import SecondStep from "./pages/productShipping/secondStep";
@@ -28,6 +27,10 @@ import ProductCategoryElement from "./pages/ProductCategories/element";
 import ProductCategoryVEPump from "./pages/ProductCategories/vePump";
 import ProductCategoryVEPumpParts from "./pages/ProductCategories/vePumpParts";
 import ProductCategoryHeadRotor from "./pages/ProductCategories/headRotor";
+import ProductCategoryInjector from './pages/ProductCategories/Inject'
+import ProductCategoryScv from './pages/ProductCategories/scv'
+import ProductCategoriesTurboParts from "./pages/ProductCategories/turboparts";
+import ProductCategoriesSensor from "./pages/ProductCategories/sensor";
 import MyOrder from "./pages/MyOrder";
 import DetailsOrder from "./pages/DetailsOrder";
 import store from "./app/store";
@@ -40,43 +43,41 @@ import AboutUs from "./pages/aboutUs";
 
 const Routing = () => {
   return (
-    <>
-      <Routes>
-        <Route exact path="/" element={<Homepage />} />
-        <Route path="/productlist" element={<ProductList />} />
-        <Route path="/category-list" element={<CategoryList />} />
-        <Route path="/category-list/:id" element={<CategoryDetail />} />
-        <Route path="/products/:id" element={<ProductDetails />} />
-        <Route path="/error404" element={<NotFound />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/shipping" element={<ProductShipping />} />
-        <Route path="/shipping" element={<FirstStep />} />
-        <Route path="/shippingSecond" element={<SecondStep />} />
-        <Route path="/check-trans" element={<CheckTrans />} />
-        <Route path="/profile-update" element={<ProfileUpdate />} />
-        <Route path="/services" element={<ServiceList />} />
-        <Route path="/profile-update/:id" element={<ProfileUpdate />} />
-        <Route path="/check-TransITech" element={<CheckTransItech />} />
-        <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
-        <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
-        <Route path="/check-TransIT" element={<CheckTransIndoTeknik />} />
-        <Route path="/nozzle" element={<ProductCategoryNozzle />} />
-        <Route path="/aboutUs" element={<AboutUs />} />
-        <Route
-          path="/delivery-valve"
-          element={<ProductCategoryDeliveryValve />}
-        />
-        <Route path="/element" element={<ProductCategoryElement />} />
-        <Route path="/ve-pump" element={<ProductCategoryVEPump />} />
-        <Route path="/ve-pump-parts" element={<ProductCategoryVEPumpParts />} />
-        <Route path="/head-rotor" element={<ProductCategoryHeadRotor />} />
-        <Route path="/my-order" element={<MyOrder />} />
-        <Route path="/my-order/:id" element={<DetailsOrder />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route exact path="/" element={<Homepage />} />
+      <Route path="/productlist" element={<ProductList />} />
+      <Route path="/category-list" element={<CategoryList />} />
+      <Route path="/category-list/:id" element={<CategoryDetail />} />
+      <Route path="/products/:id" element={<ProductDetails />} />
+      <Route path="/error404" element={<NotFound />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/shipping" element={<ProductShipping />} />
+      <Route path="/shipping" element={<FirstStep />} />
+      <Route path="/shippingSecond" element={<SecondStep />} />
+      <Route path="/check-trans" element={<CheckTrans />} />
+      <Route path="/profile-update" element={<ProfileUpdate />} />
+      <Route path="/services" element={<ServiceList />} />
+      <Route path="/profile-update/:id" element={<ProfileUpdate />} />
+      <Route path="/check-TransITech" element={<CheckTransItech />} />
+      <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
+      <Route path="/check-TransIT" element={<CheckTransIndoTeknik />} />
+      <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
+      <Route path="/nozzle" element={<ProductCategoryNozzle />} />
+      <Route path="/delivery-valve" element={<ProductCategoryDeliveryValve />} />
+      <Route path="/element" element={<ProductCategoryElement />} />
+      <Route path="/ve-pump" element={<ProductCategoryVEPump />} />
+      <Route path="/ve-pump-parts" element={<ProductCategoryVEPumpParts />} />
+      <Route path="/head-rotor" element={<ProductCategoryHeadRotor />} />
+      <Route path="/injector" element={<ProductCategoryInjector />} />
+      <Route path="/scv" element={<ProductCategoryScv />} />
+      <Route path="/turboparts" element={<ProductCategoriesTurboParts />} />
+      <Route path="/sensor" element={<ProductCategoriesSensor />} />
+      <Route path="/my-order" element={<MyOrder />} />
+      <Route path="/my-order/:id" element={<DetailsOrder />} />
+      <Route path="/aboutUs" element={<AboutUs />} />
+    </Routes>
   );
 };
 

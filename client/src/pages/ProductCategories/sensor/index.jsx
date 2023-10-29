@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../App.css";
-import "./velve.css";
+import "./nozzle.css";
 import styled, { keyframes } from "styled-components";
 import Star from "../../../assets/star.png";
-
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com";
 
@@ -71,16 +70,16 @@ const searchInputStyle = {
 const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
-  const [categoryTwo, setCategoryTwo] = useState([]);
+  const [categoryOne, setCategoryOne] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    getCategoryTwo();
+    getCategoryOne();
   }, []);
 
   useEffect(() => {
     // Filter and sort products based on search query and sort option
-    const filteredAndSortedProducts = categoryTwo
+    const filteredAndSortedProducts = categoryOne
       .filter((product) =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
       )
@@ -95,13 +94,13 @@ const ProductList = () => {
       });
 
     setFilteredProducts(filteredAndSortedProducts);
-  }, [searchQuery, sortOption, categoryTwo]);
+  }, [searchQuery, sortOption, categoryOne]);
 
-  const getCategoryTwo = async () => {
+  const getCategoryOne = async () => {
     try {
-      const response = await axios.get(`${API_URL}/products/delivery-valve`);
+      const response = await axios.get(`${API_URL}/products/sensor`);
       const jsonData = response.data;
-      setCategoryTwo(Array.isArray(jsonData) ? jsonData : []);
+      setCategoryOne(Array.isArray(jsonData) ? jsonData : []);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -131,16 +130,15 @@ const ProductList = () => {
     setSearchQuery(event.target.value);
   };
 
- 
   return (
     <>
       <div className="categotyListed">
         <img
           className="hero-image"
-          src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694142746/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Del_valve_osd99s.jpg"
+          src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694142748/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Nozzle_pye3l7.jpg"
           alt=""
         />
-        <h3 style={{textAlign: 'center'}} className="productlist-title">Delivery Valve</h3>
+        <h3 style={{textAlign: 'center'}} className="productlist-title">Sensor</h3>
 
         <div className="productsLIST">
           <SearchContainerStyle>
@@ -168,7 +166,6 @@ const ProductList = () => {
 };
 
 export default ProductList;
-
 
 const SearchContainerStyle = styled.div`
   display: flex;

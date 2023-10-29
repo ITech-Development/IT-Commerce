@@ -114,6 +114,14 @@ hr {
   width: auto;
   /* margin: 0  0 0 10px; */
 }
+.CardGridContainerss {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 20px;
+  padding: 10px ;
+  width: auto;
+  /* margin: 0  0 0 10px; */
+}
 label {
   display: block;
   font-weight: bold;
@@ -212,6 +220,11 @@ input[type="number"] {
     margin: 0 10px;
   }
   .CardGridContainer {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0;
+    padding: 0;
+  }
+  .CardGridContainerss {
     grid-template-columns: repeat(2, 1fr);
     margin: 0;
     padding: 0;

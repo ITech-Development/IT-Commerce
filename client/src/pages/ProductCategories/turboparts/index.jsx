@@ -133,12 +133,12 @@ const ProductList = () => {
           margin: "60px 0 0 0",
           width: "100%",
         }}
-        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694142748/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Ve_PUMP_vblt9y.jpg"
+        src="https://res.cloudinary.com/dcbryptkx/image/upload/v1694142749/IndoTeknikMarketplace/product/banner/Banner%20Kategori/Turbo_vvmrf8.jpg"
         alt=""
       />
       <div className="productlist-container">
         <h2 style={{ margin: "40px 0 20px 0", textAlign: "start" }}>
-          Produk Turbo & Parts
+          Turbo & Parts
         </h2>
         <div
           style={{
