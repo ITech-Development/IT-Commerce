@@ -95,27 +95,17 @@ class UserController {
   }
 
   static async registerUser(req, res, next) {
-    // try {
-    //   let { email, password, fullName, phoneNumber, address, imageProfile } =
-    //     req.body;
-
-    //   let user = await User.create({
-    //     email,
-    //     password,
-    //     fullName,
-    //     role: "user",
-    //     phoneNumber,
-    //     address,
-    //     imageProfile,
-    //   });
-    //   res.status(201).json({ user });
-    // } catch (error) {
-    //   next(error);
-    // }
-
     try {
       let { email, password, fullName, phoneNumber, address, imageProfile } =
         req.body;
+
+      const existingUser = await User.findOne({
+        where: { email: req.body.email },
+      });
+      if (existingUser) {
+        // Email sudah ada dalam database, kirim respons dengan pesan kesalahan.
+        return res.status(400).json({ error: "Email sudah terdaftar." });
+      }
 
       let user = await User.create({
         email,

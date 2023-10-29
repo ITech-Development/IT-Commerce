@@ -44,11 +44,11 @@ const Login = () => {
         <img className="imglogin img1" src={Background} alt="" />
       </div>
       <div className="divLogin">
-        <h2 className="h2">Masuk</h2>
+        <h2 className="h2">Login</h2>
         <form onSubmit={handleSubmit} className="form">
           <div>
             <label className="label" htmlFor="email">
-              Email:
+              <FiMail className="icon" /> Email:
             </label>
             <input
               type="email"
@@ -58,26 +58,20 @@ const Login = () => {
               className="inputEmail"
             />
           </div>
-          <div className="password-input">
+          <div>
             <label className="label" htmlFor="password">
-              Kata Sandi:
+              <FiLock className="icon" /> Password:
             </label>
             <input
-              type={showPassword ? "text" : "password"} // Toggle between text and password
+              type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="inputPass"
             />
-            <span
-              className="password-toggle"
-              onClick={togglePasswordVisibility}
-            >
-              {showPassword ? <FiEyeOff /> : <FiEye />} {/* Eye icons */}
-            </span>
           </div>
           <button className="button" type="submit">
-            Masuk
+            Login
           </button>
           <p className="error" style={{ color: 'red' }}>{error}</p>
         </form>
