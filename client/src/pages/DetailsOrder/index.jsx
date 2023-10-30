@@ -261,6 +261,7 @@ function CheckoutProductsPage() {
                     <p className="dataInvoice1" style={{ color: "black" }}>
                         {checkoutProducts[0].checkout.shippingMethod === null ? '-' : checkoutProducts[0].checkout.shippingMethod.toUpperCase()}
                     </p>
+                    <p className="dataInvoice1">No Resi: {checkoutProducts[0].checkout.trackingNumber === null ? 'null' : checkoutProducts[0].checkout.trackingNumber}</p>
                 </div>
                 <div>
                     <p className="dataInvoice1">Metode Pembayaran :</p>
