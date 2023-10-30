@@ -68,7 +68,7 @@ function CheckoutProductsPage() {
       </div>
 
       {Object.keys(filteredCheckoutProducts).length === 0 ? (
-        <p>Tidak ada proses</p>
+        <p></p>
       ) : (
         Object.keys(filteredCheckoutProducts).map((checkoutId) => (
           <div key={checkoutId} className="checkout-table">

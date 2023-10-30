@@ -12,9 +12,9 @@ export function Sidebar({ closeSidebar }) {
         <li>
           <Link to="/productlist">Semua Produk</Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/services">Layanan</Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/aboutUs">Tentang Kami</Link>
         </li>

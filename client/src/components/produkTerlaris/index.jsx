@@ -55,6 +55,16 @@ const ProductCard = ({ product, onAddToCart }) => {
   );
 };
 
+const searchInputStyle = {
+  padding: "10px 15px", // Mengubah padding
+  height: "auto", // Mengatur tinggi input
+  width: "100%", // Menjaga lebar 100%
+  borderRadius: "4px",
+  border: "1px solid #ccc",
+  fontSize: "14px", // Mengatur ukuran font
+  outline: "none", // Menghapus outline saat input aktif
+};
+
 const ProductList = () => {
   // const { data, error, isLoading } = useGetAllProductsQuery();
   const { data, error, isLoading } = useGetProductsQuery();
@@ -121,32 +131,42 @@ const ProductList = () => {
             <p>An error occurred</p>
           ) : (
             <>
-              <CardGridContainers>
-                {filteredAndSortedData
-                  .slice(0, displayedCards)
-                  .map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      onAddToCart={handleAddToCart}
-                    />
-                  ))}
-              </CardGridContainers>
-              {/* Tampilkan tombol "Muat Lebih Banyak" jika jumlah kartu yang ditampilkan belum mencapai total */}
-              {displayedCards < filteredAndSortedData.length && (
-                <div
-                  style={{
-                    textAlign: "center",
-                    display: "flex",
-                    maxWidth: "1420px",
-                    margin: "auto",
-                  }}
-                >
-                  <button className="muat" onClick={handleLoadMore}>
-                    Muat Lebih Banyak
-                  </button>
-                </div>
-              )}
+              <div className="productsLIST">
+                <SearchContainerStyle>
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                    style={searchInputStyle}
+                    placeholder="Produk apa yang anda cari ?.."
+                  />
+                </SearchContainerStyle>
+                <CardGridContainers>
+                  {filteredAndSortedData
+                    .slice(0, displayedCards)
+                    .map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onAddToCart={handleAddToCart}
+                      />
+                    ))}
+                </CardGridContainers>
+                {displayedCards < filteredAndSortedData.length && (
+                  <div
+                    style={{
+                      textAlign: "center",
+                      display: "flex",
+                      maxWidth: "1420px",
+                      margin: "auto",
+                    }}
+                  >
+                    <button className="muat" onClick={handleLoadMore}>
+                      Muat Lebih Banyak
+                    </button>
+                  </div>
+                )}
+              </div>
             </>
           )}
         </ProductListContainer>
@@ -156,6 +176,31 @@ const ProductList = () => {
 };
 
 export default ProductList;
+
+const SearchContainerStyle = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  width: auto;
+
+  @media (max-width: 768px) {
+    & {
+      position: relative;
+    }
+
+    input {
+      padding-left: 30px;
+    }
+
+    .imageFilter {
+      position: absolute;
+      left: 5px; /* Menyesuaikan posisi logo filter mobile */
+      top: 50%; /* Posisi tengah secara vertikal */
+      transform: translateY(-50%); /* Untuk mengatur vertikal ke tengah */
+      cursor: pointer;
+    }
+  }
+`;
 
 const loadingContainerStyle = {
   display: "flex",
