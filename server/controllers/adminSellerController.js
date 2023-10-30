@@ -554,7 +554,7 @@ class AdminSellerController {
         }
     }
 
-    
+
 
     static async deleteAdminSeller(req, res, next) {
         try {

@@ -38,7 +38,7 @@ function CheckoutProductsPage() {
         <button onClick={() => setActiveTab('Pesanan diterima')} className={activeTab === 'Pesanan diterima' ? 'active' : ''}>Selesai</button>
       </div>
 
-      
+
       {Object.keys(filteredCheckoutProducts).length === 0 ? (
         <p>Tidak ada proses</p>
       ) : (
@@ -57,6 +57,7 @@ function CheckoutProductsPage() {
                     <th>Alamat Pengiriman</th>
                     <th>Metode Pengiriman</th>
                     <th>Status Pengiriman</th>
+                    <th>No Resi</th>
                     <th>PPN</th>
                     <th>Tanggal Belanja</th>
                   </tr>
@@ -79,6 +80,7 @@ function CheckoutProductsPage() {
                       <td>{productInfo.checkout.shippingAddress}</td>
                       <td>{productInfo.checkout.shippingMethod}</td>
                       <td>{productInfo.checkout.deliveryStatus}</td>
+                      <td>{productInfo.checkout.trackingNumber === null ? '-' : productInfo.checkout.trackingNumber}</td>
                       <td>{productInfo.checkout.setPPN}</td>
                       <td>{productInfo.createdAt}</td>
                     </tr>
