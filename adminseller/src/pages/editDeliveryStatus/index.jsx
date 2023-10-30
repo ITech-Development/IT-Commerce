@@ -26,6 +26,7 @@ const Form = styled.form`
   align-items: center;
 `;
 
+
 const Select = styled.select`
   width: 220px;
   padding: 10px;
