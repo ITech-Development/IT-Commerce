@@ -245,13 +245,12 @@ const ProductDetailPage = () => {
                   relatedProduct.types?.name === product.types?.name
               )
               .map((relatedProduct) => (
+                <Link to={`/products/${product.id}`} style={{ textDecoration: "none" }} target="blank">
                 <RelatedProductCard key={relatedProduct.id}>
-                  <Link to={`/products/${relatedProduct.id}`} target="blank">
                     <RelatedProductImage
                       src={relatedProduct.image}
                       alt={relatedProduct.name}
                     />
-                  </Link>
                   <Pembungkus>
                     <RelatedProductName>
                       {relatedProduct.name.split(" ").slice(0, 5).join(" ")}...
@@ -291,7 +290,7 @@ const ProductDetailPage = () => {
                       </p>
                     </div>
                   </Pembungkus>
-                </RelatedProductCard>
+                </RelatedProductCard></Link>
               ))}
           </RelatedProductGrid>
         ) : (
@@ -425,7 +424,8 @@ const ProductDetailContainer = styled.div`
   justify-content: center;
   // align-items: center;
   position: relative;
-  top: 80px;
+  top: 60px;
+
 `;
 
 const ProductDetailWrapper = styled.div`

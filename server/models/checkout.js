@@ -34,7 +34,8 @@ module.exports = (sequelize, DataTypes) => {
     midtransCode: DataTypes.STRING,
     subTotal: DataTypes.INTEGER,
     discountVouchers: DataTypes.INTEGER,
-    shippingCost: DataTypes.INTEGER
+    shippingCost: DataTypes.INTEGER,
+    trackingNumber: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Checkout',

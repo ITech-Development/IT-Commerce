@@ -26,12 +26,6 @@ const Form = styled.form`
   align-items: center;
 `;
 
-// const Label = styled.label`
-//   font-size: 18px;
-//   color: #555;
-//   margin-bottom: 10px;
-// `;
-
 const Select = styled.select`
   width: 220px;
   padding: 10px;
@@ -53,39 +47,49 @@ const Button = styled.button`
 `;
 
 function EditCheckout() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [deliveryStatus, setDeliveryStatus] = useState('');
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [deliveryStatus, setDeliveryStatus] = useState('');
+    const [trackingNumber, setTrackingNumber] = useState('');
 
-  useEffect(() => {
-    fetch(`https://indoteknikserver-732012365989.herokuapp.com/checkouts/${id}`)
-      .then(response => response.json())
-      .then(data => setDeliveryStatus(data.deliveryStatus));
-  }, [id]);
+    useEffect(() => {
+        // Fetch data as before
+        fetch(`https://indoteknikserver-732012365989.herokuapp.com/checkouts/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                setDeliveryStatus(data.deliveryStatus);
+                setTrackingNumber(data.trackingNumber);
+            });
+    }, [id]);
 
   const handleDeliveryStatusChange = (event) => {
     setDeliveryStatus(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    fetch(`https://indoteknikserver-732012365989.herokuapp.com/checkouts/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        access_token: localStorage.getItem('access_token')
-      },
-      body: JSON.stringify({ deliveryStatus }),
-    })
-      .then(response => {
-        if (response.status === 201) {
-          alert('Successfully updated');
-          navigate('/order-list');
-        } else {
-          alert('Error updating');
-        }
-      });
-  };
+    const handleTrackingNumberChange = (event) => {
+        setTrackingNumber(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // Send the HTTP request as before
+        fetch(`https://indoteknikserver-732012365989.herokuapp.com/checkouts/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                access_token: localStorage.getItem('access_token')
+            },
+            body: JSON.stringify({ deliveryStatus, trackingNumber }),
+        })
+            .then(response => {
+                if (response.status === 201) {
+                    alert('ok');
+                    navigate('/order-list');
+                } else {
+                    alert('error');
+                }
+            });
+    };
 
   return (
     <div style={{marginTop: '200px'}}>
@@ -94,16 +98,33 @@ function EditCheckout() {
       <Title>Edit Status Pesanan</Title>
       <Form onSubmit={handleSubmit}>
         <div>
-          {/* <Label htmlFor="deliveryStatus">Delivery Status:</Label> */}
-          <Select
-            id="deliveryStatus"
-            value={deliveryStatus}
-            onChange={handleDeliveryStatusChange}
-          >
-            <option value="Sedang dikemas">Sedang dikemas</option>
-            <option value="Dikirim">Dikirim</option>
-            {/* Add more options as needed */}
-          </Select>
+            <h2>Edit Checkout</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="deliveryStatus">Delivery Status:</label>
+                    <Select
+                        id="deliveryStatus"
+                        value={deliveryStatus}
+                        onChange={handleDeliveryStatusChange}
+                        required
+                    >
+                        <option value="Sedang dikemas">Sedang dikemas</option>
+                        <option value="Dikirim">Dikirim</option>
+                        {/* Add more options as needed */}
+                    </Select>
+                </div>
+                <div>
+                    <label htmlFor="trackingNumber">Tracking Number:</label>
+                    <input
+                        type="text"
+                        id="trackingNumber"
+                        value={trackingNumber}
+                        onChange={handleTrackingNumberChange}
+                        required
+                    />
+                </div>
+                <button type="submit">Update</button>
+            </form>
         </div>
         <Button type="submit">Update</Button>
       </Form>

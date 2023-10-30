@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useGetProductCategoriesQuery } from "../../features/product/apiProducts";
 import styled, { keyframes } from "styled-components";
 import Star from "../../assets/star.png";
+import { Link } from "react-router-dom";
 
 const CategoryDetail = () => {
   const starRating = 1;
@@ -86,14 +87,13 @@ const CategoryDetail = () => {
         {hasProducts ? (
           <CardGridContainers>
             {filteredAndSortedProducts.map((product) => (
+      <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
               <Card>
-                <a href={`/products/${product.id}`}>
                   <CardImage
                     src={product.image}
                     alt={product.name}
                     width="200"
                   />
-                </a>
                 <CardContent>
                   <Title>
                     {product.name.split(" ").slice(0, 4).join(" ")}...
@@ -132,6 +132,7 @@ const CategoryDetail = () => {
                   </div>
                 </CardContent>
               </Card>
+              </Link>
             ))}
           </CardGridContainers>
         ) : (

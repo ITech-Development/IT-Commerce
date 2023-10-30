@@ -76,11 +76,13 @@ class CheckoutController {
         try {
             const checkoutId = req.params.id
             const {
-                deliveryStatus
+                deliveryStatus,
+                trackingNumber
             } = req.body
 
             await Checkout.update({
-                deliveryStatus
+                deliveryStatus,
+                trackingNumber
             },
                 {
                     where: {

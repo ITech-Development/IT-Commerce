@@ -8,50 +8,51 @@ import "../../App.css";
 import Star from "../../assets/star.png";
 import { FadeLoader } from "react-spinners";
 import styled, { keyframes } from "styled-components";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product, onAddToCart }) => {
   const starRating = 1;
   return (
-    <Card>
-      <a href={`/products/${product.id}`}>
+    <Link to={`/products/${product.id}`} style={{ textDecoration: "none" }}>
+      <Card>
         <CardImage src={product.image} alt={product.name} />
-      </a>
-      <CardContent>
-        <Title>{product.name.split(" ").slice(0, 4).join(" ")}...</Title>
-        <Price>Rp.{product.unitPrice.toLocaleString("id-ID")}</Price>
-        <div
-          style={{
-            width: "90px",
-            margin: "0",
-            padding: "5",
-            position: "relative",
-            left: "-30px",
-            top: "5px",
-          }}
-          className="star-rating"
-        >
-          {/* Render star images for the star rating */}
-          {[...Array(starRating)].map((_, index) => (
-            <img
-              key={index}
-              style={{ maxWidth: "15px" }}
-              src={Star} // Replace with your star icon image
-              alt="rating"
-            />
-          ))}
-          <p
+        <CardContent>
+          <Title>{product.name.split(" ").slice(0, 4).join(" ")}...</Title>
+          <Price>Rp.{product.unitPrice.toLocaleString("id-ID")}</Price>
+          <div
             style={{
+              width: "90px",
+              margin: "0",
+              padding: "5",
               position: "relative",
-              top: "1px",
-              left: "5px",
-              fontSize: "12px",
+              left: "-30px",
+              top: "5px",
             }}
+            className="star-rating"
           >
-            5.0
-          </p>
-        </div>
-      </CardContent>
-    </Card>
+            {/* Render star images for the star rating */}
+            {[...Array(starRating)].map((_, index) => (
+              <img
+                key={index}
+                style={{ maxWidth: "15px" }}
+                src={Star} // Replace with your star icon image
+                alt="rating"
+              />
+            ))}
+            <p
+              style={{
+                position: "relative",
+                top: "1px",
+                left: "5px",
+                fontSize: "12px",
+              }}
+            >
+              5.0
+            </p>
+          </div>
+        </CardContent>
+      </Card>{" "}
+    </Link>
   );
 };
 
