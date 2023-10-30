@@ -14,7 +14,7 @@ import {
 import { useGetMeQuery } from "../../../features/user/apiUser";
 import PaymentModal from '../PaymentModal';
 
-const validVoucherCodes = ["TK01", "IT01", "MS01"];
+const validVoucherCodes = ["DM01", "IT01", "MS01"];
 
 function Index() {
   const { data: carts } = useGetCartsIndoRiauQuery()
@@ -299,7 +299,7 @@ function Index() {
   const getVoucherImage = (code) => {
     // You can return the image URL based on the voucher code
     // For example, return the appropriate image URL for each valid voucher code
-    if (code === "TK01") {
+    if (code === "DM01") {
       return VCR1;
     } else if (code === "IT01") {
       return VCR2;
