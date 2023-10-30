@@ -132,7 +132,7 @@ class AdminSellerController {
     //                     }
     //                 ],
     //                 where: {
-    //                     '$checkouts.voucherCode$': 'TK01', // Filter by voucherCode
+    //                     '$checkouts.voucherCode$': 'DM01', // Filter by voucherCode
     //                     '$checkouts.paymentStatus$': 'pay' // Filter by paymentStatus
     //                 },
     //                 order: [['createdAt', 'ASC']],
@@ -177,7 +177,7 @@ class AdminSellerController {
                 console.log('Check the server again');
                 return;
             }
-    
+
             const checkoutProducts = await CheckoutProduct.findAll({
                 include: [
                     {
@@ -201,31 +201,31 @@ class AdminSellerController {
                 },
                 order: [['createdAt', 'ASC']],
             });
-    
+
             const orderList = {};
-    
+
             for (const checkoutProduct of checkoutProducts) {
                 const checkoutId = checkoutProduct.checkoutId;
-    
+
                 if (!orderList[checkoutId]) {
                     orderList[checkoutId] = {
                         checkout: checkoutProduct.checkouts,
                         products: []
                     };
                 }
-    
+
                 orderList[checkoutId].products.push(checkoutProduct.products);
             }
-    
+
             const orderListArray = Object.values(orderList);
-    
+
             res.status(200).json(orderListArray);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Internal server error' });
         }
     }
-    
+
 
     // static async getOrderListByVoucherCode(req, res, next) {
     //     if (req.adminSeller.id === 4) {
@@ -357,7 +357,7 @@ class AdminSellerController {
     //                     }
     //                 ],
     //                 where: {
-    //                     '$checkouts.voucherCode$': 'TK01', // Filter by voucherCode
+    //                     '$checkouts.voucherCode$': 'DM01', // Filter by voucherCode
     //                     '$checkouts.paymentStatus$': 'pay'   // Filter by paymentStatus
     //                 }
     //             });
@@ -397,7 +397,7 @@ class AdminSellerController {
 
     static async getOrderListByVoucherCode(req, res, next) {
         let voucherCode = '';
-    
+
         switch (req.adminSeller.id) {
             case 4:
                 voucherCode = 'IT01';
@@ -412,7 +412,7 @@ class AdminSellerController {
                 console.log('Check the server again');
                 return;
         }
-    
+
         try {
             const checkoutProducts = await CheckoutProduct.findAll({
                 include: [
@@ -437,31 +437,31 @@ class AdminSellerController {
                 },
                 order: [['createdAt', 'ASC']],
             });
-    
+
             const orderList = {};
-    
+
             for (const checkoutProduct of checkoutProducts) {
                 const checkoutId = checkoutProduct.checkoutId;
-    
+
                 if (!orderList[checkoutId]) {
                     orderList[checkoutId] = {
                         checkout: checkoutProduct.checkouts,
                         products: []
                     };
                 }
-    
+
                 orderList[checkoutId].products.push(checkoutProduct.products);
             }
-    
+
             const orderListArray = Object.values(orderList);
-    
+
             res.status(200).json(orderListArray);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Internal server error' });
         }
     }
-    
+
 
     static async registerAdminSeller(req, res, next) {
         try {
@@ -553,6 +553,8 @@ class AdminSellerController {
             next(error)
         }
     }
+
+    
 
     static async deleteAdminSeller(req, res, next) {
         try {

@@ -10,6 +10,7 @@ import { FadeLoader } from "react-spinners";
 import styled, { keyframes } from "styled-components";
 import logoFilterMobile from "../../assets/filter.png";
 import FilterMobile from "./FilterMobile";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product, onAddToCart }) => {
   const starRating = 1;
@@ -19,7 +20,9 @@ const ProductCard = ({ product, onAddToCart }) => {
         <CardImage src={product.image} alt={product.name} />
       </a>
       <CardContent>
-        <Title>{product.name.split(" ").slice(0, 5).join(" ")}...</Title>
+        <Link to={`/products/${product.id}`}>
+          <Title>{product.name.split(" ").slice(0, 5).join(" ")}...</Title>
+        </Link>
         <Price>Rp.{product.unitPrice.toLocaleString("id-ID")}</Price>
         <div
           style={{
@@ -53,7 +56,7 @@ const ProductCard = ({ product, onAddToCart }) => {
           </p>
         </div>
       </CardContent>
-    </Card>
+    </Card >
   );
 };
 
@@ -74,13 +77,9 @@ const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSortOption, setSelectedSortOption] = useState("name"); // Initialize the selectedSortOption state
   const [selectedCategories, setSelectedCategories] = useState([]);
-
   const [categories, setCategories] = useState([]);
-
   const [showFilterM, setShowFilterM] = useState(false);
-
   const [showNotavailable, setShowNotAvailable] = useState(false);
-
   const [minPrice, setMinPrice] = useState(""); // State untuk harga minimum
   const [maxPrice, setMaxPrice] = useState(""); // State untuk harga maksimum
 

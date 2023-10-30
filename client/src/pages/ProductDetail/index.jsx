@@ -5,7 +5,6 @@ import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import Star from "../../assets/star.png";
 import "./indexDetail.css";
-// import { useDispatch } from "react-redux";
 import { useAddToCartMutation } from "../../features/cart/apiCarts";
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
@@ -72,13 +71,17 @@ const ProductDetailPage = () => {
   // const dispatch = useDispatch()
 
   const handleAddToCart = () => {
-    addToCart({ product })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (accessToken) {
+      addToCart({ product })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    } else {
+      navigate("/login");
+    }
   };
 
   const handleBuyNow = () => {

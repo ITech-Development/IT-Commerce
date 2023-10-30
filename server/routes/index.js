@@ -24,6 +24,7 @@ const routeCheckouts = require('./checkouts')
 const routeOrderProducts = require('./orderProducts')
 const routeCheckoutProducts = require('./checkoutProducts')
 const routeMidtrans = require('./midtrans')
+const routeWishlist = require('./wishlist')
 
 router.use('/users', routeUsers)
 router.use('/product-owners', routeProductOwners)
@@ -49,6 +50,7 @@ router.use('/orders', routeOrders)
 router.use('/checkout-products', routeCheckoutProducts)
 router.use('/order-products', routeOrderProducts)
 router.use('/midtrans', routeMidtrans)
+router.use('/wishlists', routeWishlist)
 
 router.get('/', (req, res) => {
     res.send('Halo ini adalah server milik Indo Teknik');
