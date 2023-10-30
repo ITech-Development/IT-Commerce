@@ -48,6 +48,12 @@ function CheckoutProductsPage() {
           Semua
         </button>
         <button
+          onClick={() => setActiveTab("Belum Bayar")}
+          className={activeTab === "Belum Bayar" ? "active" : ""}
+        >
+          Belum Bayar
+        </button>
+        <button
           onClick={() => setActiveTab("Sedang dikemas")}
           className={activeTab === "Sedang dikemas" ? "active" : ""}
         >
