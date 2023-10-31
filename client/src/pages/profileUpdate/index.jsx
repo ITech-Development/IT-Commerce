@@ -82,6 +82,7 @@ const ProfileForm = () => {
       </ProfileCard>
 
       <Form onSubmit={handleSubmit}>
+        <TitleForm>Update Profile</TitleForm>
         <Label>Nama Lengkap</Label>
         <Input
           name="fullName"
@@ -126,21 +127,29 @@ const Container = styled.div`
 const BannerImage = styled.img`
   width: auto;
   height: 280px;
-  `;
-  
+  @media (max-width: 768px) {
+    height: 180px;
+    opacity: 1; /* Added opacity */
+  }
+`;
+
 const ProfileHeader = styled.div`
-background-color: rgba(0, 255, 255, 0.212);
+  background-color: rgba(0, 255, 255, 0.212);
   padding: 3px 0;
   margin-top: -4px;
 `;
 
 const ProfileTitle = styled.p`
-font-size: 18px;
+  font-size: 18px;
   font-weight: bold;
   padding-left: 29%;
-  `;
-  
-  const ProfileCard = styled.div`
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const ProfileCard = styled.div`
   background-color: white;
   width: 20%;
   margin: 0 40px;
@@ -150,28 +159,56 @@ font-size: 18px;
   border: none;
   border-radius: 10px;
   box-shadow: 0 0 0 2px white, 0.5em 0.3em 1em 0.4em rgba(123, 231, 235, 0.6);
+
+  @media (max-width: 768px) {
+    background-color: transparent;
+    width: auto;
+    margin: 30px 0px 0 0px;
+    border-radius: none;
+    box-shadow: none;
+  }
 `;
 
 const ProfileImage = styled.img`
-width: 100px;
-display: flex;
-justify-content: center;
-margin: auto;
-padding: 10px 0;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  padding: 10px 0;
+`;
+
+const TitleForm = styled.h3`
+  display: none;
+  @media (max-width: 768px) {
+    display: flex;
+    font-size: 20px;
+    padding-bottom: 5px;
+  }
 `;
 
 const ProfileData = styled.div`
   padding: 20px 30px;
+  @media (max-width: 768px) {
+    padding: 25px 0 0 0;
+  }
 `;
 
 const UserName = styled.h3`
   margin: 0;
+  @media (max-width: 768px) {
+    text-align: center;
+  }
 `;
 
 const CoinContainer = styled.p`
   display: flex;
   align-items: center;
   margin-top: 5px;
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+  }
 `;
 
 const CoinImage = styled.img`
@@ -188,6 +225,11 @@ const ProfileIcons = styled.div`
 const ProfileIcon = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 768px) {
+    border-radius: 10px;
+    box-shadow: 0 0 0 2px white, 0.5em 0.3em 1em 0.4em rgba(123, 231, 235, 0.6);
+    padding: 5px 10px;
+  }
   margin-bottom: 10px;
 `;
 
@@ -210,10 +252,10 @@ const Form = styled.form`
 
   @media (max-width: 768px) {
     display: flex;
-    position: relative;
-    margin: 0;
-    padding-bottom: 30px;
-    width: 95%;
+    flex-direction: column;
+    margin: -100px 15px 40px 15px;
+    padding: 0;
+    width: auto;
     height: auto;
   }
 `;
@@ -236,6 +278,9 @@ const Input = styled.input`
   &:focus {
     border-color: #007bff;
   }
+  @media (max-width: 768px) {
+    width: auto;
+  }
 `;
 
 const TextArea = styled.textarea`
@@ -250,6 +295,9 @@ const TextArea = styled.textarea`
 
   &:focus {
     border-color: #007bff;
+  }
+  @media (max-width: 768px) {
+    width: auto;
   }
 `;
 
