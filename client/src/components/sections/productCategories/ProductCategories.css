@@ -152,7 +152,7 @@
   color: black;
   font-size: 14px;
 }
-@media (max-width: 768px) {
+@media (max-width: 769px) {
   .allmas {
     padding-left: 3px;
   }
@@ -226,6 +226,7 @@
   .category-section h2 {
     font-size: 13px;
     max-width: 120px;
+    padding-top: 5px;
   }
 
   .category-section button {
@@ -264,13 +265,13 @@
     height: 10px;
     padding-top: 0;
     position: relative;
-    top: -103px;
+    top: -104px;
     left: 65px;
     font-size: 10px;
-    grid-template-columns: repeat(
+    /* grid-template-columns: repeat(
       3,
       1fr
-    ); /* Hanya 3 kolom di tampilan mobile */
+    ); */
   }
 
   .category-image {
@@ -304,9 +305,9 @@
   .category-card:nth-child(4) {
     display: block; /* Tampilkan category-card pertama (atau yang sesuai dengan kebutuhan Anda) */
   }
-  .category-card:nth-child(5) {
-    display: block; /* Tampilkan category-card pertama (atau yang sesuai dengan kebutuhan Anda) */
-  }
+  /* .category-card:nth-child(5) {
+    display: block;
+  } */
 }
 
 @media (max-width: 480px) {
