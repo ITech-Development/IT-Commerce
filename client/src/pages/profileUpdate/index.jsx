@@ -129,6 +129,7 @@ const BannerImage = styled.img`
   height: 280px;
   @media (max-width: 768px) {
     height: 180px;
+    width: 100%;
     opacity: 1; /* Added opacity */
   }
 `;
