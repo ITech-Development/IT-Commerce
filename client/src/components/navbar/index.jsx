@@ -7,6 +7,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import { useGetCountCartsQuery } from "../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../features/user/apiUser";
 import { Sidebar } from "../sidebar/index.";
+import Coin from '../../assets/coin.png'
 
 export default function Toolbar(props) {
   const { data: totalCart } = useGetCountCartsQuery();
@@ -51,7 +52,7 @@ export default function Toolbar(props) {
           <li>
             <Link to="/cart">
               {/* <FontAwesomeIcon icon='' className="cart-icon" /> */}
-              <img style={{ paddingTop: "6px" }} src={CartIcon} alt="" />
+              <img style={{ paddingTop: "20px" }} src={CartIcon} alt="" />
               <span
                 style={{
                   position: "relative",
@@ -62,7 +63,7 @@ export default function Toolbar(props) {
                   fontWeight: "700",
                   textDecoration: "none",
                   color: "black",
-                  top: "-25px",
+                  top: "-30px",
                   right: "8px",
                   fontSize: "10px",
                 }}
@@ -84,10 +85,14 @@ export default function Toolbar(props) {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                lineHeight: '15px'
               }}
             >
-              <p style={{ fontSize: "16px", paddingRight: "5px" }}>
-                Halo, <strong>{me?.fullName}</strong>{" "}
+              <p style={{ fontSize: "16px", paddingRight: "5px", lineHeight: '23px' }}>
+                Halo, <strong>{me?.fullName}</strong>{" "}<br/>
+                <span style={{fontSize: '12px', display: 'flex', alignItems: 'center'}}>
+                  <img style={{width: '20px', height: '20px', paddingRight: '10px'}} src={Coin} alt="" />
+                  1.000</span>
               </p>
               <img
                 style={{

@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useGetMeQuery, useEditMeMutation } from "../../features/user/apiUser"; // Import the hooks
-// import { useDispatch } from "react-redux";
+import { useGetMeQuery, useEditMeMutation } from "../../features/user/apiUser";
+import Banner from "../../assets/bannerProfile.jpg";
+import Coin from "../../assets/coin.png";
+import Email from "../../assets/mail.png";
+import Phone from "../../assets/phone-call.png";
+import Place from "../../assets/placeholder.png";
 
 const ProfileForm = () => {
-  // Use the useGetMeQuery hook to fetch the user's profile data
   const { data: userData, isError, isLoading } = useGetMeQuery();
-
-  // Use the useEditMeMutation hook to update the user's profile data
   const [editMe, { isLoading: isEditing }] = useEditMeMutation();
-
-  // const dispatch = useDispatch();
-
-  // Create state variables to track form input values
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
 
   useEffect(() => {
-    // Populate the form fields with user data when userData is available
     if (userData) {
       setFullName(userData.fullName);
       setPhoneNumber(userData.phoneNumber);
@@ -28,8 +24,6 @@ const ProfileForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Create an object with updated user data
     const updatedUserData = {
       fullName,
       phoneNumber,
@@ -37,16 +31,9 @@ const ProfileForm = () => {
     };
 
     try {
-      // Call the editMe mutation to update the user's profile
       const response = await editMe(updatedUserData).unwrap();
-
-      // Optionally, you can dispatch an action to update the user's data in Redux store
-      // dispatch(updateUserData(response));
-
-      // Handle success, e.g., show a success message
       console.log("Profile updated successfully", response);
     } catch (error) {
-      // Handle errors, e.g., show an error message
       console.error("Error updating profile", error);
     }
   };
@@ -60,15 +47,41 @@ const ProfileForm = () => {
   }
 
   return (
-    <FormContainer>
-      <Heading>
-        <img
-          style={{ width: "100px" }}
+    <Container>
+      <BannerImage src={Banner} alt="Banner" />
+      <ProfileHeader>
+        <ProfileTitle>Update Profile</ProfileTitle>
+      </ProfileHeader>
+
+      <ProfileCard>
+        <ProfileImage
           src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-          alt=""
+          alt="Profile"
         />
-      </Heading>
-      <form onSubmit={handleSubmit}>
+        <ProfileData>
+          <UserName>{fullName}</UserName>
+          <CoinContainer>
+            <CoinImage src={Coin} alt="Coin" />
+            1,000
+          </CoinContainer>
+          <ProfileIcons>
+            <ProfileIcon>
+              <IconImage src={Email} alt="Email" />
+              <IconText>{userData.email}</IconText>
+            </ProfileIcon>
+            <ProfileIcon>
+              <IconImage src={Phone} alt="Phone" />
+              <IconText>{phoneNumber}</IconText>
+            </ProfileIcon>
+            <ProfileIcon>
+              <IconImage src={Place} alt="Address" />
+              <IconText>{address}</IconText>
+            </ProfileIcon>
+          </ProfileIcons>
+        </ProfileData>
+      </ProfileCard>
+
+      <Form onSubmit={handleSubmit}>
         <Label>Nama Lengkap</Label>
         <Input
           name="fullName"
@@ -99,36 +112,110 @@ const ProfileForm = () => {
         <Button type="submit" disabled={isEditing}>
           {isEditing ? "Updating..." : "Update Profile"}
         </Button>
-      </form>
-    </FormContainer>
+      </Form>
+    </Container>
   );
 };
 
 export default ProfileForm;
 
-const FormContainer = styled.div`
+const Container = styled.div`
+  // text-align: center;
+`;
+
+const BannerImage = styled.img`
+  width: auto;
+  height: 280px;
+  `;
+  
+const ProfileHeader = styled.div`
+background-color: rgba(0, 255, 255, 0.212);
+  padding: 3px 0;
+  margin-top: -4px;
+`;
+
+const ProfileTitle = styled.p`
+font-size: 18px;
+  font-weight: bold;
+  padding-left: 29%;
+  `;
+  
+  const ProfileCard = styled.div`
+  background-color: white;
+  width: 20%;
+  margin: 0 40px;
+  position: relative;
+  top: -120px;
+  padding: 20px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 0 2px white, 0.5em 0.3em 1em 0.4em rgba(123, 231, 235, 0.6);
+`;
+
+const ProfileImage = styled.img`
+width: 100px;
+display: flex;
+justify-content: center;
+margin: auto;
+padding: 10px 0;
+`;
+
+const ProfileData = styled.div`
+  padding: 20px 30px;
+`;
+
+const UserName = styled.h3`
+  margin: 0;
+`;
+
+const CoinContainer = styled.p`
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+`;
+
+const CoinImage = styled.img`
+  width: 25px;
+  height: 25px;
+  margin-right: 15px;
+`;
+
+const ProfileIcons = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const ProfileIcon = styled.div`
+  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  position: fixed;
-  margin: auto;
-  padding: 70px 0 0 0;
+  margin-bottom: 10px;
+`;
+
+const IconImage = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+`;
+
+const IconText = styled.p`
+  margin: 0;
+`;
+
+const Form = styled.form`
+  padding-left: 29%;
+  width: auto;
+  padding-right: 60px;
+  margin-bottom: 30px;
+  margin-top: -350px;
+
   @media (max-width: 768px) {
     display: flex;
     position: relative;
-    margin: 0 ,
+    margin: 0;
     padding-bottom: 30px;
     width: 95%;
     height: auto;
-    
   }
-`;
-
-const Heading = styled.h1`
-  margin-bottom: 30px;
-  color: #007bff;
 `;
 
 const Label = styled.label`
@@ -161,7 +248,6 @@ const TextArea = styled.textarea`
   outline: none;
   resize: vertical;
 
-export default Profile;
   &:focus {
     border-color: #007bff;
   }
@@ -179,6 +265,7 @@ const Button = styled.button`
   &:hover {
     background-color: #0056b3;
   }
+
   @media (max-width: 768px) {
     margin-bottom: 30px;
   }

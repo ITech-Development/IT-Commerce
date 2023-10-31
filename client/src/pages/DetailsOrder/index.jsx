@@ -356,7 +356,7 @@ function CheckoutProductsPage() {
         <div>
           <br />
           {/* <label htmlFor="deliveryStatus">Delivery Status:</label> */}
-          <button type="button" onClick={handleDeliveryStatusChange}>
+          <button className="download-button" type="button" onClick={handleDeliveryStatusChange}>
             Pesanan diterima
           </button>
         </div>
