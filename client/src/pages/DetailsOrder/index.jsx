@@ -320,7 +320,6 @@ function CheckoutProductsPage() {
                     </button>
                     <p>Dapatkan bonus poin belanja dengan menekan tombol Pesanan diterima</p>
                 </div>
-
             )}
             
         </div>
