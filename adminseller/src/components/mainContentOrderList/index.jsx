@@ -11,7 +11,7 @@ const MainContent = () => {
     // Ganti URL dengan URL endpoint API Anda
     axios.get('http://localhost:3100/admin-sellers/order-list', {
       headers: {
-        access_token : localStorage.getItem('access_token')
+        access_token: localStorage.getItem('access_token')
       }
     })
       .then((response) => {
@@ -26,13 +26,13 @@ const MainContent = () => {
   return (
     <main style={{ display: "flex", margin: "auto", flexDirection: "column" }}>
       <h2>Order List</h2>
-      
+
       <p>Welcome to the Order List!</p>
 
       <Link to="/">
         <button>Dashboard</button>
       </Link>
-      <TableComponent data={checkoutData}/>
+      <TableComponent data={checkoutData} />
     </main>
   );
 };

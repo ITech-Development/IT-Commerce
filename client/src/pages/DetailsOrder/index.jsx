@@ -14,6 +14,27 @@ function CheckoutProductsPage() {
     const invoiceRef = useRef(null);
     const { data: me } = useGetMeQuery()
     const [deliveryStatus, setDeliveryStatus] = useState('');
+    const [userId, setUserId] = useState(me ? me.id : '');
+
+    const [incrementValue, setIncrementValue] = useState(calculateTotalPrice(checkoutProducts) / 1000);
+
+    const [message, setMessage] = useState('');
+
+    const handleIncrement = () => {
+
+        const incrementValueInt = parseInt(incrementValue, 10);
+        fetch(`http://localhost:3100/users/incrementPurchasePoints/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                access_token: localStorage.getItem('access_token'),
+            },
+            body: JSON.stringify({ incrementValue: incrementValueInt }), // Kirim sebagai bilangan bulat
+        })
+            .then((response) => response.json())
+            .then((data) => setMessage(data.message))
+            .catch((error) => console.error(error));
+    };
 
     const handleDeliveryStatusChange = () => {
         // Set the delivery status directly since there's only one option
@@ -28,14 +49,29 @@ function CheckoutProductsPage() {
             },
             body: JSON.stringify({ deliveryStatus: 'Pesanan diterima' }),
         })
-            .then(response => {
+            .then(async (response) => {
                 if (response.status === 201) {
-                    console.log('ok, berhasil');
+                    // If the delivery status update is successful, also increment points
+                    const incrementValueInt = parseInt(incrementValue, 10);
+                    const incrementResponse = await fetch(`http://localhost:3100/users/incrementPurchasePoints/${userId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            access_token: localStorage.getItem('access_token'),
+                        },
+                        body: JSON.stringify({ incrementValue: incrementValueInt }),
+                    });
+                    if (incrementResponse.status === 200) {
+                        console.log('Delivery status updated and points incremented successfully.');
+                    } else {
+                        console.error('Error incrementing points.');
+                    }
                 } else {
-                    alert('error');
+                    console.error('Error updating delivery status.');
                 }
             });
     };
+
 
     function calculateTotalPcs(products) {
         if (!Array.isArray(products)) {
@@ -94,8 +130,6 @@ function CheckoutProductsPage() {
     }
 
 
-
-
     useEffect(() => {
         async function fetchCheckoutProducts() {
             try {
@@ -109,6 +143,7 @@ function CheckoutProductsPage() {
                 );
                 setCheckoutProducts(response.data);
                 setLoading(false);
+                setIncrementValue(calculateTotalPrice(response.data) / 1000);
             } catch (error) {
                 console.error("Error fetching checkout products:", error);
             }
@@ -116,21 +151,6 @@ function CheckoutProductsPage() {
 
         fetchCheckoutProducts();
     }, [id]);
-
-    // function downloadInvoiceAsPDF() {
-    //   if (invoiceRef.current) {
-    //     html2canvas(invoiceRef.current).then((canvas) => {
-    //       const imgData = canvas.toDataURL("image/png");
-    //       const pdf = new jsPDF("p", "mm");
-    //       const pdfWidth = 210;
-    //       const pdfHeight = pdf.internal.pageSize.height;
-    //       const position = 0;
-    //       pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
-    //       pdf.save("invoice.pdf");
-    //     });
-    //   }
-    // }
-
 
 
     function downloadInvoiceAsPDF() {
@@ -298,9 +318,11 @@ function CheckoutProductsPage() {
                     <button type="button" onClick={handleDeliveryStatusChange}>
                         Pesanan diterima
                     </button>
+                    <p>Dapatkan bonus poin belanja dengan menekan tombol Pesanan diterima</p>
                 </div>
 
             )}
+            
         </div>
     );
 }

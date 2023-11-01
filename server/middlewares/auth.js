@@ -21,6 +21,7 @@ async function authenticationUser(req, res, next) {
       id: user.id,
       role: user.role,
       email: user.email,
+      purchasePoints: user.purchasePoints
     };
     next();
   } catch (error) {

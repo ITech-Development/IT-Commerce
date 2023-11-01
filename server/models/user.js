@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
     imageProfile: DataTypes.STRING,
     role: DataTypes.STRING,
     adminSellerId: DataTypes.INTEGER,
-    creditCoins: DataTypes.INTEGER
+    purchasePoints: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User',

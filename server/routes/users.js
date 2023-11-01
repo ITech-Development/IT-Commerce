@@ -15,5 +15,6 @@ router.get('/subdistrict/:id', authenticationUser, UserController.getSubdistrict
 router.delete('/:id', authentication, authorization, UserController.deleteUser)
 router.get('/:id', authenticationUser, UserController.detailsUser)
 router.put('/:id', authenticationUser, UserController.updateUser)
+router.put('/incrementPurchasePoints/:id', authenticationUser, UserController.incrementPurchasePoints)
 
 module.exports = router

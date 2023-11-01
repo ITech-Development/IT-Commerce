@@ -215,7 +215,6 @@ class CheckoutProductController {
                 quantity: cp.quantity,
                 createdAt: cp.createdAt
             }));
-
             res.status(200).json(formattedCheckoutProducts);
         } catch (error) {
             next(error);

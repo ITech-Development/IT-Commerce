@@ -91,8 +91,8 @@ class MidtransController {
       let temp = []
       const user = await User.findByPk(req.user.id);
       let snap = new midtransClient.Snap({
-        isProduction: true,
-        serverKey: midtransKeyIndoRiau,
+        isProduction: false,
+        serverKey: midtransKey,
       });
 
       const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
@@ -389,6 +389,7 @@ class MidtransController {
             },
             { transaction: t }
           );
+          
         });
 
         res.status(200).json({ message: 'Pembayaran berhasil diproses.' });
