@@ -50,6 +50,10 @@ export const cartsApi = createApi({
             query: () => 'product-carts/indo-riau', // Ganti dengan URL endpoint yang sesuai
             providesTags: ['Post']
         }),
+        getCarts: builder.query({
+            query: () => 'product-carts/',
+            providesTags: ['Post']
+        }),
         getCartsJuvindo: builder.query({
             query: () => 'product-carts/juvindo', // Ganti dengan URL endpoint yang sesuai
             providesTags: ['Post']
@@ -66,6 +70,7 @@ export const cartsApi = createApi({
 })
 
 export const {
+    useGetCartsQuery,
     useGetCartsIndoRiauQuery,
     useGetCartsJuvindoQuery,
     useGetCartsItechQuery,

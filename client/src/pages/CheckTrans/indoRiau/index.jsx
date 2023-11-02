@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styless.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
+
 import {
   useClearProductCartMutation,
   useGetCartsIndoRiauQuery,
@@ -10,6 +11,10 @@ import {
 import { useGetMeQuery } from "../../../features/user/apiUser";
 import PaymentModal from "../PaymentModal";
 import Edit from "../../../assets/edit.png";
+// import ShippingAddress from "../ShippingAddress";
+// import UseVouchers from "../UseVouchers";
+// import ShippingMethod from "../ShippingMethod";
+// import ProductOrdered from "../ProductOrdered";
 
 const validVoucherCodes = ["DM01", "IT01", "MS01"];
 
@@ -125,12 +130,12 @@ function Index() {
   }, [token]);
 
   useEffect(() => {
-    const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const midtransUrl = "https://app.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
-    const midtransClientKey = "SB-Mid-client-5sjWc9AhHLstKFML";
+    const midtransClientKey = "Mid-client-fFLT_yUYn3HiUpBT";
     scriptTag.setAttribute("data-client-key-indo-riau", midtransClientKey);
 
     document.body.appendChild(scriptTag);
@@ -311,12 +316,11 @@ function Index() {
     marginTop: "10px",
   };
 
-  
   function formatPrice(price) {
     const priceString = price.toString();
-    const parts = priceString.split('.');
+    const parts = priceString.split(".");
     return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
+  }
 
   return (
     <div>
@@ -391,16 +395,20 @@ function Index() {
                       </div>
                     </div>
                     <div class="cart-product-price">
-                      Rp.{(e.product.unitPrice).toLocaleString("id-ID", {})}
+                      Rp.{e.product.unitPrice.toLocaleString("id-ID", {})}
                     </div>
                     <div class="cart-product-quantityIR">
-                      <div class="count">x {(e.quantity).toLocaleString("id-ID", {})}</div>
+                      <div class="count">
+                        x {e.quantity.toLocaleString("id-ID", {})}
+                      </div>
                     </div>
                     <div class="cart-product-total-price">
                       Rp.
                       {/* {e.quantity * e.product.unitPrice} */}
-                      {(e.quantity * e.product.unitPrice).toLocaleString("id-ID", {})}
-
+                      {(e.quantity * e.product.unitPrice).toLocaleString(
+                        "id-ID",
+                        {}
+                      )}
                     </div>
                   </div>
                 ))}
@@ -410,21 +418,27 @@ function Index() {
                 <div class="cart-checkout">
                   <div class="subtotal">
                     <span className="subtot">Subtotal :</span>
-                    <span class="amountSub">Rp. {formatPrice(calculateSubtotal())}</span>
+                    <span class="amountSub">
+                      Rp. {formatPrice(calculateSubtotal())}
+                    </span>
                   </div>
                   <div class="subtotalVou">
                     <span className="subtotVou">Voucher 6% :</span>
-                    <span class="amountSub">Rp. {formatPrice(calculateVoucher())}</span>
+                    <span class="amountSub">
+                      Rp. {formatPrice(calculateVoucher())}
+                    </span>
                   </div>
                   <div className="ppn">
                     <span className="subtot">PPN 11% :</span>
-                    <span className="amountSub">Rp. {formatPrice(calculatePPN())}</span>
+                    <span className="amountSub">
+                      Rp. {formatPrice(calculatePPN())}
+                    </span>
                   </div>
                   <div class="Total">
                     <span className="subtot">Total :</span>
                     <span style={{ fontWeight: "700" }} class="amountTot">
-                      Rp. 
-                    {formatPrice(calculateTotal())}
+                      Rp.
+                      {formatPrice(calculateTotal())}
                     </span>
                   </div>
                 </div>
@@ -528,7 +542,8 @@ function Index() {
                         onChange={handleShippingCostChange}
                       />
                       <label htmlFor={`shippingChoice${index}`}>
-                        Ongkos kirim : Rp.{(el.cost[0].value).toLocaleString("id-ID", {})}
+                        Ongkos kirim : Rp.
+                        {el.cost[0].value.toLocaleString("id-ID", {})}
                       </label>
                       <p>Layanan : {el.service}</p>
                       <p>Deskripsi : {el.description}</p>
@@ -591,4 +606,5 @@ function Index() {
     </div>
   );
 }
+
 export default Index;

@@ -86,7 +86,6 @@ function Index() {
         selectedVoucher,
         checkoutPengiriman,
         bayar,
-
       },
       headers: config,
       method: "post",
