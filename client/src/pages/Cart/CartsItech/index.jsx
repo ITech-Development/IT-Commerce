@@ -56,10 +56,10 @@ function CartsItech({ cartsItech }) {
 
   function formatPrice(price) {
     const priceString = price.toString();
-    const parts = priceString.split('.');
-    const decimalPart = parts[1] === '00' ? '' : `.${parts[1]}`;
+    const parts = priceString.split(".");
+    const decimalPart = parts[1] === "00" ? "" : `.${parts[1]}`;
     return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".") + decimalPart;
-}
+  }
 
   return (
     <div
@@ -67,7 +67,12 @@ function CartsItech({ cartsItech }) {
       style={{ position: "relative", top: "50px" }}
     >
       <StoreHeader>
-        <img className="logoJuvindo" style={{ maxWidth: "16%" }} src={Itech} alt="Store Logo" />
+        <img
+          className="logoJuvindo"
+          style={{ maxWidth: "16%" }}
+          src={Itech}
+          alt="Store Logo"
+        />
         {/* <StoreTitle>ITech</StoreTitle> */}
       </StoreHeader>
 
@@ -82,7 +87,7 @@ function CartsItech({ cartsItech }) {
           {cartsItech?.map((e) => (
             <div class="cart-item">
               <div class="cart-product">
-              <ProductImageContainer>
+                <ProductImageContainer>
                   <Link to={`/products/${e.product.id}`}>
                     <ProductImage src={e.product.image} alt={e.product.name} />
                   </Link>
@@ -93,10 +98,6 @@ function CartsItech({ cartsItech }) {
                     {e.product.name.split(" ").slice(0, 15).join(" ")}
                     ...
                   </Title>
-                  {/* <Description>
-                    {e.product.description.split(" ").slice(0, 15).join(" ")}
-                    ...
-                  </Description> */}
                   <button onClick={() => handlerRemove(e.id)}>
                     <FontAwesomeIcon icon={faTrash} /> Hapus
                   </button>
@@ -108,7 +109,9 @@ function CartsItech({ cartsItech }) {
               <div className="cart-product-quantity">
                 <button onClick={() => handlerDec(e.id)}>-</button>
                 <div className="count">{e.quantity}</div>
-                <button className="plusCart" onClick={() => handlerInc(e.id)}>+</button>
+                <button className="plusCart" onClick={() => handlerInc(e.id)}>
+                  +
+                </button>
               </div>
               <div className="cart-product-total-price">
                 Rp.
@@ -123,10 +126,13 @@ function CartsItech({ cartsItech }) {
             <div className="subtotal" style={{ paddingBottom: "10px" }}>
               <span className="subtot">Total :</span>
               <span style={{ fontWeight: "700" }} className="amount">
-              {formatPrice(calculateTotalItech())}
+                {formatPrice(calculateTotalItech())}
               </span>
             </div>
-            <button className='checkoutButtonStyle' disabled={isCheckoutDisabled}>
+            <button
+              className="checkoutButtonStyle"
+              disabled={isCheckoutDisabled}
+            >
               <Link to="/check-TransITech" style={linkStyle}>
                 {!isCheckoutDisabled ? "Checkout" : "Stok produk kosong"}
               </Link>
@@ -178,20 +184,8 @@ const Title = styled.div`
   @media (max-width: 768px) {
     font-size: 14px;
     width: 100%;
-    // margin-right: 30px;
   }
 `;
-// const checkoutButtonStyle = styled.button {
-//   backgroundColor: "blue",
-//   color: "white",
-//   padding: "10px 20px",
-//   border: "none",
-//   borderRadius: "4px",
-//   cursor: "pointer",
-//   textDecoration: "none",
-//   marginBottom: '50px'
-  
-// };
 
 const linkStyle = {
   color: "white",

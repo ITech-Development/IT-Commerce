@@ -11,10 +11,6 @@ import {
 import { useGetMeQuery } from "../../../features/user/apiUser";
 import PaymentModal from "../PaymentModal";
 import Edit from "../../../assets/edit.png";
-// import ShippingAddress from "../ShippingAddress";
-// import UseVouchers from "../UseVouchers";
-// import ShippingMethod from "../ShippingMethod";
-// import ProductOrdered from "../ProductOrdered";
 
 const validVoucherCodes = ["DM01", "IT01", "MS01"];
 

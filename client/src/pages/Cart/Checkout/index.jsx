@@ -8,7 +8,7 @@ import {
   useIncrementCartItemMutation,
   useDecrementCartItemMutation,
 } from "../../../features/cart/apiCarts";
-import './itCart.css'
+import "./itCart.css";
 
 function Checkout({ carts }) {
   const isCheckoutDisabled = carts?.some(
@@ -52,21 +52,13 @@ function Checkout({ carts }) {
     return total.toFixed(2);
   };
 
-
-  function formatPrice(price) {
-    const priceString = price.toString();
-    const parts = priceString.split('.');
-    const decimalPart = parts[1] === '00' ? '' : `.${parts[1]}`;
-    return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".") + decimalPart;
-}
-
   return (
     <div
       className="cart-container"
       style={{ position: "relative", top: "50px" }}
     >
       <div>
-      <div className="titles">
+        <div className="titles">
           <H3 className="product-title">Produk</H3>
           <H3 className="price">Harga</H3>
           <H3 className="quantity">Kuantitas</H3>
@@ -76,7 +68,7 @@ function Checkout({ carts }) {
           {carts?.map((e) => (
             <div class="cart-item">
               <div class="cart-product">
-              <ProductImageContainer>
+                <ProductImageContainer>
                   <Link to={`/products/${e.product.id}`}>
                     <ProductImage src={e.product.image} alt={e.product.name} />
                   </Link>
@@ -86,26 +78,19 @@ function Checkout({ carts }) {
                     {e.product.name.split(" ").slice(0, 15).join(" ")}
                     ...
                   </Title>
-                  {/* <Description>
-                    {e.product.description.split(" ").slice(0, 15).join(" ")}
-                    ...
-                  </Description> */}
                   <button onClick={() => handlerRemove(e.id)}>
                     <FontAwesomeIcon icon={faTrash} /> Hapus
                   </button>
                 </SectionLeft>
               </div>
-              <div className="cart-product-price">
-                Rp.{e.product.unitPrice.toLocaleString("id-ID")}
-              </div>              
+              <div className="cart-product-price">Rp.{e.product.unitPrice}</div>
               <div className="cart-product-quantity">
                 <button onClick={() => handlerDec(e.id)}>-</button>
                 <div className="count">{e.quantity}</div>
-                <button className="plusCart" onClick={() => handlerInc(e.id)}>+</button>
+                <button onClick={() => handlerInc(e.id)}>+</button>
               </div>
               <div className="cart-product-total-price">
-                Rp.
-                {(e.quantity * e.product.unitPrice).toLocaleString("id-ID", {})}
+                Rp.{e.quantity * e.product.unitPrice}
               </div>
             </div>
           ))}
@@ -113,21 +98,20 @@ function Checkout({ carts }) {
         <div className="cart-summary">
           <p></p>
           <div className="cart-checkout">
-          <div className="subtotal" style={{ paddingBottom: "10px" }}>
+            <div className="subtotal" style={{ paddingBottom: "10px" }}>
               <span className="subtot">Total :</span>
               <span style={{ fontWeight: "700" }} className="amount">
-              {formatPrice(calculateTotal())}
+                {calculateTotal()}
               </span>
             </div>
-            <button className='checkoutButtonStyle' disabled={isCheckoutDisabled}>
+            <button
+              className="checkoutButtonStyle"
+              disabled={isCheckoutDisabled} // Disable the button if any product is out of stock
+            >
               <Link to="/pay-now" style={linkStyle}>
                 {!isCheckoutDisabled ? "Checkout" : "Stok produk kosong"}
               </Link>
             </button>
-            {/* <ContinueShoppingContainer>
-              <ContinueShoppingIcon>&lt;</ContinueShoppingIcon>
-              <Link to="/productlist">Beli Lagi</Link>
-            </ContinueShoppingContainer> */}
           </div>
         </div>
       </div>
@@ -136,7 +120,6 @@ function Checkout({ carts }) {
 }
 
 export default Checkout;
-
 
 const ProductImage = styled.img`
   max-width: 180px;
@@ -157,7 +140,6 @@ const H3 = styled.div`
   }
 `;
 
-
 const SectionLeft = styled.div`
   padding-left: 20px @media (max-width: 768px) {
     padding: 0;
@@ -172,20 +154,8 @@ const Title = styled.div`
   @media (max-width: 768px) {
     font-size: 14px;
     width: 100%;
-    // margin-right: 30px;
   }
 `;
-// const checkoutButtonStyle = styled.button {
-//   backgroundColor: "blue",
-//   color: "white",
-//   padding: "10px 20px",
-//   border: "none",
-//   borderRadius: "4px",
-//   cursor: "pointer",
-//   textDecoration: "none",
-//   marginBottom: '50px'
-  
-// };
 
 const linkStyle = {
   color: "white",
