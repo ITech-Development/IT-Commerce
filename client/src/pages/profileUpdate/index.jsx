@@ -62,7 +62,7 @@ const ProfileForm = () => {
           <UserName>{fullName}</UserName>
           <CoinContainer>
             <CoinImage src={Coin} alt="Coin" />
-            1,000
+            {userData?.purchasePoints}
           </CoinContainer>
           <ProfileIcons>
             <ProfileIcon>

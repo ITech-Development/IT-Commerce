@@ -26,6 +26,35 @@ class UserController {
     }
   }
 
+
+
+  static async incrementPurchasePoints(req, res) {
+    const { id } = req.params;
+    const { incrementValue } = req.body; // Anda perlu mengirimkan incrementValue dalam badan permintaan PUT
+  
+    try {
+      const user = await User.findByPk(id);
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Increment purchasePoints by the value provided in the request body
+      user.purchasePoints += incrementValue;
+  
+      await user.save();
+  
+      return res.status(200).json({ message: 'PurchasePoints incremented successfully' });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Error incrementing PurchasePoints' });
+    }
+  }
+  
+
+
+
+
   static async getMeById(req, res, next) {
     try {
       const profile = await User.findOne({

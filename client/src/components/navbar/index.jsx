@@ -92,7 +92,7 @@ export default function Toolbar(props) {
                 Halo, <strong>{me?.fullName}</strong>{" "}<br/>
                 <span style={{fontSize: '12px', display: 'flex', alignItems: 'center'}}>
                   <img style={{width: '20px', height: '20px', paddingRight: '10px'}} src={Coin} alt="" />
-                  1.000</span>
+                  {me?.purchasePoints}</span>
               </p>
               <img
                 style={{
