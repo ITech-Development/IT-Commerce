@@ -20,7 +20,7 @@ class MidtransController {
       });
 
       const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-      let order_id = `INV/${currentDate}/ITE/` +
+      let order_id = `INV/${currentDate}/DONIK/` +
         Math.floor(1000000 + Math.random() * 9000000)
       let parameter = {
         transaction_details: {
@@ -41,6 +41,7 @@ class MidtransController {
       const midtransToken = await snap.createTransaction(parameter);
 
       const {
+        pajak,
         checkoutProvince,
         checkoutCity,
         bayar,
@@ -57,7 +58,7 @@ class MidtransController {
         totalPrice: bayar,
         voucherCode: selectedVoucher,
         midtransCode: order_id,
-        setPPN: `-`,
+        setPPN: `${pajak}`,
         shippingMethod: `${checkoutCourier}`,
         shippingCost: selectedShippingCost,
         transaction: t
@@ -300,7 +301,7 @@ class MidtransController {
           // Avoid sending sensitive user data like password here.
         },
       };
-      
+
       const midtransToken = await snap.createTransaction(parameter);
 
       const {
@@ -389,7 +390,7 @@ class MidtransController {
             },
             { transaction: t }
           );
-          
+
         });
 
         res.status(200).json({ message: 'Pembayaran berhasil diproses.' });

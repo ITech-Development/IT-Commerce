@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styless.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import VCR1 from "../../../assets/IT01.png";
 import VCR2 from "../../../assets/MS01.png";
 import VCR3 from "../../../assets/TK01.png";
@@ -13,10 +12,15 @@ import {
 } from "../../../features/cart/apiCarts";
 import { useGetMeQuery } from "../../../features/user/apiUser";
 import PaymentModal from '../PaymentModal';
+import ShippingAddress from "../ShippingAddress";
+import UseVouchers from "../UseVouchers";
+import ShippingMethod from "../ShippingMethod";
+import ProductOrdered from "../ProductOrdered";
 
 const validVoucherCodes = ["DM01", "IT01", "MS01"];
 
 function Index() {
+
   const { data: carts } = useGetCartsIndoRiauQuery()
   const { data: profile } = useGetMeQuery()
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
@@ -334,27 +338,7 @@ function Index() {
 
   return (
     <div>
-
-      <div className="alamat">
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h2>Alamat Pengiriman</h2>
-          <Link to="/profile-update">
-            <button className="edit-button">Edit</button>
-          </Link>
-        </div>
-        <div className="address-info">
-          <h4>Nama Lengkap</h4>
-          <p style={{ paddingLeft: "40px" }}>: {profile?.fullName}</p>
-        </div>
-        <div className="address-info">
-          <h4>Nomor Handphone</h4>
-          <p style={{ paddingLeft: "5px" }}>: {profile?.phoneNumber}</p>
-        </div>
-        <div className="address-info">
-          <h4>Detail Alamat</h4>
-          <p style={{ paddingLeft: "55px" }}>: {profile?.address}</p>
-        </div>
-      </div>
+      <ShippingAddress profile={profile} />
 
       <div
         className="alamat"
@@ -362,218 +346,38 @@ function Index() {
       >
         <h2>Produk Dipesan</h2>
         {/* <CartCheckTrans /> */}
-        <div className="cart-container">
-          {carts?.length === 0 ? (
-            <div class="cart-empty">
-              <p>Your cart is empty</p>
-              <div class="start-shopping">
-                <a href="/productlist">
-                  <span>&lt;</span>
-                  <span>Start Shopping</span>
-                </a>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div class="titles">
-                <h3 class="product-title">Product</h3>
-                <h3 class="price">Price</h3>
-                <h3 class="quantity">Quantity</h3>
-                <h3 class="total">Total</h3>
-              </div>
-              <div class="cart-items">
-                {carts?.map((e) => (
-                  <div class="cart-item">
-                    <div class="cart-product">
-                      <Link to={`/products/${e.product.id}`}>
-                        <img
-                          src={e.product.image}
-                          alt={e.product.name}
-                        />
-                      </Link>
-                      <div>
-                        <h3>{e.product.name}</h3>
-                        <p>{e.product.description}</p>
-                        <button onClick={() => handlerRemove(e.id)}>
-                          Remove
-                        </button>
-                      </div>
-                    </div>
-                    <div class="cart-product-price">
-                      Rp.{e.product.unitPrice}
-                    </div>
-                    <div class="cart-product-quantity">
-                      <button disabled>-</button>
-                      <div class="count">{e.quantity}</div>
-                      <button disabled>+</button>
-                    </div>
-                    <div class="cart-product-total-price">
-                      Rp.{e.quantity * e.product.unitPrice}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div class="cart-summary">
-                <p></p>
-                <div class="cart-checkout" style={{ lineHeight: "30px" }}>
-                  <div class="subtotal">
-                    <span>Subtotal :</span>
-                    <span class="amount">Rp.{calculateSubtotal()}</span>
-                  </div>
-                  <div class="subtotal">
-                    <span>Voucher 6% :</span>
-                    <span class="amount">Rp. {calculateVoucher()}</span>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontStyle: "italic",
-                    }}
-                  >
-                    <span>PPN 11% :</span>
-                    <span className="amount"> Rp. {calculatePPN()}</span>
-                  </div>
-                  <div class="subtotal">
-                    <span>Total :</span>
-                    <span style={{ fontWeight: "700" }} class="amount">
-                      {calculateTotal()}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+        <ProductOrdered
+          carts={carts}
+          handlerRemove={handlerRemove}
+          calculateSubtotal={calculateSubtotal}
+          calculateVoucher={calculateVoucher}
+          calculatePPN={calculatePPN}
+          calculateTotal={calculateTotal}
+        />
+        
 
         <div>
-          <h2>Pilih Kode Voucher</h2>
-          <div>
-            <input
-              type="text"
-              placeholder="Masukkan kode voucher"
-              value={voucherCode}
-              onChange={(e) => setVoucherCode(e.target.value)}
-            />
-            <button onClick={applyVoucher}>Apply</button>
-          </div>
+          <UseVouchers voucherCode={voucherCode} setVoucherCode={setVoucherCode} applyVoucher={applyVoucher} />
         </div>
 
 
 
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div
-            className="calcongkir"
-            style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
-          >
-            <h2>Pilih Metode Pengiriman</h2>
-            <div>
+          <ShippingMethod
+            courier={courier}
+            handlerSetCourier={handlerSetCourier}
+            handleProvinceChange={handleProvinceChange}
+            province={province}
+            handleCityChange={handleCityChange}
+            city={city}
+            handlerGetCost={handlerGetCost}
+            subdistrict={subdistrict}
+            pengiriman={pengiriman}
+            selectedShippingCost={selectedShippingCost}
+            handleShippingCostChange={handleShippingCostChange}
+          />
 
-              <select
-                value={courier}
-                onChange={handlerSetCourier}
-                className="methodDeliverySelect"
-              >
-                <option className="methodDeliveryOption" value="jne">
-                  jne
-                </option>
-                <option className="methodDeliveryOption" value="tiki">
-                  tiki
-                </option>
-                <option className="methodDeliveryOption" value="pos">
-                  pos
-                </option>
-                <option className="methodDeliveryOption" value="jnt">
-                  jnt
-                </option>
-              </select>
-              {/* <input
-                type="number"
-                value={calculateTotalWeight()}
-                readOnly
-                placeholder="Total Weight in Grams"
-              /> */}
-              <select
-                name="province"
-                id="province"
-                onChange={handleProvinceChange}
-                className="methodDeliverySelect"
-              >
-                <option className="methodDeliveryOption" value="">
-                  Select Province
-                </option>
-                {province.map((item) => (
-                  <option
-                    className="methodDeliveryOption"
-                    key={item.province_id}
-                    value={item.province_id}
-                  >
-                    {item.province}
-                  </option>
-                ))}
-              </select>
-              <select
-                name="city"
-                id="city"
-                onChange={handleCityChange}
-                className="methodDeliverySelect"
-              >
-                <option className="methodDeliveryOption" value="">
-                  Select City
-                </option>
-                {Array.isArray(city) &&
-                  city.map((item) => (
-                    <option
-                      className="methodDeliveryOption"
-                      key={item.city_id}
-                      value={item.city_id}
-                    >
-                      {item.city_name}
-                    </option>
-                  ))}
-              </select>
-              <select
-                name="subdistrict"
-                id="subdistrict"
-                onChange={handlerGetCost}
-                className="methodDeliverySelect"
-              >
-                <option className="methodDeliveryOption" value="">
-                  Select Subdistrict
-                </option>
-                {Array.isArray(subdistrict) &&
-                  subdistrict.map((item) => (
-                    <option
-                      className="methodDeliveryOption"
-                      key={item.subdistrict_id}
-                      value={item.subdistrict_id}
-                    >
-                      {item.subdistrict_name}
-                    </option>
-                  ))}
-              </select>
-              {pengiriman
-                ? pengiriman.map((el, index) => (
-                  <div key={index}>
-                    <input
-                      type="radio"
-                      id={`shippingChoice${index}`}
-                      name="shipping"
-                      value={el.cost[0].value}
-                      checked={selectedShippingCost === el.cost[0].value}
-                      onChange={handleShippingCostChange}
-                    />
-                    <label htmlFor={`shippingChoice${index}`}>
-                      Shipping Cost: Rp.{el.cost[0].value}
-                    </label>
-                    <p>Service: {el.service}</p>
-                    <p>Description: {el.description}</p>
-                    <p>Est: {el.cost[0].etd} Days</p>
-                  </div>
-                ))
-                : null}
-            </div>
-          </div>
+
           <div
             style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end' }}
           >
@@ -607,4 +411,5 @@ function Index() {
     </div>
   );
 }
+
 export default Index;
