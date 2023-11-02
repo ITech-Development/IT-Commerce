@@ -169,6 +169,7 @@ class AdminSellerController {
             let voucherCode = '';
             if (req.adminSeller.id === 4) {
                 voucherCode = 'IT01';
+                voucherCode = null;
             } else if (req.adminSeller.id === 5) {
                 voucherCode = 'MS01';
             } else if (req.adminSeller.id === 6) {
@@ -401,6 +402,7 @@ class AdminSellerController {
         switch (req.adminSeller.id) {
             case 4:
                 voucherCode = 'IT01';
+                voucherCode = null;
                 break;
             case 5:
                 voucherCode = 'MS01';
