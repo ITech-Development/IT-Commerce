@@ -11,9 +11,7 @@ import {
 } from "../../../features/cart/apiCarts";
 
 function Checkout({ carts }) {
-
     const isCheckoutDisabled = carts?.some((cartItem) => cartItem.product.stock <= 0);
-
     const [removeItemFromCart] = useRemoveItemFromCartMutation()
     const [incrementCartItem] = useIncrementCartItemMutation()
     const [decrementCartItem] = useDecrementCartItemMutation()
