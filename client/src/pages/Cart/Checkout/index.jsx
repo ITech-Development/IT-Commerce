@@ -11,14 +11,6 @@ import {
 import "./itCart.css";
 
 function Checkout({ carts }) {
-  const isCheckoutDisabled = carts?.some(
-    (cartItem) => cartItem.product.stock <= 0
-  );
-
-  const [removeItemFromCart] = useRemoveItemFromCartMutation();
-  const [incrementCartItem] = useIncrementCartItemMutation();
-  const [decrementCartItem] = useDecrementCartItemMutation();
-
   const handlerInc = (id) => {
     incrementCartItem(id)
       .then((response) => {
@@ -28,6 +20,12 @@ function Checkout({ carts }) {
         console.log(error);
       });
   };
+  const isCheckoutDisabled = carts?.some(
+    (cartItem) => cartItem.product.stock <= 0
+  );
+  const [removeItemFromCart] = useRemoveItemFromCartMutation();
+  const [incrementCartItem] = useIncrementCartItemMutation();
+  const [decrementCartItem] = useDecrementCartItemMutation();
 
   const handlerDec = (id) => {
     decrementCartItem(id);
@@ -37,7 +35,6 @@ function Checkout({ carts }) {
     removeItemFromCart(id);
   };
 
-  //
   const calculateSubtotal = () => {
     return carts?.reduce((total, cartItem) => {
       const productPrice = cartItem.product.unitPrice;
@@ -53,10 +50,7 @@ function Checkout({ carts }) {
   };
 
   return (
-    <div
-      className="cart-container"
-      style={{ position: "relative", top: "50px" }}
-    >
+    <div className="cart-container" style={{ marginTop: "100px" }}>
       <div>
         <div className="titles">
           <H3 className="product-title">Produk</H3>

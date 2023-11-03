@@ -308,16 +308,18 @@ function PayNow() {
     borderRadius: "4px",
     cursor: "pointer",
   };
+  function formatPrice(price) {
+    const priceString = price.toString();
+    const parts = priceString.split(".");
+    return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
 
   return (
     <div>
       <ShippingAddress profile={profile} />
 
-      <div
-        className="alamat"
-        style={{ margin: '20px 30px'}}
-      >
-        <h2>Produk Dipesan</h2>
+      <div className="Produk">
+        <h3 className="judulcheck">Produk Dipesan</h3>
         {/* <CartCheckTrans /> */}
         <ProductOrdered
           carts={carts}
@@ -328,15 +330,8 @@ function PayNow() {
           calculateTotal={calculateTotal}
         />
 
-        <div>
-          <UseVouchers
-            voucherCode={voucherCode}
-            setVoucherCode={setVoucherCode}
-            applyVoucher={applyVoucher}
-          />
-        </div>
-
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div className="ongPay full-width">
+        <div className="calcongkir">
           <ShippingMethod
             courier={courier}
             handlerSetCourier={handlerSetCourier}
@@ -351,41 +346,41 @@ function PayNow() {
             handleShippingCostChange={handleShippingCostChange}
           />
 
-          <div
-            style={{
-              padding: "20px 65px",
-              fontSize: "20px",
-              display: "flex",
-              justifyContent: "end",
-            }}
-          >
-            <div style={{ paddingTop: "5px" }}>
-              <span>Total Bayar : </span>
-              <span
-                style={{ fontWeight: "700", paddingRight: "20px" }}
-                className="amount"
-              >
-                Rp. {calculateTotalBayar()}
-              </span>
-            </div>
-            <div>
-              {totalShippingCost === 0 ? (
-                <p>
-                  <i>Silahkan pilih metode pengiriman</i>
-                </p>
-              ) : (
-                <button
-                  onClick={() => handlePaymentProcess()}
-                  style={paymentButtonStyle}
+          <div className="secRightPay">
+            <UseVouchers
+              voucherCode={voucherCode}
+              setVoucherCode={setVoucherCode}
+              applyVoucher={applyVoucher}
+            />
+            <div className="paybut">
+              <div>
+                <span className="totBay">Total Bayar : </span>
+                <span
+                  style={{ fontWeight: "700", paddingRight: "20px" }}
+                  className="amountbay"
                 >
-                  Bayar Sekarang
-                </button>
-              )}
+                  Rp. {formatPrice(calculateTotalBayar())}
+                </span>
+              </div>
+              <div style={{margin: '10px 0'}}>
+                {totalShippingCost === 0 ? (
+                  <p className="befBut">
+                    <i>Silahkan pilih metode pengiriman</i>
+                  </p>
+                ) : (
+                  <button
+                    onClick={() => handlePaymentProcess()}
+                    style={paymentButtonStyle}
+                  >
+                    Bayar Sekarang
+                  </button>
+                )}
+              </div>
+              {/* Tampilkan modal jika isModalOpen adalah true */}
+              <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
             </div>
-            {/* Tampilkan modal jika isModalOpen adalah true */}
-            <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
           </div>
-        </div>
+        </div></div>
       </div>
     </div>
   );

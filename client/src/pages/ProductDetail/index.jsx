@@ -86,16 +86,8 @@ const ProductDetailPage = () => {
 
   const handleBuyNow = () => {
     if (accessToken) {
-      if (product.product_owners?.name === "Indo Riau") {
-        handleAddToCart();
-        navigate("/check-TransIR");
-      } else if (product.product_owners?.name === "Juvindo") {
-        handleAddToCart();
-        navigate("/check-TransJuvindo");
-      } else if (product.product_owners?.name === "Itech") {
-        handleAddToCart();
-        navigate("/check-TransITech");
-      }
+      handleAddToCart();
+      navigate("/pay-now");
     } else {
       // alert("Login terlebih dahulu agar dapat belanja");
       navigate("/login");
