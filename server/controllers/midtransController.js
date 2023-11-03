@@ -84,7 +84,6 @@ class MidtransController {
     }
   }
 
-
   static async midtransTokenIndoRiau(req, res, next) {
     console.log(req.body, '<<indoriau');
     const t = await sequelize.transaction();
@@ -348,7 +347,62 @@ class MidtransController {
     }
   }
 
-  static async pay(req, res, next) {
+  // static async pay(req, res, next) {
+  //   console.log(req.body, 'test pay');
+  //   const vaNumbers = req.body.va_numbers;
+
+  //   try {
+  //     if (req.body.transaction_status === 'settlement') {
+  //       // Menggunakan transaksi Sequelize
+  //       await sequelize.transaction(async (t) => {
+  //         // Ambil checkout yang sesuai dengan order_id
+  //         const checkout = await Checkout.findOne({
+  //           where: { midtransCode: req.body.order_id },
+  //           transaction: t,
+  //         });
+
+  //         if (!checkout) {
+  //           throw new Error('Data checkout tidak ditemukan');
+  //         }
+
+  //         // Ambil produk yang terkait
+  //         const products = await CheckoutProduct.findAll({
+  //           where: { checkoutId: checkout.id },
+  //           transaction: t,
+  //         });
+
+  //         for (const product of products) {
+  //           const productData = await Product.findByPk(product.productId, { transaction: t });
+  //           if (productData && productData.stock >= product.quantity) {
+  //             // Mengurangi stok produk
+  //             await productData.decrement('stock', { by: product.quantity, transaction: t });
+  //           } else {
+  //             throw new Error('Produk tidak memiliki cukup stok.');
+  //           }
+  //         }
+
+  //         // Update status pembayaran checkout
+  //         await checkout.update(
+  //           {
+  //             paymentStatus: 'dibayar',
+  //             paymentMethod: `${vaNumbers[0].bank}`,
+  //           },
+  //           { transaction: t }
+  //         );
+
+  //       });
+
+  //       res.status(200).json({ message: 'Pembayaran berhasil diproses.' });
+  //     } else {
+  //       res.status(200).json({ message: 'Status transaksi tidak sesuai untuk pemrosesan pembayaran.' });
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     res.status(500).json({ message: 'Terjadi kesalahan dalam pemrosesan pembayaran.' });
+  //   }
+  // }
+
+  static async paymentSuccessful(req, res, next) {
     console.log(req.body, 'test pay');
     const vaNumbers = req.body.va_numbers;
 
