@@ -68,7 +68,7 @@ function PayNow() {
 
     let params = { total: bayar };
     const response = await axios({
-      url: `https://indoteknikserver-732012365989.herokuapp.com/midtrans/itech`,
+      url: `https://indoteknikserver-732012365989.herokuapp.com/midtrans/donik`,
       params,
       data: {
         carts,
@@ -128,8 +128,8 @@ function PayNow() {
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
-    const midtransClientKey = "Mid-client-O4jQIpz7nFgHIY3h";
-    scriptTag.setAttribute("data-client-key-indo-itech", midtransClientKey);
+    const midtransClientKey = "Mid-client-7Al2Kp7TdLPqUFMx";
+        scriptTag.setAttribute("data-client-key-indo-donik", midtransClientKey);
 
     document.body.appendChild(scriptTag);
 
