@@ -72,6 +72,7 @@ class CheckoutController {
         }
     }
 
+
     static async editCheckout(req, res, next) {
         try {
             const checkoutId = req.params.id

@@ -10,5 +10,6 @@ router.post('/indo-riau', MidtransController.midtransTokenIndoRiau)
 router.post('/juvindo', MidtransController.midtransTokenJuvindo)
 router.post('/itech', MidtransController.midtransTokenItech)
 router.post('/indo-teknik', MidtransController.midtransTokenIndoTeknik)
+router.post('/donik', MidtransController.midtransTokenDonik)
 
 module.exports = router

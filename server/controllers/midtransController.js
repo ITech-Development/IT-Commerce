@@ -4,10 +4,86 @@ const midtransKey = process.env.MIDTRANS_SERVER_KEY;
 const midtransKeyItech = process.env.MIDTRANS_SERVER_KEY_ITECH;
 const midtransKeyJuvindo = process.env.MIDTRANS_SERVER_KEY_JUVINDO;
 const midtransKeyIndoRiau = process.env.MIDTRANS_SERVER_KEY_INDO_RIAU;
+const midtransKeyDonik = process.env.MIDTRANS_SERVER_KEY_DONIK;
 let { sequelize } = require("../models/");
 
 class MidtransController {
 
+  static async midtransTokenDonik(req, res, next) {
+    console.log(req.body, '<<donik');
+    const t = await sequelize.transaction();
+    try {
+      let temp = []
+      const user = await User.findByPk(req.user.id);
+      let snap = new midtransClient.Snap({
+        isProduction: true,
+        serverKey: midtransKeyDonik,
+      });
+
+      const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+      let order_id = `INV/${currentDate}/DONIK/` +
+        Math.floor(1000000 + Math.random() * 9000000)
+      let parameter = {
+        transaction_details: {
+          order_id,
+          gross_amount: +req.query.total,
+        },
+        credit_card: {
+          secure: true,
+        },
+        customer_details: {
+          fullName: user.fullName,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+          address: user.address,
+          // Avoid sending sensitive user data like password here.
+        },
+      };
+      const midtransToken = await snap.createTransaction(parameter);
+
+      const {
+        pajak,
+        checkoutProvince,
+        checkoutCity,
+        bayar,
+        checkoutSubdistrict,
+        selectedVoucher,
+        carts,
+        checkoutCourier,
+        selectedShippingCost,
+      } = req.body;
+
+      const createCheckout = await Checkout.create({
+        userId: req.user.id,
+        shippingAddress: `${user.fullName}, (${user.phoneNumber}), ${user.address}, ${checkoutSubdistrict}, ${checkoutCity}, ${checkoutProvince}`,
+        totalPrice: bayar,
+        voucherCode: selectedVoucher,
+        midtransCode: order_id,
+        setPPN: `${pajak}`,
+        shippingMethod: `${checkoutCourier}`,
+        shippingCost: selectedShippingCost,
+        transaction: t
+      });
+
+      for (const el of carts) {
+        temp.push({
+          checkoutId: createCheckout.id,
+          productId: el.productId,
+          quantity: el.quantity,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        });
+      }
+
+      await CheckoutProduct.bulkCreate(temp, { transaction: t });
+      await t.commit();
+      res.status(201).json({ token: midtransToken.token });
+    } catch (error) {
+      console.error(error, 'errornya apa');
+      await t.rollback();
+      res.status(500).json({ message: 'Terjadi kesalahan dalam proses pembayaran.' });
+    }
+  }
   static async midtransTokenItech(req, res, next) {
     console.log(req.body, '<<itech');
     const t = await sequelize.transaction();
