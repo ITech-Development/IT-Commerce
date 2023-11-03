@@ -6,7 +6,7 @@ const baseUrl = 'http://localhost:3100'; // Ubah dengan URL server Anda
 class ProductController {
     static async getAllProducts(req, res, next) {
         try {
-            const hiddenProductIds = [1, 2, 3];
+            const hiddenProductIds = [1, 2, 3, 82, 83];
 
             const products = await Product.findAll(
                 {
