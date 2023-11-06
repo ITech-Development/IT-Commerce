@@ -52,6 +52,13 @@
         font-size: 18px;
         margin: 8px 90px 15px 0;
     }
+    .checkTrans-product-total-price {
+        position: relative;
+        border: none;
+        display: none;
+        font-size: 18px;
+        margin: 8px 90px 15px 0;
+    }
     .cart-product-price {
         display: none;
     }

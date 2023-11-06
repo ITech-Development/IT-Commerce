@@ -147,7 +147,7 @@ const ProductList = () => {
           if (selectedCategories.length === 0) {
             return true;
           }
-          return selectedCategories.includes(product.categories.name);
+          return selectedCategories.includes(product.categories.name); 
         })
         .filter((product) => {
           if (minPrice !== "" && maxPrice !== "") {
@@ -157,7 +157,7 @@ const ProductList = () => {
               product.unitPrice <= parseInt(maxPrice)
             );
           }
-          return true; // Tampilkan semua produk jika harga minimum dan maksimum tidak ditentukan
+          return true;
         })
         .sort((a, b) => {
           switch (selectedSortOption) {

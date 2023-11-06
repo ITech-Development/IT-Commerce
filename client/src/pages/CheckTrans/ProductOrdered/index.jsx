@@ -38,7 +38,7 @@ function ProductOrdered({
             </div>
             <div class="cart-items">
               {carts?.map((e) => (
-                <div class="cart-item">
+                <div class="checkTrans-item">
                   <div class="cart-product">
                     <Link to={`/products/${e.product.id}`}>
                       <img
@@ -65,7 +65,7 @@ function ProductOrdered({
                       x {e.quantity.toLocaleString("id-ID", {})}
                     </div>
                   </div>
-                  <div class="cart-product-total-price">
+                  <div class="checkTrans-product-total-price">
                       Rp.
                       {/* {e.quantity * e.product.unitPrice} */}
                       {(e.quantity * e.product.unitPrice).toLocaleString(

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Star from "../../assets/star.png";
 import "./indexDetail.css";
 import { useAddToCartMutation } from "../../features/cart/apiCarts";
+import Back from '../../assets/back-button.png'
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
@@ -70,15 +71,21 @@ const ProductDetailPage = () => {
 
   // const dispatch = useDispatch()
 
+  
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+
   const handleAddToCart = () => {
     if (accessToken) {
       addToCart({ product })
         .then((data) => {
           console.log(data);
+          setPopupMessage("Sukses memasukkan ke keranjang");
+          setShowPopup(true);
         })
         .catch((error) => {
           console.log(error);
-        })
+        });
     } else {
       navigate("/login");
     }
@@ -98,7 +105,24 @@ const ProductDetailPage = () => {
     return <p>Loading product details...</p>;
   }
 
+  const handleGoBack = () => {
+    window.history.back(); // Go back to the previous page in the browsing history
+  };
+
   return (
+    <div>
+      <div className="okeja">
+        <Link className="backDetail" onClick={handleGoBack}>
+          <img className="back" src={Back} alt="Back" />
+          <h3 className="cartTitle">Kembali</h3>
+        </Link>
+      </div>
+      <PopupContainer show={showPopup}>
+        <PopupContent>
+          <PopupMessage>{popupMessage}</PopupMessage>
+          <CloseButton onClick={() => setShowPopup(false)}>x</CloseButton>
+        </PopupContent>
+      </PopupContainer>
     <ProductDetailContainer>
       <ProductDetailWrapper>
         <div className="productDetail">
@@ -290,8 +314,95 @@ const ProductDetailPage = () => {
         )}
       </RelatedProducts>
     </ProductDetailContainer>
+    </div>
   );
 };
+
+const PopupContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // background-color: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 5px;
+  padding: 0;
+  z-index: 999;
+  text-align: center;
+  display: ${(props) => (props.show ? "block" : "none")};
+  .PopupContent {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    color: #333;
+    width: 100%;
+    position: relative;
+
+    /* Close button */
+    &::before {
+      content: "✕"; /* Unicode character for 'X' */
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+`;
+
+const PopupContent = styled.div`
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 15px 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  color: #333;
+  width: 100%;
+  height: 60px;
+  @media (max-width: 768px) {
+    diplay: flex;
+    justify-content: center;
+    width: auto;
+    margin: auto;
+    padding: 30px;
+
+  }
+`;
+
+
+const PopupMessage = styled.p`
+  @media (max-width: 768px) {
+    diplay: flex;
+    justify-content: center;
+    width: auto;
+    margin: auto;
+
+  }
+`;
+
+const CloseButton = styled.button`
+background-color: ${(props) => (props.disabled ? "#ccc" : "#007bff")};
+color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 10px 15px;
+  position: relative;
+  top: -100px;
+  margin-left: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0ef0f0;
+    color: #2b3b3b;
+    font-weigth: 800;
+  }
+
+  @media (max-width: 768px) {
+    position: relative;
+    margin-top: -100px;
+  }
+`;
+
 
 const RatingContainer = styled.div`
   display: flex;
@@ -416,7 +527,6 @@ const ProductDetailContainer = styled.div`
   justify-content: center;
   // align-items: center;
   position: relative;
-  top: 60px;
 
 `;
 

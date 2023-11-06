@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import Back from "../../../assets/back-button.png";
 import {
   useRemoveItemFromCartMutation,
   useIncrementCartItemMutation,
@@ -44,13 +45,23 @@ function Checkout({ carts }) {
   };
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
-    const ppn = subtotal * 0.11;
-    const total = subtotal + ppn;
-    return total.toFixed(2);
+    const total = subtotal;
+    return total;
+  };
+
+  const handleGoBack = () => {
+    window.history.back(); // Go back to the previous page in the browsing history
   };
 
   return (
-    <div className="cart-container" style={{ marginTop: "100px" }}>
+    <div className="cart-container" style={{ marginTop: "55px" }}>
+      <div>
+        <Link className="backCart" onClick={handleGoBack}>
+          <img className="back" src={Back} alt="Back" />
+          <h3 className="cartTitle">Kembali</h3>
+        </Link>
+      </div>
+
       <div>
         <div className="titles">
           <H3 className="product-title">Produk</H3>
@@ -68,23 +79,28 @@ function Checkout({ carts }) {
                   </Link>
                 </ProductImageContainer>
                 <SectionLeft>
-                  <Title>
-                    {e.product.name.split(" ").slice(0, 15).join(" ")}
-                    ...
-                  </Title>
+                  <Title>{e.product.name}</Title>
                   <button onClick={() => handlerRemove(e.id)}>
                     <FontAwesomeIcon icon={faTrash} /> Hapus
                   </button>
                 </SectionLeft>
               </div>
-              <div className="cart-product-price">Rp.{e.product.unitPrice}</div>
+              <div className="cart-product-price">
+                Rp.{e.product.unitPrice.toLocaleString("id-ID", {})}
+              </div>
               <div className="cart-product-quantity">
                 <button onClick={() => handlerDec(e.id)}>-</button>
                 <div className="count">{e.quantity}</div>
-                <button onClick={() => handlerInc(e.id)}>+</button>
+                <button
+                  style={{ marginTop: "5px" }}
+                  onClick={() => handlerInc(e.id)}
+                >
+                  +
+                </button>
               </div>
               <div className="cart-product-total-price">
-                Rp.{e.quantity * e.product.unitPrice}
+                Rp.
+                {(e.quantity * e.product.unitPrice).toLocaleString("id-ID", {})}
               </div>
             </div>
           ))}
@@ -95,7 +111,9 @@ function Checkout({ carts }) {
             <div className="subtotal" style={{ paddingBottom: "10px" }}>
               <span className="subtot">Total :</span>
               <span style={{ fontWeight: "700" }} className="amount">
-                {calculateTotal()}
+                {typeof calculateTotal() === "number"
+                  ? calculateTotal().toLocaleString("id-ID")
+                  : ""}
               </span>
             </div>
             <button
@@ -115,16 +133,20 @@ function Checkout({ carts }) {
 
 export default Checkout;
 
-const ProductImage = styled.img`
-  max-width: 180px;
-  max-height: 100px;
+const ProductImageContainer = styled.div`
+  width: 100px; /* Set a fixed width for the container */
+  height: auto; /* Set a fixed height for the container */
+  margin-right: 20px; /* Add some margin to separate the images */
+
+  @media (max-width: 768px) {
+    width: 80px; /* Adjust the width for smaller screens */
+    height: 80px; /* Adjust the height for smaller screens */
+    margin-right: 35px; /* Adjust the margin for smaller screens */
+  }
 `;
 
-const ProductImageContainer = styled.div`
-  margin-right: 20px;
-  @media (max-width: 768px) {
-    width: 180px;
-  }
+const ProductImage = styled.img`
+  width: auto; /* Ensure the image takes the full width of the container */
 `;
 
 const H3 = styled.div`
@@ -146,8 +168,8 @@ const Title = styled.div`
   width: 90%;
   font-weight: 400;
   @media (max-width: 768px) {
-    font-size: 14px;
-    width: 100%;
+    font-size: 12px;
+    padding-top: 12px;
   }
 `;
 

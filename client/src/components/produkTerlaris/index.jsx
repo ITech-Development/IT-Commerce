@@ -158,7 +158,7 @@ const ProductList = () => {
                     style={{
                       textAlign: "center",
                       display: "flex",
-                      maxWidth: "1420px",
+                      maxWidth: "auto",
                       margin: "auto",
                     }}
                   >

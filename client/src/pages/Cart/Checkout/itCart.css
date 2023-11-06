@@ -2,9 +2,41 @@
     display: flex;
     align-items: center;
 }
+
 .count {
     display: flex;
     align-items: center;
+}
+.backCart {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+.backCheckTrans {
+    display: flex;
+    align-items: center;
+    margin: 60px 0 0 30px;
+    text-decoration: none;
+}
+.backDetail {
+    display: flex;
+    align-items: center;
+    margin: 60px 0 0 30px;
+    text-decoration: none;
+}
+.back {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+.cartTitle {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 24px;
+    padding-left: 20px;
+    text-decoration: none;
 }
 
 .plusCart {
@@ -27,18 +59,36 @@
         width: 100%;
         display: none;
     }
+    .backCheckTrans {
+        display: flex;
+        align-items: center;
+        margin: 50px 0 0 15px;
+    }
+    .backDetail {
+        display: flex;
+        align-items: center;
+        margin: 45px 0 0 15px;
+    }
     .cart-container {
-        margin: 0;
+        margin: 0 15px;
         padding: 0 10px;
     }
+    .cartTitle {
+    font-weight: 600;
+    font-size: 14px;
+}
     .titles {
         display: none; /* Menyembunyikan elemen pada layar 768px atau lebih kecil */
     }
+    .action{
+        padding: 0;
+        margin: 0;
+    }
     .cart-summary {
-        border-top: none; /* Menghapus garis pembatas pada elemen terakhir */
         margin: 0;
         padding: 0;
     }
+
     .cart-checkout {
         padding: 0;
         margin: 0;
@@ -46,10 +96,21 @@
         width: 60%;
     }
     .cart-item {
+        border-top: none; /* Menghapus garis pembatas pada elemen terakhir */
         display: flex;
         flex-direction: column;
         margin: 0;
         padding: 0;
+        position: relative;
+        top: -35px;
+    }
+    .checkTrans-item {
+        border-top: none; /* Menghapus garis pembatas pada elemen terakhir */
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        position: relative;
     }
     .contain {
         width: 100%;
@@ -59,18 +120,27 @@
     .cart-item:last-child {
         border-top: none; /* Menghapus garis pembatas pada elemen terakhir */
     }
+    .checkTrans-item:last-child {
+        border-top: none; /* Menghapus garis pembatas pada elemen terakhir */
+    }
     .cart-product-total-price {
         position: relative;
         border: none;
-        font-size: 18px;
-        margin: 8px 90px 15px 0;
+        font-size: 16px;
+        margin: 10px 0 15px -20px;
+    }
+    .checkTrans-product-total-price {
+        position: relative;
+        border: none;
+        font-size: 16px;
+        margin: 0 0 15px 70px;
     }
     .cart-product-price {
         display: none;
     }
     .cart-product-quantity {
         position: relative;
-        left: -65px;
+        left: -23px;
         font-size: 14px;
         border: none;
         margin-top: 10px;

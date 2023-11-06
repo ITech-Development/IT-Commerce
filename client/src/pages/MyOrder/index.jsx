@@ -114,7 +114,7 @@ function CheckoutProductsPage() {
                               />
                             </div>
                           </Link>
-                        </td>
+                        </td> 
                         <td className="name">{productInfo.product.name}</td>
                         <td>{productInfo.quantity}</td>
                         <td>{productInfo.checkout.setPPN}</td>

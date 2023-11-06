@@ -81,9 +81,9 @@
     transition: background-color 0.3s ease;
     display: flex;
     margin-top: 25px;
-    max-width: 1420px;
     align-content: center;
     justify-content: center;
+    margin-bottom: 50px;
 
 
     &:hover {
@@ -117,6 +117,7 @@
     .muat {
       position: relative;
       /* top: 5px; */
+      margin-bottom: 0;
     }
     .productlist {
       display: grid; /* Mengubah tampilan container menjadi grid */

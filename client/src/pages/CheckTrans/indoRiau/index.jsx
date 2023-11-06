@@ -340,7 +340,7 @@ function Index() {
           </p>
         </div>
         <div className="address-info">
-          <h4>Detail Alamat</h4>
+          <h4>Detail Alamat</h4> 
           <p className="contentAl" style={{ paddingLeft: "55px" }}>
             : {profile?.address}
           </p>

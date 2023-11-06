@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../styless.css";
 import axios from "axios";
 import {
@@ -12,6 +13,7 @@ import ShippingAddress from "../ShippingAddress";
 import UseVouchers from "../UseVouchers";
 import ShippingMethod from "../ShippingMethod";
 import ProductOrdered from "../ProductOrdered";
+import Back from "../../../assets/back-button.png";
 
 const validVoucherCodes = ["DM01", "IT01", "MS01"];
 
@@ -129,7 +131,7 @@ function PayNow() {
     scriptTag.src = midtransUrl;
 
     const midtransClientKey = "Mid-client-7Al2Kp7TdLPqUFMx";
-        scriptTag.setAttribute("data-client-key-indo-donik", midtransClientKey);
+    scriptTag.setAttribute("data-client-key-indo-donik", midtransClientKey);
 
     document.body.appendChild(scriptTag);
 
@@ -314,8 +316,18 @@ function PayNow() {
     return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
+  const handleGoBack = () => {
+    window.history.back(); // Go back to the previous page in the browsing history
+  };
+
   return (
     <div>
+      <div>
+        <Link className="backCheckTrans" onClick={handleGoBack}>
+          <img className="back" src={Back} alt="Back" />
+          <h3 className="cartTitle">Kembali</h3>
+        </Link>
+      </div>
       <ShippingAddress profile={profile} />
 
       <div className="Produk">
@@ -331,56 +343,57 @@ function PayNow() {
         />
 
         <div className="ongPay full-width">
-        <div className="calcongkir">
-          <ShippingMethod
-            courier={courier}
-            handlerSetCourier={handlerSetCourier}
-            handleProvinceChange={handleProvinceChange}
-            province={province}
-            handleCityChange={handleCityChange}
-            city={city}
-            handlerGetCost={handlerGetCost}
-            subdistrict={subdistrict}
-            pengiriman={pengiriman}
-            selectedShippingCost={selectedShippingCost}
-            handleShippingCostChange={handleShippingCostChange}
-          />
-
-          <div className="secRightPay">
-            <UseVouchers
-              voucherCode={voucherCode}
-              setVoucherCode={setVoucherCode}
-              applyVoucher={applyVoucher}
+          <div className="calcongkir">
+            <ShippingMethod
+              courier={courier}
+              handlerSetCourier={handlerSetCourier}
+              handleProvinceChange={handleProvinceChange}
+              province={province}
+              handleCityChange={handleCityChange}
+              city={city}
+              handlerGetCost={handlerGetCost}
+              subdistrict={subdistrict}
+              pengiriman={pengiriman}
+              selectedShippingCost={selectedShippingCost}
+              handleShippingCostChange={handleShippingCostChange}
             />
-            <div className="paybut">
-              <div>
-                <span className="totBay">Total Bayar : </span>
-                <span
-                  style={{ fontWeight: "700", paddingRight: "20px" }}
-                  className="amountbay"
-                >
-                  Rp. {formatPrice(calculateTotalBayar())}
-                </span>
-              </div>
-              <div style={{margin: '10px 0'}}>
-                {totalShippingCost === 0 ? (
-                  <p className="befBut">
-                    <i>Silahkan pilih metode pengiriman</i>
-                  </p>
-                ) : (
-                  <button
-                    onClick={() => handlePaymentProcess()}
-                    style={paymentButtonStyle}
+
+            <div className="secRightPay">
+              <UseVouchers
+                voucherCode={voucherCode}
+                setVoucherCode={setVoucherCode}
+                applyVoucher={applyVoucher}
+              />
+              <div className="paybut">
+                <div>
+                  <span className="totBay">Total Bayar : </span>
+                  <span
+                    style={{ fontWeight: "700", paddingRight: "20px" }}
+                    className="amountbay"
                   >
-                    Bayar Sekarang
-                  </button>
-                )}
+                    Rp. {formatPrice(calculateTotalBayar())}
+                  </span>
+                </div>
+                <div style={{ margin: "10px 0" }}>
+                  {totalShippingCost === 0 ? (
+                    <p className="befBut">
+                      <i>Silahkan pilih metode pengiriman</i>
+                    </p>
+                  ) : (
+                    <button
+                      onClick={() => handlePaymentProcess()}
+                      style={paymentButtonStyle}
+                    >
+                      Bayar Sekarang
+                    </button>
+                  )}
+                </div>
+                {/* Tampilkan modal jika isModalOpen adalah true */}
+                <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
               </div>
-              {/* Tampilkan modal jika isModalOpen adalah true */}
-              <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
             </div>
           </div>
-        </div></div>
+        </div>
       </div>
     </div>
   );
