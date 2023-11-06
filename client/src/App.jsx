@@ -29,6 +29,7 @@ import ProductCategoryVEPump from "./pages/ProductCategories/vePump";
 import ProductCategoryVEPumpParts from "./pages/ProductCategories/vePumpParts";
 import ProductCategoryHeadRotor from "./pages/ProductCategories/headRotor";
 import MyOrder from "./pages/MyOrder";
+import WishlistProducts from "./pages/WishlistProducts";
 import DetailsOrder from "./pages/DetailsOrder";
 import store from './app/store'
 import { Provider } from "react-redux";
@@ -66,6 +67,8 @@ const Routing = () => {
       <Route path="/ve-pump-parts" element={<ProductCategoryVEPumpParts />} />
       <Route path="/head-rotor" element={<ProductCategoryHeadRotor />} />
       <Route path="/my-order" element={<MyOrder />} />
+      <Route path="/wishlist-products" element={<WishlistProducts />} />
+      <Route path="/wishlist-products/:id" element={<ProductDetails />} />
       <Route path="/my-order/:id" element={<DetailsOrder />} />
     </Routes>
   );

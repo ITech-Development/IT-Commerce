@@ -15,11 +15,8 @@ function CheckoutProductsPage() {
     const { data: me } = useGetMeQuery()
     const [deliveryStatus, setDeliveryStatus] = useState('');
     const [userId, setUserId] = useState(me ? me.id : '');
-
     const [incrementValue, setIncrementValue] = useState(calculateTotalPrice(checkoutProducts) / 1000);
-
     const [message, setMessage] = useState('');
-
     const handleIncrement = () => {
 
         const incrementValueInt = parseInt(incrementValue, 10);
@@ -321,7 +318,7 @@ function CheckoutProductsPage() {
                     <p>Dapatkan bonus poin belanja dengan menekan tombol Pesanan diterima</p>
                 </div>
             )}
-            
+
         </div>
     );
 }

@@ -6,7 +6,7 @@ const baseUrl = 'http://localhost:3100'; // Ubah dengan URL server Anda
 class ProductController {
     static async getAllProducts(req, res, next) {
         try {
-            const hiddenProductIds = [1, 2, 3, 82, 83];
+            const hiddenProductIds = [1, 2, 3, 82, 83, 191];
 
             const products = await Product.findAll(
                 {
@@ -254,7 +254,7 @@ class ProductController {
                 // Update path gambar jika ada file yang diunggah
                 existingProduct.image = result.secure_url;
             }
-            
+
             // Update the product's properties based on request body
             existingProduct.name = req.body.name;
             existingProduct.categoryId = req.body.categoryId;

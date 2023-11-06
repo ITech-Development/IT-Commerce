@@ -7,6 +7,7 @@ import Star from "../../assets/star.png";
 import "./indexDetail.css";
 import { useDispatch } from "react-redux";
 import { useAddToCartMutation } from "../../features/cart/apiCarts";
+import { useAddWishlistMutation } from "../../features/wishlist/apiWishlist";
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
@@ -14,11 +15,13 @@ const accessToken = localStorage.getItem("access_token");
 const ProductDetailPage = () => {
   const starRating = 1;
   const [product, setProduct] = useState(null);
+
   const { id } = useParams();
   const navigate = useNavigate();
   const [relatedProducts, setRelatedProducts] = useState([]);
 
   const [addToCart] = useAddToCartMutation()
+  const [addToWishlist] = useAddWishlistMutation()
   const [zoom, setZoom] = useState(1);
 
   const handleImageMouseMove = (e) => {
@@ -83,6 +86,21 @@ const ProductDetailPage = () => {
     } else {
       navigate("/login");
     }
+
+  };
+  const handleAddToWishlist = () => {
+    if (accessToken) {
+      addToWishlist(product?.id) // Use the addWishlist mutation with the product ID
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      navigate("/login");
+    }
+
   };
 
   const handleBuyNow = () => {
@@ -196,6 +214,7 @@ const ProductDetailPage = () => {
             >
               {product.stock > 0 ? "Keranjang" : "Stok Habis"}
             </AddToCartButton>
+            <AddToWishlistButton onClick={handleAddToWishlist}>Tambah ke Wishlist</AddToWishlistButton>
           </div>
         </ProductInfo>
       </ProductDetailWrapper>
@@ -277,6 +296,21 @@ const ProductDetailPage = () => {
     </ProductDetailContainer>
   );
 };
+
+const AddToWishlistButton = styled.button`
+  padding: 12px 35px;
+  background-color: #ff4a4a;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+
+  &:hover {
+    background-color: #ff0000;
+  }
+`;
+
 
 const shadowAnimation = keyframes`
   0% {

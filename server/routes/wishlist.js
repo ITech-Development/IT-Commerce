@@ -4,7 +4,8 @@ const router = express.Router()
 const { authenticationUser } = require('../middlewares/auth')
 
 router.use(authenticationUser)
-router.get('/', authenticationUser, WishlistController.getAllWishlists)
-
+router.get('/', WishlistController.getAllWishlists)
+router.post('/:id', WishlistController.addWishlist)
+router.delete('/:id', WishlistController.removeWishlist)
 
 module.exports = router

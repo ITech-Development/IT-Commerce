@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import { useGetAllProductsQuery } from "../../features/productsApi";
 import { useGetProductsQuery } from "../../features/product/apiProducts";
 import Corousel from "../../components/corousel/product";
 import "./productliststyle.css";
@@ -13,7 +12,6 @@ import FilterMobile from "./FilterMobile";
 import { Link } from "react-router-dom";
 
 const ProductCard = ({ product, onAddToCart }) => {
-
   const starRating = 1;
   return (
     <Card>
@@ -75,13 +73,11 @@ const searchInputStyle = {
   width: "auto",
   borderRadius: "4px",
   border: "1px solid #ccc",
-  // marginRight: "10px",
   margin: "0",
   flex: 1,
 };
 
 const ProductList = () => {
-  // const { data, error, isLoading } = useGetAllProductsQuery();
   const { data, error, isLoading } = useGetProductsQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSortOption, setSelectedSortOption] = useState("name"); // Initialize the selectedSortOption state
@@ -205,7 +201,6 @@ const ProductList = () => {
         ) : (
           <>
             <h2 className="productlist-title">Produk Rekomendasi</h2>
-
             <div
               style={{
                 display: "flex",
@@ -219,7 +214,6 @@ const ProductList = () => {
                 style={{
                   width: "280px",
                   paddingTop: "30px",
-
                 }}
               >
                 <div style={{ width: "280px", paddingTop: "30px" }} className="filter">

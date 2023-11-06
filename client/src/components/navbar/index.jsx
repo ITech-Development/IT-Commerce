@@ -155,6 +155,24 @@ export default function Toolbar(props) {
                       color: "gray",
                     }}
                   >
+                    <i className="fas fa-shopping-cart" />{" "}
+                    <Link
+                      style={{ display: "flex", marginLeft: "10px" }}
+                      to="/wishlist-products"
+                    >
+                      Wishlist
+                    </Link>
+                  </li>
+                  <li
+                    style={{
+                      display: "flex",
+                      padding: "10px 13px",
+                      margin: "0",
+                      alignContent: "center",
+                      alignItems: "center",
+                      color: "gray",
+                    }}
+                  >
                     <i
                       style={{ marginLeft: "2px" }}
                       className="fas fa-sign-out-alt"
