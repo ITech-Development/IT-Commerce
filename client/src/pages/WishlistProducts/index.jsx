@@ -40,7 +40,7 @@ function Wishlist() {
                         </Link>
                         <br />
                         <button onClick={() => handleRemoveFromWishlist(wishlist.id)}>
-                            Delete
+                            Hapus
                         </button>
                         <hr />
                     </li>

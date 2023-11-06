@@ -27,9 +27,7 @@ class ProductController {
                             model: WarehouseAdmin,
                             as: 'authors'
                         },
-
                     ],
-                    order: [['createdAt', 'DESC']]
                 }
             );
             const filteredProducts = products.filter(product => !hiddenProductIds.includes(product.id));

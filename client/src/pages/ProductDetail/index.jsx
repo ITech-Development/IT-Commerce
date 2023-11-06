@@ -7,7 +7,7 @@ import Star from "../../assets/star.png";
 import "./indexDetail.css";
 import { useDispatch } from "react-redux";
 import { useAddToCartMutation } from "../../features/cart/apiCarts";
-import { useAddWishlistMutation } from "../../features/wishlist/apiWishlist";
+import { useAddWishlistMutation, useGetWishlistsQuery } from "../../features/wishlist/apiWishlist";
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
@@ -21,8 +21,12 @@ const ProductDetailPage = () => {
   const [relatedProducts, setRelatedProducts] = useState([]);
 
   const [addToCart] = useAddToCartMutation()
+  const { data: wishlists } = useGetWishlistsQuery();
   const [addToWishlist] = useAddWishlistMutation()
   const [zoom, setZoom] = useState(1);
+
+  const isInWishlist = wishlists?.some((item) => item.productId === product?.id);
+
 
   const handleImageMouseMove = (e) => {
     // Calculate the cursor position relative to the container
@@ -60,6 +64,7 @@ const ProductDetailPage = () => {
         console.error(error, "There was an error fetching the product.");
       });
   }, [id]);
+
 
   useEffect(() => {
     axios
@@ -112,6 +117,9 @@ const ProductDetailPage = () => {
       navigate("/login");
     }
   };
+
+
+
 
   if (!product) {
     return <p>Loading product details...</p>;
@@ -214,7 +222,12 @@ const ProductDetailPage = () => {
             >
               {product.stock > 0 ? "Keranjang" : "Stok Habis"}
             </AddToCartButton>
-            <AddToWishlistButton onClick={handleAddToWishlist}>Tambah ke Wishlist</AddToWishlistButton>
+            <AddToWishlistButton
+              onClick={handleAddToWishlist}
+              disabled={isInWishlist}
+            >
+              {isInWishlist ? 'Dalam Wishlist' : 'Wishlist'}
+            </AddToWishlistButton>
           </div>
         </ProductInfo>
       </ProductDetailWrapper>

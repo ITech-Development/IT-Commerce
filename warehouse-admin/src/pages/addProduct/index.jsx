@@ -22,7 +22,7 @@ const AddProductPage = () => {
     // Tambahkan atribut lainnya jika perlu
   });
 
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];

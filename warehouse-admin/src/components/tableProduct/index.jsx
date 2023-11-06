@@ -138,33 +138,40 @@ const TableComponent = () => {
 
   useEffect(() => {
     if (product) {
-      const filteredData = product.filter((item) => {
-        const nameMatch = item.name
-          .toLowerCase()
-          .includes(filters.name.toLowerCase());
-        const categoriesMatch = item.categories?.name
-          .toLowerCase()
-          .includes(filters.categories.toLowerCase());
-        const typesMatch = item.types?.name
-          .toLowerCase()
-          .includes(filters.types.toLowerCase());
-        const productOwnerMatch = item.product_owners?.name
-          .toLowerCase()
-          .includes(filters.productOwner.toLowerCase());
-        const authorMatch = item.authors?.fullName
-          .toLowerCase()
-          .includes(filters.author.toLowerCase());
-
-        return (
-          nameMatch &&
-          categoriesMatch &&
-          typesMatch &&
-          productOwnerMatch &&
-          authorMatch
-        );
-      });
-      filteredData.sort((a, b) => a.id - b.id);
-
+      const filteredData = product
+        .filter((item) => {
+          const nameMatch = item.name
+            .toLowerCase()
+            .includes(filters.name.toLowerCase());
+          const categoriesMatch = item.categories?.name
+            .toLowerCase()
+            .includes(filters.categories.toLowerCase());
+          const typesMatch = item.types?.name
+            .toLowerCase()
+            .includes(filters.types.toLowerCase());
+          const productOwnerMatch = item.product_owners?.name
+            .toLowerCase()
+            .includes(filters.productOwner.toLowerCase());
+          const authorMatch = item.authors?.fullName
+            .toLowerCase()
+            .includes(filters.author.toLowerCase());
+  
+          return (
+            nameMatch &&
+            categoriesMatch &&
+            typesMatch &&
+            productOwnerMatch &&
+            authorMatch
+          );
+        })
+        .sort((a, b) => {
+          // Assuming there is a 'createdAt' property in the product object
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+          // Sort in descending order to get the newest products first
+          return dateB - dateA;
+        });
+  
       setFilteredProduct(filteredData);
     }
   }, [product, filters]);

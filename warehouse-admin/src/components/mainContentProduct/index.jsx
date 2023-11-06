@@ -7,7 +7,7 @@ import ChatbotIcon from "../../assets/chatbot.png";
 
 function Index() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-const [isChatbotMessageVisible, setIsChatbotMessageVisible] = useState(false);
+  const [isChatbotMessageVisible, setIsChatbotMessageVisible] = useState(false);
 
   useEffect(() => {
     const hasModalBeenShown = localStorage.getItem("modalShown");
@@ -78,13 +78,13 @@ const [isChatbotMessageVisible, setIsChatbotMessageVisible] = useState(false);
           },
         }}
       >
-          <img
-            src={ClaimVoucher}
-            alt="Product"
-            style={{
-              width: "90%",
-            }}
-          />
+        <img
+          src={ClaimVoucher}
+          alt="Product"
+          style={{
+            width: "90%",
+          }}
+        />
       </Modal>
       {/* Tampilkan pesan sapaan dari chatbot */}
       {isChatbotMessageVisible && (
