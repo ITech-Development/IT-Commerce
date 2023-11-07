@@ -33,6 +33,7 @@ import ProductCategoryScv from './pages/ProductCategories/scv'
 import ProductCategoriesTurboParts from "./pages/ProductCategories/turboparts";
 import ProductCategoriesSensor from "./pages/ProductCategories/sensor";
 import MyOrder from "./pages/MyOrder";
+import WishlistProducts from "./pages/WishlistProducts";
 import DetailsOrder from "./pages/DetailsOrder";
 import store from "./app/store";
 import { Provider } from "react-redux";
@@ -77,6 +78,8 @@ const Routing = () => {
       <Route path="/turboparts" element={<ProductCategoriesTurboParts />} />
       <Route path="/sensor" element={<ProductCategoriesSensor />} />
       <Route path="/my-order" element={<MyOrder />} />
+      <Route path="/wishlist-products" element={<WishlistProducts />} />
+      <Route path="/wishlist-products/:id" element={<ProductDetails />} />
       <Route path="/my-order/:id" element={<DetailsOrder />} />
       <Route path="/aboutUs" element={<AboutUs />} />
     </Routes>

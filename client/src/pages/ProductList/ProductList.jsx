@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import { useGetAllProductsQuery } from "../../features/productsApi";
 import { useGetProductsQuery } from "../../features/product/apiProducts";
 // import Corousel from "../../components/corousel/product";
 import "./productliststyle.css";
@@ -69,7 +68,6 @@ const searchInputStyle = {
 };
 
 const ProductList = () => {
-  // const { data, error, isLoading } = useGetAllProductsQuery();
   const { data, error, isLoading } = useGetProductsQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSortOption, setSelectedSortOption] = useState("name"); // Initialize the selectedSortOption state

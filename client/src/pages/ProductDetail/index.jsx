@@ -7,6 +7,7 @@ import Star from "../../assets/star.png";
 import "./indexDetail.css";
 import { useAddToCartMutation } from "../../features/cart/apiCarts";
 import Back from '../../assets/back-button.png'
+import { useAddWishlistMutation, useGetWishlistsQuery } from "../../features/wishlist/apiWishlist";
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 const accessToken = localStorage.getItem("access_token");
@@ -14,12 +15,18 @@ const accessToken = localStorage.getItem("access_token");
 const ProductDetailPage = () => {
   const starRating = 1;
   const [product, setProduct] = useState(null);
+
   const { id } = useParams();
   const navigate = useNavigate();
   const [relatedProducts, setRelatedProducts] = useState([]);
 
-  const [addToCart] = useAddToCartMutation();
+  const [addToCart] = useAddToCartMutation()
+  const { data: wishlists } = useGetWishlistsQuery();
+  const [addToWishlist] = useAddWishlistMutation()
   const [zoom, setZoom] = useState(1);
+
+  const isInWishlist = wishlists?.some((item) => item.productId === product?.id);
+
 
   const handleImageMouseMove = (e) => {
     // Calculate the cursor position relative to the container
@@ -58,6 +65,7 @@ const ProductDetailPage = () => {
       });
   }, [id]);
 
+
   useEffect(() => {
     axios
       .get(`${API_URL}/products/${id}`)
@@ -89,6 +97,21 @@ const ProductDetailPage = () => {
     } else {
       navigate("/login");
     }
+
+  };
+  const handleAddToWishlist = () => {
+    if (accessToken) {
+      addToWishlist(product?.id) // Use the addWishlist mutation with the product ID
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      navigate("/login");
+    }
+
   };
 
   const handleBuyNow = () => {
@@ -100,6 +123,9 @@ const ProductDetailPage = () => {
       navigate("/login");
     }
   };
+
+
+
 
   if (!product) {
     return <p>Loading product details...</p>;
@@ -233,6 +259,12 @@ const ProductDetailPage = () => {
               disabled={product.stock === 0}
             >
               {product.stock > 0 ? "Keranjang" : "Stok Habis"}
+            </AddToCartButton>
+            <AddToCartButton
+              onClick={handleAddToWishlist}
+              disabled={isInWishlist}
+            >
+              {isInWishlist ? 'Dalam Wishlist' : 'Wishlist'}
             </AddToCartButton>
           </div>
         </ProductInfo>

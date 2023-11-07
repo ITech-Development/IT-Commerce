@@ -6,7 +6,7 @@ const baseUrl = 'https://indoteknikserver-732012365989.herokuapp.com'; // Ubah d
 class ProductController {
     static async getAllProducts(req, res, next) {
         try {
-            const hiddenProductIds = [1, 2, 3];
+            const hiddenProductIds = [1, 2, 3, 82, 83, 191];
 
             const products = await Product.findAll(
                 {
@@ -27,9 +27,7 @@ class ProductController {
                             model: WarehouseAdmin,
                             as: 'authors'
                         },
-
                     ],
-                    order: [['createdAt', 'DESC']]
                 }
             );
             const filteredProducts = products.filter(product => !hiddenProductIds.includes(product.id));
@@ -254,7 +252,7 @@ class ProductController {
                 // Update path gambar jika ada file yang diunggah
                 existingProduct.image = result.secure_url;
             }
-            
+
             // Update the product's properties based on request body
             existingProduct.name = req.body.name;
             existingProduct.categoryId = req.body.categoryId;

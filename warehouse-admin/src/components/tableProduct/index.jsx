@@ -11,7 +11,6 @@ import {
   IconButton,
 } from "@mui/material";
 
-
 import {
   Edit as EditIcon,
   Delete as DeleteIcon,
@@ -47,6 +46,101 @@ const TableComponent = () => {
     author: "",
   });
 
+  const [categories, setCategories] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [owners, setOwners] = useState([]);
+  const [authors, setAuthors] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedOwn, setSelectedOwner] = useState("");
+  const [selectedAuthor, setSelectedAuthor] = useState("");
+
+  const [editingProductId, setEditingProductId] = useState(null);
+  const [editedPrice, setEditedPrice] = useState("");
+
+  const handleEditPrice = (productId, currentPrice) => {
+    setEditingProductId(productId);
+    setEditedPrice(currentPrice);
+  };
+
+  const saveEditedPrice = (productId) => {
+    // Make an HTTP request to update the price for the given product ID.
+    axios
+      .put(
+        `${API_URL}/products/${productId}`,
+        { unitPrice: editedPrice },
+        {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        }
+      )
+      .then(() => {
+        // Update the local state with the new price.
+        setProduct((prevProducts) =>
+          prevProducts.map((item) => {
+            if (item.id === productId) {
+              return { ...item, unitPrice: editedPrice };
+            }
+            return item;
+          })
+        );
+        // Reset the editing state.
+        setEditingProductId(null);
+      })
+      .catch((error) => {
+        console.error(error, "There was an error while updating the price.");
+      });
+  };
+
+  useEffect(() => {
+    // Lakukan permintaan HTTP untuk mendapatkan daftar kategori dari API
+    axios
+      .get(`${API_URL}/product-categories`)
+      .then(({ data }) => {
+        setCategories(data);
+      })
+      .catch((error) => {
+        console.error(error, "There was an error.");
+      });
+  }, []);
+
+  useEffect(() => {
+    // Lakukan permintaan HTTP untuk mendapatkan daftar kategori dari API
+    axios
+      .get(`${API_URL}/product-types`)
+      .then(({ data }) => {
+        setTypes(data);
+      })
+      .catch((error) => {
+        console.error(error, "There was an error.");
+      });
+  }, []);
+
+  useEffect(() => {
+    // Lakukan permintaan HTTP untuk mendapatkan daftar kategori dari API
+    axios
+      .get(`${API_URL}/product-owners`)
+      .then(({ data }) => {
+        setOwners(data);
+      })
+      .catch((error) => {
+        console.error(error, "There was an error.");
+      });
+  }, []);
+
+  useEffect(() => {
+    // Lakukan permintaan HTTP untuk mendapatkan daftar kategori dari API
+    axios
+      .get(`${API_URL}/warehouse-admins`)
+      .then(({ data }) => {
+        setAuthors(data);
+      })
+      .catch((error) => {
+        console.error(error, "There was an error.");
+      });
+  }, []);
+
   useEffect(() => {
     axios
       .get(`${API_URL}/products/?_sort=id&_order=asc`)
@@ -61,11 +155,38 @@ const TableComponent = () => {
 
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: value,
-    }));
+
+    if (name === "categories") {
+      setSelectedCategory(value);
+    } else if (name === "types") {
+      setSelectedType(value);
+      // Update the "types" filter as well
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        types: value,
+      }));
+    } else if (name === "productOwner") {
+      setSelectedOwner(value);
+      // Update the "productOwner" filter as well
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        productOwner: value,
+      }));
+    } else if (name === "author") {
+      setSelectedAuthor(value); // Update the selectedAuthor state variable
+      // Update the "author" filter as well
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        author: value,
+      }));
+    } else {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [name]: value,
+      }));
+    }
   };
+
   const handleDownloadPdf = () => {
     const pdfElement = document.getElementById("product-table");
 
@@ -138,36 +259,42 @@ const TableComponent = () => {
 
   useEffect(() => {
     if (product) {
-      const filteredData = product.filter((item) => {
-        const nameMatch = item.name
-          .toLowerCase()
-          .includes(filters.name.toLowerCase());
-        const categoriesMatch = item.categories?.name
-          .toLowerCase()
-          .includes(filters.categories.toLowerCase());
-        const typesMatch = item.types?.name
-          .toLowerCase()
-          .includes(filters.types.toLowerCase());
-        const productOwnerMatch = item.product_owners?.name
-          .toLowerCase()
-          .includes(filters.productOwner.toLowerCase());
-        const authorMatch = item.authors?.fullName
-          .toLowerCase()
-          .includes(filters.author.toLowerCase());
+      const filteredData = product
+        .filter((item) => {
+          const nameMatch = item.name
+            .toLowerCase()
+            .includes(filters.name.toLowerCase());
+          const categoriesMatch =
+            selectedCategory === "" ||
+            item.categories?.name.toLowerCase() ===
+              selectedCategory.toLowerCase();
+          const typesMatch = item.types?.name
+            .toLowerCase()
+            .includes(filters.types.toLowerCase());
+          const productOwnerMatch = item.product_owners?.name
+            .toLowerCase()
+            .includes(filters.productOwner.toLowerCase());
+          const authorMatch = item.authors?.fullName
+            .toLowerCase()
+            .includes(filters.author.toLowerCase());
 
-        return (
-          nameMatch &&
-          categoriesMatch &&
-          typesMatch &&
-          productOwnerMatch &&
-          authorMatch
-        );
-      });
-      filteredData.sort((a, b) => a.id - b.id);
+          return (
+            nameMatch &&
+            categoriesMatch &&
+            typesMatch &&
+            productOwnerMatch &&
+            authorMatch
+          );
+        })
+        .sort((a, b) => {
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+          return dateB - dateA;
+        });
 
       setFilteredProduct(filteredData);
     }
-  }, [product, filters]);
+  }, [product, filters, selectedCategory]);
 
   const deleteProduct = (id) => {
     axios
@@ -197,38 +324,79 @@ const TableComponent = () => {
           variant="outlined"
           size="small"
         />
-        <TextField
-          label="Categories"
-          value={filters.categories}
-          name="categories"
-          onChange={handleFilterChange}
-          variant="outlined"
-          size="small"
-        />
-        <TextField
-          label="Types"
-          value={filters.types}
-          name="types"
-          onChange={handleFilterChange}
-          variant="outlined"
-          size="small"
-        />
-        <TextField
-          label="Product Owner"
-          value={filters.productOwner}
-          name="productOwner"
-          onChange={handleFilterChange}
-          variant="outlined"
-          size="small"
-        />
-        <TextField
-          label="Author"
-          value={filters.author}
-          name="author"
-          onChange={handleFilterChange}
-          variant="outlined"
-          size="small"
-        />
+        <div variant="outlined" size="small">
+          <select
+            value={selectedCategory}
+            onChange={(event) => {
+              setSelectedCategory(event.target.value);
+              handleFilterChange(event);
+            }}
+            label="Category"
+            name="categories"
+          >
+            <option value="">All Categories</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.name}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div variant="outlined" size="small">
+          <select
+            value={selectedType}
+            onChange={(event) => {
+              setSelectedType(event.target.value);
+              handleFilterChange(event);
+            }}
+            label="Type"
+            name="types"
+          >
+            <option value="">All Types</option>
+            {types.map((type) => (
+              <option key={type.id} value={type.name}>
+                {type.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div variant="outlined" size="small">
+          <select
+            value={selectedOwn}
+            onChange={(event) => {
+              setSelectedOwner(event.target.value);
+              handleFilterChange(event); // Pastikan ini sesuai dengan event yang benar
+            }}
+            label="Owner"
+            name="productOwner" // Pastikan nama ini sesuai dengan objek filters
+          >
+            <option value="">All Owners</option>
+            {owners.map((owner) => (
+              <option key={owner.id} value={owner.name}>
+                {owner.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div variant="outlined" size="small">
+          <select
+            value={selectedAuthor}
+            onChange={(event) => {
+              setSelectedAuthor(event.target.value);
+              handleFilterChange(event); // Pastikan ini sesuai dengan event yang benar
+            }}
+            label="Author"
+            name="author" // Pastikan nama ini sesuai dengan objek filters
+          >
+            <option value="">All Authors</option>
+            {authors.map((author) => (
+              <option key={author.id} value={author.fullName}>
+                {author.fullName}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <button
           onClick={handleDownloadPdf}
           style={{
@@ -386,13 +554,15 @@ const TableComponent = () => {
                   <TableCell>
                     <NoUnderlineLink to={`/product/${row.id}`}>
                       <BoldText>
-                      {row.name} 
+                        {row.name}
 
                         {/* {row.name.split(" ").slice(0, 25).join(" ")}  */}
                       </BoldText>{" "}
                     </NoUnderlineLink>{" "}
                   </TableCell>
-                  <TableCell>{row.stock.toLocaleString('id-ID')} unit</TableCell>
+                  <TableCell>
+                    {row.stock.toLocaleString("id-ID")} unit
+                  </TableCell>
                   <TableCell>{row.types?.name}</TableCell>
                   <TableCell>{row.categories?.name}</TableCell>
                   {/* <TableCell
@@ -404,12 +574,43 @@ const TableComponent = () => {
                     }}
                   >
                     {row.description.split(" ").slice(0, 6).join(" ")}...
-                  </TableCell> */}
-                  {/* <TableCell>{row.minimumOrder.toLocaleString('id-ID')}</TableCell> */}
-                  <TableCell> Rp.{row.unitPrice.toLocaleString('id-ID')}</TableCell>
+                  </TableCell>
+                  <TableCell>{row.minimumOrder.toLocaleString('id-ID')}</TableCell> */}
+                  <TableCell>
+                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: '150px'}}>
+                      <span style={{backgroundColor: '#F1EAFF', padding: '10.5px ', border: 'none', borderRadius: '5px', marginRight: '-5px', fontSize: '12px'}}>Rp</span>
+                      <input
+                        type="number"
+                        value={
+                          editingProductId === row.id
+                            ? editedPrice
+                            : row.unitPrice
+                        }
+                        onChange={(e) => {
+                          if (editingProductId === row.id) {
+                            setEditedPrice(e.target.value);
+                          } else {
+                            handleEditPrice(row.id, row.unitPrice);
+                          }
+                        }}
+                        onBlur={() => {
+                          if (editingProductId === row.id) {
+                            saveEditedPrice(row.id);
+                            // Tambahkan kode notifikasi di sini
+                            alert("Sukses merubah harga");
+                          }
+                        }}
+                        min="1"
+                      />
+                    </div>
+                  </TableCell>
+
+                  <TableCell>
+                    {row.stock.toLocaleString("id-ID")} unit
+                  </TableCell>
                   {/* <TableCell>{row.length} cm</TableCell>
                   <TableCell>{row.width.toLocaleString('id-ID')} cm</TableCell>
-                  <TableCell>{row.height.toLocaleString('id-ID')} cm</TableCell> */}
+                  <TableCell>{row.height.toLocaleString('id-ID')} cm</TableCell>
                   {/* <TableCell>{row.weight.toLocaleString('id-ID')} gram</TableCell> */}
                   <TableCell>{row.product_owners?.name}</TableCell>
                   <TableCell>{row.authors?.fullName}</TableCell>
