@@ -11,7 +11,6 @@ import {
   IconButton,
 } from "@mui/material";
 
-
 import {
   Edit as EditIcon,
   Delete as DeleteIcon,
@@ -47,6 +46,63 @@ const TableComponent = () => {
     author: "",
   });
 
+  const [categories, setCategories] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [owners, setOwners] = useState([]);
+  const [authors, setAuthors] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedOwn, setSelectedOwner] = useState("");
+  const [selectedAuthor, setSelectedAuthor] = useState("");
+
+  useEffect(() => {
+    // Lakukan permintaan HTTP untuk mendapatkan daftar kategori dari API
+    axios
+      .get(`${API_URL}/product-categories`)
+      .then(({ data }) => {
+        setCategories(data);
+      })
+      .catch((error) => {
+        console.error(error, "There was an error.");
+      });
+  }, []);
+
+  useEffect(() => {
+    // Lakukan permintaan HTTP untuk mendapatkan daftar kategori dari API
+    axios
+      .get(`${API_URL}/product-types`)
+      .then(({ data }) => {
+        setTypes(data);
+      })
+      .catch((error) => {
+        console.error(error, "There was an error.");
+      });
+  }, []);
+
+  useEffect(() => {
+    // Lakukan permintaan HTTP untuk mendapatkan daftar kategori dari API
+    axios
+      .get(`${API_URL}/product-owners`)
+      .then(({ data }) => {
+        setOwners(data);
+      })
+      .catch((error) => {
+        console.error(error, "There was an error.");
+      });
+  }, []);
+
+  useEffect(() => {
+    // Lakukan permintaan HTTP untuk mendapatkan daftar kategori dari API
+    axios
+      .get(`${API_URL}/warehouse-admins`)
+      .then(({ data }) => {
+        setAuthors(data);
+      })
+      .catch((error) => {
+        console.error(error, "There was an error.");
+      });
+  }, []);
+
   useEffect(() => {
     axios
       .get(`${API_URL}/products/?_sort=id&_order=asc`)
@@ -61,11 +117,39 @@ const TableComponent = () => {
 
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: value,
-    }));
+
+    if (name === "categories") {
+      setSelectedCategory(value);
+    } else if (name === "types") {
+      setSelectedType(value);
+      // Update the "types" filter as well
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        types: value,
+      }));
+    } else if (name === "productOwner") {
+      setSelectedOwner(value);
+      // Update the "productOwner" filter as well
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        productOwner: value,
+      }));
+     } else if (name === "author") {
+        setSelectedAuthor(value); // Update the selectedAuthor state variable
+        // Update the "author" filter as well
+        setFilters((prevFilters) => ({
+          ...prevFilters,
+          author: value,
+        }));      
+    } else {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [name]: value,
+      }));
+    }
   };
+
+
   const handleDownloadPdf = () => {
     const pdfElement = document.getElementById("product-table");
 
@@ -140,41 +224,26 @@ const TableComponent = () => {
     if (product) {
       const filteredData = product
         .filter((item) => {
-          const nameMatch = item.name
-            .toLowerCase()
-            .includes(filters.name.toLowerCase());
-          const categoriesMatch = item.categories?.name
-            .toLowerCase()
-            .includes(filters.categories.toLowerCase());
-          const typesMatch = item.types?.name
-            .toLowerCase()
-            .includes(filters.types.toLowerCase());
-          const productOwnerMatch = item.product_owners?.name
-            .toLowerCase()
-            .includes(filters.productOwner.toLowerCase());
-          const authorMatch = item.authors?.fullName
-            .toLowerCase()
-            .includes(filters.author.toLowerCase());
-  
-          return (
-            nameMatch &&
-            categoriesMatch &&
-            typesMatch &&
-            productOwnerMatch &&
-            authorMatch
-          );
+          const nameMatch = item.name.toLowerCase().includes(filters.name.toLowerCase());
+          const categoriesMatch =
+            selectedCategory === "" ||
+            item.categories?.name.toLowerCase() === selectedCategory.toLowerCase();
+          const typesMatch = item.types?.name.toLowerCase().includes(filters.types.toLowerCase());
+          const productOwnerMatch = item.product_owners?.name.toLowerCase().includes(filters.productOwner.toLowerCase());
+          const authorMatch = item.authors?.fullName.toLowerCase().includes(filters.author.toLowerCase());
+
+          return nameMatch && categoriesMatch && typesMatch && productOwnerMatch && authorMatch;
         })
         .sort((a, b) => {
-          // Assuming there is a 'createdAt' property in the product object
           const dateA = new Date(a.createdAt);
           const dateB = new Date(b.createdAt);
-          // Sort in descending order to get the newest products first
           return dateB - dateA;
         });
-  
+
       setFilteredProduct(filteredData);
     }
-  }, [product, filters]);
+  }, [product, filters, selectedCategory]);
+
 
   const deleteProduct = (id) => {
     axios
@@ -196,6 +265,7 @@ const TableComponent = () => {
   return (
     <div>
       <div style={{ marginBottom: "20px", display: "flex", gap: "10px" }}>
+
         <TextField
           label="Name"
           value={filters.name}
@@ -204,38 +274,83 @@ const TableComponent = () => {
           variant="outlined"
           size="small"
         />
-        <TextField
-          label="Categories"
-          value={filters.categories}
-          name="categories"
-          onChange={handleFilterChange}
-          variant="outlined"
-          size="small"
-        />
-        <TextField
-          label="Types"
-          value={filters.types}
-          name="types"
-          onChange={handleFilterChange}
-          variant="outlined"
-          size="small"
-        />
-        <TextField
-          label="Product Owner"
-          value={filters.productOwner}
-          name="productOwner"
-          onChange={handleFilterChange}
-          variant="outlined"
-          size="small"
-        />
-        <TextField
-          label="Author"
-          value={filters.author}
-          name="author"
-          onChange={handleFilterChange}
-          variant="outlined"
-          size="small"
-        />
+        <div variant="outlined" size="small">
+          <select
+            value={selectedCategory}
+            onChange={(event) => {
+              setSelectedCategory(event.target.value);
+              handleFilterChange(event);
+            }}
+            label="Category"
+            name="categories"
+          >
+            <option value="">All Categories</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.name}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div variant="outlined" size="small">
+          <select
+            value={selectedType}
+            onChange={(event) => {
+              setSelectedType(event.target.value);
+              handleFilterChange(event);
+            }}
+            label="Type"
+            name="types"
+          >
+            <option value="">All Types</option>
+            {types.map((type) => (
+              <option key={type.id} value={type.name}>
+                {type.name}
+              </option>
+            ))}
+          </select>
+
+        </div>
+        <div variant="outlined" size="small">
+          <select
+            value={selectedOwn}
+            onChange={(event) => {
+              setSelectedOwner(event.target.value);
+              handleFilterChange(event); // Pastikan ini sesuai dengan event yang benar
+            }}
+            label="Owner"
+            name="productOwner" // Pastikan nama ini sesuai dengan objek filters
+          >
+            <option value="">All Owners</option>
+            {owners.map((owner) => (
+              <option key={owner.id} value={owner.name}>
+                {owner.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div variant="outlined" size="small">
+          <select
+            value={selectedAuthor}
+            onChange={(event) => {
+              setSelectedAuthor(event.target.value);
+              handleFilterChange(event); // Pastikan ini sesuai dengan event yang benar
+            }}
+            label="Author"
+            name="author" // Pastikan nama ini sesuai dengan objek filters
+          >
+            <option value="">All Authors</option>
+            {authors.map((author) => (
+              <option key={author.id} value={author.fullName}>
+                {author.fullName}
+              </option>
+            ))}
+          </select>
+        </div>
+
+
+
+
         <button
           onClick={handleDownloadPdf}
           style={{
@@ -393,7 +508,7 @@ const TableComponent = () => {
                   <TableCell>
                     <NoUnderlineLink to={`/product/${row.id}`}>
                       <BoldText>
-                        {row.name.split(" ").slice(0, 6).join(" ")} 
+                        {row.name.split(" ").slice(0, 6).join(" ")}
                       </BoldText>{" "}...
                     </NoUnderlineLink>{" "}
                   </TableCell>
