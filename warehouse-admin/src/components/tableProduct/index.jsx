@@ -55,6 +55,41 @@ const TableComponent = () => {
   const [selectedOwn, setSelectedOwner] = useState("");
   const [selectedAuthor, setSelectedAuthor] = useState("");
 
+  const [editingProductId, setEditingProductId] = useState(null);
+  const [editedPrice, setEditedPrice] = useState("");
+
+  const handleEditPrice = (productId, currentPrice) => {
+    setEditingProductId(productId);
+    setEditedPrice(currentPrice);
+  };
+
+  const saveEditedPrice = (productId) => {
+    // Make an HTTP request to update the price for the given product ID.
+    axios
+      .put(`${API_URL}/products/${productId}`, { unitPrice: editedPrice }, {
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+      .then(() => {
+        // Update the local state with the new price.
+        setProduct((prevProducts) =>
+          prevProducts.map((item) => {
+            if (item.id === productId) {
+              return { ...item, unitPrice: editedPrice };
+            }
+            return item;
+          })
+        );
+        // Reset the editing state.
+        setEditingProductId(null);
+      })
+      .catch((error) => {
+        console.error(error, "There was an error while updating the price.");
+      });
+  };
+
+
   useEffect(() => {
     // Lakukan permintaan HTTP untuk mendapatkan daftar kategori dari API
     axios
@@ -134,13 +169,13 @@ const TableComponent = () => {
         ...prevFilters,
         productOwner: value,
       }));
-     } else if (name === "author") {
-        setSelectedAuthor(value); // Update the selectedAuthor state variable
-        // Update the "author" filter as well
-        setFilters((prevFilters) => ({
-          ...prevFilters,
-          author: value,
-        }));      
+    } else if (name === "author") {
+      setSelectedAuthor(value); // Update the selectedAuthor state variable
+      // Update the "author" filter as well
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        author: value,
+      }));
     } else {
       setFilters((prevFilters) => ({
         ...prevFilters,
@@ -512,6 +547,7 @@ const TableComponent = () => {
                       </BoldText>{" "}...
                     </NoUnderlineLink>{" "}
                   </TableCell>
+
                   <TableCell>{row.categories?.name}</TableCell>
                   <TableCell>{row.types?.name}</TableCell>
                   <TableCell
@@ -525,7 +561,30 @@ const TableComponent = () => {
                     {row.description.split(" ").slice(0, 6).join(" ")}...
                   </TableCell>
                   <TableCell>{row.minimumOrder.toLocaleString('id-ID')}</TableCell>
-                  <TableCell> Rp.{row.unitPrice.toLocaleString('id-ID')}</TableCell>
+                  <TableCell>
+                    {editingProductId === row.id ? (
+                      <div>
+                        <input
+                          type="number"
+                          value={editedPrice}
+                          onChange={(e) => setEditedPrice(e.target.value)}
+                          min="1"
+                        />
+                        <button onClick={() => saveEditedPrice(row.id)}>Save</button>
+                      </div>
+                    ) : (
+                      // Display the product price
+                      <div>
+                        Rp.{row.unitPrice.toLocaleString('id-ID')}
+                        <IconButton
+                          aria-label="edit"
+                          onClick={() => handleEditPrice(row.id, row.unitPrice)}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </div>
+                    )}
+                  </TableCell>
                   <TableCell>{row.stock.toLocaleString('id-ID')} unit</TableCell>
                   {/* <TableCell>{row.length} cm</TableCell>
                   <TableCell>{row.width.toLocaleString('id-ID')} cm</TableCell>
