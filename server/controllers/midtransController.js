@@ -512,6 +512,8 @@ class MidtransController {
             }
           }
 
+          await ProductCart.destroy({ where: {} });
+
           // Update status pembayaran checkout
           await checkout.update(
             {

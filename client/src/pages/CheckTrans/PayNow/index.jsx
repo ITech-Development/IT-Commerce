@@ -20,7 +20,6 @@ function PayNow() {
     const { data: carts } = useGetCartsQuery()
     const { data: profile } = useGetMeQuery()
     const [removeItemFromCart] = useRemoveItemFromCartMutation()
-    const [clearItemFromCart] = useClearProductCartMutation()
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -89,7 +88,6 @@ function PayNow() {
             headers: config,
             method: "post",
         });
-        clearItemFromCart()
         setToken(response.data.token);
         setIsModalOpen(true);
     };
