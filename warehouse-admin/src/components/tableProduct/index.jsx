@@ -471,11 +471,6 @@ const TableComponent = () => {
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Stok
-                </TableCell>
-                <TableCell
-                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
-                >
                   Merek
                 </TableCell>
                 <TableCell
@@ -491,12 +486,17 @@ const TableComponent = () => {
                 {/* <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
-                  Minimum Beli
+                Minimum Beli
                 </TableCell> */}
                 <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
                 >
                   Harga
+                </TableCell>
+                <TableCell
+                  style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
+                >
+                  Stok
                 </TableCell>
                 {/* <TableCell
                   style={{ fontWeight: "bold", backgroundColor: "#e6f7ff" }}
@@ -560,9 +560,9 @@ const TableComponent = () => {
                       </BoldText>{" "}
                     </NoUnderlineLink>{" "}
                   </TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     {row.stock.toLocaleString("id-ID")} unit
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>{row.types?.name}</TableCell>
                   <TableCell>{row.categories?.name}</TableCell>
                   {/* <TableCell

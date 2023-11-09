@@ -155,7 +155,7 @@ export default function Toolbar(props) {
                       color: "gray",
                     }}
                   >
-                    <i className="fas fa-shopping-cart" />{" "}
+                    <i class="fa-solid fa-heart"></i>
                     <Link
                       style={{ display: "flex", marginLeft: "10px" }}
                       to="/wishlist-products"

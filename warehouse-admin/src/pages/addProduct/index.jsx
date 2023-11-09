@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./addStyleProducts.css";
 import styled from "styled-components";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TextAreaContainer = styled.div`
   margin: 30px 22px 0 0px;
@@ -133,7 +135,7 @@ const AddProductPage = () => {
         // Jika berhasil, Anda dapat melakukan redirect ke halaman lain atau memberikan notifikasi berhasil tambah produk.
         // Contoh:
         navigate("/");
-        console.log("Produk berhasil ditambahkan.");
+        toast.success('Produk berhasil ditambahkan.');
       } else {
         // Jika terjadi kesalahan saat menyimpan produk di server, Anda dapat menampilkan pesan error atau melakukan tindakan lainnya.
         console.error("Terjadi kesalahan saat menyimpan produk.");
@@ -590,6 +592,7 @@ const AddProductPage = () => {
           </Link>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 };

@@ -101,9 +101,11 @@ const ProductDetailPage = () => {
   };
   const handleAddToWishlist = () => {
     if (accessToken) {
-      addToWishlist(product?.id) // Use the addWishlist mutation with the product ID
+      addToWishlist(product?.id)
         .then((data) => {
           console.log(data);
+          setPopupMessage("Sukses memasukkan ke wishlist");
+          setShowPopup(true);
         })
         .catch((error) => {
           console.log(error);
@@ -260,12 +262,12 @@ const ProductDetailPage = () => {
             >
               {product.stock > 0 ? "Keranjang" : "Stok Habis"}
             </AddToCartButton>
-            <AddToCartButton
+            <AddToWishButton
               onClick={handleAddToWishlist}
               disabled={isInWishlist}
             >
               {isInWishlist ? 'Dalam Wishlist' : 'Wishlist'}
-            </AddToCartButton>
+            </AddToWishButton>
           </div>
         </ProductInfo>
       </ProductDetailWrapper>
@@ -764,6 +766,28 @@ const AddToCartButton = styled.button`
     background-color: #0ef0f0;
     color: #2b3b3b;
     font-weigth: 800;
+  }
+`;
+
+const AddToWishButton = styled.button`
+  padding: 12px 35px;
+  margin-left: 15px;
+  background-color: ${(props) => (props.disabled ? "#ccc" : "#007bff")};
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+
+  &:hover {
+    background-color: #0ef0f0;
+    color: #2b3b3b;
+    font-weigth: 800;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    margin: 10px 0 0 0;
+    width: auto;
   }
 `;
 
