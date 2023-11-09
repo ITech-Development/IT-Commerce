@@ -2,7 +2,16 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 
-function ProductOrdered({ carts, handlerRemove, calculateSubtotal, calculateVoucher, calculatePPN, calculateTotal }) {
+function ProductOrdered({ carts, handlerRemove, calculateSubtotal, calculateVoucher, calculatePPN, calculateTotal, isPickupInStore }) {
+    function calculatePickupInStore() {
+        // Menghitung biaya "Pick Up In Store" jika dipilih
+        if (isPickupInStore) {
+            // Gantilah nilai 0 dengan biaya "Pick Up In Store" yang sesuai
+            const pickupInStoreFee = calculateSubtotal() * 0.11;
+            return pickupInStoreFee;
+        }
+        return 0;
+    }
     return (
         <div>
             <div className="cart-container">
@@ -76,6 +85,10 @@ function ProductOrdered({ carts, handlerRemove, calculateSubtotal, calculateVouc
                                 >
                                     <span>PPN 11% :</span>
                                     <span className="amount"> Rp. {calculatePPN()}</span>
+                                </div>
+                                <div class="subtotal">
+                                    <span>Pick Up 11% :</span>
+                                    <span class="amount">Rp. {calculatePickupInStore()}</span>
                                 </div>
                                 <div class="subtotal">
                                     <span>Total :</span>

@@ -32,10 +32,9 @@ module.exports = (sequelize, DataTypes) => {
     shippingMethod: DataTypes.STRING,
     deliveryStatus: DataTypes.STRING,
     midtransCode: DataTypes.STRING,
-    subTotal: DataTypes.INTEGER,
-    discountVouchers: DataTypes.INTEGER,
     shippingCost: DataTypes.INTEGER,
-    trackingNumber: DataTypes.STRING
+    trackingNumber: DataTypes.STRING,
+    isPickUpInStore: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Checkout',

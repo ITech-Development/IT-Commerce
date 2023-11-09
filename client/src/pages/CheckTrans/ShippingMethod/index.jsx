@@ -11,13 +11,25 @@ function ShippingMethod({
     subdistrict,
     pengiriman,
     selectedShippingCost,
-    handleShippingCostChange
+    handleShippingCostChange,
+    
+    handleDisablePickupInStore
 }) {
+    // Function to handle the courier change
+    const handleCourierChange = (event) => {
+        handlerSetCourier(event.target.value); // Update the selected courier
+        if (event.target.value !== "pickup") {
+            handleDisablePickupInStore(false); // Disable "Pick Up In Store" if a shipping method is selected
+        } else {
+            handleDisablePickupInStore(true); // Enable "Pick Up In Store" if "Pick Up" is selected
+        }
+    };
     return (
-        <div>
+        <div >
             <div
                 className="calcongkir"
                 style={{ position: "relative", top: "-5px", marginBottom: "5px" }}
+
             >
                 <h2>Pilih Metode Pengiriman</h2>
                 <div>
@@ -26,6 +38,8 @@ function ShippingMethod({
                         value={courier}
                         onChange={handlerSetCourier}
                         className="methodDeliverySelect"
+                        
+
                     >
                         <option className="methodDeliveryOption" value="jne">
                             jne
@@ -45,6 +59,7 @@ function ShippingMethod({
                         id="province"
                         onChange={handleProvinceChange}
                         className="methodDeliverySelect"
+                        
                     >
                         <option className="methodDeliveryOption" value="">
                             Select Province
@@ -64,6 +79,7 @@ function ShippingMethod({
                         id="city"
                         onChange={handleCityChange}
                         className="methodDeliverySelect"
+                       
                     >
                         <option className="methodDeliveryOption" value="">
                             Select City
@@ -84,6 +100,7 @@ function ShippingMethod({
                         id="subdistrict"
                         onChange={handlerGetCost}
                         className="methodDeliverySelect"
+                       
                     >
                         <option className="methodDeliveryOption" value="">
                             Select Subdistrict
@@ -109,6 +126,7 @@ function ShippingMethod({
                                     value={el.cost[0].value}
                                     checked={selectedShippingCost === el.cost[0].value}
                                     onChange={handleShippingCostChange}
+                                    
                                 />
                                 <label htmlFor={`shippingChoice${index}`}>
                                     Shipping Cost: Rp.{el.cost[0].value}

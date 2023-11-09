@@ -44,6 +44,19 @@ function PayNow() {
     const [voucherCode, setVoucherCode] = useState(""); // State for the voucher code input
     const [isVoucherValid, setIsVoucherValid] = useState(false); // Flag to track voucher code validity
 
+    const [isPickupInStore, setIsPickupInStore] = useState(false);
+    const [selectedShippingMethod, setSelectedShippingMethod] = useState(null);
+    
+
+    const handlePickupInStoreChange = () => {
+        setIsPickupInStore(true);
+        setSelectedShippingMethod(null);
+    };
+
+    const handleShippingMethodChange = () => {
+        setIsPickupInStore(false);
+    };
+
     useEffect(() => {
         const fetchVouchers = async () => {
             try {
@@ -84,6 +97,7 @@ function PayNow() {
                 checkoutPengiriman,
                 bayar,
                 pajak,
+                isPickupInStore,
             },
             headers: config,
             method: "post",
@@ -125,13 +139,15 @@ function PayNow() {
     }, [token]);
 
     useEffect(() => {
-        const midtransUrl = "https://app.midtrans.com/snap/snap.js";
+        const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
 
         let scriptTag = document.createElement("script");
         scriptTag.src = midtransUrl;
 
-        const midtransClientKey = "Mid-client-7Al2Kp7TdLPqUFMx";
-        scriptTag.setAttribute("data-client-key-indo-donik", midtransClientKey);
+        const midtransClientKey = "SB-Mid-client-5sjWc9AhHLstKFML";
+        // const midtransClientKey = "Mid-client-7Al2Kp7TdLPqUFMx";
+        scriptTag.setAttribute("data-client-key-indo-sandbox", midtransClientKey);
+        // scriptTag.setAttribute("data-client-key-indo-donik", midtransClientKey);
 
         document.body.appendChild(scriptTag);
 
@@ -178,9 +194,14 @@ function PayNow() {
         const subtotal = calculateSubtotal();
         const voucherDiscount = calculateVoucher();
         const ppnAmount = calculatePPN();
-        const total = subtotal - voucherDiscount + ppnAmount;
+
+        // Add 11% fee if "Pick Up In Store" is selected
+        const pickupInStoreFee = isPickupInStore ? (subtotal * 0.11) : 0;
+
+        const total = subtotal - voucherDiscount + ppnAmount + pickupInStoreFee;
         return total;
     };
+
 
     const calculateTotalBayar = () => {
         const total = calculateTotal();
@@ -295,7 +316,6 @@ function PayNow() {
 
 
     const applyVoucher = () => {
-
         if (validVoucherCodes.includes(voucherCode)) {
             setSelectedVoucher(voucherCode); // Apply the valid voucher
             setIsVoucherValid(true); // Set the flag to true
@@ -332,59 +352,93 @@ function PayNow() {
                     calculateVoucher={calculateVoucher}
                     calculatePPN={calculatePPN}
                     calculateTotal={calculateTotal}
+                    isPickupInStore={isPickupInStore}
                 />
 
                 <div>
                     <UseVouchers voucherCode={voucherCode} setVoucherCode={setVoucherCode} applyVoucher={applyVoucher} />
                 </div>
 
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <ShippingMethod
-                        courier={courier}
-                        handlerSetCourier={handlerSetCourier}
-                        handleProvinceChange={handleProvinceChange}
-                        province={province}
-                        handleCityChange={handleCityChange}
-                        city={city}
-                        handlerGetCost={handlerGetCost}
-                        subdistrict={subdistrict}
-                        pengiriman={pengiriman}
-                        selectedShippingCost={selectedShippingCost}
-                        handleShippingCostChange={handleShippingCostChange}
-                    />
-
-
-                    <div
-                        style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end' }}
-                    >
-                        <div style={{ paddingTop: '5px' }}>
-
-                            <span >Total Bayar : </span>
-                            <span style={{ fontWeight: "700", paddingRight: '20px' }} className="amount">
-                                Rp. {calculateTotalBayar()}
-                            </span>
-                        </div>
-                        <div>
-                            {totalShippingCost === 0 ? (
-                                <p >
-                                    <i>Silahkan pilih metode pengiriman</i>
-                                </p>
-                            ) : (
-                                <button
-                                    onClick={() => handlePaymentProcess()}
-                                    style={paymentButtonStyle}
-                                >
-                                    Bayar Sekarang
-                                </button>
-                            )}
-                        </div>
-                        {/* Tampilkan modal jika isModalOpen adalah true */}
-                        <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
-                    </div>
+                {/* Add the "Pick Up In Store" option here */}
+                <div style={{ display: "flex", justifyContent: "start" }}>
+                    <br />
+                    <label>
+                        <input
+                            type="radio"
+                            name="shippingOption"
+                            value="pickupInStore"
+                            checked={isPickupInStore}
+                            onChange={handlePickupInStoreChange}
+                        />
+                        Pick Up In Store
+                    </label>
+                    <br />
+                    <label>
+                        <input
+                            type="radio"
+                            name="shippingOption"
+                            value="shippingMethod"
+                            checked={!isPickupInStore}
+                            onChange={handleShippingMethodChange}
+                        />
+                        Shipping Method
+                    </label>
                 </div>
+
+                {isPickupInStore ? (
+                    // Content for Pick Up In Store
+                    <i>Biaya penangan untuk  <b>Ambil di Toko</b> dikenakan 11%</i>
+                ) : (
+                    // Content for Shipping Method
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <ShippingMethod
+                            courier={courier}
+                            handlerSetCourier={handlerSetCourier}
+                            handleProvinceChange={handleProvinceChange}
+                            province={province}
+                            handleCityChange={handleCityChange}
+                            city={city}
+                            handlerGetCost={handlerGetCost}
+                            subdistrict={subdistrict}
+                            pengiriman={pengiriman}
+                            selectedShippingCost={selectedShippingCost}
+                            handleShippingCostChange={handleShippingCostChange}
+
+                            handleDisablePickupInStore={setIsPickupInStore}
+                        />
+                    </div>
+                )}
+
+                <div style={{ padding: "20px 65px", fontSize: "20px", display: 'flex', justifyContent: 'end' }}>
+                    <div style={{ paddingTop: '5px' }}>
+                        <span>Total Bayar : </span>
+                        <span style={{ fontWeight: "700", paddingRight: '20px' }} className="amount">
+                            Rp. {calculateTotalBayar()}
+                        </span>
+                    </div>
+                    <div>
+                        {totalShippingCost === 0 && !isPickupInStore ? (
+                            <p>
+                                <i>Silahkan pilih metode pengiriman</i>
+                            </p>
+                        ) : (
+                            <button
+                                onClick={() => handlePaymentProcess()}
+                                style={paymentButtonStyle}
+                            >
+                                Bayar Sekarang
+                            </button>
+                        )}
+                    </div>
+                    {/* Tampilkan modal jika isModalOpen adalah true */}
+                    <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
+                </div>
+
             </div>
 
+
         </div>
+        // </div >
     );
 }
 
