@@ -1,4 +1,4 @@
-const { User, Profile, Checkout, CheckoutProduct, Product } = require("../models/index");
+const { User, Profile, Checkout, CheckoutProduct, Product, ProductCart } = require("../models/index");
 const midtransClient = require("midtrans-client");
 const midtransKey = process.env.MIDTRANS_SERVER_KEY;
 const midtransKeyItech = process.env.MIDTRANS_SERVER_KEY_ITECH;
@@ -51,7 +51,6 @@ class MidtransController {
         carts,
         checkoutCourier,
         selectedShippingCost,
-        // checkoutPengiriman,
         isPickupInStore
       } = req.body;
 
@@ -94,6 +93,7 @@ class MidtransController {
       res.status(500).json({ message: 'Terjadi kesalahan dalam proses pembayaran.' });
     }
   }
+
   static async midtransTokenItech(req, res, next) {
     console.log(req.body, '<<itech');
     const t = await sequelize.transaction();

@@ -118,8 +118,8 @@ function CheckoutProductsPage() {
 
         // Calculate the total discount by summing the discount of each product
         const totalDiscount = products.reduce((total, product) => {
-            // Calculate the discount for each product (3% of the product's unit price)
-            const productDiscount = (0.03 * product.product.unitPrice) * product.quantity;
+            // Calculate the discount for each product (6% of the product's unit price)
+            const productDiscount = (0.06 * product.product.unitPrice) * product.quantity;
             return total + productDiscount;
         }, 0);
 
@@ -237,7 +237,7 @@ function CheckoutProductsPage() {
                     </div>
                     <div className="contentSec3">
                         <p className="dataInvoice1">Total Ongkos Kirim ({calculateTotalWeight(checkoutProducts)} gr)</p>
-                        <p className="dataInvoice1">Rp. {checkoutProducts[0].checkout.shippingCost}</p>
+                        <p className="dataInvoice1">Rp. {checkoutProducts[0].checkout.shippingCost === null ? '-' : checkoutProducts[0].checkout.shippingCost}</p>
                     </div>
                     <div className="contentSec3">
                         <p className="dataInvoice1">Diskon Ongkos Kirim</p>
@@ -255,6 +255,10 @@ function CheckoutProductsPage() {
                         <p className="dataInvoice1">PPN</p>
                         <p className="dataInvoice1">Rp. {checkoutProducts[0].checkout.setPPN}</p>
                     </div>
+                    <div className="contentSec3">
+                        <p className="dataInvoice1">Ambil di Toko</p>
+                        <p className="dataInvoice1">Rp. {checkoutProducts[0].checkout.isPickUpInStore === false ? '-' : calculateTotalPrice(checkoutProducts) * 0.11}</p>
+                    </div>
                     <div className="content1Sec3">
                         <p className="dataInvoice1Total">TOTAL BELANJA</p>
                         <p className="dataInvoice1">Rp. {checkoutProducts[0].checkout.totalPrice}</p>
@@ -266,20 +270,32 @@ function CheckoutProductsPage() {
                     <div className="content3Sec3">
                         <p className="dataInvoice1promo">Promo Donik</p>
                         <div className="isiContentSec3">
-                            <p className="dataInvoice1">Diskon Belanja 3%</p>
+                            <p className="dataInvoice1">Diskon Belanja 6%</p>
                             <p className="dataInvoice1">Rp. {calculateTotalDiscount(checkoutProducts)}</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="kurirInvoice4">
-                <div>
-                    <p className="dataInvoice1">Kurir :</p>
-                    <p className="dataInvoice1" style={{ color: "black" }}>
-                        {checkoutProducts[0].checkout.shippingMethod === null ? '-' : checkoutProducts[0].checkout.shippingMethod.toUpperCase()}
-                    </p>
-                    <p className="dataInvoice1">No Resi: {checkoutProducts[0].checkout.trackingNumber === null ? 'null' : checkoutProducts[0].checkout.trackingNumber}</p>
-                </div>
+                {checkoutProducts[0].checkout.isPickUpInStore === false ? (
+                    <div>
+                        <p className="dataInvoice1">Kurir :</p>
+                        <p className="dataInvoice1" style={{ color: "black" }}>
+                            {checkoutProducts[0].checkout.shippingMethod === null ? '-' : checkoutProducts[0].checkout.shippingMethod.toUpperCase()}
+                        </p>
+                        <p className="dataInvoice1">No Resi: {checkoutProducts[0].checkout.trackingNumber === null ? '-' : checkoutProducts[0].checkout.trackingNumber}</p>
+                    </div>
+                ) : (
+                    <div>
+                        <p className="dataInvoice1">Ambil di Toko :</p>
+                        <p className="dataInvoice1" style={{ color: "black" }}>
+                            Ya
+                        </p>
+                        <p className="dataInvoice1" style={{ color: "black" }}>
+                            <i> Biaya layanan Ambil di Toko dikenakan 11%</i>
+                        </p>
+                    </div>
+                )}
                 <div>
                     <p className="dataInvoice1">Metode Pembayaran :</p>
                     <p className="dataInvoice1" style={{ color: "black" }}>
@@ -287,6 +303,9 @@ function CheckoutProductsPage() {
                     </p>
                 </div>
             </div>
+
+
+
             <div className="kurir2invoice">
                 <p className="dataInvoice1">
                     Invoice ini sah dan diproses oleh komputer
