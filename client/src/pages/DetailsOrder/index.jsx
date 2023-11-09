@@ -327,7 +327,7 @@ function CheckoutProductsPage() {
                 Download Invoice as PDF
             </button>
 
-            {checkoutProducts[0].checkout.deliveryStatus === 'Dikirim' && (
+            {checkoutProducts[0].checkout.deliveryStatus === 'Dikirim' || checkoutProducts[0].checkout.deliveryStatus === 'Menunggu pembeli' && (
                 <div>
                     <br />
                     {/* <label htmlFor="deliveryStatus">Delivery Status:</label> */}

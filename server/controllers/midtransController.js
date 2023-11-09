@@ -43,10 +43,7 @@ class MidtransController {
 
       const {
         pajak,
-        checkoutProvince,
-        checkoutCity,
         bayar,
-        checkoutSubdistrict,
         selectedVoucher,
         carts,
         checkoutCourier,
@@ -56,14 +53,23 @@ class MidtransController {
 
       let checkoutPengiriman = ''
       if (req.body.checkoutPengiriman === undefined) {
-        checkoutPengiriman = null
+        checkoutPengiriman = '-'
       } else {
         checkoutPengiriman = req.body.checkoutPengiriman.service + ' (' + req.body.checkoutPengiriman.description + ')'
       }
 
+      let rajaOngkirAddress = ''
+      if (req.body.checkoutProvince === undefined &&
+        req.body.checkoutCity === undefined &&
+        req.body.checkoutSubdistrict === undefined) {
+        rajaOngkirAddress = '-'
+      } else {
+        rajaOngkirAddress = req.body.checkoutSubdistrict + ', ' + req.body.checkoutCity + ', ' + req.body.checkoutProvince
+      }
+
       const createCheckout = await Checkout.create({
         userId: req.user.id,
-        shippingAddress: `${user.fullName}, (${user.phoneNumber}), ${user.address}, ${checkoutSubdistrict}, ${checkoutCity}, ${checkoutProvince}`,
+        shippingAddress: `${user.fullName}, (${user.phoneNumber}), ${user.address}, ${rajaOngkirAddress}`,
         totalPrice: bayar,
         voucherCode: selectedVoucher,
         midtransCode: order_id,

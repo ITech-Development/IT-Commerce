@@ -60,6 +60,7 @@ function EditCheckout() {
                     >
                         <option value="Sedang dikemas">Sedang dikemas</option>
                         <option value="Dikirim">Dikirim</option>
+                        <option value="Menunggu pembeli">Menunggu pembeli</option>
                         {/* Add more options as needed */}
                     </select>
                 </div>
@@ -69,8 +70,7 @@ function EditCheckout() {
                         type="text"
                         id="trackingNumber"
                         value={trackingNumber}
-                        onChange={handleTrackingNumberChange}
-                        required
+                        onChange={handleTrackingNumberChange}  
                     />
                 </div>
                 <button type="submit">Update</button>
