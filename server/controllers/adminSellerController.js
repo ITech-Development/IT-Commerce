@@ -167,13 +167,15 @@ class AdminSellerController {
     static async getTransactionListByVoucherCode(req, res, next) {
         try {
             let voucherCode = '';
+
             if (req.adminSeller.id === 4) {
                 voucherCode = 'IT01';
-                voucherCode = null;
             } else if (req.adminSeller.id === 5) {
                 voucherCode = 'MS01';
             } else if (req.adminSeller.id === 6) {
                 voucherCode = 'DM01';
+            } else if (req.adminSeller.id === 7 || req.adminSeller.id === 9) {
+                voucherCode = null;
             } else {
                 console.log('Check the server again');
                 return;
@@ -401,14 +403,19 @@ class AdminSellerController {
 
         switch (req.adminSeller.id) {
             case 4:
-                voucherCode = 'IT01';
-                voucherCode = null;
+                voucherCode = 'IT01'
                 break;
             case 5:
                 voucherCode = 'MS01';
                 break;
             case 6:
                 voucherCode = 'DM01';
+                break;
+            case 7:
+                voucherCode = null;
+                break;
+            case 9:
+                voucherCode = null;
                 break;
             default:
                 console.log('Check the server again');
