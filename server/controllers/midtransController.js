@@ -16,8 +16,8 @@ class MidtransController {
       let temp = []
       const user = await User.findByPk(req.user.id);
       let snap = new midtransClient.Snap({
-        isProduction: false,
-        serverKey: midtransKey,
+        isProduction: true,
+        serverKey: midtransKeyDonik,
       });
 
       const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
