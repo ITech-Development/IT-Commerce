@@ -8,7 +8,7 @@ const IncrementPurchasePoints = () => {
   const handleIncrement = () => {
 
     const incrementValueInt = parseInt(incrementValue, 10);
-    fetch(`http://localhost:3100/users/incrementPurchasePoints/${userId}`, {
+    fetch(`https://indoteknikserver-732012365989.herokuapp.com/users/incrementPurchasePoints/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

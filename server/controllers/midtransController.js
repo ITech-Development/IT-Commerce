@@ -1,4 +1,4 @@
-const { User, Profile, Checkout, CheckoutProduct, Product } = require("../models/index");
+const { User, Profile, Checkout, CheckoutProduct, Product, ProductCart } = require("../models/index");
 const midtransClient = require("midtrans-client");
 const midtransKey = process.env.MIDTRANS_SERVER_KEY;
 const midtransKeyItech = process.env.MIDTRANS_SERVER_KEY_ITECH;
@@ -43,25 +43,40 @@ class MidtransController {
 
       const {
         pajak,
-        checkoutProvince,
-        checkoutCity,
         bayar,
-        checkoutSubdistrict,
         selectedVoucher,
         carts,
         checkoutCourier,
         selectedShippingCost,
+        isPickupInStore
       } = req.body;
+
+      let checkoutPengiriman = ''
+      if (req.body.checkoutPengiriman === undefined) {
+        checkoutPengiriman = '-'
+      } else {
+        checkoutPengiriman = req.body.checkoutPengiriman.service + ' (' + req.body.checkoutPengiriman.description + ')'
+      }
+
+      let rajaOngkirAddress = ''
+      if (req.body.checkoutProvince === undefined &&
+        req.body.checkoutCity === undefined &&
+        req.body.checkoutSubdistrict === undefined) {
+        rajaOngkirAddress = '-'
+      } else {
+        rajaOngkirAddress = req.body.checkoutSubdistrict + ', ' + req.body.checkoutCity + ', ' + req.body.checkoutProvince
+      }
 
       const createCheckout = await Checkout.create({
         userId: req.user.id,
-        shippingAddress: `${user.fullName}, (${user.phoneNumber}), ${user.address}, ${checkoutSubdistrict}, ${checkoutCity}, ${checkoutProvince}`,
+        shippingAddress: `${user.fullName}, (${user.phoneNumber}), ${user.address}, ${rajaOngkirAddress}`,
         totalPrice: bayar,
         voucherCode: selectedVoucher,
         midtransCode: order_id,
         setPPN: `${pajak}`,
-        shippingMethod: `${checkoutCourier}`,
+        shippingMethod: `${checkoutCourier} - ${checkoutPengiriman}`,
         shippingCost: selectedShippingCost,
+        isPickUpInStore: isPickupInStore,
         transaction: t
       });
 
@@ -84,6 +99,7 @@ class MidtransController {
       res.status(500).json({ message: 'Terjadi kesalahan dalam proses pembayaran.' });
     }
   }
+
   static async midtransTokenItech(req, res, next) {
     console.log(req.body, '<<itech');
     const t = await sequelize.transaction();
@@ -511,6 +527,8 @@ class MidtransController {
               throw new Error('Produk tidak memiliki cukup stok.');
             }
           }
+
+          await ProductCart.destroy({ where: {} });
 
           // Update status pembayaran checkout
           await checkout.update(

@@ -20,25 +20,25 @@ function CheckoutProductsPage() {
 
   const [incrementValue, setIncrementValue] = useState(0);
 
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
 
-  const handleIncrement = () => {
-    const incrementValueInt = parseInt(incrementValue, 10);
-    fetch(
-      `https://indoteknikserver-732012365989.herokuapp.com/users/incrementPurchasePoints/${userId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          access_token: localStorage.getItem("access_token"),
-        },
-        body: JSON.stringify({ incrementValue: incrementValueInt }),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => setMessage(data.message))
-      .catch((error) => console.error(error));
-  };
+  // const handleIncrement = () => {
+  //   const incrementValueInt = parseInt(incrementValue, 10);
+  //   fetch(
+  //     `https://indoteknikserver-732012365989.herokuapp.com/users/incrementPurchasePoints/${userId}`,
+  //     {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         access_token: localStorage.getItem("access_token"),
+  //       },
+  //       body: JSON.stringify({ incrementValue: incrementValueInt }),
+  //     }
+  //   )
+  //     .then((response) => response.json())
+  //     .then((data) => setMessage(data.message))
+  //     .catch((error) => console.error(error));
+  // };
 
   const handleDeliveryStatusChange = () => {
     setDeliveryStatus("Pesanan diterima");
