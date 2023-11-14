@@ -16,7 +16,7 @@ class MidtransController {
       let temp = []
       const user = await User.findByPk(req.user.id);
       let snap = new midtransClient.Snap({
-        isProduction: true,
+        isProduction: false,
         serverKey: midtransKeyDonik,
       });
 
@@ -538,7 +538,6 @@ class MidtransController {
             },
             { transaction: t }
           );
-
         });
 
         res.status(200).json({ message: 'Pembayaran berhasil diproses.' });
