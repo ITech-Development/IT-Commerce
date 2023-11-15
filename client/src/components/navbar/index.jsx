@@ -101,8 +101,8 @@ export default function Toolbar(props) {
                   cursor: "pointer",
                   paddingLeft: "10px",
                 }}
-                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                alt=""
+                src={me?.imageProfile}
+                alt={me?.fullName}
               />
               {isDropdownHovered && (
                 <ul
