@@ -17,11 +17,7 @@ import SecondStep from "./pages/productShipping/secondStep";
 import CheckTrans from "./pages/CheckTrans";
 import ProfileUpdate from "./pages/profileUpdate";
 import ServiceList from "./pages/ServiceList";
-import CheckTransItech from "./pages/CheckTrans/itech";
-import CheckTransIndoRiau from "./pages/CheckTrans/indoRiau";
 import PayNow from "./pages/CheckTrans/PayNow";
-import CheckTransIndoTeknik from "./pages/CheckTrans/indoTeknik";
-import CheckTransJuvindo from "./pages/CheckTrans/juvindo";
 import ProductCategoryNozzle from "./pages/ProductCategories/nozzle";
 import ProductCategoryDeliveryValve from "./pages/ProductCategories/deliveryValve";
 import ProductCategoryElement from "./pages/ProductCategories/element";
@@ -34,7 +30,8 @@ import DetailsOrder from "./pages/DetailsOrder";
 import store from './app/store'
 import { Provider } from "react-redux";
 import CategoryList from './pages/CategoryList/CategoryList'
-import CategoryDetail from './pages/CategoryDetail' 
+import CategoryDetail from './pages/CategoryDetail'
+import EventProduct from './pages/EventProduct'
 
 const Routing = () => {
   return (
@@ -55,11 +52,7 @@ const Routing = () => {
       <Route path="/profile-update" element={<ProfileUpdate />} />
       <Route path="/services" element={<ServiceList />} />
       <Route path="/profile-update/:id" element={<ProfileUpdate />} />
-      <Route path="/check-TransITech" element={<CheckTransItech />} />
-      <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
       <Route path="/pay-now" element={<PayNow />} />
-      <Route path="/check-TransIT" element={<CheckTransIndoTeknik />} />
-      <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
       <Route path="/nozzle" element={<ProductCategoryNozzle />} />
       <Route path="/delivery-valve" element={<ProductCategoryDeliveryValve />} />
       <Route path="/element" element={<ProductCategoryElement />} />
@@ -70,6 +63,7 @@ const Routing = () => {
       <Route path="/wishlist-products" element={<WishlistProducts />} />
       <Route path="/wishlist-products/:id" element={<ProductDetails />} />
       <Route path="/my-order/:id" element={<DetailsOrder />} />
+      <Route path="/event-products" element={<EventProduct />} />
     </Routes>
   );
 };

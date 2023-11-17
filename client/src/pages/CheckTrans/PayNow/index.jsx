@@ -139,13 +139,13 @@ function PayNow() {
     }, [token]);
 
     useEffect(() => {
-        const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+        const midtransUrl = "https://app.midtrans.com/snap/snap.js";
 
         let scriptTag = document.createElement("script");
         scriptTag.src = midtransUrl;
 
-        // const midtransClientKey = "SB-Mid-client-5sjWc9AhHLstKFML";
-        const midtransClientKey = "SB-Mid-client-Al7Im9ogatOwrmNv";
+        const midtransClientKey = "Mid-client-7Al2Kp7TdLPqUFMx";
+        // const midtransClientKey = "SB-Mid-client-Al7Im9ogatOwrmNv";
         // scriptTag.setAttribute("data-client-key-indo-sandbox", midtransClientKey);
         scriptTag.setAttribute("data-client-key-indo-donik", midtransClientKey);
 

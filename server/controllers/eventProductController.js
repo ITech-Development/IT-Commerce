@@ -24,7 +24,7 @@ class EventProductController {
             }
 
             const eventProduct = await eventProduct.create({
-                userId: req.user.id,
+                eventId: req.user.id,
                 productId: id
             })
 

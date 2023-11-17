@@ -108,6 +108,14 @@ const CardSection = () => {
         title="Points"
         count={0} // Replace with the actual value of points
       />
+      <Link to="/product-list">
+        <Card
+          imageUrl="https://w7.pngwing.com/pngs/428/470/png-transparent-spare-part-computer-icons-aftersales-blue-text-logo-thumbnail.png"
+          title="Total Products"
+          count={products.length}
+          width='200px'
+        />
+      </Link>
     </div>
   );
 };

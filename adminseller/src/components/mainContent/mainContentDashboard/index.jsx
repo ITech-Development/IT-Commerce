@@ -1,5 +1,5 @@
 import React from "react";
-import CardComponent from "../cardDasboard";
+import CardComponent from "../../cardDasboard";
 import { Link } from "react-router-dom";
 
 const MainContent = () => {

@@ -1,7 +1,7 @@
 // Dashboard.js
 import React from 'react';
 // import Header from '../../components/headerDashboard';
-import MainContent from '../../components/mainContentDashboard';
+import MainContent from '../../components/mainContent/mainContentDashboard';
 
 const Dashboard = () => {
   return (

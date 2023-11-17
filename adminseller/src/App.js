@@ -13,6 +13,7 @@ import { loadUser } from "./features/authslice";
 import { useDispatch } from "react-redux";
 import { initialState, reducer } from "./reducer/UseReducer";
 import Chat from "./pages/Chat";
+import GetProductList from "./pages/getProductList";
 
 export const UserContext = createContext();
 
@@ -29,6 +30,7 @@ const Routing = () => {
         <>
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Dashboard />} />
+          <Route path="/product-list" element={<GetProductList/>}/>
           <Route path="/transaction-list" element={<GetTransactionList />} />
           <Route path="/order-list" element={<GetOrderList />} />
           <Route path="/order-list/:id" element={<EditDeliveryStatus />} />
