@@ -41,10 +41,8 @@ export const usersApi = createApi({
         url: 'users/me', // URL untuk mengedit profil pengguna
         method: 'PUT', // Gunakan metode PUT untuk mengganti data profil
         body: updatedUserData, // Data yang akan dikirim dalam permintaan
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
       }),
+      invalidatesTags: ['Post']
     }),
   })
 })

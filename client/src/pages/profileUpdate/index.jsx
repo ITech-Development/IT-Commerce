@@ -13,6 +13,16 @@ const ProfileForm = () => {
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setProfileImage(file);
+    // Create a preview URL for the selected image
+    const previewURL = URL.createObjectURL(file);
+    setPreviewImage(previewURL);
+  };
 
   useEffect(() => {
     if (userData) {
@@ -24,14 +34,26 @@ const ProfileForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updatedUserData = {
-      fullName,
-      phoneNumber,
-      address,
-    };
+    // const updatedUserData = {
+    //   fullName,
+    //   phoneNumber,
+    //   address,
+    //   imageProfile: profileImage,
+    // };
+
+    const updatedUserData = new FormData();
+
+    updatedUserData.append("fullName", fullName);
+    updatedUserData.append("phoneNumber", phoneNumber);
+    updatedUserData.append("address", address);
+    updatedUserData.append("imageProfile", profileImage);
 
     try {
-      const response = await editMe(updatedUserData).unwrap();
+      const response = await editMe(updatedUserData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).unwrap();
       console.log("Profile updated successfully", response);
     } catch (error) {
       console.error("Error updating profile", error);
@@ -54,10 +76,7 @@ const ProfileForm = () => {
       </ProfileHeader>
 
       <ProfileCard>
-        <ProfileImage
-          src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-          alt="Profile"
-        />
+        <ProfileImage src={userData?.imageProfile} alt="Profile" />
         <ProfileData>
           <UserName>{fullName}</UserName>
           <CoinContainer>
@@ -83,6 +102,21 @@ const ProfileForm = () => {
 
       <Form onSubmit={handleSubmit}>
         <TitleForm>Update Profile</TitleForm>
+        {previewImage && (
+          <img
+            src={previewImage}
+            alt="Preview"
+            width="100"
+            style={{ borderRadius: "10px" }}
+          />
+        )}
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          placeholder="Ganti Foto Profil"
+        />
+
         <Label>Nama Lengkap</Label>
         <Input
           name="fullName"

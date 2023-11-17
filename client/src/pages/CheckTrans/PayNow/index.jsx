@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../styless.css";
 import axios from "axios";
 import {
-  // useClearProductCartMutation,
+  useClearProductCartMutation,
   useGetCartsQuery,
   useRemoveItemFromCartMutation,
 } from "../../../features/cart/apiCarts";
@@ -12,6 +13,7 @@ import ShippingAddress from "../ShippingAddress";
 import UseVouchers from "../UseVouchers";
 import ShippingMethod from "../ShippingMethod";
 import ProductOrdered from "../ProductOrdered";
+import Back from "../../../assets/back-button.png";
 
 const validVoucherCodes = ["DM01", "IT01", "MS01"];
 
@@ -326,14 +328,27 @@ function PayNow() {
     cursor: "pointer",
   };
 
+  function formatPrice(price) {
+    const priceString = price.toString();
+    const parts = priceString.split(".");
+    return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  const handleGoBack = () => {
+    window.history.back(); // Go back to the previous page in the browsing history
+  };
+
   return (
     <div>
+      <div>
+        <Link className="backCheckTrans" onClick={handleGoBack}>
+          <img className="back" src={Back} alt="Back" />
+          <h3 className="cartTitle">Kembali</h3>
+        </Link>
+      </div>
       <ShippingAddress profile={profile} />
-      <div
-        className="alamat"
-        style={{ marginTop: "20px", marginBottom: "20px" }}
-      >
-        <h2>Produk Dipesan</h2>
+      <div className="Produk">
+        <h3 className="judulcheck">Produk Dipesan</h3>
         {/* <CartCheckTrans /> */}
         <ProductOrdered
           carts={carts}
@@ -344,49 +359,46 @@ function PayNow() {
           calculateTotal={calculateTotal}
           isPickupInStore={isPickupInStore}
         />
-
+        {/* 
         <div>
           <UseVouchers
             voucherCode={voucherCode}
             setVoucherCode={setVoucherCode}
             applyVoucher={applyVoucher}
           />
-        </div>
+        </div> */}
 
         {/* Add the "Pick Up In Store" option here */}
-        <div style={{ display: "flex", justifyContent: "start" }}>
-          <br />
-          <label>
-            <input
-              type="radio"
-              name="shippingOption"
-              value="pickupInStore"
-              checked={isPickupInStore}
-              onChange={handlePickupInStoreChange}
-            />
-            Pick Up In Store
-          </label>
-          <br />
-          <label>
-            <input
-              type="radio"
-              name="shippingOption"
-              value="shippingMethod"
-              checked={!isPickupInStore}
-              onChange={handleShippingMethodChange}
-            />
-            Shipping Method
-          </label>
-        </div>
-     
-        {isPickupInStore ? (
-          // Content for Pick Up In Store
-          <i>
-            Biaya penangan untuk <b>Ambil di Toko</b> dikenakan 11%
-          </i>
-        ) : (
-          // Content for Shipping Method
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div className="ongPay full-width">
+          <div className="calcongkir">
+            <br />
+            <label>
+              <input
+                type="radio"
+                name="shippingOption"
+                value="shippingMethod"
+                checked={!isPickupInStore}
+                onChange={handleShippingMethodChange}
+              />
+              Metode Pengiriman
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="shippingOption"
+                value="pickupInStore"
+                checked={isPickupInStore}
+                onChange={handlePickupInStoreChange}
+              />
+              Ambil di Toko
+            </label>
+          </div>
+
+          {isPickupInStore ? (
+            <i>
+              Biaya penangan untuk <b>Ambil di Toko</b> dikenakan 11%
+            </i>
+          ) : (
             <ShippingMethod
               courier={courier}
               handlerSetCourier={handlerSetCourier}
@@ -401,46 +413,45 @@ function PayNow() {
               handleShippingCostChange={handleShippingCostChange}
               handleDisablePickupInStore={setIsPickupInStore}
             />
-          </div>
-        )}
+          )}
 
-        <div
-          style={{
-            padding: "20px 65px",
-            fontSize: "20px",
-            display: "flex",
-            justifyContent: "end",
-          }}
-        >
-          <div style={{ paddingTop: "5px" }}>
-            <span>Total Bayar : </span>
-            <span
-              style={{ fontWeight: "700", paddingRight: "20px" }}
-              className="amount"
-            >
-              Rp. {calculateTotalBayar()}
-            </span>
+          <div className="secRightPay">
+            <UseVouchers
+              voucherCode={voucherCode}
+              setVoucherCode={setVoucherCode}
+              applyVoucher={applyVoucher}
+            />
+            <div className="paybut">
+              <div>
+                <span className="totBay">Total Bayar : </span>
+                <span
+                  style={{ fontWeight: "700", paddingRight: "20px" }}
+                  className="amountbay"
+                >
+                  Rp. {formatPrice(calculateTotalBayar())}
+                </span>
+              </div>
+              <div style={{ margin: "10px 0" }}>
+                {totalShippingCost === 0 ? (
+                  <p className="befBut">
+                    <i>Silahkan pilih metode pengiriman</i>
+                  </p>
+                ) : (
+                  <button
+                    onClick={() => handlePaymentProcess()}
+                    style={paymentButtonStyle}
+                  >
+                    Bayar Sekarang
+                  </button>
+                )}
+              </div>
+              {/* Tampilkan modal jika isModalOpen adalah true */}
+              <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
+            </div>
           </div>
-          <div>
-            {totalShippingCost === 0 && !isPickupInStore ? (
-              <p>
-                <i>Silahkan pilih metode pengiriman</i>
-              </p>
-            ) : (
-              <button
-                onClick={() => handlePaymentProcess()}
-                style={paymentButtonStyle}
-              >
-                Bayar Sekarang
-              </button>
-            )}
-          </div>
-          {/* Tampilkan modal jika isModalOpen adalah true */}
-          <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
         </div>
       </div>
     </div>
-    // </div >
   );
 }
 
