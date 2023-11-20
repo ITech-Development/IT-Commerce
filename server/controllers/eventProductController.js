@@ -5,6 +5,16 @@ class EventProductController {
     static async getAllEventProducts(req, res, next) {
         try {
             const eventProducts = await EventProduct.findAll({
+                include: [
+                    {
+                        model: Product,
+                        as: 'eventProducts'
+                    },
+                    {
+                        model: Event,
+                        as: 'events'
+                    }
+                ],
             })
             res.status(200).json(eventProducts)
         } catch (error) {
@@ -15,26 +25,26 @@ class EventProductController {
 
     static async addEventProduct(req, res, next) {
         try {
-            const { id } = req.params
-            const findProduct = await Product.findByPk(id)
-            if (!findProduct) {
-                throw {
-                    message: 'Not found product'
-                }
+            const { eventId, productId } = req.body;
+
+            // Check if Event and Product exist
+            const event = await Event.findByPk(eventId);
+            const product = await Product.findByPk(productId);
+
+            if (!event || !product) {
+                return res.status(404).json({ error: 'Event or Product not found' });
             }
 
-            const eventProduct = await eventProduct.create({
-                eventId: req.user.id,
-                productId: id
-            })
+            // Create EventProduct
+            const newEventProduct = await EventProduct.create({ eventId, productId });
 
-            res.status(201).json({
-                message: 'Added event product successfuly',
-                eventProduct: eventProduct
-            })
+            return res.status(201).json({
+                message: 'Added event product successfully',
+                eventProduct: newEventProduct
+            });
         } catch (error) {
-            console.log(error);
-            next(error)
+            console.error(error);
+            return res.status(500).json({ error: 'Internal Server Error' });
         }
     }
 
@@ -52,7 +62,7 @@ class EventProductController {
             if (product) {
 
                 await eventProduct.destroy();
-                
+
                 return res.status(200).json({ message: "Product removed from event product" });
             } else {
                 res.status(404).json({ message: "Product not found" });

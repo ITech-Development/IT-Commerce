@@ -1,40 +1,101 @@
-import React, { useEffect, useState } from "react";
-import TableComponent from "../../table/tableTransactionList";
+import React, { useState, useEffect } from "react";
+import TableComponent from "../../table/tableProductList";
 import { Link } from "react-router-dom";
-import axios from 'axios';
+// import ClaimVoucher from "../../assets/ClaimVouc.png";
+import Modal from "react-modal";
+// import ChatbotIcon from "../../assets/chatbot.png";
 
-const MainContent = () => {
+function Index() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isChatbotMessageVisible, setIsChatbotMessageVisible] = useState(false);
 
-  const [TransactionData, setTransactionData] = useState([]);
-  
   useEffect(() => {
-    // Ganti URL dengan URL endpoint API Anda
-    axios.get('http://localhost:3100/admin-sellers/transaction-list', {
-      headers: {
-        access_token: localStorage.getItem('access_token')
-      }
-    })
-      .then((response) => {
-        // Set data transaction yang diterima dari API ke state
-        setTransactionData(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []); // [] sebagai dependensi untuk menjalankan efek hanya sekali saat komponen dipasang
+    const hasModalBeenShown = localStorage.getItem("modalShown");
+
+    if (!hasModalBeenShown) {
+      setIsModalOpen(true);
+
+      localStorage.setItem("modalShown", "true");
+    }
+  }, []);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
-    <main style={{ display: "flex", margin: "auto", flexDirection: "column" }}>
-      <h2>Transaction List</h2>
+    <>
+      <main
+        style={{
+          display: "flex",
+          margin: "0px 20px 15px 20px",
+          flexDirection: "column",
+        }}
+      >
+        <h2>Dashboard Produk INDOTEKNIK</h2>
 
-      <p>Welcome to the Transaction List!</p>
-
-      <Link to="/">
-        <button>Dashboard</button>
-      </Link>
-      <TableComponent data={TransactionData} />
-    </main>
+        <div style={{ marginBottom: "30px" }}>
+          <Link to="/">
+            <button
+              style={{
+                padding: "10px 20px",
+                background: "blue",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            >
+              Dashboard
+            </button>
+          </Link>
+          
+        </div>
+        <TableComponent />
+      </main>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Selected Product Image"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.75)",
+          },
+          content: {
+            maxWidth: "37%",
+            margin: "auto",
+            position: "relative",
+            top: "100px",
+            background: "none",
+            border: "none",
+          },
+        }}
+      >
+        
+      </Modal>
+      {/* Tampilkan pesan sapaan dari chatbot */}
+      {isChatbotMessageVisible && (
+        <div
+          id="chatbot-message"
+          style={{
+            position: "fixed",
+            bottom: "130px", // Sesuaikan posisi pesan chatbot dengan modal
+            right: "20px",
+            width: "200px",
+            backgroundColor: "#fff",
+            border: "1px solid #ccc",
+            padding: "10px",
+            borderRadius: "5px",
+            zIndex: 9999,
+            animation: "slideInFromBottom 1s ease-in-out", // Animasi
+          }}
+        >
+          Hello, Selamat datang di Indoteknik
+        </div>
+      )}
+      
+    </>
   );
-};
+}
 
-export default MainContent;
+export default Index;

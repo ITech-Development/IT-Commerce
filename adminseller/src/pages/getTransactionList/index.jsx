@@ -1,6 +1,6 @@
 // Dashboard.js
 import React from 'react';
-import Header from '../../components/headerTransactionList';
+import Header from '../../components/header/headerTransactionList';
 import MainContent from '../../components/mainContent/mainContentTransactionList';
 
 const Product = () => {

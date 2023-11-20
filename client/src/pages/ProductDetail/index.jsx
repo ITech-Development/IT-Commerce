@@ -77,7 +77,7 @@ const ProductDetailPage = () => {
       });
   }, [id]);
 
-  const dispatch = useDispatch()
+
 
   const handleAddToCart = () => {
     if (accessToken) {

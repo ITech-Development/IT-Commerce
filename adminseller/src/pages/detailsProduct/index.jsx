@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import { useGetAllEventsQuery } from "../../features/event/apiEvents";
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const ProductDetailPage = () => {
   const [product, setProduct] = useState(null);
   const { id } = useParams();
+  const { data: events } = useGetAllEventsQuery()
 
   useEffect(() => {
     axios
@@ -28,6 +30,7 @@ const ProductDetailPage = () => {
     <ProductDetailContainer>
       <ProductDetailWrapper>
         <ProductImage src={product.image} alt={product.name} />
+
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>
@@ -45,9 +48,6 @@ const ProductDetailPage = () => {
               Tipe: <strong>{product.types?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Kondisi: <strong>{product.condition}</strong>
-            </SpecificationItem>
-            <SpecificationItem>
               Minimum Order: <strong>{product.minimumOrder}</strong>
             </SpecificationItem>
             <SpecificationItem>
@@ -63,18 +63,26 @@ const ProductDetailPage = () => {
               Lebar: <strong>{product.width} cm</strong>
             </SpecificationItem>
             <SpecificationItem>
+              Panjang: <strong>{product.length} cm</strong>
+            </SpecificationItem>
+            <SpecificationItem>
               Product Owner: <strong>{product.product_owners?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Author: <strong>{product.authors?.name}</strong>
+              Author: <strong>{product.authors?.fullName}</strong>
             </SpecificationItem>
           </Specifications>
           <div style={{ marginTop: "30px" }}>
-            <Link to="/product">
-            <button>Back</button>
+            <Link to="/product-list">
+              <button>Back</button>
             </Link>
           </div>
         </ProductInfo>
+        <EventButtons>
+          {events?.map((event) => (
+            <Button key={event.id}>{event.name}</Button>
+          ))}
+        </EventButtons>
       </ProductDetailWrapper>
 
       <Description>
@@ -154,6 +162,16 @@ const Description = styled.div`
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+`;
+
+const EventButtons = styled.div`
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+`;
+
+const Button = styled.button`
+  /* Add styling for your buttons */
 `;
 
 export default ProductDetailPage;

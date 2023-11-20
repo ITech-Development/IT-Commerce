@@ -3,7 +3,7 @@ const { EventProductController } = require('../controllers/eventProductControlle
 const router = express.Router()
 
 router.get('/', EventProductController.getAllEventProducts)
-router.post('/:id', EventProductController.addEventProduct)
+router.post('/', EventProductController.addEventProduct)
 router.delete('/:id', EventProductController.deleteEventProduct)
 
 module.exports = router
