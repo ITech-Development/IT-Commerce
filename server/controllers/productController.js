@@ -1,4 +1,4 @@
-const { Product, ProductCategory, ProductType, User, SuperAdmin, ProductOwner, WarehouseAdmin } = require('../models')
+const { Product, ProductCategory, ProductType, User, SuperAdmin, ProductOwner, WarehouseAdmin, EventProduct } = require('../models')
 const { validationResult } = require('express-validator')
 const cloudinary = require('../helpers/cloudinary')
 const baseUrl = 'http://localhost:3100'; // Ubah dengan URL server Anda
@@ -27,6 +27,10 @@ class ProductController {
                             model: WarehouseAdmin,
                             as: 'authors'
                         },
+                        {
+                            model: EventProduct,
+                            as: 'eventProducts'
+                        }
                     ],
                 }
             );

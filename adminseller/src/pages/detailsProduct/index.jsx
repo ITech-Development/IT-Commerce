@@ -3,13 +3,36 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { useGetAllEventsQuery } from "../../features/event/apiEvents";
+import { useAddEventProductMutation } from "../../features/eventProduct/apiEventProducts";
+
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
 
 const ProductDetailPage = () => {
   const [product, setProduct] = useState(null);
   const { id } = useParams();
-  const { data: events } = useGetAllEventsQuery()
+  const { data: events } = useGetAllEventsQuery();
+  const [addEventProduct] = useAddEventProductMutation()
+  
+
+  const handleAddEventProduct = async (eventId) => {
+    try {
+      // Assuming you have the necessary data for the event product
+      const eventData = {
+        productId: id, // Assuming 'id' is the product ID
+        eventId,
+        // ... other required data
+      };
+
+      // Use the mutation hook to add the event product
+      const result = await addEventProduct(eventData);
+
+      // Handle the result (check if successful, update UI, etc.)
+      console.log("Event product added successfully", result);
+    } catch (error) {
+      console.error("Error adding event product", error);
+    }
+  };
 
   useEffect(() => {
     axios
@@ -79,10 +102,12 @@ const ProductDetailPage = () => {
           </div>
         </ProductInfo>
         <EventButtons>
-          {events?.map((event) => (
-            <Button key={event.id}>{event.name}</Button>
-          ))}
-        </EventButtons>
+        {events?.map((event) => (
+          <Button key={event.id} onClick={() => handleAddEventProduct(event.id)}>
+            {event.name}
+          </Button>
+        ))}
+      </EventButtons>
       </ProductDetailWrapper>
 
       <Description>
@@ -171,7 +196,16 @@ const EventButtons = styled.div`
 `;
 
 const Button = styled.button`
-  /* Add styling for your buttons */
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #2980b9;
+  }
 `;
 
 export default ProductDetailPage;
