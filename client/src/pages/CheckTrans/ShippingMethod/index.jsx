@@ -53,6 +53,12 @@ function ShippingMethod({
                         <option className="methodDeliveryOption" value="jnt">
                             jnt
                         </option>
+                        <option className="methodDeliveryOption" value="lion">
+                            lion parcel
+                        </option>
+                        <option className="methodDeliveryOption" value="sicepat">
+                            sicepat
+                        </option>
                     </select>
                     <select
                         name="province"

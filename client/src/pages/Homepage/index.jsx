@@ -10,6 +10,7 @@ import CorouselBrands from "../../components/sections/corouselBrands";
 import "./stl.css";
 import ChatbotIcon from "../../assets/chatbot.png";
 import ProdukTerlaris from "../../components/produkTerlaris";
+import FlashSale from "../../components/flashSale";
 
 function Index() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -68,6 +69,7 @@ function Index() {
         <HeroSection />
         <CorouselBrands />
         <ProductCategories />
+        <FlashSale />
         <h1 className="productlaris">Produk Terlaris</h1>
         <ProdukTerlaris />
         <Footer />

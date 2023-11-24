@@ -64,6 +64,7 @@ const Routing = () => {
       <Route path="/wishlist-products/:id" element={<ProductDetails />} />
       <Route path="/my-order/:id" element={<DetailsOrder />} />
       <Route path="/event-products" element={<EventProduct />} />
+      <Route path="/event-products/:id" element={<ProductDetails />} />
     </Routes>
   );
 };

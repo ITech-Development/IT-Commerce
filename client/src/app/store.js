@@ -8,6 +8,7 @@ import { checkoutProductsApi } from '../features/checkoutProduct/apiCheckoutProd
 import { checkoutsApi } from '../features/checkout/apiCheckouts'
 import { wishlistsApi } from '../features/wishlist/apiWishlist'
 import { eventProductsApi } from '../features/eventProduct/apiEventProducts'
+import { productCategoriesApi } from '../features/productCategory/apiProductCategories'
 import cartReducer from '../features/cart/cartSlice'
 
 export default configureStore({
@@ -21,6 +22,7 @@ export default configureStore({
         [checkoutsApi.reducerPath]: checkoutsApi.reducer,
         [wishlistsApi.reducerPath]: wishlistsApi.reducer,
         [eventProductsApi.reducerPath]: eventProductsApi.reducer,
+        [productCategoriesApi.reducerPath]: productCategoriesApi.reducer,
         cart: cartReducer
     },
     middleware: (getDefaultMiddleware) => {
@@ -34,6 +36,7 @@ export default configureStore({
             .concat(checkoutsApi.middleware)
             .concat(wishlistsApi.middleware)
             .concat(eventProductsApi.middleware)
+            .concat(productCategoriesApi.middleware)
     },
 })
 

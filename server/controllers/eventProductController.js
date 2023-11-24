@@ -1,4 +1,4 @@
-const { EventProduct, Product, Event } = require('../models')
+const { EventProduct, Product, Event, ProductCategory } = require('../models')
 
 class EventProductController {
 
@@ -8,7 +8,13 @@ class EventProductController {
                 include: [
                     {
                         model: Product,
-                        as: 'eventProducts'
+                        as: 'eventProducts',
+                        include: [
+                            {
+                                model: ProductCategory,
+                                as: 'categories'
+                            }
+                        ]
                     },
                     {
                         model: Event,
