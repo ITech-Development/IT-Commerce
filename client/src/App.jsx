@@ -32,6 +32,7 @@ import { Provider } from "react-redux";
 import CategoryList from './pages/CategoryList/CategoryList'
 import CategoryDetail from './pages/CategoryDetail'
 import EventProduct from './pages/EventProduct'
+import MyProfile from './pages/MyProfile/index'
 
 const Routing = () => {
   return (
@@ -50,6 +51,7 @@ const Routing = () => {
       <Route path="/shippingSecond" element={<SecondStep />} />
       <Route path="/check-trans" element={<CheckTrans />} />
       <Route path="/profile-update" element={<ProfileUpdate />} />
+      <Route path="/my-profile" element={<MyProfile />} />
       <Route path="/services" element={<ServiceList />} />
       <Route path="/profile-update/:id" element={<ProfileUpdate />} />
       <Route path="/pay-now" element={<PayNow />} />

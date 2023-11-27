@@ -1,10 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './CheckoutProductsPage.css';
+import DetailsTransaction from './DetailsTransaction';
 
 function CheckoutProductsPage() {
   const [checkoutProducts, setCheckoutProducts] = useState({});
   const [activeTab, setActiveTab] = useState('Semua'); // Default active tab is 'Semua'
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isDetailsTransaction, setDetailsTransaction] = useState(false);
+
+  const openDetailsTransaction = () => {
+    setDetailsTransaction(true);
+  };
+
+  const closeDetailsTransaction = () => {
+    setDetailsTransaction(false);
+  };
+
 
   useEffect(() => {
     fetch('http://localhost:3100/checkout-products',
@@ -21,15 +33,20 @@ function CheckoutProductsPage() {
   // Filter the checkoutProducts based on the activeTab
   const filteredCheckoutProducts = Object.keys(checkoutProducts).reduce((result, checkoutId) => {
     const checkout = checkoutProducts[checkoutId][0]?.checkout;
-    if (activeTab === 'Semua' || checkout?.deliveryStatus === activeTab) {
-      result[checkoutId] = checkoutProducts[checkoutId];
+    const products = checkoutProducts[checkoutId].filter((productInfo) =>
+      productInfo.product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    if ((activeTab === 'Semua' || checkout?.deliveryStatus === activeTab) && products.length > 0) {
+      result[checkoutId] = products;
     }
+
     return result;
   }, {});
 
+
   return (
     <div>
-      <h1>Checkout Products</h1>
 
       <div className="tabs">
         <button onClick={() => setActiveTab('Semua')} className={activeTab === 'Semua' ? 'active' : ''}>Semua</button>
@@ -38,28 +55,30 @@ function CheckoutProductsPage() {
         <button onClick={() => setActiveTab('Pesanan diterima')} className={activeTab === 'Pesanan diterima' ? 'active' : ''}>Selesai</button>
       </div>
 
+      <div className='searchMyOrder'>
+        <input
+          type="text"
+          placeholder="Cari produk..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
 
       {Object.keys(filteredCheckoutProducts).length === 0 ? (
         <p>Tidak ada proses</p>
       ) : (
         Object.keys(filteredCheckoutProducts).map(checkoutId => (
           <div key={checkoutId} className="checkout-table">
-            <h2>{filteredCheckoutProducts[checkoutId][0]?.product?.product_owners?.name}</h2>
+            <h5>Invoice {filteredCheckoutProducts[checkoutId][0].checkout.midtransCode}</h5>
+            <p>{new Date(filteredCheckoutProducts[checkoutId][0].checkout.createdAt).toLocaleDateString('id-ID')}</p>
+            <p><b>{filteredCheckoutProducts[checkoutId][0].checkout.deliveryStatus}</b></p>
             <div className="table-responsive">
               <table className="table">
                 <thead>
                   <tr>
-                    <th>Produk</th>
+                    <th>Belanja</th>
                     <th>Kuantitas</th>
-                    <th>Kode Voucher</th>
-                    <th>Status Pembayaran</th>
-                    <th>Total Bayar</th>
-                    <th>Alamat Pengiriman</th>
-                    <th>Metode Pengiriman</th>
-                    <th>Status Pengiriman</th>
-                    <th>No Resi</th>
-                    <th>PPN</th>
-                    <th>Tanggal Belanja</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -74,20 +93,22 @@ function CheckoutProductsPage() {
                         </Link>
                       </td>
                       <td>{productInfo.quantity}</td>
-                      <td>{productInfo.checkout.voucherCode}</td>
-                      <td>{productInfo.checkout.paymentStatus}</td>
-                      <td>{productInfo.checkout.totalPrice}</td>
-                      <td>{productInfo.checkout.shippingAddress}</td>
-                      <td>{productInfo.checkout.shippingMethod}</td>
-                      <td>{productInfo.checkout.deliveryStatus}</td>
-                      <td>{productInfo.checkout.trackingNumber === null ? '-' : productInfo.checkout.trackingNumber}</td>
-                      <td>{productInfo.checkout.setPPN}</td>
-                      <td>{productInfo.createdAt}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+            <p>Total Belanja <b> Rp. {filteredCheckoutProducts[checkoutId][0].checkout.totalPrice}</b></p>
+            <p onClick={openDetailsTransaction}>Lihat Detail Transaksi</p>
+            {/* DetailsTransaction */}
+            {isDetailsTransaction && (
+              <DetailsTransaction onClose={closeDetailsTransaction}>
+                {/* Content to display in the detail transaction */}
+                {/* You can include detailed transaction information here */}
+                <p>Modal Content</p>
+              </DetailsTransaction>
+            )}
+            <button>Ulasan</button>
             <button className="buy-again-button">Beli lagi</button>
           </div>
         ))

@@ -122,7 +122,7 @@ export default function Toolbar(props) {
                     <i style={{ marginLeft: "3px" }} className="fas fa-user" />{" "}
                     <Link
                       style={{ display: "flex", marginLeft: "12px" }}
-                      to="/profile-update"
+                      to="/my-profile"
                     >
                       Profil
                     </Link>

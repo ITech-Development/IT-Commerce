@@ -1,15 +1,12 @@
 // EventProductPage.js
 import React, { useEffect, useState } from 'react';
 import { useGetAllEventProductsQuery } from '../../features/eventProduct/apiEventProducts';
-import { useGetAllproductCategoriesQuery } from '../../features/productCategory/apiProductCategories';
 import { Link } from "react-router-dom";
 
 const EventProductPage = () => {
   const { data: eventProducts, error: eventError, isLoading: eventIsLoading } = useGetAllEventProductsQuery();
-  const { data: productCategories, error: categoryError, isLoading: categoryIsLoading } = useGetAllproductCategoriesQuery();
   const uniqueEventNames = [...new Set(eventProducts?.map((eventProduct) => eventProduct.events.name))];
-  const uniqueCategories = productCategories?.map((category) => category.name) || [];
-  
+
   const [timeRemaining, setTimeRemaining] = useState(calculateTimeRemaining());
   const [weeklyTimeRemaining, setWeeklyTimeRemaining] = useState(calculateWeeklyTimeRemaining());
   const [monthlyTimeRemaining, setMonthlyTimeRemaining] = useState(calculateMonthlyTimeRemaining());
@@ -24,7 +21,6 @@ const EventProductPage = () => {
 
     return { hours, minutes, seconds };
   }
-
 
   function calculateWeeklyTimeRemaining() {
     const today = new Date();
@@ -83,13 +79,12 @@ const EventProductPage = () => {
 
   const [selectedTab, setSelectedTab] = useState('Today');
 
-  // Filter event products based on selected tab and category
+  // Filter event products based on selected tab 
   const filteredEventProducts = eventProducts?.filter((eventProduct) => {
     const isTodayTab = selectedTab === 'Today';
     const isWeeklyTab = selectedTab === 'Weekly';
     const isMonthlyTab = selectedTab === 'Monthly';
     const isMatchingEvent = eventProduct.events.name === selectedTab;
-    const isMatchingCategory = eventProduct.eventProducts.categories?.name === selectedTab;
 
     if (isTodayTab) {
       // Check if createdAt date is today
@@ -118,21 +113,21 @@ const EventProductPage = () => {
       return isMonthlyTab && eventProductDate >= startOfMonth && eventProductDate <= endOfMonth && eventProduct.events.name === 'Monthly';
     }
 
-    return isMatchingEvent || isMatchingCategory;
+    return isMatchingEvent 
   });
 
   const handleTabClick = (tabName) => {
     setSelectedTab(tabName);
   };
 
-  if (eventIsLoading || categoryIsLoading) {
+  if (eventIsLoading ) {
     return <div>Loading...</div>;
   }
 
-  if (eventError || categoryError) {
+  if (eventError ) {
     return (
       <div>
-        <div>Error: {eventError?.message || categoryError?.message}</div>
+        <div>Error: {eventError?.message }</div>
         {/* Add a button or link to retry the operation */}
 
       </div>
@@ -162,8 +157,6 @@ const EventProductPage = () => {
         )}
       </p>
 
-
-
       {/* Render event tabs */}
       <div>
         {uniqueEventNames.map((eventName) => (
@@ -177,25 +170,12 @@ const EventProductPage = () => {
         ))}
       </div>
 
-      {/* Render category tabs */}
-      <div>
-        {uniqueCategories.map((categoryName) => (
-          <button
-            key={categoryName}
-            onClick={() => handleTabClick(categoryName)}
-            className={selectedTab === categoryName ? 'selected-tab' : ''}
-          >
-            {categoryName}
-          </button>
-        ))}
-      </div>
 
       {/* Render content based on selected tab */}
       {filteredEventProducts.map((eventProduct) => (
         <div key={eventProduct.id}>
           {/* ... (render event product details as before) */}
           <h2>{eventProduct.events.name}</h2>
-          <p>{eventProduct.createdAt}</p>
           <Link to={`${eventProduct.eventProducts.id}`}>
             <p>{eventProduct.eventProducts.name}</p>
           </Link>
