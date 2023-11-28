@@ -7,9 +7,15 @@ function CheckoutProductsPage() {
   const [checkoutProducts, setCheckoutProducts] = useState({});
   const [activeTab, setActiveTab] = useState('Semua'); // Default active tab is 'Semua'
   const [searchQuery, setSearchQuery] = useState('');
+  // State to manage detailed transaction modal visibility and data
   const [isDetailsTransaction, setDetailsTransaction] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [selectedProducts, setSelectedProducts] = useState(null);
 
-  const openDetailsTransaction = () => {
+  // Function to open details transaction modal
+  const openDetailsTransaction = (checkout, products) => {
+    setSelectedTransaction(checkout);
+    setSelectedProducts(products);
     setDetailsTransaction(true);
   };
 
@@ -99,13 +105,13 @@ function CheckoutProductsPage() {
               </table>
             </div>
             <p>Total Belanja <b> Rp. {filteredCheckoutProducts[checkoutId][0].checkout.totalPrice}</b></p>
-            <p onClick={openDetailsTransaction}>Lihat Detail Transaksi</p>
+            <p onClick={() => openDetailsTransaction(filteredCheckoutProducts[checkoutId][0].checkout, filteredCheckoutProducts[checkoutId])}>
+              Lihat Detail Transaksi
+            </p>
             {/* DetailsTransaction */}
-            {isDetailsTransaction && (
-              <DetailsTransaction onClose={closeDetailsTransaction}>
-                {/* Content to display in the detail transaction */}
-                {/* You can include detailed transaction information here */}
-                <p>Modal Content</p>
+            {isDetailsTransaction && selectedTransaction && selectedProducts && (
+              <DetailsTransaction onClose={() => setDetailsTransaction(false)} checkoutDetails={selectedTransaction} products={selectedProducts}>
+                {/* You can include additional content here if needed */}
               </DetailsTransaction>
             )}
             <button>Ulasan</button>

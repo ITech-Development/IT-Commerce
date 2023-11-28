@@ -16,7 +16,9 @@
     padding: 20px;
     border-radius: 8px;
     position: relative;
-  }
+    max-height: 80%; /* Adjust this value as needed */
+    overflow-y: auto;
+}
   
   .modal-close {
     position: absolute;
