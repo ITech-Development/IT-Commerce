@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './CheckoutProductsPage.css';
+import './myOrder.css';
 import DetailsTransaction from './DetailsTransaction';
 
-function CheckoutProductsPage() {
+function MyOrder() {
   const [checkoutProducts, setCheckoutProducts] = useState({});
   const [activeTab, setActiveTab] = useState('Semua'); // Default active tab is 'Semua'
   const [searchQuery, setSearchQuery] = useState('');
@@ -72,7 +72,7 @@ function CheckoutProductsPage() {
 
 
       {Object.keys(filteredCheckoutProducts).length === 0 ? (
-        <p>Tidak ada proses</p>
+        <p className='checkout-table'>Tidak ada proses</p>
       ) : (
         Object.keys(filteredCheckoutProducts).map(checkoutId => (
           <div key={checkoutId} className="checkout-table">
@@ -91,12 +91,10 @@ function CheckoutProductsPage() {
                   {filteredCheckoutProducts[checkoutId].map((productInfo, index) => (
                     <tr key={index}>
                       <td>
-                        <Link to={`/my-order/${productInfo.checkout.id}`}>
                           <div className="product-info">
                             <img src={productInfo.product.image} alt={productInfo.product.name} />
                             <span>{productInfo.product.name}</span>
                           </div>
-                        </Link>
                       </td>
                       <td>{productInfo.quantity}</td>
                     </tr>
@@ -123,4 +121,4 @@ function CheckoutProductsPage() {
   );
 }
 
-export default CheckoutProductsPage;
+export default MyOrder;

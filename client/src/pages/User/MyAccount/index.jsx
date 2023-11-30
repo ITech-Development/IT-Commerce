@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useGetMeQuery, useEditMeMutation } from "../../features/user/apiUser";
-import Banner from "../../assets/bannerProfile.jpg";
-import Coin from "../../assets/coin.png";
-import Email from "../../assets/mail.png";
-import Phone from "../../assets/phone-call.png";
-import Place from "../../assets/placeholder.png";
+import { useGetMeQuery, useEditMeMutation } from "../../../features/user/apiUser";
+import Banner from "../../../assets/bannerProfile.jpg";
+import Coin from "../../../assets/coin.png";
+import Email from "../../../assets/mail.png";
+import Phone from "../../../assets/phone-call.png";
+import Place from "../../../assets/placeholder.png";
 import MyOrder from '../MyOrder'
 import UpdateProfile from "./Update";
 
@@ -71,10 +71,10 @@ const ProfileForm = () => {
 
     return (
         <Container>
-            <BannerImage src={Banner} alt="Banner" />
+            {/* <BannerImage src={Banner} alt="Banner" /> */}
             
 
-            <ProfileCard>
+            {/* <ProfileCard>
                 <ProfileImage
                     src={userData?.imageProfile}
                     alt="Profile"
@@ -104,7 +104,7 @@ const ProfileForm = () => {
                 <button onClick={() => handleTabClick("updateProfile")}>Update Profile</button>
                 <br />
                 <button onClick={() => handleTabClick("pesananSaya")}>Pesanan Saya</button>
-            </ProfileCard>
+            </ProfileCard> */}
 
             {activeTab === "updateProfile" && 
                 <div>

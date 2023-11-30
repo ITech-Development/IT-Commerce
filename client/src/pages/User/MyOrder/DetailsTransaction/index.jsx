@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const DetailsTransaction = ({ onClose, checkoutDetails, products }) => {
 
@@ -26,7 +26,9 @@ const DetailsTransaction = ({ onClose, checkoutDetails, products }) => {
                     <hr />
                     <p><b>{checkoutDetails.deliveryStatus}</b></p>
                     <hr />
+                    <Link to={`${checkoutDetails.id}`}>
                     <p>No. Invoice <b>{checkoutDetails.midtransCode}</b></p>
+                    </Link>
                     <p>Tanggal Pembelian {new Date(checkoutDetails.createdAt).toLocaleString('id-ID')} WIB</p>
                     <hr />
                     {/* Render product details */}

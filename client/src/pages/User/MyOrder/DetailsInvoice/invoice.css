@@ -1,0 +1,175 @@
+.checkout-page {
+    /* background-color: #fff; */
+    padding: 20px 60px;
+    width: auto;
+    margin: 100px 30px 30px 30px;
+    font-family: Arial, sans-serif;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+    /* border: 1px solid gray; */
+  }
+  .kodeInvoice {
+    font-size: 14px;
+  }
+  .product-table {
+    margin: 40px 0;
+    width: 100%;
+    background-color: transparent;
+  }
+  
+  .sec2Invoice {
+    display: flex;
+    justify-content: space-between;
+    line-height: 12px;
+  }
+  .sec3Inovice {
+    display: flex;
+    justify-content: space-between;
+    line-height: 5px;
+    border-bottom: 1px solid #ccc;
+  }
+  .sec3Right {
+    /* padding-right: 155px; */
+    width: 360px;
+  }
+  .contentSec3 {
+    display: flex;
+    justify-content: space-between;
+  }
+  .contentSec31 {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+  }
+  .content1Sec3 {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+  
+  }
+  .content2Sec3 {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+  
+  }
+  .content3Sec3 {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .isiContentSec3 {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -10px;
+    margin-bottom: 25px;
+  }
+  .kurirInvoice4 {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+  }
+  .kurirInvoice4s {
+    display: flex;
+    justify-content: space-between;
+  
+  }
+  .kurir2invoice {
+    line-height: 0px;
+    padding-bottom: 30px;
+  }
+  .dataInvoice {
+    font-size: 14px;
+    color: #47aaa3;
+  }
+  .dataInvoice1 {
+    font-size: 14px;
+  }
+  .dataInvoice1Total {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .dataInvoice1promo {
+    font-size: 11px;
+    color: blueviolet;
+    background-color: rgba(0, 255, 255, 0.301);
+    padding: 13px;
+    width: 70px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-style: italic;
+  }
+  .dataInvoiceName {
+    font-weight: 600;
+    color: blueviolet;
+  }
+  .product-table thead {
+    background-color: white; /* Remove background color */
+    font-size: 14px;
+  }
+  
+  .product-table th {
+    border-top: 1px solid #ccc; /* Add top border */
+    border-bottom: 1px solid #ccc;
+    background-color: transparent;
+  }
+  
+  .logoInvoice {
+    width: 200px;
+    height: 45px;
+  }
+  
+  .invoice-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .invoice-header h2 {
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  .invoice-details {
+    font-size: 14em;
+    text-align: right;
+  }
+  
+  .product-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .product-card h3 {
+    font-size: 142rem;
+    margin: 0;
+  }
+  
+  .product-card img {
+    max-width: 100%;
+    margin: 10px 0;
+  }
+  
+  .product-card p {
+    margin: 5px 0;
+  }
+  
+  /* Add styles for the download button */
+  .download-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* Change to your preferred button color */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .download-button:hover {
+    background-color: #0056b3; /* Hover color change */
+  }

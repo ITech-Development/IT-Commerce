@@ -24,7 +24,6 @@ import ProductCategoryElement from "./pages/ProductCategories/element";
 import ProductCategoryVEPump from "./pages/ProductCategories/vePump";
 import ProductCategoryVEPumpParts from "./pages/ProductCategories/vePumpParts";
 import ProductCategoryHeadRotor from "./pages/ProductCategories/headRotor";
-import MyOrder from "./pages/MyOrder";
 import WishlistProducts from "./pages/WishlistProducts";
 import DetailsOrder from "./pages/DetailsOrder";
 import store from './app/store'
@@ -32,7 +31,11 @@ import { Provider } from "react-redux";
 import CategoryList from './pages/CategoryList/CategoryList'
 import CategoryDetail from './pages/CategoryDetail'
 import EventProduct from './pages/EventProduct'
-import MyProfile from './pages/MyProfile/index'
+import MyAccount from './pages/User/MyAccount'
+import MyOrder from './pages/User/MyOrder'
+import Sidebar from "./components/sidebarUser";
+import DetailsInvoice from './pages/User/MyOrder/DetailsInvoice'
+
 
 const Routing = () => {
   return (
@@ -51,7 +54,6 @@ const Routing = () => {
       <Route path="/shippingSecond" element={<SecondStep />} />
       <Route path="/check-trans" element={<CheckTrans />} />
       <Route path="/profile-update" element={<ProfileUpdate />} />
-      <Route path="/my-profile" element={<MyProfile />} />
       <Route path="/services" element={<ServiceList />} />
       <Route path="/profile-update/:id" element={<ProfileUpdate />} />
       <Route path="/pay-now" element={<PayNow />} />
@@ -61,7 +63,9 @@ const Routing = () => {
       <Route path="/ve-pump" element={<ProductCategoryVEPump />} />
       <Route path="/ve-pump-parts" element={<ProductCategoryVEPumpParts />} />
       <Route path="/head-rotor" element={<ProductCategoryHeadRotor />} />
-      <Route path="/my-order" element={<MyOrder />} />
+      <Route path="/user/my-order" element={<MyOrder />} />
+      <Route path="/user/my-order/:id" element={<DetailsInvoice />} />
+      <Route path="/user/my-account" element={<MyAccount />} />
       <Route path="/wishlist-products" element={<WishlistProducts />} />
       <Route path="/wishlist-products/:id" element={<ProductDetails />} />
       <Route path="/my-order/:id" element={<DetailsOrder />} />
@@ -71,13 +75,17 @@ const Routing = () => {
   );
 };
 
+const sidebarRoutes = ["/user/my-account", "/user/my-order"];
+
 function App() {
+
 
   return (
     <BrowserRouter>
       <Provider store={store}>
         <ToastContainer />
         <Navbar />
+        <Sidebar allowedRoutes={sidebarRoutes} />
         <Routing />
       </Provider>
     </BrowserRouter>

@@ -1,0 +1,32 @@
+/* sidebar.css */
+
+/* Flex container for the entire application */
+.app-container {
+  display: flex;
+}
+
+
+
+/* Sidebar styling */
+.sidebar {
+  width: 200px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  position: fixed;
+  top: 10%;
+  left: 0;
+  bottom: 0;
+}
+
+/* Styling for items inside the sidebar */
+.sidebar-item {
+  margin-bottom: 10px;
+}
+
+/* Adjust content area to the right of the sidebar */
+.content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 200px; /* Adjust this value to match the width of the sidebar */
+
+}
