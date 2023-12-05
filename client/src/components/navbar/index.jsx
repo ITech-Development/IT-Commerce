@@ -89,9 +89,9 @@ export default function Toolbar(props) {
               }}
             >
               <p style={{ fontSize: "16px", paddingRight: "5px", lineHeight: '23px' }}>
-                Halo, <strong>{me?.fullName}</strong>{" "}<br/>
-                <span style={{fontSize: '12px', display: 'flex', alignItems: 'center'}}>
-                  <img style={{width: '20px', height: '20px', paddingRight: '10px'}} src={Coin} alt="" />
+                Halo, <strong>{me?.fullName}</strong>{" "}<br />
+                <span style={{ fontSize: '12px', display: 'flex', alignItems: 'center' }}>
+                  <img style={{ width: '20px', height: '20px', paddingRight: '10px' }} src={Coin} alt="" />
                   {me?.purchasePoints}</span>
               </p>
               <img
@@ -122,9 +122,9 @@ export default function Toolbar(props) {
                     <i style={{ marginLeft: "3px" }} className="fas fa-user" />{" "}
                     <Link
                       style={{ display: "flex", marginLeft: "12px" }}
-                      to="/profile-update"
+                      to="/user/my-account"
                     >
-                      Profil
+                      Akun Saya
                     </Link>
                   </li>
                   <li
@@ -140,9 +140,9 @@ export default function Toolbar(props) {
                     <i className="fas fa-shopping-cart" />{" "}
                     <Link
                       style={{ display: "flex", marginLeft: "10px" }}
-                      to="/my-order"
+                      to="/user/my-order"
                     >
-                      Pesanan
+                      Pesanan Saya
                     </Link>
                   </li>
                   <li

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import OrderIcon from "../../assets/order.png";
 import TransactionIcon from "../../assets/transaction-history.png";
-import Coin from "../../assets/coin.png";
+// import Coin from "../../assets/coin.png";
 import Packaging from './packaging.png'
 import Delivery from './delivery.png'
 import PackageReceived from './package-received.png'
@@ -209,20 +209,14 @@ const CardSection = () => {
         count={Object.keys(users).length}
         to="/order-list"
       />
-
-      <Card
-        imageUrl={TransactionIcon}
-        title="Transaksi Pembayaran"
-        count={products.length}
-        to="/transaction-list"
-      />
-
-      <Card
-        imageUrl={Coin}
-        title="Coin"
-        count={0}
-        // to="/points"
-      />
+      <Link to="/product-list">
+        <Card
+          imageUrl="https://w7.pngwing.com/pngs/428/470/png-transparent-spare-part-computer-icons-aftersales-blue-text-logo-thumbnail.png"
+          title="Total Products"
+          count={products.length}
+          width='200px'
+        />
+      </Link>
     </CardContainer>
   );
 };

@@ -8,11 +8,11 @@ import GetOrderList from "./pages/getOrderList";
 import EditDeliveryStatus from "./pages/editDeliveryStatus/index";
 import DetailsProduct from "./pages/detailsProduct";
 import NotFound from "./pages/notFound";
-import React, { createContext, useEffect, useReducer } from "react";
-import { loadUser } from "./features/authslice";
-import { useDispatch } from "react-redux";
-import { initialState, reducer } from "./reducer/UseReducer";
+import React, { createContext } from "react";
 import Chat from "./pages/Chat";
+import GetProductList from "./pages/getProductList";
+import { Provider } from "react-redux";
+import store from './app/store'
 
 export const UserContext = createContext();
 
@@ -29,6 +29,8 @@ const Routing = () => {
         <>
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Dashboard />} />
+          <Route path="/product-list" element={<GetProductList/>}/>
+          <Route path="/product-list/:id" element={<DetailsProduct/>}/>
           <Route path="/transaction-list" element={<GetTransactionList />} />
           <Route path="/order-list" element={<GetOrderList />} />
           <Route path="/order-list/:id" element={<EditDeliveryStatus />} />
@@ -41,20 +43,13 @@ const Routing = () => {
 };
 
 function App() {
-  const dispatchRedux = useDispatch();
-
-  useEffect(() => {
-    dispatchRedux(loadUser(null));
-  }, [dispatchRedux]);
-
-  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ state, dispatch }}>
+        <Provider store={store}>
         <Navbar />
         <Routing />
-      </UserContext.Provider>
+      </Provider>
     </BrowserRouter>
   );
 }

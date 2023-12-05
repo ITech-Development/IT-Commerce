@@ -290,6 +290,7 @@ class UserController {
         .catch((err) => {
           throw err;
         });
+        console.log(city, 'kota');
       res.status(200).json({ data: city });
     } catch (error) {
       next(error);
@@ -322,8 +323,8 @@ class UserController {
       let destination = +req.query.destination;
       let weight = +req.query.weight;
       const obj = {
-        origin: "351",
-        originType: "city",
+        origin: "350",
+        originType: 'city',
         destination,
         destinationType: "subdistrict",
         weight,

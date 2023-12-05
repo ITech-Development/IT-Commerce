@@ -1,0 +1,98 @@
+/* Styles for the Checkout Products Page */
+
+/* Tabs */
+.tabs {
+  padding: 100px 30px 0 300px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+button {
+  background-color: #0056b3;
+  padding: 10px;
+  font-weight: 600;
+}
+button:hover {
+  background-color: #e41414;
+}
+
+
+/* Search */
+.searchMyOrder {
+  padding: 20px 70px 0 300px;
+}
+
+input {
+  padding: 12px 20px;
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+/* Checkout Container */
+.checkout-container {
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.checkout-table {
+  background-color: transparent;
+  border: 1px solid #ddd;
+  margin: 25px 30px 25px 300px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Adjusted alpha value for a lighter shadow */
+}
+
+/* Table Styles */
+.table-responsive {
+  overflow-x: auto;
+  border: none;
+  border-radius: 5px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #E5D4FF;
+  color: #080808;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Product Info */
+.product-info {
+  display: flex;
+  align-items: center;
+}
+
+.product-info img {
+  max-width: 100px;
+  margin-right: 10px;
+}
+
+/* Buy Again Button */
+.buy-again-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.buy-again-button:hover {
+  background-color: #0056b3;
+}

@@ -38,5 +38,5 @@ const port = 3000;
 
 // Jalankan server
 app.listen(port, () => {
-  console.log(`Server berjalan pada http://localhost:${port}`);
+  console.log(`Server berjalan pada https://indoteknikserver-732012365989.herokuapp.com:${port}`);
 });

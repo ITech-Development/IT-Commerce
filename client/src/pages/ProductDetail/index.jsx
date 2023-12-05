@@ -77,8 +77,6 @@ const ProductDetailPage = () => {
       });
   }, [id]);
 
-  // const dispatch = useDispatch()
-
   
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");

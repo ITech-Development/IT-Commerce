@@ -1,0 +1,21 @@
+/* Add this CSS to your existing stylesheet or a new CSS file */
+@media print {
+  .bordered-table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid black;
+  }
+
+  .bordered-table th,
+  .bordered-table td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+}
+
+.product-table {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}

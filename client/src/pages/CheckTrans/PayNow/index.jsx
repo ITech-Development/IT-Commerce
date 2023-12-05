@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "../styless.css";
 import axios from "axios";
 import {
-  useClearProductCartMutation,
   useGetCartsQuery,
   useRemoveItemFromCartMutation,
 } from "../../../features/cart/apiCarts";

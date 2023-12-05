@@ -2,12 +2,37 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import { useGetAllEventsQuery } from "../../features/event/apiEvents";
+import { useAddEventProductMutation } from "../../features/eventProduct/apiEventProducts";
+
 
 const API_URL = "https://indoteknikserver-732012365989.herokuapp.com"; // Define your API URL here
 
 const ProductDetailPage = () => {
   const [product, setProduct] = useState(null);
   const { id } = useParams();
+  const { data: events } = useGetAllEventsQuery();
+  const [addEventProduct] = useAddEventProductMutation()
+  
+
+  const handleAddEventProduct = async (eventId) => {
+    try {
+      // Assuming you have the necessary data for the event product
+      const eventData = {
+        productId: id, // Assuming 'id' is the product ID
+        eventId,
+        // ... other required data
+      };
+
+      // Use the mutation hook to add the event product
+      const result = await addEventProduct(eventData);
+
+      // Handle the result (check if successful, update UI, etc.)
+      console.log("Event product added successfully", result);
+    } catch (error) {
+      console.error("Error adding event product", error);
+    }
+  };
 
   useEffect(() => {
     axios
@@ -28,6 +53,7 @@ const ProductDetailPage = () => {
     <ProductDetailContainer>
       <ProductDetailWrapper>
         <ProductImage src={product.image} alt={product.name} />
+
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
           <Price>
@@ -45,9 +71,6 @@ const ProductDetailPage = () => {
               Tipe: <strong>{product.types?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Kondisi: <strong>{product.condition}</strong>
-            </SpecificationItem>
-            <SpecificationItem>
               Minimum Order: <strong>{product.minimumOrder}</strong>
             </SpecificationItem>
             <SpecificationItem>
@@ -63,18 +86,28 @@ const ProductDetailPage = () => {
               Lebar: <strong>{product.width} cm</strong>
             </SpecificationItem>
             <SpecificationItem>
+              Panjang: <strong>{product.length} cm</strong>
+            </SpecificationItem>
+            <SpecificationItem>
               Product Owner: <strong>{product.product_owners?.name}</strong>
             </SpecificationItem>
             <SpecificationItem>
-              Author: <strong>{product.authors?.name}</strong>
+              Author: <strong>{product.authors?.fullName}</strong>
             </SpecificationItem>
           </Specifications>
           <div style={{ marginTop: "30px" }}>
-            <Link to="/product">
-            <button>Back</button>
+            <Link to="/product-list">
+              <button>Back</button>
             </Link>
           </div>
         </ProductInfo>
+        <EventButtons>
+        {events?.map((event) => (
+          <Button key={event.id} onClick={() => handleAddEventProduct(event.id)}>
+            {event.name}
+          </Button>
+        ))}
+      </EventButtons>
       </ProductDetailWrapper>
 
       <Description>
@@ -154,6 +187,25 @@ width: 100%;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+`;
+
+const EventButtons = styled.div`
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+`;
+
+const Button = styled.button`
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #2980b9;
+  }
 `;
 
 export default ProductDetailPage;

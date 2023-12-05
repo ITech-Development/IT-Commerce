@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import ProductList from "./pages/ProductList/ProductList";
@@ -17,31 +17,25 @@ import SecondStep from "./pages/productShipping/secondStep";
 import CheckTrans from "./pages/CheckTrans";
 import ProfileUpdate from "./pages/profileUpdate";
 import ServiceList from "./pages/ServiceList";
-import CheckTransItech from "./pages/CheckTrans/itech";
-import CheckTransIndoRiau from "./pages/CheckTrans/indoRiau";
 import PayNow from "./pages/CheckTrans/PayNow";
-import CheckTransIndoTeknik from "./pages/CheckTrans/indoTeknik";
-import CheckTransJuvindo from "./pages/CheckTrans/juvindo";
 import ProductCategoryNozzle from "./pages/ProductCategories/nozzle";
 import ProductCategoryDeliveryValve from "./pages/ProductCategories/deliveryValve";
 import ProductCategoryElement from "./pages/ProductCategories/element";
 import ProductCategoryVEPump from "./pages/ProductCategories/vePump";
 import ProductCategoryVEPumpParts from "./pages/ProductCategories/vePumpParts";
 import ProductCategoryHeadRotor from "./pages/ProductCategories/headRotor";
-import ProductCategoryInjector from './pages/ProductCategories/Inject'
-import ProductCategoryScv from './pages/ProductCategories/scv'
-import ProductCategoriesTurboParts from "./pages/ProductCategories/turboparts";
-import ProductCategoriesSensor from "./pages/ProductCategories/sensor";
-import MyOrder from "./pages/MyOrder";
 import WishlistProducts from "./pages/WishlistProducts";
 import DetailsOrder from "./pages/DetailsOrder";
 import store from "./app/store";
 import { Provider } from "react-redux";
-import CategoryList from "./pages/CategoryList/CategoryList";
-import CategoryDetail from "./pages/CategoryDetail";
-import SideDrawer from "./components/navbar/sidemenu/SideDrawer";
-import BackDrop from "./components/navbar/backdrop/BackDrop";
-import AboutUs from "./pages/aboutUs";
+import CategoryList from './pages/CategoryList/CategoryList'
+import CategoryDetail from './pages/CategoryDetail'
+import EventProduct from './pages/EventProduct'
+import MyAccount from './pages/User/MyAccount'
+import MyOrder from './pages/User/MyOrder'
+import Sidebar from "./components/sidebarUser";
+import DetailsInvoice from './pages/User/MyOrder/DetailsInvoice'
+
 
 const Routing = () => {
   return (
@@ -62,56 +56,36 @@ const Routing = () => {
       <Route path="/profile-update" element={<ProfileUpdate />} />
       <Route path="/services" element={<ServiceList />} />
       <Route path="/profile-update/:id" element={<ProfileUpdate />} />
-      <Route path="/check-TransITech" element={<CheckTransItech />} />
-      <Route path="/check-TransIR" element={<CheckTransIndoRiau />} />
       <Route path="/pay-now" element={<PayNow />} />
-      <Route path="/check-TransIT" element={<CheckTransIndoTeknik />} />
-      <Route path="/check-TransJuvindo" element={<CheckTransJuvindo />} />
       <Route path="/nozzle" element={<ProductCategoryNozzle />} />
       <Route path="/delivery-valve" element={<ProductCategoryDeliveryValve />} />
       <Route path="/element" element={<ProductCategoryElement />} />
       <Route path="/ve-pump" element={<ProductCategoryVEPump />} />
       <Route path="/ve-pump-parts" element={<ProductCategoryVEPumpParts />} />
       <Route path="/head-rotor" element={<ProductCategoryHeadRotor />} />
-      <Route path="/injector" element={<ProductCategoryInjector />} />
-      <Route path="/scv" element={<ProductCategoryScv />} />
-      <Route path="/turboparts" element={<ProductCategoriesTurboParts />} />
-      <Route path="/sensor" element={<ProductCategoriesSensor />} />
-      <Route path="/my-order" element={<MyOrder />} />
+      <Route path="/user/my-order" element={<MyOrder />} />
+      <Route path="/user/my-order/:id" element={<DetailsInvoice />} />
+      <Route path="/user/my-account" element={<MyAccount />} />
       <Route path="/wishlist-products" element={<WishlistProducts />} />
       <Route path="/wishlist-products/:id" element={<ProductDetails />} />
       <Route path="/my-order/:id" element={<DetailsOrder />} />
-      <Route path="/aboutUs" element={<AboutUs />} />
+      <Route path="/event-products" element={<EventProduct />} />
+      <Route path="/event-products/:id" element={<ProductDetails />} />
     </Routes>
   );
 };
 
+const sidebarRoutes = ["/user/my-account", "/user/my-order"];
+
 function App() {
-  const [sideDrawerOpen, setSideDrawerOpen] = useState(false);
 
-  const drawerToggleClickHandler = () => {
-    setSideDrawerOpen(!sideDrawerOpen);
-  };
 
-  const backDropClickHandler = () => {
-    setSideDrawerOpen(false);
-  };
-
-  let backdrop;
-
-  if (sideDrawerOpen) {
-    backdrop = <BackDrop click={backDropClickHandler} />;
-  }
   return (
     <BrowserRouter>
       <Provider store={store}>
-        <div style={{ height: "100%" }}>
-          {/* <ToastContainer /> */}
-          <Navbar drawerToggleClickHandler={drawerToggleClickHandler} />
-          <SideDrawer show={sideDrawerOpen} />
-          {backdrop}
-          <Routing />
-        </div>
+        <Navbar />
+        <Sidebar allowedRoutes={sidebarRoutes} />
+        <Routing />
       </Provider>
     </BrowserRouter>
   );
