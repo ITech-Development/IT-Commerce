@@ -1,7 +1,15 @@
 import React from 'react'
 import styled from 'styled-components';
+import { useDeleteEventProductMutation } from '../../../features/eventProduct/apiEventProducts';
+
 
 function HistoryEventProducts({ eventProducts, product }) {
+
+  const [deleteProductFromHistory] = useDeleteEventProductMutation()
+
+  const handlerDelete = (id) => {
+    deleteProductFromHistory(id)
+  }
   // Filter and sort the eventProducts
   const filteredProducts = eventProducts
     ?.filter((eventProduct) => eventProduct.productId === product.id)
@@ -12,20 +20,29 @@ function HistoryEventProducts({ eventProducts, product }) {
     return <HistoryOfEventProducts>Belum ada produk yang ditambahkan</HistoryOfEventProducts>;
   }
 
+
+
+
   // Render the list of eventProducts
   return (
-    <HistoryOfEventProducts>
+    <div>
       <h3>Riwayat penambahan event produk</h3>
-      {filteredProducts.map((relatedProduct) => (
-        <div key={relatedProduct.eventProducts.id}>
-          <hr />
-          {/* Add additional information as needed */}
-          <p>{relatedProduct.events.name}</p>
-          <p>Ditambahkan {new Date(relatedProduct.createdAt).toLocaleDateString('id-Id')}</p>
-          <hr />
-        </div>
-      ))}
-    </HistoryOfEventProducts>
+      <HistoryOfEventProducts>
+        {filteredProducts.map((history) => (
+          <div key={history.eventProducts.id}>
+            <hr />
+            {/* Add additional information as needed */}
+            <p>{history.events.name}</p>
+            <p><b>{history.eventProducts.name}</b></p>
+            <p>Ditambahkan {new Date(history.createdAt).toLocaleDateString('id-Id')}</p>
+            <button onClick={() => handlerDelete(history.id)}>
+              Hapus
+            </button>
+            <hr />
+          </div>
+        ))}
+      </HistoryOfEventProducts>
+    </div>
   );
 }
 

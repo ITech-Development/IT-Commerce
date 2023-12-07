@@ -18,11 +18,16 @@ export const eventProductsApi = createApi({
         addEventProduct: builder.mutation({
             query: (body) => ({ url: "event-products", method: 'POST', body }),
             invalidatesTags: ['Post']
+        }),
+        deleteEventProduct: builder.mutation({
+            query: (id) => ({ url: `event-products/${id}`, method: 'DELETE' }),
+            invalidatesTags: ['Post'] 
         })
     })
 })
 
 export const {
     useGetAllEventProductsQuery,
-    useAddEventProductMutation
+    useAddEventProductMutation,
+    useDeleteEventProductMutation
 } = eventProductsApi
