@@ -58,10 +58,7 @@ const TableComponent = () => {
   const [editingProductId, setEditingProductId] = useState(null);
   const [editedPrice, setEditedPrice] = useState("");
 
-  const handleEditPrice = (productId, currentPrice) => {
-    setEditingProductId(productId);
-    setEditedPrice(currentPrice);
-  };
+ 
 
   const saveEditedPrice = (productId) => {
     // Make an HTTP request to update the price for the given product ID.
@@ -280,22 +277,7 @@ const TableComponent = () => {
   }, [product, filters, selectedCategory]);
 
 
-  const deleteProduct = (id) => {
-    axios
-      .delete(`${API_URL}/products/${id}`, {
-        headers: {
-          access_token: localStorage.getItem("access_token"),
-        },
-      })
-      .then(() => {
-        setProduct((prevProducts) =>
-          prevProducts.filter((item) => item.id !== id)
-        );
-      })
-      .catch((error) => {
-        console.error(error, "There was an error while deleting the product.");
-      });
-  };
+
 
   return (
     <div>
@@ -576,12 +558,6 @@ const TableComponent = () => {
                       // Display the product price
                       <div>
                         Rp.{row.unitPrice.toLocaleString('id-ID')}
-                        <IconButton
-                          aria-label="edit"
-                          onClick={() => handleEditPrice(row.id, row.unitPrice)}
-                        >
-                          <EditIcon />
-                        </IconButton>
                       </div>
                     )}
                   </TableCell>
@@ -599,17 +575,10 @@ const TableComponent = () => {
                         justifyContent: "space-between",
                       }}
                     >
-                      <Link to={`/edit-product/${row.id}`}>
-                        <IconButton aria-label="edit">
-                          <EditIcon />
-                        </IconButton>
+                      <Link to={`/product-list/${row.id}`}>
+                        <button>Tambahkan ke Event</button>
                       </Link>
-                      <IconButton
-                        aria-label="delete"
-                        onClick={() => deleteProduct(row.id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      
                     </div>
                   </TableCell>
                 </TableRow>

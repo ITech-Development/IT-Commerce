@@ -3,7 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { useGetAllEventsQuery } from "../../features/event/apiEvents";
-import { useAddEventProductMutation } from "../../features/eventProduct/apiEventProducts";
+import { useAddEventProductMutation, useGetAllEventProductsQuery } from "../../features/eventProduct/apiEventProducts";
+import HistoryEventProducts from "./HistoryEventProducts";
 
 
 const API_URL = "http://localhost:3100"; // Define your API URL here
@@ -12,8 +13,11 @@ const ProductDetailPage = () => {
   const [product, setProduct] = useState(null);
   const { id } = useParams();
   const { data: events } = useGetAllEventsQuery();
+  const { data: eventProducts } = useGetAllEventProductsQuery()
   const [addEventProduct] = useAddEventProductMutation()
-  
+  const [successful, setSuccessful] = useState('');
+  const [error, setError] = useState('');
+
 
   const handleAddEventProduct = async (eventId) => {
     try {
@@ -26,10 +30,11 @@ const ProductDetailPage = () => {
 
       // Use the mutation hook to add the event product
       const result = await addEventProduct(eventData);
-
       // Handle the result (check if successful, update UI, etc.)
+      setSuccessful(result.data.message)
       console.log("Event product added successfully", result);
     } catch (error) {
+      setError(error)
       console.error("Error adding event product", error);
     }
   };
@@ -102,12 +107,18 @@ const ProductDetailPage = () => {
           </div>
         </ProductInfo>
         <EventButtons>
-        {events?.map((event) => (
-          <Button key={event.id} onClick={() => handleAddEventProduct(event.id)}>
-            {event.name}
-          </Button>
-        ))}
-      </EventButtons>
+          {events?.map((event) => (
+            <Button key={event.id} onClick={() => handleAddEventProduct(event.id)}>
+              {event.name}
+            </Button>
+          ))}
+        </EventButtons>
+        <div>
+          {error}
+          {successful}
+        </div>
+        <HistoryEventProducts eventProducts={eventProducts} product={product} />
+
       </ProductDetailWrapper>
 
       <Description>
@@ -117,6 +128,8 @@ const ProductDetailPage = () => {
     </ProductDetailContainer>
   );
 };
+
+
 
 const ProductDetailContainer = styled.div`
   display: flex;

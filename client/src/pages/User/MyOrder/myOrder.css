@@ -24,8 +24,8 @@
 .checkout-table {
   background-color: #f7f7f7;
   border: 1px solid #ddd;
-  margin: 25px 30px;
-  padding: 300px;
+  margin: 25px 300px;
+  padding: 30px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

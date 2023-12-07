@@ -70,7 +70,6 @@ function Index() {
         <CorouselBrands />
         <ProductCategories />
         <FlashSale />
-        <h1 className="productlaris">Produk Terlaris</h1>
         <ProdukTerlaris />
         <Footer />
       </div>

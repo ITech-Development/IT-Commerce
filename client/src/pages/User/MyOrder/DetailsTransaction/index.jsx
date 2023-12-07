@@ -13,7 +13,6 @@ const DetailsTransaction = ({ onClose, checkoutDetails, products }) => {
     );
 
 
-
     return (
         <div className="modal-overlay">
             <div className="modal-content">
@@ -27,7 +26,7 @@ const DetailsTransaction = ({ onClose, checkoutDetails, products }) => {
                     <p><b>{checkoutDetails.deliveryStatus}</b></p>
                     <hr />
                     <Link to={`${checkoutDetails.id}`}>
-                    <p>No. Invoice <b>{checkoutDetails.midtransCode}</b></p>
+                        <p>No. Invoice <b>{checkoutDetails.midtransCode}</b></p>
                     </Link>
                     <p>Tanggal Pembelian {new Date(checkoutDetails.createdAt).toLocaleString('id-ID')} WIB</p>
                     <hr />
@@ -77,6 +76,7 @@ const DetailsTransaction = ({ onClose, checkoutDetails, products }) => {
                     <p>Biaya Asuransi Pengiriman Rp-</p>
                     <p>PPN (11%) Rp{checkoutDetails.setPPN}</p>
                     <p>Diskon Belanja (6%) Rp{((products.reduce((total, product) => total + product.quantity * product.product.unitPrice, 0) * 6) / 100).toFixed(2)}</p>
+                    <p>Biaya Ambil di Toko (11%) Rp{checkoutDetails.isPickUpInStore === false ? '-' : products.reduce((total, product) => total + product.quantity * product.product.unitPrice, 0) * 0.11}</p>
                     <p><b>Total Belanja Rp{checkoutDetails.totalPrice}</b></p>
                     <hr />
                     <button>Chat Admin</button>
