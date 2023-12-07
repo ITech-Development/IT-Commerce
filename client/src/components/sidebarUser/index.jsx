@@ -81,14 +81,12 @@ export default Sidebar;
 
 const ProfileCard = styled.div`
   background-color: white;
-  width: 86%;
-  margin: auto;
-  position: fix;
+  width: 95%;
+  margin-top: 300px;
   padding: 0;
-  top: -120px;
   border: none;
   border-radius: 10px;
-  box-shadow: 0 0 0 2px white, 0.5em 0.3em 1em 0.4em rgba(123, 231, 235, 0.6);
+  box-shadow: 0 0 0 2px white, 0.1em 0.1em 1em 0.2em rgba(123, 231, 235, 0.6);
 
   @media (max-width: 768px) {
     background-color: transparent;
@@ -104,7 +102,8 @@ const ProfileImage = styled.img`
   display: flex;
   justify-content: center;
   margin: auto;
-  padding: 10px 0;
+  padding: 30px 0 0 0 ;
+  border-radius: 10px;
 `;
 
 const ProfileData = styled.div`
@@ -116,6 +115,7 @@ const ProfileData = styled.div`
 
 const UserName = styled.h3`
   margin: 0;
+  text-align: center;
   @media (max-width: 768px) {
     text-align: center;
   }
@@ -124,7 +124,9 @@ const UserName = styled.h3`
 const CoinContainer = styled.p`
   display: flex;
   align-items: center;
-  margin-top: 5px;
+  margin: auto;
+  width: 56px;
+  padding: 10px 0;
   @media (max-width: 768px) {
     display: flex;
     justify-content: center;
@@ -135,7 +137,9 @@ const CoinContainer = styled.p`
 const CoinImage = styled.img`
   width: 25px;
   height: 25px;
-  margin-right: 15px;
+  margin: auto;
+  text-align: center;
+
 `;
 
 const ProfileIcons = styled.div`

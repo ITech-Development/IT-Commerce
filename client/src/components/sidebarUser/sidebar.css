@@ -1,29 +1,28 @@
-/* sidebar.css */
-
-/* Flex container for the entire application */
-.app-container {
-  display: flex;
-}
-
-/* Sidebar styling */
 .sidebar {
-  width: 230px;
-  background-color: #A0E9FF;
+  width: 280px;
   padding: 20px;
-  position: fixed;
-  top: 10%;
-  left: 0;
+  top: 0;
+  left: 80px;
   bottom: 0;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  position: absolute;
 }
 
-/* Styling for items inside the sidebar */
 .sidebar-item {
   margin-bottom: 10px;
+  border: 1px solid #243A73;
+  border-radius: 10px;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  background-color: #243A73;
 }
 
-/* Adjust content area to the right of the sidebar */
+
 .content {
   flex: 1;
   padding: 20px;
-  margin-left: 200px; /* Adjust this value to match the width of the sidebar */
+  margin-left: 200px; 
 }

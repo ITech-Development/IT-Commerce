@@ -17,7 +17,6 @@ import Message from "../../assets/message.png";
 import Mascotmes from "../../assets/mascotmes.gif";
 import EmojiPicker from "./emoji";
 import Hero2 from "../../components/sections/hero2";
-import FlashSale from "../../components/flashSale";
 
 function Index() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -97,7 +96,6 @@ function Index() {
         <CorouselBrands />
         <ProductCategories />
         <Hero2 />
-        <FlashSale />
         <ProdukTerlaris />
         {/* <Footer /> */}
       </div>

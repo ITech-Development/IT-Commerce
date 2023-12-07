@@ -1,83 +1,87 @@
-import React from 'react'
+import React from "react";
 import styled from "styled-components";
+import ImageHero from '../../../../assets/Rectangle 8374.png'
 
 function UpdateProfile({
-    handleSubmit,
-    previewImage,
-    handleImageChange,
-    fullName,
-    setFullName,
-    userData,
-    phoneNumber,
-    setPhoneNumber,
-    address,
-    setAddress,
-    isEditing
+  handleSubmit,
+  previewImage,
+  handleImageChange,
+  fullName,
+  setFullName,
+  userData,
+  phoneNumber,
+  setPhoneNumber,
+  address,
+  setAddress,
+  isEditing,
 }) {
-    return (
-        <div>
-            <ProfileHeader>
-                <ProfileTitle>Profil Saya</ProfileTitle>
-                <ProfileDescription>
-                    Kelola informasi profil Anda untuk mengontrol, melindungi dan mengamankan akun
-                </ProfileDescription>
-            </ProfileHeader>
-            <Form onSubmit={handleSubmit}>
-                <TitleForm>Update Profile</TitleForm>
-                <Label>Profile Image</Label>
-                {previewImage && <img src={previewImage} alt="Preview" width='200' />}
-                <Input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                />
-                <Label>Nama Lengkap</Label>
-                <Input
-                    name="fullName"
-                    type="text"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                />
+  return (
+    <div>
+      <ProfileHeader>
+      <Images src={ImageHero} alt="" />
+        <ProfileTitle>Profil Saya</ProfileTitle>
+        <ProfileDescription>
+          Kelola informasi profil Anda untuk mengontrol, melindungi dan
+          mengamankan akun
+        </ProfileDescription>
+      </ProfileHeader>
+      <Form onSubmit={handleSubmit}>
+        <TitleForm>Update Profile</TitleForm>
+        <Label>Profile Image</Label>
+        {previewImage && <img src={previewImage} alt="Preview" width="200" />}
+        <Input type="file" accept="image/*" onChange={handleImageChange} />
+        <Label >Nama Lengkap</Label>
+        <Input
+          name="fullName"
+          type="text"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+        />
 
-                <Label>Email</Label>
-                <Input name="email" type="email" value={userData?.email} readOnly />
+        <Label>Email</Label>
+        <Input name="email" type="email" value={userData?.email} readOnly />
 
-                <Label>No.Hp</Label>
-                <Input
-                    name="phoneNumber"
-                    type="tel"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                />
+        <Label>No.Hp</Label>
+        <Input
+          name="phoneNumber"
+          type="tel"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
 
-                <Label>Alamat</Label>
-                <TextArea
-                    name="address"
-                    rows={4}
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                />
+        <Label>Alamat</Label>
+        <TextArea
+          name="address"
+          rows={4}
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
 
-                <Button type="submit" disabled={isEditing}>
-                    {isEditing ? "Updating..." : "Update Profile"}
-                </Button>
-            </Form>
-        </div>
-    )
+        <Button type="submit" disabled={isEditing}>
+          {isEditing ? "Updating..." : "Update Profile"}
+        </Button>
+      </Form>
+    </div>
+  );
 }
 
-export default UpdateProfile
+export default UpdateProfile;
 
 const ProfileHeader = styled.div`
-  background-color: rgba(0, 255, 255, 0.212);
-  padding: 3px 0;
+  padding: 0 30px;
   margin-top: 60px;
+`;
+
+const Images = styled.img`
+  margin: 5px 0;
+  width: 100%;
+  // position: fixed;
 `;
 
 const ProfileTitle = styled.p`
   font-size: 18px;
   font-weight: bold;
-  padding-left: 29%;
+  padding-left: 28%;
 
   @media (max-width: 768px) {
     display: none;
@@ -86,13 +90,13 @@ const ProfileTitle = styled.p`
 
 const ProfileDescription = styled.p`
   font-size: 14px;
-  padding-left: 29%;
+  padding-left: 28%;
+  margin: -10px 0 40px 0;
 
   @media (max-width: 768px) {
     display: none;
   }
 `;
-
 
 const Button = styled.button`
   padding: 10px 20px;
@@ -145,7 +149,6 @@ const Input = styled.input`
   @media (max-width: 768px) {
     width: auto;
   }
-  
 `;
 
 const Label = styled.label`

@@ -89,10 +89,10 @@ export default function Toolbar(props) {
               }}
             >
               <p style={{ fontSize: "16px", paddingRight: "5px", lineHeight: '23px' }}>
-                Halo, <strong>{me?.fullName}</strong>{" "}<br />
-                <span style={{ fontSize: '12px', display: 'flex', alignItems: 'center' }}>
-                  <img style={{ width: '20px', height: '20px', paddingRight: '10px' }} src={Coin} alt="" />
-                  {me?.purchasePoints}</span>
+                Halo, <strong>{me?.fullName}</strong>{" "}<br/>
+                <span style={{fontSize: '12px', display: 'flex', alignItems: 'center'}}>
+                  <img style={{width: '20px', height: '20px', paddingRight: '10px'}} src={Coin} alt="" />
+                  1.000</span>
               </p>
               <img
                 style={{
@@ -101,8 +101,8 @@ export default function Toolbar(props) {
                   cursor: "pointer",
                   paddingLeft: "10px",
                 }}
-                src={me?.imageProfile}
-                alt={me?.fullName}
+                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                alt=""
               />
               {isDropdownHovered && (
                 <ul
@@ -122,9 +122,9 @@ export default function Toolbar(props) {
                     <i style={{ marginLeft: "3px" }} className="fas fa-user" />{" "}
                     <Link
                       style={{ display: "flex", marginLeft: "12px" }}
-                      to="/user/my-account"
+                      to="/profile-update"
                     >
-                      Akun Saya
+                      Profil
                     </Link>
                   </li>
                   <li
@@ -140,27 +140,9 @@ export default function Toolbar(props) {
                     <i className="fas fa-shopping-cart" />{" "}
                     <Link
                       style={{ display: "flex", marginLeft: "10px" }}
-                      to="/user/my-order"
+                      to="/my-order"
                     >
-                      Pesanan Saya
-                    </Link>
-                  </li>
-                  <li
-                    style={{
-                      display: "flex",
-                      padding: "10px 13px",
-                      margin: "0",
-                      alignContent: "center",
-                      alignItems: "center",
-                      color: "gray",
-                    }}
-                  >
-                    <i class="fa-solid fa-heart"></i>
-                    <Link
-                      style={{ display: "flex", marginLeft: "10px" }}
-                      to="/wishlist-products"
-                    >
-                      Wishlist
+                      Pesanan
                     </Link>
                   </li>
                   <li
