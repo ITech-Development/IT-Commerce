@@ -339,28 +339,6 @@ class MidtransController {
     }
   }
 
-  // static async pay(req, res, next) {
-  //   console.log(req.body, 'test pay');
-  //   const vaNumbers = req.body.va_numbers;
-  //   try {
-  //     if (req.body.transaction_status === 'settlement') {
-  //       await Checkout.update({
-  //         paymentStatus: 'pay',
-  //         paymentMethod: `VA Number: ${vaNumbers[0].va_number}, Bank: ${vaNumbers[0].bank}, Payment Type: ${req.body.payment_type}`
-  //       }, {
-  //         where: {
-  //           midtransCode: req.body.order_id
-  //         }
-  //       })
-
-
-  //     }
-
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
   static async midtransTokenIndoTeknik(req, res, next) {
     console.log(req.body, '<<indoteknik');
     const t = await sequelize.transaction();

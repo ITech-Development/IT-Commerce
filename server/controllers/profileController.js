@@ -3,19 +3,6 @@ const { Profile, User } = require('../models')
 class ProfileController {
 
   static async getProfileByUserId(req, res, next) {
-    // try {
-    //     const profiles = await Profile.findAll({
-    //         include: [
-    //             {
-    //                 model: User,
-    //                 as: 'user'
-    //             }
-    //         ]
-    //     })
-    //     res.status(200).json(profiles)
-    // } catch (error) {
-    //     next(error)
-    // }
     try {
       const profiles = await Profile.findOne({
         where: { userId: req.user.id },

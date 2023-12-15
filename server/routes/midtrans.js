@@ -3,7 +3,6 @@ const { authenticationUser } = require('../middlewares/auth')
 const MidtransController = require('../controllers/midtransController')
 const router = express.Router()
 
-// router.post('/pay', MidtransController.pay)
 router.post('/payment-successful', MidtransController.paymentSuccessful)
 router.use(authenticationUser)
 router.post('/indo-riau', MidtransController.midtransTokenIndoRiau)

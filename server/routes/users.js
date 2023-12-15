@@ -1,7 +1,7 @@
 const express = require('express')
 const UserController = require('../controllers/userController')
 const { authentication, authenticationUser, authenticationAdminSeller, authorization } = require('../middlewares/auth')
-const bodyParser = require('body-parser'); // Tambahkan ini
+const bodyParser = require('body-parser'); 
 const router = express.Router()
 const multer = require('multer');
 const path = require('path')
@@ -28,7 +28,7 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-const maxSize = 5 * 1024 * 1024 // 5 MB, sesuaikan dengan batas yang Anda inginkan
+const maxSize = 3 * 1024 * 1024 // 3 MB, sesuaikan dengan batas yang Anda inginkan
 
 router.use(bodyParser.json());
 router.use(multer({

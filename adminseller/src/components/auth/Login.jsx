@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./style.css";
-import { UserContext } from "../../App.js";
+// import { UserContext } from "../../App.js";
 
 const Login = () => {
-  const { dispatch } = useContext(UserContext);
+  // const { dispatch } = useContext(UserContext);
 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -42,7 +42,7 @@ const Login = () => {
       setPassword("");
 
       // Redirect to the Home page
-      dispatch({ type: "USER", payload: true });
+      // dispatch({ type: "USER", payload: true });
       navigate("/");
     } catch (error) {
       console.error("Login error:", error);

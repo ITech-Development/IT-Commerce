@@ -2,8 +2,30 @@ import React, { useEffect, useRef, useState } from "react";
 import "./style.css";
 import Logo from "../../assets/Logo.png";
 import { Link } from "react-router-dom";
+import axios from 'axios'
 
 export default function Navigation() {
+  const [packingCount, setPackingCount] = useState(0); // State to store the count of "Dikemas" status
+
+  useEffect(() => {
+    // Ganti URL dengan URL endpoint API Anda
+    axios.get('http://localhost:3100/admin-sellers/order-list', {
+      headers: {
+        access_token: localStorage.getItem('access_token')
+      }
+    })
+      .then((response) => {
+        // Set data checkout yang diterima dari API ke state
+
+        // Calculate the count of "Dikemas" statuses
+        const dikemasCount = response.data.filter(checkout => checkout.checkout.deliveryStatus === 'Dikemas').length;
+        setPackingCount(dikemasCount);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []); // [] sebagai dependensi untuk menjalankan efek hanya sekali saat komponen dipasang
+
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -27,9 +49,17 @@ export default function Navigation() {
     return (
       <>
         {accessToken && (
-          < li >
-            <button onClick={handleLogout}>Logout</button>
-          </li >
+          <div>
+            < li >
+              <button onClick={handleLogout}>Logout</button>
+              <br />
+              {packingCount > 0
+                ? `Notification: Ada ${packingCount} orderan belum Dikirim'`
+                : 'Notification: ' + 'Belum ada orderan masuk'
+              }
+            </li >
+
+          </div>
         )}
       </>
     );

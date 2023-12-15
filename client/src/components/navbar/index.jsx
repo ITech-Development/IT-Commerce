@@ -23,10 +23,6 @@ export default function Toolbar(props) {
 
   const dropdownRef = useRef(null);
 
-  // const toggleDropdown = () => {
-  //   setIsDropdownOpen(!isDropdownOpen);
-  // };
-
   const handleSidebarToggle = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };

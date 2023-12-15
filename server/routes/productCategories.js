@@ -27,7 +27,7 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-const maxSize = 5 * 1024 * 1024 // 5 MB, sesuaikan dengan batas yang Anda inginkan
+const maxSize = 3 * 1024 * 1024 // 3 MB, sesuaikan dengan batas yang Anda inginkan
 
 router.use(bodyParser.json());
 router.use(multer({

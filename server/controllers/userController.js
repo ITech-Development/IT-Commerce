@@ -22,8 +22,6 @@ class UserController {
     }
   }
 
-
-
   static async incrementPurchasePoints(req, res) {
     const { id } = req.params;
     const { incrementValue } = req.body; // Anda perlu mengirimkan incrementValue dalam badan permintaan PUT
@@ -61,33 +59,6 @@ class UserController {
       next(error)
     }
   }
-
-  // static async editUser(req, res, next) {
-  //   const { fullName, email, phoneNumber, address } = req.body;
-
-  //   try {
-  //     // Dapatkan pengguna yang akan diedit berdasarkan ID pengguna yang terautentikasi
-  //     const user = await User.findByPk(req.user.id);
-
-  //     if (!user) {
-  //       return res.status(404).json({ error: 'User not found' });
-  //     }
-
-  //     // Update informasi pengguna dengan nilai-nilai baru
-  //     user.fullName = fullName || user.fullName;
-  //     user.email = email || user.email;
-  //     user.phoneNumber = phoneNumber || user.phoneNumber;
-  //     user.address = address || user.address;
-
-  //     // Simpan perubahan informasi pengguna ke database
-  //     await user.save();
-
-  //     res.status(200).json({ message: 'User information updated successfully' });
-  //   } catch (error) {
-  //     console.log(error, 'roar');
-  //     next(error);
-  //   }
-  // }
 
   static async editUser(req, res, next) {
     try {
