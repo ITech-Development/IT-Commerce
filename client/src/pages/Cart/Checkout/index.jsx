@@ -32,29 +32,16 @@ function Checkout({ carts }) {
 
     const handlerRemove = (id) => {
         removeItemFromCart(id)
-
     };
 
-    //
-    const calculateSubtotal = () => {
+    const calculateTotal = () => {
         return carts?.reduce((total, cartItem) => {
             const productPrice = cartItem.product.unitPrice;
             const quantity = cartItem.quantity;
             return total + productPrice * quantity;
         }, 0);
     };
-    const calculateTotal = () => {
-        const subtotal = calculateSubtotal();
-        const ppn = subtotal * 0.11;
-        const total = subtotal + ppn;
-        return total.toFixed(2);
-    };
-    const calculatePPN = () => {
-        const subtotal = calculateSubtotal();
-        const ppn = subtotal * 0.11;
-        return ppn.toFixed(2);
-    };
-
+    
     return (
         <div
             className="cart-container"
@@ -115,31 +102,12 @@ function Checkout({ carts }) {
                     <p></p>
                     <div className="cart-checkout">
                         <div className="subtotal">
-                            <span>Subtotal :</span>
+                            <span>Total Harga (Sudah termasuk PPN) :</span>
                             <span className="amount">
-                                Rp.{calculateSubtotal()}
+                                Rp.{calculateTotal()}
                             </span>
                         </div>
-                        <div
-                            style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                fontStyle: "italic",
-                                padding: "8px 0",
-                            }}
-                        >
-                            <span>PPN 11% :</span>
-                            <span className="amount">
-                                {" "}
-                                Rp. {calculatePPN()}
-                            </span>
-                        </div>
-                        <div className="subtotal" style={{ paddingBottom: "10px" }}>
-                            <span>Total :</span>
-                            <span style={{ fontWeight: "700" }} className="amount">
-                                {calculateTotal()}
-                            </span>
-                        </div>
+                            <p><i>Biaya PPN dikenakan 11%</i></p>
                         <button
                             style={checkoutButtonStyle}
                             disabled={isCheckoutDisabled} // Disable the button if any product is out of stock

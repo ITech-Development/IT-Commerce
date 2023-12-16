@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "../styless.css";
 import axios from "axios";
 import {
-    useClearProductCartMutation,
     useGetCartsQuery,
     useRemoveItemFromCartMutation
 } from "../../../features/cart/apiCarts";
@@ -46,7 +45,7 @@ function PayNow() {
 
     const [isPickupInStore, setIsPickupInStore] = useState(false);
     const [selectedShippingMethod, setSelectedShippingMethod] = useState(null);
-    
+
 
     const handlePickupInStoreChange = () => {
         setIsPickupInStore(true);
@@ -76,7 +75,6 @@ function PayNow() {
 
     const handlePaymentProcess = async (data) => {
         const bayar = calculateTotalBayar();
-        const pajak = calculatePPN()
         const config = {
             "Content-Type": "application/json",
             access_token: localStorage.getItem("access_token"),
@@ -96,7 +94,6 @@ function PayNow() {
                 selectedVoucher,
                 checkoutPengiriman,
                 bayar,
-                pajak,
                 isPickupInStore,
             },
             headers: config,
@@ -160,45 +157,46 @@ function PayNow() {
         removeItemFromCart(id)
     };
 
-    const calculateSubtotal = () => {
-        let subtotal = 0;
+    const calculateAfterPPN = () => {
+        let afterPPN = 0;
         carts?.forEach((e) => {
             const productPrice = e.product.unitPrice;
             const quantity = e.quantity;
             const totalProductPrice = productPrice * quantity;
-            subtotal += totalProductPrice;
+            afterPPN += totalProductPrice;
         });
-        return subtotal;
+        return afterPPN;
     };
+
+    
+    const calculateBeforePPN = () => {
+        const afterPPN = calculateAfterPPN();
+        const beforePPN = afterPPN / (1 + 0.11); // Divide by (1 + PPN percentage)
+        return Math.ceil(beforePPN);
+      };
+
+
+
 
     const calculateVoucher = () => {
         if (!selectedVoucher) {
             return 0;
         }
-        const subtotal = calculateSubtotal(); // Panggil fungsi calculateSubtotal untuk mendapatkan nilai subtotal
+        const afterPPN = calculateAfterPPN();
         const voucherPercentage = 6;
-        const discountAmount = (subtotal * voucherPercentage) / 100;
+        const discountAmount = (afterPPN * voucherPercentage) / 100;
         return discountAmount;
     };
 
-    const calculatePPN = () => {
-        const subtotal = calculateSubtotal();
-        const voucherDiscount = calculateVoucher();
-        const afterVoucherSubtotal = subtotal - voucherDiscount;
-        const ppnPercentage = 11;
-        const ppnAmount = (afterVoucherSubtotal * ppnPercentage) / 100;
-        return ppnAmount;
-    };
-
     const calculateTotal = () => {
-        const subtotal = calculateSubtotal();
+        const afterPPN = calculateAfterPPN();
         const voucherDiscount = calculateVoucher();
-        const ppnAmount = calculatePPN();
+
 
         // Add 11% fee if "Pick Up In Store" is selected
-        const pickupInStoreFee = isPickupInStore ? (subtotal * 0.11) : 0;
+        const pickupInStoreFee = isPickupInStore ? (afterPPN * 0.11) : 0;
 
-        const total = subtotal - voucherDiscount + ppnAmount + pickupInStoreFee;
+        const total = afterPPN - voucherDiscount + pickupInStoreFee;
         return total;
     };
 
@@ -348,9 +346,10 @@ function PayNow() {
                 <ProductOrdered
                     carts={carts}
                     handlerRemove={handlerRemove}
-                    calculateSubtotal={calculateSubtotal}
+                    calculateAfterPPN={calculateAfterPPN}
                     calculateVoucher={calculateVoucher}
-                    calculatePPN={calculatePPN}
+                    calculateBeforePPN ={calculateBeforePPN}
+                    totalShippingCost={totalShippingCost}
                     calculateTotal={calculateTotal}
                     isPickupInStore={isPickupInStore}
                 />
@@ -403,7 +402,6 @@ function PayNow() {
                             pengiriman={pengiriman}
                             selectedShippingCost={selectedShippingCost}
                             handleShippingCostChange={handleShippingCostChange}
-
                             handleDisablePickupInStore={setIsPickupInStore}
                         />
                     </div>
@@ -438,7 +436,6 @@ function PayNow() {
 
 
         </div>
-        // </div >
     );
 }
 

@@ -2,12 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 
-function ProductOrdered({ carts, handlerRemove, calculateSubtotal, calculateVoucher, calculatePPN, calculateTotal, isPickupInStore }) {
+function ProductOrdered({ carts, handlerRemove, calculateAfterPPN, calculateVoucher, calculateTotal, isPickupInStore, calculateBeforePPN, totalShippingCost }) {
     function calculatePickupInStore() {
         // Menghitung biaya "Pick Up In Store" jika dipilih
         if (isPickupInStore) {
             // Gantilah nilai 0 dengan biaya "Pick Up In Store" yang sesuai
-            const pickupInStoreFee = calculateSubtotal() * 0.11;
+            const pickupInStoreFee = calculateAfterPPN() * 0.11;
             return pickupInStoreFee;
         }
         return 0;
@@ -68,34 +68,42 @@ function ProductOrdered({ carts, handlerRemove, calculateSubtotal, calculateVouc
                         <div class="cart-summary">
                             <p></p>
                             <div class="cart-checkout" style={{ lineHeight: "30px" }}>
+
                                 <div class="subtotal">
-                                    <span>Subtotal :</span>
-                                    <span class="amount">Rp.{calculateSubtotal()}</span>
+                                    <span>Total Harga <i>(Belum termasuk PPN)</i>: </span>
+                                    <span class="amount">Rp.{calculateBeforePPN()}</span>
                                 </div>
                                 <div class="subtotal">
-                                    <span>Voucher 6% :</span>
-                                    <span class="amount">Rp. {calculateVoucher()}</span>
-                                </div>
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        fontStyle: "italic",
-                                    }}
-                                >
-                                    <span>PPN 11% :</span>
-                                    <span className="amount"> Rp. {calculatePPN()}</span>
+                                    <span>Total PPN <i>(11%)</i>:</span>
+                                    <span class="amount">Rp.{calculateAfterPPN() - calculateBeforePPN()}</span>
                                 </div>
                                 <div class="subtotal">
-                                    <span>Pick Up 11% :</span>
-                                    <span class="amount">Rp. {calculatePickupInStore()}</span>
+                                    <span>Voucher: </span>
+                                    <span class="amount">Rp.{calculateVoucher()}</span>
                                 </div>
+
+
+                                {!isPickupInStore ? (
+                                    <div class="subtotal">
+                                        <span>Total Ongkos Kirim:</span>
+                                        <span class="amount">Rp.{totalShippingCost}</span>
+                                    </div>
+                                ) : (
+                                    <div class="subtotal">
+                                        <span>Ambil di Toko:</span>
+                                        <span class="amount">Rp.{calculatePickupInStore()}</span>
+                                    </div>
+                                )}
                                 <div class="subtotal">
-                                    <span>Total :</span>
+                                    <span>Total Harga <i>(Sudah termasuk PPN)</i>: </span>
+                                    <span class="amount">Rp.{calculateAfterPPN()}</span>
+                                </div>
+                                {/* <div class="subtotal">
+                                    <span>Total: </span>
                                     <span style={{ fontWeight: "700" }} class="amount">
-                                        {calculateTotal()}
+                                    Rp.{calculateTotal()}
                                     </span>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

@@ -42,7 +42,6 @@ class MidtransController {
       const midtransToken = await snap.createTransaction(parameter);
 
       const {
-        pajak,
         bayar,
         selectedVoucher,
         carts,
@@ -73,7 +72,7 @@ class MidtransController {
         totalPrice: bayar,
         voucherCode: selectedVoucher,
         midtransCode: order_id,
-        setPPN: `${pajak}`,
+        setPPN: "-",
         shippingMethod: `${checkoutCourier} - ${checkoutPengiriman}`,
         shippingCost: selectedShippingCost,
         isPickUpInStore: isPickupInStore,
