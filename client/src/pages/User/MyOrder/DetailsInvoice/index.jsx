@@ -194,7 +194,7 @@ function Invoice() {
                 <div>
                     <h5>UNTUK</h5>
                     <p className="dataInvoice">Pembeli : {me?.fullName}</p>
-                    <p className="dataInvoice">Tanggal Pembelian : {checkoutProducts[0].createdAt}</p>
+                    <p className="dataInvoice">Tanggal Pembelian : {new Date(checkoutProducts[0].createdAt).toLocaleDateString('id-ID')}</p>
                     <p className="dataInvoice">
                         Alamat Pengiriman : {checkoutProducts[0].checkout.shippingAddress}
                     </p>
@@ -232,8 +232,12 @@ function Invoice() {
                 <p className="dataInvoice1"></p>
                 <div className="sec3Right">
                     <div className="contentSec31">
-                        <p className="dataInvoice1Total">TOTAL HARGA ({calculateTotalPcs(checkoutProducts)} Pcs)</p>
-                        <p className="dataInvoice1">Rp. {calculateTotalPrice(checkoutProducts)}</p>
+                        <p className="dataInvoice1Total">TOTAL HARGA <i>belum termasuk PPN</i> ({calculateTotalPcs(checkoutProducts)} Pcs)</p>
+                        <p className="dataInvoice1">Rp. {Math.ceil(calculateTotalPrice(checkoutProducts) / (1 + 0.11))}</p>
+                    </div>
+                    <div className="contentSec3">
+                        <p className="dataInvoice1">TOTAL PPN (11%)</p>
+                        <p className="dataInvoice1">Rp. {calculateTotalPrice(checkoutProducts) - Math.ceil(calculateTotalPrice(checkoutProducts) / (1 + 0.11))}</p>
                     </div>
                     <div className="contentSec3">
                         <p className="dataInvoice1">Total Ongkos Kirim ({calculateTotalWeight(checkoutProducts)} gr)</p>
@@ -252,12 +256,12 @@ function Invoice() {
                         <p className="dataInvoice1">Rp. -</p>
                     </div>
                     <div className="contentSec3">
-                        <p className="dataInvoice1">PPN</p>
-                        <p className="dataInvoice1">Rp. {checkoutProducts[0].checkout.setPPN}</p>
-                    </div>
-                    <div className="contentSec3">
                         <p className="dataInvoice1">Ambil di Toko</p>
                         <p className="dataInvoice1">Rp. {checkoutProducts[0].checkout.isPickUpInStore === false ? '-' : calculateTotalPrice(checkoutProducts) * 0.11}</p>
+                    </div>
+                    <div className="contentSec31">
+                        <p className="dataInvoice1Total">TOTAL HARGA <i>sudah termasuk PPN</i> ({calculateTotalPcs(checkoutProducts)} Pcs)</p>
+                        <p className="dataInvoice1">Rp. {calculateTotalPrice(checkoutProducts)}</p>
                     </div>
                     <div className="content1Sec3">
                         <p className="dataInvoice1Total">TOTAL BELANJA</p>
@@ -319,7 +323,7 @@ function Invoice() {
                         apabila kamu membutuhkan bantuan
                     </p>
                     <p className="dataInvoice1">
-                        Terakhir diupdate: {checkoutProducts[0].createdAt}
+                        Terakhir diperbarui: {new Date(checkoutProducts[0].createdAt).toLocaleString('id-ID')}
                     </p>
                 </div>
             </div>

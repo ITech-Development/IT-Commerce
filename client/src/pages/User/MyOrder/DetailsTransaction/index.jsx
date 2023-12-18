@@ -70,13 +70,14 @@ const DetailsTransaction = ({ onClose, checkoutDetails, products }) => {
                     <hr />
                     <h4>Rincian Pembayaran</h4>
                     <p>Metode Pembayaran {checkoutDetails.paymentMethod === null ? '-' : checkoutDetails.paymentMethod.toUpperCase()}</p>
-                    <p>Total Harga({totalQuantity} barang) Rp{products.reduce((total, product) => total + product.quantity * product.product.unitPrice, 0)}</p>
+                    <p>Total Harga <i>belum termasuk PPN </i>({totalQuantity} barang) Rp{Math.ceil(products.reduce((total, product) => total + product.quantity * product.product.unitPrice, 0) / (1 + 0.11))}</p>
+                    <p>Total PPN 11% ({totalQuantity} barang) Rp{products.reduce((total, product) => total + product.quantity * product.product.unitPrice, 0) * 0.11}</p>
                     <p>Total Ongkos Kirim ({totalProductWeight} gr) Rp{checkoutDetails.shippingCost === null ? '-' : checkoutDetails.shippingCost}</p>
-                    <p>Diskon Ongkos Kirim Rp-</p>
-                    <p>Biaya Asuransi Pengiriman Rp-</p>
-                    <p>PPN (11%) Rp{checkoutDetails.setPPN}</p>
+                    {/* <p>Diskon Ongkos Kirim Rp-</p> */}
+                    {/* <p>Biaya Asuransi Pengiriman Rp-</p> */}
                     <p>Diskon Belanja (6%) Rp{((products.reduce((total, product) => total + product.quantity * product.product.unitPrice, 0) * 6) / 100).toFixed(2)}</p>
                     <p>Biaya Ambil di Toko (11%) Rp{checkoutDetails.isPickUpInStore === false ? '-' : products.reduce((total, product) => total + product.quantity * product.product.unitPrice, 0) * 0.11}</p>
+                    <p>Total Harga <i>sudah termasuk PPN </i>({totalQuantity} barang) Rp{products.reduce((total, product) => total + product.quantity * product.product.unitPrice, 0)}</p>
                     <p><b>Total Belanja Rp{checkoutDetails.totalPrice}</b></p>
                     <hr />
                     <button>Chat Admin</button>

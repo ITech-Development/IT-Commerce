@@ -15,6 +15,78 @@ class AdminSellerController {
         }
     }
 
+    static async getNotificationCountByVoucherCode(req, res, next) {
+        try {
+            let voucherCode = '';
+
+            if (req.adminSeller.id === 4) {
+                voucherCode = 'IT01';
+            } else if (req.adminSeller.id === 5) {
+                voucherCode = 'MS01';
+            } else if (req.adminSeller.id === 6) {
+                voucherCode = 'DM01';
+            } else if (req.adminSeller.id === 7 || req.adminSeller.id === 9) {
+                voucherCode = null;
+            } else {
+                console.log('Check the server again');
+                return;
+            }
+
+            const checkoutProducts = await CheckoutProduct.findAll({
+                include: [
+                    {
+                        model: Checkout,
+                        as: 'checkouts',
+                        include: [
+                            {
+                                model: User,
+                                as: 'users'
+                            }
+                        ]
+                    },
+                    {
+                        model: Product,
+                        as: 'products'
+                    }
+                ],
+                where: {
+                    '$checkouts.voucherCode$': voucherCode,
+                    '$checkouts.paymentStatus$': 'dibayar'
+                },
+                order: [['createdAt', 'ASC']],
+            });
+
+            const orderList = {};
+
+            for (const checkoutProduct of checkoutProducts) {
+                const checkoutId = checkoutProduct.checkoutId;
+
+                if (!orderList[checkoutId]) {
+                    orderList[checkoutId] = {
+                        checkout: checkoutProduct.checkouts,
+                        products: []
+                    };
+                }
+
+                orderList[checkoutId].products.push(checkoutProduct.products);
+            }
+
+            const orderListArray = Object.values(orderList);
+
+            // Hitung jumlah checkouts dengan deliveryStatus 'Sedang dikemas'
+            const sedangDikemasCount = orderListArray.reduce((count, checkout) => {
+                if (checkout.checkout.deliveryStatus === 'Sedang dikemas') {
+                    return count + 1;
+                }
+                return count;
+            }, 0);
+            
+            res.status(200).json(sedangDikemasCount);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     static async getTransactionListByVoucherCode(req, res, next) {
         try {
             let voucherCode = '';

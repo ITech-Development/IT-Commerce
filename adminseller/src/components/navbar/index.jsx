@@ -18,7 +18,8 @@ export default function Navigation() {
         // Set data checkout yang diterima dari API ke state
 
         // Calculate the count of "Dikemas" statuses
-        const dikemasCount = response.data.filter(checkout => checkout.checkout.deliveryStatus === 'Dikemas').length;
+        const dikemasCount = response.data.filter(checkout => checkout.checkout.deliveryStatus === 'Sedang dikemas' && checkout.checkout.paymentStatus === 'dibayar').length;
+        
         setPackingCount(dikemasCount);
       })
       .catch((error) => {
@@ -54,7 +55,7 @@ export default function Navigation() {
               <button onClick={handleLogout}>Logout</button>
               <br />
               {packingCount > 0
-                ? `Notification: Ada ${packingCount} orderan belum Dikirim'`
+                ? `Notification: Ada ${packingCount} orderan belum Dikirim`
                 : 'Notification: ' + 'Belum ada orderan masuk'
               }
             </li >

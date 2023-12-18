@@ -5,6 +5,7 @@ const router = express.Router()
 
 router.get('/', AdminSellerController.getAllAdminSellers)
 router.get('/order-list', authenticationAdminSeller, AdminSellerController.getOrderListByVoucherCode)
+router.get('/notification-count', authenticationAdminSeller, AdminSellerController.getNotificationCountByVoucherCode)
 router.get('/transaction-list', authenticationAdminSeller, AdminSellerController.getTransactionListByVoucherCode)
 router.post('/register', AdminSellerController.registerAdminSeller)
 router.post('/login', AdminSellerController.loginAdminSeller)
