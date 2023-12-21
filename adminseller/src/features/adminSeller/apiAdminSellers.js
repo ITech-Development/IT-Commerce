@@ -23,10 +23,14 @@ export const adminSellersApi = createApi({
         }
       }),
     }),
+    getNotificationCount: builder.query({
+      query: () => "admin-sellers/notification-count"
+    }),
   })
 })
 
 export const {
   useGetAdminSellersQuery,
-  useLoginMutation
+  useLoginMutation,
+  useGetNotificationCountQuery
 } = adminSellersApi

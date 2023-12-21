@@ -1,32 +1,83 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 import Logo from "../../assets/Logo.png";
 import { Link } from "react-router-dom";
 import axios from 'axios'
 
 export default function Navigation() {
-  const [packingCount, setPackingCount] = useState(0); // State to store the count of "Dikemas" status
+  const [notificationList, setNotificationList] = useState([]);
+  const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] = useState(false);
 
   useEffect(() => {
-    // Ganti URL dengan URL endpoint API Anda
-    axios.get('http://localhost:3100/admin-sellers/order-list', {
-      headers: {
-        access_token: localStorage.getItem('access_token')
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3100/admin-sellers/order-list', {
+          headers: {
+            access_token: localStorage.getItem('access_token'),
+          },
+        });
+        const notifications = response.data.filter(
+          (checkout) => checkout.checkout.deliveryStatus === 'Sedang dikemas' && checkout.checkout.paymentStatus === 'dibayar'
+        );
+        setNotificationList(notifications);
+      } catch (error) {
+        console.log(error);
       }
-    })
-      .then((response) => {
-        // Set data checkout yang diterima dari API ke state
+    };
 
-        // Calculate the count of "Dikemas" statuses
-        const dikemasCount = response.data.filter(checkout => checkout.checkout.deliveryStatus === 'Sedang dikemas' && checkout.checkout.paymentStatus === 'dibayar').length;
-        
-        setPackingCount(dikemasCount);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []); // [] sebagai dependensi untuk menjalankan efek hanya sekali saat komponen dipasang
+    fetchData();
+  }, []);
 
+  const toggleNotificationDropdown = () => {
+    setIsNotificationDropdownOpen(!isNotificationDropdownOpen);
+  };
+
+  const [isHovered, setIsHovered] = useState(false);
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+  
+  const RenderNotifications = () => {
+    const hasNotifications = notificationList.length > 0;
+    return (
+      <div className="notifications-dropdown">
+        <button
+          className={`notifications-btn ${hasNotifications ? 'has-notifications' : ''}`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          Notification
+          {hasNotifications && <span className="notification-indicator"></span>}
+        </button>
+        {(isHovered || isNotificationDropdownOpen) && (
+          <ul
+            className="notifications-list"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div className="notifications-head">
+              <b>{notificationList.length > 0 ? `${notificationList.length} orderan belum dikirim` : 'Belum ada orderan masuk'}</b>
+            </div>
+            <hr />
+            {notificationList.map((notification) => (
+              <li key={notification.checkout.id}>
+                {/* Render each notification item as needed */}
+                <Link to={`/order-list/${notification.checkout.id}`}>
+                  {notification.checkout.id} - {notification.checkout.deliveryStatus}
+                  <br />
+                  {notification.checkout.midtransCode}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
+  };
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -45,21 +96,21 @@ export default function Navigation() {
   };
 
   const RenderMenu = () => {
-    const accessToken = localStorage.getItem('access_token')
-    // Implement your menu items here, for example:
+    const accessToken = localStorage.getItem('access_token');
+  
     return (
       <>
         {accessToken && (
-          <div>
-            < li >
+          <div className="menu-items">
+            {/* Render notifications */}
+            <li>
+              <RenderNotifications />
+            </li>
+  
+            {/* Logout button */}
+            <li>
               <button onClick={handleLogout}>Logout</button>
-              <br />
-              {packingCount > 0
-                ? `Notification: Ada ${packingCount} orderan belum Dikirim`
-                : 'Notification: ' + 'Belum ada orderan masuk'
-              }
-            </li >
-
+            </li>
           </div>
         )}
       </>
@@ -68,12 +119,13 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className="navigation">
+      <nav className="navigation" >
         <Link to="/">
           <img style={{ height: "50px" }} src={Logo} alt="" />
         </Link>
         <div className="navigation-menu">
-          <ul className={isDropdownOpen ? "expanded" : ""}>
+          
+          <ul >
             <RenderMenu />
           </ul>
           <button className="hamburger" onClick={toggleDropdown}>

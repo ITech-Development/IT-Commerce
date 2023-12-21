@@ -1,3 +1,71 @@
+/* Add these styles to your existing "style.css" or create a new stylesheet */
+
+/* Updated Dropdown styles for vertical layout */
+.notifications-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  display: none;
+  z-index: 1;
+  flex-direction: column;
+  /* Ensure vertical layout */
+}
+
+.notifications-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.notifications-btn.has-notifications {
+  position: relative;
+}
+
+.notification-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background-color: red; /* Choose a color for your indicator */
+  border-radius: 50%;
+}
+
+
+.notifications-head {
+  padding: 10px;
+  padding-bottom: 0px;
+  text-align: center;
+  
+}
+
+.notifications-list li {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+  /* Make the list items take the full width */
+}
+
+/* Style for the "No notifications" message */
+.notifications-list:empty::before {
+  content: 'No notifications';
+  display: block;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Style for the individual notification item */
+.notifications-list li:hover {
+  background-color: #f5f5f5;
+}
+
+
 
 body {
   font-family: Arial, sans-serif;
@@ -11,7 +79,8 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100; /* Ensure it's on top of other elements */
+  z-index: 100;
+  /* Ensure it's on top of other elements */
   height: 65px;
   width: 100%;
   display: flex;
@@ -30,6 +99,12 @@ body {
 }
 
 .navigation-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Menyusun elemen secara horizontal dengan ruang di antara */
+}
+
+.menu-items {
   display: flex;
   align-items: center;
 }
@@ -147,6 +222,7 @@ body {
     padding: 1rem;
   }
 }
+
 .cart-icon {
   width: 30px;
   height: 30px;
@@ -154,5 +230,5 @@ body {
   cursor: pointer;
   /* display: flex; */
   position: relative;
-  top:12px;
+  top: 12px;
 }

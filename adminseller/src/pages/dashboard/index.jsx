@@ -8,6 +8,7 @@ const Dashboard = () => {
    
       <div style={{ display: 'flex', margin: '80px 30px' }}>
         <MainContent />
+        
       </div>
   );
 };

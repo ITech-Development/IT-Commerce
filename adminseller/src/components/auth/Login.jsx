@@ -2,20 +2,16 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./style.css";
-// import { UserContext } from "../../App.js";
-
 const Login = () => {
-  // const { dispatch } = useContext(UserContext);
 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
-    
+
     e.preventDefault();
 
-    // Perform login logic here
     if (!email || !password) {
       alert("Please enter your email and password.");
       return;
@@ -41,9 +37,11 @@ const Login = () => {
       setEmail("");
       setPassword("");
 
-      // Redirect to the Home page
-      // dispatch({ type: "USER", payload: true });
-      navigate("/");
+      console.log("Before navigation");
+      window.location.href = "/";
+      // navigate("/");
+      console.log("After navigation");
+
     } catch (error) {
       console.error("Login error:", error);
       alert("Login failed. Please try again.");
