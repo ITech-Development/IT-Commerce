@@ -24,26 +24,42 @@ const Routing = () => {
 
   // State to manage the visibility of the pop-up
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  // State to track whether the popup should be closed for 5 hours
+  const [closeFor5Hours, setCloseFor5Hours] = useState(false);
 
   useEffect(() => {
-    // Show the pop-up when notifCount is greater than 0
-    if (notifCount && notifCount > 0) {
+    // Show the pop-up when notifCount is greater than 0 and not closed for 5 hours
+    if (notifCount && notifCount > 0 && !closeFor5Hours) {
       setIsPopUpVisible(true);
     }
 
     // Set up an interval to check every 5 minutes
     const intervalId = setInterval(() => {
-      setIsPopUpVisible(notifCount && notifCount > 0);
+      setIsPopUpVisible(notifCount && notifCount > 0 && !closeFor5Hours);
     }, 5 * 60 * 1000); // 5 minutes in milliseconds
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, [notifCount]);
+  }, [notifCount, closeFor5Hours]);
 
   const closePopUp = () => {
     // Close the pop-up when needed
     setIsPopUpVisible(false);
   };
+
+  const disableNotificationsHandler = () => {
+    // Set the state to indicate that the popup should be closed for 5 hours
+    setCloseFor5Hours(true);
+
+    // Close the popup
+    closePopUp();
+
+    // Reset the state after 5 hours
+    setTimeout(() => {
+      setCloseFor5Hours(false);
+    }, 5 * 60 * 60 * 1000); // 5 hours in milliseconds
+  };
+
   return (
     <>
       <Routes>
@@ -75,7 +91,8 @@ const Routing = () => {
               <source src={notificationSound} type="audio/mp3" />
             </audio>
             <p>Customer sedang menunggu pesanan datang. Mohon segera packing orderan ya!</p>
-            <button onClick={closePopUp}>Close</button>
+            <button onClick={closePopUp}>Tutup</button>
+            <button onClick={disableNotificationsHandler}>Matikan</button>
           </div>
         </div>
       )}
