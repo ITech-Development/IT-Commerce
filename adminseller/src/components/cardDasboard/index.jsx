@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSpring, animated } from "react-spring";
 import { Link } from "react-router-dom";
+import { useGetProductsQuery } from "../../features/product/apiProducts";
 
 const Card = ({ imageUrl, title, count }) => {
   const [visible, setVisible] = useState(false);
@@ -46,6 +47,7 @@ const Card = ({ imageUrl, title, count }) => {
 const CardSection = () => {
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
+  const { data: dataProduct } = useGetProductsQuery()
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -63,7 +65,7 @@ const CardSection = () => {
 
     const fetchUsers = async () => {
       try {
-        
+
         const response = await axios.get("http://localhost:3100/admin-sellers/order-list", {
           headers: {
             access_token: localStorage.getItem("access_token"),
@@ -112,7 +114,7 @@ const CardSection = () => {
         <Card
           imageUrl="https://w7.pngwing.com/pngs/428/470/png-transparent-spare-part-computer-icons-aftersales-blue-text-logo-thumbnail.png"
           title="Total Products"
-          count={products.length}
+          count={dataProduct?.length}
           width='200px'
         />
       </Link>
